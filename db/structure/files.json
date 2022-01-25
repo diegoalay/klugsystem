@@ -20,6 +20,9 @@
   "name": "user_creator_id",
   "type": "bigint"
 },{
+  "name": "user_modifier_id",
+  "type": "bigint"
+},{
   "name": "size_mb",
   "type": "decimal"
 },{

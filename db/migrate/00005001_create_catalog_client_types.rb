@@ -6,6 +6,7 @@ class CreateCatalogClientTypes < ActiveRecord::Migration[6.1]
       t.string :name
 
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps
     end
@@ -13,5 +14,6 @@ class CreateCatalogClientTypes < ActiveRecord::Migration[6.1]
     add_reference   :catalog_client_types, :accounts, foreign_key: true
 
     add_foreign_key :catalog_client_types, :users, column: :user_creator_id
+    add_foreign_key :catalog_client_types, :users, column: :user_modifier_id
   end
 end

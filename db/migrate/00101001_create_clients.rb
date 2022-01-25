@@ -19,6 +19,7 @@ class CreateClients < ActiveRecord::Migration[6.1]
       t.text   :note
 
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps
     end
@@ -26,5 +27,6 @@ class CreateClients < ActiveRecord::Migration[6.1]
     add_reference   :clients, :accounts,     foreign_key: true
 
     add_foreign_key :clients, :users, column: :user_creator_id
+    add_foreign_key :clients, :users, column: :user_modifier_id
   end
 end

@@ -45,6 +45,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
       # Users Relations
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps null: false
     end

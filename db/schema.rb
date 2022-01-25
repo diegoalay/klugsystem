@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.datetime "deleted_at"
     t.string "name"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "name"
     t.string "model_type"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -59,7 +61,8 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "value_to"
     t.string "category"
     t.bigint "user_creator_id"
-    t.datetime "deleted_at"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "clients_id"
@@ -74,6 +77,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "file_extension"
     t.string "file_type"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.decimal "size_mb"
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
@@ -95,6 +99,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "billing_identifier"
     t.text "note"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "catalog_client_types_id"
@@ -115,6 +120,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "url"
     t.boolean "public"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -141,6 +147,7 @@ ActiveRecord::Schema.define(version: 102001) do
   create_table "user_roles", force: :cascade do |t|
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "users_id"
@@ -173,6 +180,7 @@ ActiveRecord::Schema.define(version: 102001) do
     t.string "telephone"
     t.string "address"
     t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -184,20 +192,27 @@ ActiveRecord::Schema.define(version: 102001) do
 
   add_foreign_key "catalog_client_types", "accounts", column: "accounts_id"
   add_foreign_key "catalog_client_types", "users", column: "user_creator_id"
+  add_foreign_key "catalog_client_types", "users", column: "user_modifier_id"
   add_foreign_key "catalog_event_types", "accounts", column: "accounts_id"
   add_foreign_key "catalog_event_types", "users", column: "user_creator_id"
+  add_foreign_key "catalog_event_types", "users", column: "user_modifier_id"
   add_foreign_key "client_activities", "clients", column: "clients_id"
   add_foreign_key "client_activities", "users", column: "user_creator_id"
+  add_foreign_key "client_activities", "users", column: "user_modifier_id"
   add_foreign_key "client_files", "clients", column: "clients_id"
   add_foreign_key "client_files", "users", column: "user_creator_id"
+  add_foreign_key "client_files", "users", column: "user_modifier_id"
   add_foreign_key "clients", "accounts", column: "accounts_id"
   add_foreign_key "clients", "catalog_client_types", column: "catalog_client_types_id"
   add_foreign_key "clients", "users", column: "user_creator_id"
+  add_foreign_key "clients", "users", column: "user_modifier_id"
   add_foreign_key "events", "accounts", column: "accounts_id"
   add_foreign_key "events", "catalog_event_types", column: "catalog_event_types_id"
   add_foreign_key "events", "users", column: "user_creator_id"
+  add_foreign_key "events", "users", column: "user_modifier_id"
   add_foreign_key "user_roles", "roles", column: "roles_id"
   add_foreign_key "user_roles", "users", column: "user_creator_id"
+  add_foreign_key "user_roles", "users", column: "user_modifier_id"
   add_foreign_key "user_roles", "users", column: "users_id"
   add_foreign_key "users", "accounts", column: "accounts_id"
   add_foreign_key "users", "users", column: "user_creator_id"

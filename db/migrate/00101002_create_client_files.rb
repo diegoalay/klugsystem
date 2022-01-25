@@ -16,6 +16,8 @@ class CreateClientFiles < ActiveRecord::Migration[6.1]
     end
 
     add_reference   :client_files, :clients, foreign_key: true
+
     add_foreign_key :client_files, :users,   column: :user_creator_id
+    add_foreign_key :client_files, :users,   column: :user_modifier_id
   end
 end

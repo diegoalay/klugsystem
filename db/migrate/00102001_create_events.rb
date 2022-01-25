@@ -16,6 +16,7 @@ class CreateEvents < ActiveRecord::Migration[6.1]
       t.boolean   :public
 
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps
     end
@@ -25,5 +26,6 @@ class CreateEvents < ActiveRecord::Migration[6.1]
     add_reference   :events, :catalog_event_types, foreign_key: true
 
     add_foreign_key :events, :users, column: :user_creator_id
+    add_foreign_key :events, :users, column: :user_modifier_id
   end
 end

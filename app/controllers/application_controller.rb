@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
+  before_action :set_account
+
+  def set_account
+    @account = current_user.account
+  end
 
   def respond_with_successful(data = nil)
     response_body = { successful: true }

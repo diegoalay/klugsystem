@@ -7,6 +7,7 @@ class CreateCatalogEventTypes < ActiveRecord::Migration[6.1]
       t.string :model_type, index: true
 
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps
     end
@@ -14,5 +15,6 @@ class CreateCatalogEventTypes < ActiveRecord::Migration[6.1]
     add_reference   :catalog_event_types, :accounts, foreign_key: true
 
     add_foreign_key :catalog_event_types, :users, column: :user_creator_id
+    add_foreign_key :catalog_event_types, :users, column: :user_modifier_id
   end
 end

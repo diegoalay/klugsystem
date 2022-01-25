@@ -1,13 +1,25 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: %i[ show edit update destroy ]
+  before_action :set_client, only: %i[update destroy ]
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.all
+    respond_to do |format|
+      format.html {}
+      format.json do
+
+        respond_with_successful(@account.clients)
+      end
   end
 
   # GET /clients/1 or /clients/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json do
+        set_client
+
+        respond_with_successful(@client)
+      end
   end
 
   # GET /clients/new
@@ -21,49 +33,60 @@ class ClientsController < ApplicationController
 
   # POST /clients or /clients.json
   def create
-    @client = Client.new(client_params)
+    @client = @account.clients.new(client_params)
+    @client = @client.user_creator = current_user
 
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to @client, notice: "Client was successfully created." }
-        format.json { render :show, status: :created, location: @client }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
-      end
+    if @client.save
+      @client.log_create
+    else
+      respond_client_with_error
     end
   end
 
   # PATCH/PUT /clients/1 or /clients/1.json
   def update
-    respond_to do |format|
-      if @client.update(client_params)
-        format.html { redirect_to @client, notice: "Client was successfully updated." }
-        format.json { render :show, status: :ok, location: @client }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
-      end
+    @client.user_modifier = current_user
+
+    if @client.update(client_params)
+      @client.log_update
+
+      respond_with_successful(@client)
+    else
+      respond_client_with_error
     end
   end
 
   # DELETE /clients/1 or /clients/1.json
   def destroy
-    @client.destroy
-    respond_to do |format|
-      format.html { redirect_to clients_url, notice: "Client was successfully destroyed." }
-      format.json { head :no_content }
+    @client.user_modifier = current_user
+
+    if @client.destroy
+      @client.log_destroy
+
+      respond_with_successful(@client)
+    else
+      respond_client_with_error
     end
   end
 
   private
+    def respond_client_with_error
+      respond_with_error(@client.errors.full_messages.to_sentence)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_client
-      @client = Client.find(params[:id])
+      @client = @account.clients.find_by(id: params[:id])
+
+      return respond_with_not_found unless @client
     end
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.fetch(:client, {})
+      params.fetch(:client, {}).permit(
+        %i[first_name last_name telephone email gender birthdate
+          billing_name billing_address billing_identifier note
+        ]
+      )
     end
 end

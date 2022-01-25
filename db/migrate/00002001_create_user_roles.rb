@@ -4,6 +4,7 @@ class CreateUserRoles < ActiveRecord::Migration[6.1]
       t.datetime :deleted_at, index: true
 
       t.bigint   :user_creator_id
+      t.bigint   :user_modifier_id
 
       t.timestamps
     end
@@ -12,5 +13,6 @@ class CreateUserRoles < ActiveRecord::Migration[6.1]
     add_reference :user_roles, :roles, foreign_key: true
 
     add_foreign_key :user_roles, :users, column: :user_creator_id
+    add_foreign_key :user_roles, :users, column: :user_modifier_id
   end
 end

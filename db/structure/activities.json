@@ -17,6 +17,9 @@
   "name": "user_creator_id",
   "type": "bigint"
 },{
+  "name": "user_modifier_id",
+  "type": "bigint"
+},{
   "name": "deleted_at",
   "type": "datetime",
   "index": true
