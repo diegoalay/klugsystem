@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2001) do
+ActiveRecord::Schema.define(version: 102001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,13 +19,112 @@ ActiveRecord::Schema.define(version: 2001) do
     t.string "name"
     t.string "direction"
     t.string "telephone"
-    t.string "billing_nit"
+    t.string "billing_identifier"
     t.string "billing_name"
     t.string "billing_direction"
     t.text "description"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "catalog_client_types", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.string "name"
+    t.bigint "user_creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_catalog_client_types_on_accounts_id"
+    t.index ["deleted_at"], name: "index_catalog_client_types_on_deleted_at"
+  end
+
+  create_table "catalog_event_types", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.string "name"
+    t.string "model_type"
+    t.bigint "user_creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_catalog_event_types_on_accounts_id"
+    t.index ["deleted_at"], name: "index_catalog_event_types_on_deleted_at"
+    t.index ["model_type"], name: "index_catalog_event_types_on_model_type"
+  end
+
+  create_table "client_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.bigint "user_creator_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "clients_id"
+    t.index ["clients_id"], name: "index_client_activities_on_clients_id"
+  end
+
+  create_table "client_files", force: :cascade do |t|
+    t.string "name"
+    t.string "attachment"
+    t.string "attachment_s3"
+    t.string "attachment_public"
+    t.string "file_extension"
+    t.string "file_type"
+    t.bigint "user_creator_id"
+    t.decimal "size_mb"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "clients_id"
+    t.index ["clients_id"], name: "index_client_files_on_clients_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "telephone"
+    t.string "email"
+    t.string "gender"
+    t.date "birthdate"
+    t.string "billing_name"
+    t.string "billing_address"
+    t.string "billing_identifier"
+    t.text "note"
+    t.bigint "user_creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "catalog_client_types_id"
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_clients_on_accounts_id"
+    t.index ["catalog_client_types_id"], name: "index_clients_on_catalog_client_types_id"
+    t.index ["deleted_at"], name: "index_clients_on_deleted_at"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.text "description"
+    t.datetime "event_date"
+    t.datetime "time_start"
+    t.datetime "time_end"
+    t.string "title"
+    t.string "location"
+    t.string "url"
+    t.boolean "public"
+    t.bigint "user_creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.string "model_type"
+    t.bigint "model_id"
+    t.bigint "catalog_event_types_id"
+    t.index ["accounts_id"], name: "index_events_on_accounts_id"
+    t.index ["catalog_event_types_id"], name: "index_events_on_catalog_event_types_id"
+    t.index ["deleted_at"], name: "index_events_on_deleted_at"
+    t.index ["model_type", "model_id"], name: "index_events_on_model"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -41,6 +140,7 @@ ActiveRecord::Schema.define(version: 2001) do
 
   create_table "user_roles", force: :cascade do |t|
     t.datetime "deleted_at"
+    t.bigint "user_creator_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "users_id"
@@ -51,6 +151,7 @@ ActiveRecord::Schema.define(version: 2001) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.datetime "deleted_at"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -72,8 +173,6 @@ ActiveRecord::Schema.define(version: 2001) do
     t.string "telephone"
     t.string "address"
     t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
@@ -83,9 +182,23 @@ ActiveRecord::Schema.define(version: 2001) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "catalog_client_types", "accounts", column: "accounts_id"
+  add_foreign_key "catalog_client_types", "users", column: "user_creator_id"
+  add_foreign_key "catalog_event_types", "accounts", column: "accounts_id"
+  add_foreign_key "catalog_event_types", "users", column: "user_creator_id"
+  add_foreign_key "client_activities", "clients", column: "clients_id"
+  add_foreign_key "client_activities", "users", column: "user_creator_id"
+  add_foreign_key "client_files", "clients", column: "clients_id"
+  add_foreign_key "client_files", "users", column: "user_creator_id"
+  add_foreign_key "clients", "accounts", column: "accounts_id"
+  add_foreign_key "clients", "catalog_client_types", column: "catalog_client_types_id"
+  add_foreign_key "clients", "users", column: "user_creator_id"
+  add_foreign_key "events", "accounts", column: "accounts_id"
+  add_foreign_key "events", "catalog_event_types", column: "catalog_event_types_id"
+  add_foreign_key "events", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "roles", column: "roles_id"
+  add_foreign_key "user_roles", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "users", column: "users_id"
   add_foreign_key "users", "accounts", column: "accounts_id"
   add_foreign_key "users", "users", column: "user_creator_id"
-  add_foreign_key "users", "users", column: "user_modifier_id"
 end

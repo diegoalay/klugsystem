@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Catalog Event Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @catalog_event_types.each do |catalog_event_type| %>
+      <tr>
+        <td><%= link_to 'Show', catalog_event_type %></td>
+        <td><%= link_to 'Edit', edit_catalog_event_type_path(catalog_event_type) %></td>
+        <td><%= link_to 'Destroy', catalog_event_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Catalog Event Type', new_catalog_event_type_path %>

@@ -3,6 +3,8 @@
 class CreateUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :users do |t|
+      t.datetime :deleted_at, index: true
+
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -43,9 +45,6 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
       # Users Relations
       t.bigint   :user_creator_id
-      t.bigint   :user_modifier_id
-
-      t.datetime :deleted_at, index: true
 
       t.timestamps null: false
     end
@@ -55,6 +54,5 @@ class CreateUsers < ActiveRecord::Migration[6.0]
     add_reference   :users, :accounts, foreign_key: true
 
     add_foreign_key :users, :users, column: :user_creator_id
-    add_foreign_key :users, :users, column: :user_modifier_id
   end
 end

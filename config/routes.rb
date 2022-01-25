@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  namespace :client do
+    resources :activities
+  end
+  namespace :client do
+    resources :files
+  end
+  resources :events
+  namespace :catalog do
+    resources :event_types
+  end
+  namespace :catalog do
+    resources :client_types
+  end
+  resources :clients
   namespace :user do
     resources :roles
   end
