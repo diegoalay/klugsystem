@@ -1,0 +1,40 @@
+development:
+  adapter: postgresql
+  database: klugsystem_development
+  encoding: unicode
+  reconnect: false
+  pool: 30
+  username: postgres
+  password: ""
+  host: 127.0.0.1
+
+test:
+  adapter: postgresql
+  database: klugsystem_test
+  encoding: unicode
+  reconnect: false
+  pool: 30
+  username: postgres
+  password: ""
+  host: 127.0.0.1
+
+staging:
+  adapter: mysql2
+  encoding: utf8mb4
+  reconnect: false
+  database: wahtari_production
+  pool: 30
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PWD'] %>
+
+production:
+  adapter: postgresql
+  database: klugsystem_production
+  encoding: unicode
+  reconnect: false
+  pool: 30
+  username: postgres
+  password: ""
+  host: 127.0.0.1

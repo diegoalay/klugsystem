@@ -1,0 +1,81 @@
+<nav class="top-navbar">
+    
+</nav>
+
+<nav id="sidebar" style="">
+    <div class="sidebar-header">
+        <h3>Transport</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li>
+            <a href="destinations">
+                <i class="fas fa-store">
+                    <span>Pagar </span>
+                </i>
+            </a>
+        </li>
+        <li>
+            <a href="destinations">
+                <i class="fas fa-store">
+                    <span>Destinos </span>
+                </i>
+            </a>
+        </li>
+        <li>
+            <a href="#" >
+                <i class="fas fa-users">
+                    <span>Pilotos </span>
+                </i>
+            </a>
+            <ul class="list-unstyled dropdown">
+                <li>
+                    <a href="/pilots" >
+                        <i class="fas fa-list">
+                            <span>Listado </span>
+                        </i>
+                    </a>
+                </li>
+                <%# <li>
+                    <a href="/payments#new" >
+                        <i class="fas fa-money-bill-alt">
+                            <span>Pagar </span>
+                        </i>
+                    </a>
+                </li> %>
+            </ul>
+        </li>
+        <li> 
+            <a href="/units">
+                <i class="fas fa-truck">
+                    <span>Unidades </span>
+                </i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Page Content -->
+<div id="content">
+    <nav class="top-navbar navbar navbar-expand-lg navbar-light">
+
+        <div class="">
+            <a href="#home" id="sidebarCollapse">
+                <i class="fas fa-bars"></i>
+            </a>
+            <div class="right-element">
+                <a href="#"> Salir               
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </nav>    
+
+    <div id="app" class="container-fluid">
+        <notifications></notifications>
+        <router-view></router-view>
+    </div>   
+</div>
+
+
+<%= javascript_include_tag 'sidebar' %>

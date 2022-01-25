@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <title>Transport</title>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    </head>
+    <body>
+        <% if notice %>
+            <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+            <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+        <div class="wrapper">
+            <% if current_user %>
+                <%= render 'layouts/partials/navigation' %>
+                <%= render 'layouts/partials/loaders' %>
+            <% end %>
+                
+            <%= yield %>
+        </div>
+        <%# <div class="footer">
+            <p> ©2019 All Rights Reserved. transAdmin is a sales APP. Privacy and Terms</p>
+        </div> %>
+    </body>
+</html>

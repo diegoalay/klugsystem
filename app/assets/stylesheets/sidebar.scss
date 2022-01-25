@@ -1,0 +1,164 @@
+// top bar
+$topbar-color: #2A3F54;
+$topbar-hover-color: #C1D6EB;
+
+//left bar
+$leftbar-color: #2A3F54;
+$leftbar-header-color: #FFF;
+$leftbar-hover-color: #C1D6EB;
+$leftbar-font-color: #FFF;
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.top-navbar {
+    overflow: hidden;
+    background-color: $topbar-color;
+    position: fixed;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 1em;
+}
+  
+.top-navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 20px;
+    text-decoration: none;
+    font-size: 17px;
+}
+  
+.navbar a:hover {
+    background: $topbar-hover-color;
+    color: black;
+}
+  
+#content {
+    width: 100%;
+}
+
+.right-element{
+    position: absolute;
+    right: 30px;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+}
+
+p {
+    font-size: 2em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: $leftbar-color;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: $leftbar-header-color;
+}
+
+// #sidebar ul.components {
+//     padding: 20px 0;
+//     border-bottom: 1px solid #47748b;
+// }
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+    font-size: 2vw;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: $leftbar-font-color;
+    border-bottom: 1px solid white;
+}
+
+#sidebar ul li a:hover {
+    color: #1C1C1C;
+    background: $leftbar-hover-color;
+    text-decoration: none;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #D8D8D8;
+    text-decoration: none;
+}
+
+#sidebar.active .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+ul ul a {
+    padding-left: 1.5em !important;
+    background: transparent;
+}
+
+ul li ul {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    transition: all 0.5s ease;
+    margin-top: 0rem;
+    left: 0;
+    display: none;
+}
+
+ul li:hover > ul,
+ul li:focus-within > ul,
+ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}

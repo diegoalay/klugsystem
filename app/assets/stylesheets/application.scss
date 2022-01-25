@@ -1,0 +1,69 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import "bootstrap";
+@import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// @import "bulma/sass/utilities/_all";
+
+
+// // · 
+// $primary: $info;
+// $primary-invert: $info-invert;
+
+// // · Links
+// $link: $info;
+// $link-invert: $info-invert;
+// $link-focus-border: $info;
+
+// // · Override framework colors
+// $custom-colors: (
+//     "primary": ($primary, $primary-invert), 
+//     "link": ($link, $link-invert)
+// );
+
+// $colors: mergeColorMaps(
+//     (
+//         "white": ($white, $black), 
+//         "black": ($black, $white), 
+//         "light": ($light, $light-invert), 
+//         "dark": ($dark, $dark-invert), 
+//         "primary": ($primary, $primary-invert, $primary-light, $primary-dark), 
+//         "link": ($link, $link-invert, $link-light, $link-dark), 
+//         "info": ($info, $info-invert, $info-light, $info-dark), 
+//         "success": ($success, $success-invert, $success-light, $success-dark), 
+//         "warning": ($warning, $warning-invert, $warning-light, $warning-dark), 
+//         "danger": ($danger, $danger-invert, $danger-light, $danger-dark)
+//     ), 
+//     $custom-colors
+// );
+
+
+// // · Border radius
+// $radius: 2px;
+// $radius-small: 3px;
+// $radius-large: 4px;
+
+// $control-radius: $radius;
+// $control-radius-small: $radius-small;
+
+
+// // · Import Bulma and Buefy styles
+// @import "bulma/bulma.sass";
+// @import "buefy/src/scss/buefy";
+
