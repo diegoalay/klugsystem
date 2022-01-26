@@ -38,7 +38,7 @@ class ClientsController < ApplicationSystemController
     @client = @client.user_creator = current_user
 
     if @client.save
-      @client.log_create
+      respond_with_successful(@client)
     else
       respond_client_with_error
     end
@@ -49,8 +49,6 @@ class ClientsController < ApplicationSystemController
     @client.user_modifier = current_user
 
     if @client.update(client_params)
-      @client.log_update
-
       respond_with_successful(@client)
     else
       respond_client_with_error
@@ -62,8 +60,6 @@ class ClientsController < ApplicationSystemController
     @client.user_modifier = current_user
 
     if @client.destroy
-      @client.log_destroy
-
       respond_with_successful(@client)
     else
       respond_client_with_error

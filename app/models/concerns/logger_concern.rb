@@ -7,8 +7,6 @@
       after_destroy :log_destroy
       after_update  :log_update
 
-      belongs_to :user_creator, class_name: "::User", foreign_key: "user_creator_id", optional: true
-
       enum category: {
         list: "list",
         create: "create",
@@ -46,9 +44,14 @@
 
       def log_update(category = "update")
         fields = self.previous_changes
-        fields.keys.except!("created_at", "updated_at", "deleted_at").each do |key|
-          old_value = fields[key].first
-          new_value = fields[key].last
+
+        fields.each do |key, values|
+          next if key == "updated_at"
+          next if key == "created_at"
+          next if key == "deleted_at"
+
+          old_value = values.first
+          new_value = values.last
 
           next if old_value == new_value
 
@@ -61,24 +64,22 @@
 
     private
 
-    def self.update_field(key, old_field, new_field, category)
-      # old_field = LC::Date.to_string_datetime(old_field) if old_field.is_a ? (Time) || old_field.is_a ? (Date)
-      # new_field = LC::Date.to_string_datetime(new_field) if new_field.is_a ? (Time) || new_field.is_a ? (Date)
-
-      object.activities.create(
-        user_creator: self.user_modifier,
-        category: category,
-        field_name: key,
-        value_from: old_field,
-        value_to: new_field,
-        field_type: field_type(field_name)
-      )
+    def update_field(field, old_field, new_field, category)
+      ActiveRecord::Base.transaction do
+        self.activities.create(
+          user_creator: self.user_modifier,
+          category: category,
+          field_name: field,
+          value_from: old_field,
+          value_to: new_field,
+          field_type: field_type(field)
+        )
+      end
     end
 
     def field_type(field_name)
       column = self.class.columns_hash[field_name]
-
-      column&.type&.to_s if column.present?
+      return column&.type&.to_s if column.present?
 
       nil
     end
