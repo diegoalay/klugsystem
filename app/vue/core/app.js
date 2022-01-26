@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import DatePicker from 'vue2-datepicker';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons, ToastPlugin } from 'bootstrap-vue'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -11,12 +11,12 @@ import componentSearchList from "../components/component-search-list.vue"
 import componentHeaderForm from "../components/component-header-form.vue"
 
 // Libraries
-import Notifications from 'vue-notification'
 import VueRouter from 'vue-router'
 
 // plugins
 import http from './http'
 import url from './url'
+import msg from './msg'
 
 library.add(fas)
 
@@ -31,18 +31,21 @@ Vue.component('component-header-form', componentHeaderForm)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('component-datepicker', DatePicker)
-Vue.use(Notifications)
+
 Vue.use(BootstrapVueIcons)
 Vue.use(BootstrapVue)
+Vue.use(ToastPlugin)
+
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url)
+Vue.use(msg)
 
 export default (base_path, routes=[]) => {
     //app builder
     let app_builder = { }
 
-    // · Routes for SPAs
+    // · Routes
     app_builder['router'] = new VueRouter({
         linkActiveClass: 'is-active',
         mode: 'history',

@@ -31,9 +31,9 @@ export default {
     methods: {
         onSubmit(){
             if (this.client.id) {
-                this.postForm()
-            } else {
                 this.putForm()
+            } else {
+                this.postForm()
             }
         },
         postForm(){
@@ -44,9 +44,9 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$router.push(`/${result.data.id}`)
-                    this.notification('creado exitosamente.')
+                    // this.notification('creado exitosamente.')
                 } else {
-                    this.notification(result.data.message.errors)
+                    // this.notification(result.data.message.errors)
                 }
             }).catch(error => {
                 console.log(error)
@@ -59,22 +59,14 @@ export default {
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    this.notification('actualizado exitosamente.')
+                    // this.notification('actualizado exitosamente.')
                 } else {
-                    this.notification(result.data.message.errors)
+                    // this.notification(result.data.message.errors)
                 }
             }).catch(error => {
                 console.log(error)
             })
-        },
-        notification(text, type = "success"){
-            this.$notify({
-                groups: "foo",
-                title: this.alert.title,
-                type,
-                text
-            })
-        },
+        }
     }
 }
 </script>
@@ -159,7 +151,6 @@ export default {
                 <b-button type="submit" variant="primary">Guardar</b-button>
                 <b-button type="reset" variant="default">Limpiar</b-button>
             </b-form>
-            <notifications group="foo" />
         </b-card-body>
     </b-card>
 </template>

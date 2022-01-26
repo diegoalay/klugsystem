@@ -49,10 +49,11 @@
             }
         },
         mounted() {
-            this.list();
+            this.list()
         },
         methods: {
             list(){
+                this.makeToast()
                 this.loading = true
                 this.http.get(`${this.main_path}.json`).then(response => {
                     this.data = response.data
@@ -87,12 +88,13 @@
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
             },
-            notification(text, type = "success"){
-                this.$notify({
-                    groups: "foo",
-                    title: '',
-                    type,
-                    text
+            makeToast(append = false) {
+                console.log('')
+                this.toastCount++
+                this.$bvToast.toast(`This is toast number ${this.toastCount}`, {
+                    title: 'BootstrapVue Toast',
+                    autoHideDelay: 5000,
+                    appendToast: append
                 })
             }
         }
