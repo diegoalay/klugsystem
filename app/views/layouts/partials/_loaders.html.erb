@@ -1,2 +1,1 @@
-<% path = controller_path %>
-<%= javascript_include_tag path %>
+<%= javascript_include_tag controller_path if controller_asset_exists?(controller_path, "js") %>

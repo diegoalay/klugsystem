@@ -1,4 +1,4 @@
-class OptionsController < ApplicationController
+class OptionsController < ApplicationSystemController
 
     def fetch_current_user
         return current_user
@@ -13,5 +13,5 @@ class OptionsController < ApplicationController
         expeditures = Expediture.where(:companies_id => current_user.company.id)
         responseWithSuccess(expeditures)
     end
-    
+
 end

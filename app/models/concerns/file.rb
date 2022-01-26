@@ -1,5 +1,5 @@
 module Concerns
-  class File
+  module File
     extend ActiveSupport::Concern
 
     included do

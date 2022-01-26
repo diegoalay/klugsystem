@@ -1,5 +1,5 @@
 module Concerns
-  class FilesController < ApplicationController
+  module FilesController
     extend ActiveSupport::Concern
 
   end

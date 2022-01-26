@@ -1,4 +1,4 @@
-class RolesController < ApplicationController
+class RolesController < ApplicationSystemController
   before_action :set_role, only: %i[ show edit update destroy ]
 
   # GET /roles or /roles.json

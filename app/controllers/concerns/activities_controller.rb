@@ -1,5 +1,5 @@
 module Concerns
-  class ActivitiesController < ApplicationController
+  module ActivitiesController
     extend ActiveSupport::Concern
 
   end

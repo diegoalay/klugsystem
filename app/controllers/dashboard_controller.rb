@@ -1,6 +1,5 @@
-class DashboardController < ApplicationController
+class DashboardController < ApplicationSystemController
+  def default
 
-    def default
-      
-    end
+  end
 end

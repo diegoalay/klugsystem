@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class AccountsController < ApplicationSystemController
   before_action :set_account, only: %i[ show edit update destroy ]
 
   # GET /accounts or /accounts.json

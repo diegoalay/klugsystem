@@ -17,21 +17,17 @@ export default {
 }
 </script>
 <template>
-    <nav class="navbar component-header">
-        <div class="navbar-menu">
-            <div class="navbar-start">
-                <div class="navbar-item">
-                    <h4 class="is-size-3"> {{ title }} </h4>
-                </div>
+    <nav class="navbar component-header-form">
+        <div class="float-left">
+            <div class="navbar-item">
+                <h4 class="is-size-3"> {{ title }} </h4>
             </div>
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <b-button variant="dark" class="mb-2" to="/">
-                            Listado <b-icon icon="list"></b-icon>
-                        </b-button>
-                    </div>
-                </div>
+        </div>
+        <div class="float-right">
+            <div class="buttons">
+                <b-button variant="dark" class="mb-2" to="/">
+                    Listado <font-awesome-icon icon="list" />
+                </b-button>
             </div>
         </div>
     </nav>

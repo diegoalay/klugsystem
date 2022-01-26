@@ -11,10 +11,6 @@ class Users::SessionsController < Devise::SessionsController
         redirect_to "/login"
     end
 
-    # unless resource.confirmed?
-    #     return responseWithError('devise.errors.custom.confirmation_required')
-    # end
-
     sign_in :user, resource
 
     redirect_to "/"

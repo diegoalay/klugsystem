@@ -1,5 +1,5 @@
-class ClientsController < ApplicationController
-  before_action :set_client, only: %i[update destroy ]
+class ClientsController < ApplicationSystemController
+  before_action :set_client, only: %i[update destroy]
 
   # GET /clients or /clients.json
   def index
@@ -9,6 +9,7 @@ class ClientsController < ApplicationController
 
         respond_with_successful(@account.clients)
       end
+    end
   end
 
   # GET /clients/1 or /clients/1.json
@@ -20,11 +21,11 @@ class ClientsController < ApplicationController
 
         respond_with_successful(@client)
       end
+    end
   end
 
   # GET /clients/new
   def new
-    @client = Client.new
   end
 
   # GET /clients/1/edit
@@ -70,23 +71,24 @@ class ClientsController < ApplicationController
   end
 
   private
-    def respond_client_with_error
-      respond_with_error(@client.errors.full_messages.to_sentence)
-    end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_client
-      @client = @account.clients.find_by(id: params[:id])
+  def respond_client_with_error
+    respond_with_error(@client.errors.full_messages.to_sentence)
+  end
 
-      return respond_with_not_found unless @client
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_client
+    @client = @account.clients.find_by(id: params[:id])
 
-    # Only allow a list of trusted parameters through.
-    def client_params
-      params.fetch(:client, {}).permit(
-        %i[first_name last_name telephone email gender birthdate
-          billing_name billing_address billing_identifier note
-        ]
-      )
-    end
+    return respond_with_not_found unless @client
+  end
+
+  # Only allow a list of trusted parameters through.
+  def client_params
+    params.fetch(:client, {}).permit(
+      %i[first_name last_name telephone email gender birthdate
+        billing_name billing_address billing_identifier note
+      ]
+    )
+  end
 end
