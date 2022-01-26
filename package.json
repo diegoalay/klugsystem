@@ -17,8 +17,6 @@
     "axios": "^0.19.1",
     "bootstrap": "4.3.1",
     "bootstrap-vue": "^2.2.2",
-    "buefy": "^0.8.10",
-    "bulma": "^0.8.2",
     "fs": "0.0.1-security",
     "jquery": "^3.4.1",
     "mini-toastr": "^0.8.1",
