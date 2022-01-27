@@ -7,19 +7,24 @@ class CreateClients < ActiveRecord::Migration[6.1]
       t.string :last_name
 
       t.string :telephone
+      t.string :mobile_number
+      t.string :fax
+
       t.string :email
 
       t.string :gender
+      t.string :title
 
       t.date   :birthdate
       t.string :billing_name
       t.string :billing_address
       t.string :billing_identifier
+      t.string :billing_email
 
       t.text   :note
 
-      t.bigint   :user_creator_id
-      t.bigint   :user_modifier_id
+      t.bigint :user_creator_id
+      t.bigint :user_modifier_id
 
       t.timestamps
     end
