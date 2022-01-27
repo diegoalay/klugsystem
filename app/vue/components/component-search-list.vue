@@ -23,12 +23,12 @@
 
         methods: {
             search(){
-                this.$emit("search", text)
+                this.$emit("search", this.text)
             }
         },
 
         watch: {
-            text(){
+            text(value){
                 this.search()
             }
         }
@@ -41,6 +41,7 @@
             <b-form-input
                 id="filterInput"
                 :placeholder="placeholderText"
+                v-model="text"
             >
             </b-form-input>
             <b-input-group-append>

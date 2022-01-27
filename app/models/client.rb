@@ -5,5 +5,8 @@ class Client < ApplicationRecord
 
   has_many   :activities, foreign_key: "clients_id"
 
+  validates :first_name, presence: true
+  validates :last_name,  presence: true
+
   include LoggerConcern
 end

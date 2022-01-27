@@ -53,7 +53,6 @@
         },
         methods: {
             list(){
-                this.makeToast()
                 this.loading = true
                 this.http.get(`${this.main_path}.json`).then(response => {
                     this.data = response.data
@@ -87,15 +86,6 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
-            },
-            makeToast(append = false) {
-                console.log('')
-                this.toastCount++
-                this.$bvToast.toast(`This is toast number ${this.toastCount}`, {
-                    title: 'BootstrapVue Toast',
-                    autoHideDelay: 5000,
-                    appendToast: append
-                })
             }
         }
     }
@@ -110,6 +100,7 @@
             @reloadList="list"
         >
         </component-header-list>
+
         <b-card>
             <component-search-list :loading="loading" @search="onSearch"/>
             <b-card-body>

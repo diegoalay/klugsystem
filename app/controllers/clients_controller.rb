@@ -35,7 +35,8 @@ class ClientsController < ApplicationSystemController
   # POST /clients or /clients.json
   def create
     @client = @account.clients.new(client_params)
-    @client = @client.user_creator = current_user
+    @client.user_creator = current_user
+    @client.user_modifier = current_user
 
     if @client.save
       respond_with_successful(@client)
@@ -66,10 +67,27 @@ class ClientsController < ApplicationSystemController
     end
   end
 
+  def export_csv
+    contact_template = IO.binread("#{Rails.root}/storage/templates/vcard/contact.vcf")
+
+    main_department = self.company.main_department
+
+    contact_template = contact_template
+    .gsub("{{contact_first_name}}", ( self.first_name || "").strip )
+    .gsub("{{contact_last_name}}", ( self.last_name || "").strip )
+    .gsub("{{contact_email}}", ( self.email || "").strip )
+    .gsub("{{contact_telephone}}", ( self.telephone || "").strip )
+    .gsub("{{contact_fax}}", ( self.company.fax || "").strip )
+    .gsub("{{contact_title}}", ( self.title || "").strip )
+    .gsub("{{contact_birthdate}}", ( self.birthdate.blank? ? "" : self.birthdate.strftime("%Y%m%d")) )
+
+    contact_template
+  end
+
   private
 
   def respond_client_with_error
-    respond_with_error(@client.errors.full_messages.to_sentence)
+    return respond_with_error(@client.errors.full_messages.to_sentence)
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -82,8 +100,9 @@ class ClientsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def client_params
     params.fetch(:client, {}).permit(
-      %i[first_name last_name telephone email gender birthdate
-        billing_name billing_address billing_identifier note
+      %i[first_name last_name  gender birthdate title
+        mobile_number telephone fax email note
+        billing_name billing_address billing_identifier billing_email
       ]
     )
   end

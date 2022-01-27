@@ -16,8 +16,16 @@
 
 @import "bootstrap";
 @import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
+
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
 // custom variables
-@import "bootstrap/scss/variables"
+@import "bootstrap/scss/variables";
+
+
+.col-header {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: black;
+}

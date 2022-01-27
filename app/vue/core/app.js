@@ -1,7 +1,22 @@
 import Vue from 'vue'
 import DatePicker from 'vue2-datepicker';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { BootstrapVue, BootstrapVueIcons, ToastPlugin } from 'bootstrap-vue'
+
+import {
+    ButtonPlugin,
+    ToastPlugin,
+    FormPlugin,
+    PaginationPlugin,
+    BootstrapVueIcons,
+    CardPlugin,
+    FormTextareaPlugin,
+    FormInputPlugin,
+    FormGroupPlugin,
+    TablePlugin,
+    InputGroupPlugin,
+    LayoutPlugin
+} from 'bootstrap-vue'
+
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -33,8 +48,17 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('component-datepicker', DatePicker)
 
 Vue.use(BootstrapVueIcons)
-Vue.use(BootstrapVue)
 Vue.use(ToastPlugin)
+Vue.use(ButtonPlugin)
+Vue.use(FormPlugin)
+Vue.use(PaginationPlugin)
+Vue.use(CardPlugin)
+Vue.use(FormInputPlugin)
+Vue.use(FormTextareaPlugin)
+Vue.use(FormGroupPlugin)
+Vue.use(TablePlugin)
+Vue.use(InputGroupPlugin)
+Vue.use(LayoutPlugin)
 
 Vue.use(VueRouter)
 Vue.use(http)
