@@ -1,9 +1,5 @@
 
-// top bar
-$topbar-color: #FFF;
-$topbar-border-color: #232D5E;
-$topbar-hover-color: #FFF;
-$topbar-font-color: #232D5E;
+@import "colors";
 
 .top-navbar {
     display: flex;

@@ -20,12 +20,12 @@ export default {
     <nav class="navbar component-header-form">
         <div class="float-left">
             <div class="navbar-item">
-                <h4 class="is-size-3"> {{ title }} </h4>
+                <h3 class="is-size-3"> {{ title }} </h3>
             </div>
         </div>
         <div class="float-right">
             <div class="buttons">
-                <b-button variant="dark" class="mb-2" to="/">
+                <b-button variant="outline-dark" class="mb-2" to="/">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </div>

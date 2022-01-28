@@ -1,14 +1,4 @@
-//left bar
-$leftbar-color: #232D5E;
-$leftbar-header-color: #232D5E;
-$leftbar-header-font-color: #FFF;
-
-$leftbar-hover-color: #34373a;
-$leftbar-font-color: #FFF;
-
-// footer
-$footer-color: #2A3F54;
-$footer-font-color: #FFF;
+@import "colors";
 
 .wrapper {
     display: flex;
@@ -76,11 +66,6 @@ a, a:hover, a:focus {
     color: $leftbar-header-font-color;
 }
 
-// #sidebar ul.components {
-//     padding: 20px 0;
-//     border-bottom: 1px solid #47748b;
-// }
-
 #sidebar ul p {
     color: #fff;
     padding: 15px;
@@ -91,6 +76,7 @@ a, a:hover, a:focus {
     display: block;
     color: $leftbar-font-color;
     border-bottom: 1px solid white;
+    font-size: 16px;
 }
 
 #sidebar ul li a:hover {

@@ -13,6 +13,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+# Paranoid
+gem 'acts_as_paranoid'
+
 # Images
 gem 'carrierwave', '~> 2.0'
 

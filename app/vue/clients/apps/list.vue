@@ -66,15 +66,15 @@
             show(client){
                 this.$router.push(`/${client.id}`)
             },
-            delete(id){
+            deleteRecord(id){
                 let url = `${this.main_path}/${id}.json`
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
-                        this.notification('eliminado exitosamente.')
+                        // this.notification('eliminado exitosamente.')
                     } else {
-                        this.notification(result.message.error)
+                        // this.notification(result.message.error)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -116,7 +116,7 @@
                     @row-clicked="show"
                 >
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" @click.stop="delete(row.item.id)" class="mr-1">
+                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
                     </template>

@@ -44,7 +44,7 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Destinos">
+            title="Clientes">
         </component-header-form>
         <component-form :main_path="main_path" :view_type="view_type" :client="client"></component-form>
     </section>

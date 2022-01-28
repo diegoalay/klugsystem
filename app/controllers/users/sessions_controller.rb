@@ -4,10 +4,10 @@ class Users::SessionsController < Devise::SessionsController
   def create
     resource = User.find_for_database_authentication(email: sign_in_params[:email])
 
-    return responseWithError('User not found') unless resource
+    return respond_with_error('User not found') unless resource
 
     unless resource.valid_password?(sign_in_params[:password])
-        return responseWithError('Invalid Credentials')
+        return respond_with_error('Invalid Credentials')
         redirect_to "/login"
     end
 
