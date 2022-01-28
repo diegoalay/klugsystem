@@ -1,0 +1,32 @@
+
+// top bar
+$topbar-color: #FFF;
+$topbar-border-color: #232D5E;
+$topbar-hover-color: #FFF;
+$topbar-font-color: #232D5E;
+
+.top-navbar {
+    display: flex;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 1em;
+    background-color: $topbar-color;
+    border-bottom: 0.2em solid $topbar-border-color;
+}
+
+.top-navbar a {
+    float: left;
+    display: block;
+    color:  $topbar-font-color;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background: $topbar-hover-color;
+    color: black;
+}

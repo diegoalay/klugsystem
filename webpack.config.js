@@ -1,12 +1,12 @@
 // · Including plugins and dependencies
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
 var fs = require('fs')
-var path = require('path')  
+var path = require('path')
 var webpack = require("webpack")
 var VueLoaderPlugin = require('vue-loader/lib/plugin')
 let webpackConfig = []
 
-// · 
+// ·
 module.exports = env => {
 
     // set mode
@@ -14,7 +14,7 @@ module.exports = env => {
     env.watch = env.watch ? env.watch : false
     var production = env.mode == "production" ? true : false
 
-    // · 
+    // ·
     let webpackBase = {
         watch: env.watch == 'true',
         mode: production ? "production" : "development",
@@ -68,7 +68,7 @@ module.exports = env => {
                       {
                           loader: 'sass-loader', // compiles Sass to CSS, using Node Sass by default
                       }
-                      
+
                   ]
                 }
             ]
@@ -82,7 +82,7 @@ module.exports = env => {
         plugins: [
             new VueLoaderPlugin()
         ]
-        
+
     }
 
     fs.readdirSync(path.join('app', 'vue')).forEach(action => {

@@ -116,7 +116,7 @@
                     @row-clicked="show"
                 >
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="danger" @click.stop="delete(row.item.id)" class="mr-1">
+                        <b-button variant="outline-danger" @click.stop="delete(row.item.id)" class="mr-1">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
                     </template>

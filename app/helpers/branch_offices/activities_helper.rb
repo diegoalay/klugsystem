@@ -1,0 +1,2 @@
+module BranchOffices::ActivitiesHelper
+end

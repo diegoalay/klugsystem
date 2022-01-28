@@ -217,8 +217,8 @@ export default {
                 <br>
                 <b-container>
                     <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="default">Limpiar</b-button>
-                    <b-button variant="secondary" v-if="client.id">Exportar CSV</b-button>
+                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
+                    <b-button variant="outline-dark" v-if="client.id">Exportar CSV</b-button>
                 </b-container>
             </b-card-body>
         </b-card>

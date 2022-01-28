@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  resources :products
+  namespace :branch_offices do
+    resources :activities
+  end
+  resources :branch_offices
+  resources :departments
+  resources :brands
+  namespace :product do
+    resources :files
+  end
+  namespace :sale do
+    resources :details
+  end
+  resources :sales
   namespace :client do
     resources :activities
   end
