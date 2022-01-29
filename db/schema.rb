@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_27_197655) do
+ActiveRecord::Schema.define(version: 2022_01_29_140858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,8 +197,10 @@ ActiveRecord::Schema.define(version: 2022_01_27_197655) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
+    t.bigint "departments_id"
     t.index ["accounts_id"], name: "index_departments_on_accounts_id"
     t.index ["deleted_at"], name: "index_departments_on_deleted_at"
+    t.index ["departments_id"], name: "index_departments_on_departments_id"
   end
 
   create_table "event_activities", force: :cascade do |t|
@@ -413,6 +415,7 @@ ActiveRecord::Schema.define(version: 2022_01_27_197655) do
   add_foreign_key "department_activities", "users", column: "user_creator_id"
   add_foreign_key "department_activities", "users", column: "user_modifier_id"
   add_foreign_key "departments", "accounts", column: "accounts_id"
+  add_foreign_key "departments", "departments", column: "departments_id"
   add_foreign_key "departments", "users", column: "user_creator_id"
   add_foreign_key "departments", "users", column: "user_modifier_id"
   add_foreign_key "event_activities", "events", column: "events_id"

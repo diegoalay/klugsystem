@@ -14,16 +14,11 @@
     right: 30px;
 }
 
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-}
-
-#sidebar.active {
+.sidebar.active {
     margin-left: -250px;
 }
 
-#sidebar {
+.sidebar {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
@@ -34,10 +29,23 @@ a[data-toggle="collapse"] {
 }
 
 @media (max-width: 768px) {
-    #sidebar {
+    .card {
+        .card-body {
+            padding: 1rem 0.5rem 0.5rem 0.5rem;
+            width: 100%;
+        }
+    }
+
+    .table-scroll {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .sidebar {
         margin-left: -250px;
     }
-    #sidebar.active {
+    .sidebar.active {
         margin-left: 0;
     }
 }
@@ -53,25 +61,25 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar {
+.sidebar {
     /* don't forget to add all the previously mentioned styles here too */
     background: $leftbar-color;
     color: #fff;
     transition: all 0.3s;
 }
 
-#sidebar .sidebar-header {
+.sidebar .sidebar-header {
     padding: 20px;
     background: $leftbar-header-color;
     color: $leftbar-header-font-color;
 }
 
-#sidebar ul p {
+.sidebar ul p {
     color: #fff;
     padding: 15px;
 }
 
-#sidebar ul li a {
+.sidebar ul li a {
     padding: 15px;
     display: block;
     color: $leftbar-font-color;
@@ -79,19 +87,19 @@ a, a:hover, a:focus {
     font-size: 16px;
 }
 
-#sidebar ul li a:hover {
+.sidebar ul li a:hover {
     color: #1C1C1C;
     background: $leftbar-hover-color;
     text-decoration: none;
 }
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
+.sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
     background: #D8D8D8;
     text-decoration: none;
 }
 
-#sidebar.active .dropdown-toggle::after {
+.sidebar.active .dropdown-toggle::after {
     top: auto;
     bottom: 10px;
     right: 50%;

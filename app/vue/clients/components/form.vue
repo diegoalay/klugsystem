@@ -5,9 +5,6 @@ export default {
             required: true,
             type: Object
         },
-        view_type: {
-            default: 'new'
-        },
         main_path: {
             required: true
         }
@@ -17,12 +14,6 @@ export default {
     },
     data() {
         return {
-            options: {
-                truck_types: []
-            },
-            alert: {
-                title: 'Pilotos:'
-            }
         }
     },
     mounted() {

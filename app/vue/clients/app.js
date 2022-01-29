@@ -9,8 +9,8 @@ app( "/clients", [{
     component: appList
 },{
     path: "/new",
-    component: appNew, props: { viewType: 'new' }
+    component: appNew
 },{
     path: "/:id",
-    component: appShow, props: { viewType: 'edit' },
+    component: appShow
 }])

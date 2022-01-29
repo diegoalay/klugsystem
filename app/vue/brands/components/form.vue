@@ -14,12 +14,7 @@ export default {
     },
     data() {
         return {
-            options: {
-                truck_types: []
-            },
-            alert: {
-                title: 'Pilotos:'
-            }
+
         }
     },
     mounted() {

@@ -16,7 +16,7 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Crear Marca">
+            title="Crear marca">
         </component-header-form>
         <component-form :main_path="main_path" :brand="brand"></component-form>
     </section>

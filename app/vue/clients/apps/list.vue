@@ -105,6 +105,7 @@
             <component-search-list :loading="loading" @search="onSearch"/>
             <b-card-body>
                 <b-table
+                    class="table-scroll"
                     striped
                     hover
                     :items="data"

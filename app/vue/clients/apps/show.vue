@@ -5,9 +5,6 @@
             'component-form': componentForm
         },
         props: {
-            view_type: {
-                default: 'edit',
-            }
         },
         data() {
             return {

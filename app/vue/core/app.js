@@ -14,7 +14,9 @@ import {
     FormGroupPlugin,
     TablePlugin,
     InputGroupPlugin,
-    LayoutPlugin
+    LayoutPlugin,
+    FormSelectPlugin,
+    FormCheckboxPlugin
 } from 'bootstrap-vue'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -59,6 +61,8 @@ Vue.use(FormGroupPlugin)
 Vue.use(TablePlugin)
 Vue.use(InputGroupPlugin)
 Vue.use(LayoutPlugin)
+Vue.use(FormSelectPlugin)
+Vue.use(FormCheckboxPlugin)
 
 Vue.use(VueRouter)
 Vue.use(http)
