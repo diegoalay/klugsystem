@@ -11,4 +11,11 @@ class Client < ApplicationRecord
   validates :last_name,  presence: true
 
   include LoggerConcern
+
+  def self.search account
+    return account.clients.select("
+      id,
+      concat(first_name, ' ', last_name) as name
+    ")
+  end
 end

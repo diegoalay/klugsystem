@@ -67,6 +67,10 @@ class ClientsController < ApplicationSystemController
     end
   end
 
+  def search
+    respond_with_successful(Client.search(@account))
+  end
+
   def export_csv
     contact_template = IO.binread("#{Rails.root}/storage/templates/vcard/contact.vcf")
 

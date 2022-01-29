@@ -1,6 +1,9 @@
 <script type="text/javascript">
+    import componenentAutocomplete from '../../components/component-autocomplete.vue'
+
     export default {
         components:{
+            'component-autocomplete': componenentAutocomplete
         },
         data() {
             return {
@@ -30,6 +33,8 @@
                     label: '',
                     key: 'actions'
                 }],
+                products: [],
+                sale: {}
             }
         },
     }
@@ -54,7 +59,7 @@
                                         >
                                         </b-form-input>
                                         <b-input-group-append>
-                                            <b-button :disabled="!text" @click="product_text = ''"><font-awesome-icon icon="times" /></b-button>
+                                            <b-button :disabled="!product_text" @click="product_text = ''"><font-awesome-icon icon="times" /></b-button>
                                         </b-input-group-append>
                                     </b-input-group>
                                 </b-form-group>
@@ -69,7 +74,7 @@
                                         >
                                         </b-form-input>
                                         <b-input-group-append>
-                                            <b-button :disabled="!text" @click="product_quantity = ''"><font-awesome-icon icon="times" /></b-button>
+                                            <b-button :disabled="!product_quantity" @click="product_quantity = ''"><font-awesome-icon icon="times" /></b-button>
                                         </b-input-group-append>
                                     </b-input-group>
                                 </b-form-group>
@@ -84,7 +89,7 @@
                         <b-table
                             striped
                             hover
-                            :items="data"
+                            :items="products"
                             :fields="fields"
                         >
                             <template v-slot:cell(actions)="row">
@@ -97,9 +102,10 @@
                 </b-col>
                 <b-col>
                     <b-card>
-                        <b-form-group label="Departamento mayor">
+                        <!-- <b-form-group label="Departamento mayor">
                             <b-form-select v-model="department.departments_id" :options="options.departments"></b-form-select>
-                        </b-form-group>
+                        </b-form-group> -->
+                        <component-autocomplete text-field="name" :endpoint="'/clients/search'" />
 
                         <b-form-group label="Fecha de emisión">
                             <component-datepicker

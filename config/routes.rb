@@ -23,7 +23,12 @@ Rails.application.routes.draw do
 
         resources :products
         resources :branch_offices
-        resources :clients
+        resources :clients do
+          collection do
+            get :search
+          end
+        end
+
         resources :brands
         resources :sales
         resources :roles
