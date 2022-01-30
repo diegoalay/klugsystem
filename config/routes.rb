@@ -21,7 +21,12 @@ Rails.application.routes.draw do
     authenticated :user do
         root 'dashboard#default', as: :authenticated_root
 
-        resources :products
+        resources :products do
+          collection do
+            get :options
+          end
+        end
+
         resources :branch_offices
         resources :clients do
           collection do
@@ -30,7 +35,11 @@ Rails.application.routes.draw do
         end
 
         resources :brands
-        resources :sales
+        resources :sales do
+          collection do
+            get :options
+          end
+        end
         resources :roles
         resources :accounts
         resources :events

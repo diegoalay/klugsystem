@@ -68,7 +68,7 @@ class ClientsController < ApplicationSystemController
   end
 
   def search
-    respond_with_successful(Client.search(@account))
+    respond_with_successful(Client.search(@account, @query))
   end
 
   def export_csv

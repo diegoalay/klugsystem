@@ -309,9 +309,13 @@ export default {
                 @focus="focus"
             >
             </b-form-input>
-            <div class="input-group-prepend">
-              <b-button :disabled="!search" @click="search = ''"><font-awesome-icon icon="times" /></b-button>
-            </div>
+            <template name="buttons">
+                <slot>
+                  <b-input-group-prepend>
+                      <b-button :disabled="!search" @click="search = ''"><font-awesome-icon icon="times" /></b-button>
+                  </b-input-group-prepend>
+                </slot>
+            </template>
         </div>
 
         <ul
@@ -329,6 +333,7 @@ export default {
                 {{ option[textField] }}
             </li>
         </ul>
+        <br>
     </div>
 </template>
 <style>
@@ -347,7 +352,7 @@ export default {
     background-color: rgb(220, 220, 220);
 }
 .autocomplete-wrap li {
-    padding: 0.25rem;
+    padding: 0.5rem;
 }
 .w-100 {
     width: 80%;

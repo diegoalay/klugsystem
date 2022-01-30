@@ -12,10 +12,30 @@ class Client < ApplicationRecord
 
   include LoggerConcern
 
-  def self.search account
-    return account.clients.select("
+  def self.search account, query
+    search = query[:filters][:search]&.downcase
+
+    clients = account.clients.select("
       id,
-      concat(first_name, ' ', last_name) as name
+      first_name,
+      last_name,
+      billing_identifier,
+      billing_email,
+      billing_name,
+      concat(
+        billing_identifier,
+        ' [',
+        billing_name,
+        ']'
+      ) as details
     ")
+
+    clients = clients.where("
+      lower(first_name) like '%#{search}%' or
+      lower(last_name) like '%#{search}%' or
+      lower(billing_name) like '%#{search}%' or
+      lower(billing_identifier) like '%#{search}%' or
+      lower(billing_email) like '%#{search}%'
+    ") if search
   end
 end

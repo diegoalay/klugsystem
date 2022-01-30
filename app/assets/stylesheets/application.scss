@@ -34,8 +34,28 @@ body {
     font-size: 16px;
 }
 
+
 .col-header {
     font-size: 16px;
     font-weight: bold;
     color: black;
 }
+
+.tabs {
+    margin-bottom: 1rem;
+
+    a {
+        font-size: 16px;
+        color: #447EB7;
+        text-decoration: none;
+        background-color: #FFF;
+    }
+}
+
+label {
+    font-weight: bold;
+}
+
+.col-form-label {
+    font-weight: bold;
+  }

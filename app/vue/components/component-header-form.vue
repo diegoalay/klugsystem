@@ -24,11 +24,13 @@ export default {
             </div>
         </div>
         <div class="float-right">
-            <div class="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/">
-                    Listado <font-awesome-icon icon="list" />
-                </b-button>
-            </div>
+            <template name="buttons">
+                <slot>
+                    <b-button variant="outline-dark" class="mb-2" to="/">
+                        Listado <font-awesome-icon icon="list" />
+                    </b-button>
+                </slot>
+            </template>
         </div>
     </nav>
 </template>

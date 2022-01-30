@@ -67,6 +67,14 @@ class ProductsController < ApplicationSystemController
     end
   end
 
+  def search
+    respond_with_successful(Product.search(@account, @query))
+  end
+
+  def options
+    respond_with_successful(Product.options(@account))
+  end
+
   private
 
   def respond_product_with_error
@@ -84,7 +92,7 @@ class ProductsController < ApplicationSystemController
   def product_params
     params.fetch(:product, {}).permit(
       %i[
-        name, sku, retail_price, wholesale_price,
+        sku, retail_price, wholesale_price,
         purchase_price quantity note status product_type
         brands_id branch_offices_id items_id departments_id
       ]
