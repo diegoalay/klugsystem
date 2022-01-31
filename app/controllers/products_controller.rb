@@ -92,7 +92,7 @@ class ProductsController < ApplicationSystemController
   def product_params
     params.fetch(:product, {}).permit(
       %i[
-        sku, retail_price, wholesale_price,
+        name sku retail_price wholesale_price
         purchase_price quantity note status product_type
         brands_id branch_offices_id items_id departments_id
       ]

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         resources :products do
           collection do
             get :options
+            get :search
           end
         end
 

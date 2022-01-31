@@ -18,7 +18,8 @@ import {
     FormSelectPlugin,
     FormCheckboxPlugin,
     TabsPlugin,
-    FormTagsPlugin
+    FormTagsPlugin,
+    FormSpinbuttonPlugin
 } from 'bootstrap-vue'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -67,6 +68,7 @@ Vue.use(FormSelectPlugin)
 Vue.use(FormCheckboxPlugin)
 Vue.use(TabsPlugin)
 Vue.use(FormTagsPlugin)
+Vue.use(FormSpinbuttonPlugin)
 
 Vue.use(VueRouter)
 Vue.use(http)

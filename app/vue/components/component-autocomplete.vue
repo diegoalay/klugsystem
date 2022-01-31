@@ -307,6 +307,7 @@ export default {
                 :required="required"
                 @change.native="verifySelectedOption"
                 @focus="focus"
+                autocomplete="off"
             >
             </b-form-input>
             <template name="buttons">
