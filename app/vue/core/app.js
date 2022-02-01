@@ -19,11 +19,13 @@ import {
     FormCheckboxPlugin,
     TabsPlugin,
     FormTagsPlugin,
-    FormSpinbuttonPlugin
+    FormSpinbuttonPlugin,
+    ModalPlugin
 } from 'bootstrap-vue'
 
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Toastr from 'vue-toastr';
 
 // Commponents
 import componentHeaderList from "../components/component-header-list.vue"
@@ -38,9 +40,10 @@ import http from './http'
 import url from './url'
 import msg from './msg'
 
-library.add(fas)
-
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+require('vue-toastr/src/vue-toastr.scss');
+
+library.add(fas)
 
 // Global registration
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
@@ -69,6 +72,15 @@ Vue.use(FormCheckboxPlugin)
 Vue.use(TabsPlugin)
 Vue.use(FormTagsPlugin)
 Vue.use(FormSpinbuttonPlugin)
+Vue.use(ModalPlugin)
+
+Vue.use(Toastr, {
+    defaultTimeout: 3000,
+    defaultProgressBar: false,
+    defaultProgressBarValue: 0,
+    defaultType: "success",
+    defaultPosition: "toast-bottom-right"
+})
 
 Vue.use(VueRouter)
 Vue.use(http)
