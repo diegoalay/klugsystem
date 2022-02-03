@@ -87,7 +87,7 @@ export default {
             <b-card-body>
                 <b-container>
                     <b-row>
-                        <b-col cols="8">
+                        <b-col cols="6">
                             <b-form-group>
                                 <label> Nombre <sup class="text-danger">*</sup> </label>
 
@@ -107,6 +107,19 @@ export default {
                                 <b-form-input
                                     v-model="product.sku"
                                     type="text"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col>
+                            <b-form-group>
+                                <label> Cantidad <sup class="text-danger">*</sup> </label>
+
+                                <b-form-input
+                                    v-model="product.quantity"
+                                    type="number"
                                     placeholder=""
                                     required
                                 >

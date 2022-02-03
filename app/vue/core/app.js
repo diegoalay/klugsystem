@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import DatePicker from 'vue2-datepicker';
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// import useToastr from 'vue-toastr';  require('vue-toastr/src/vue-toastr.scss')
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+
+const options = {
+  draggable: false
+}
 
 import {
     ButtonPlugin,
-    ToastPlugin,
     FormPlugin,
     PaginationPlugin,
     BootstrapVueIcons,
@@ -23,10 +30,6 @@ import {
     ModalPlugin
 } from 'bootstrap-vue'
 
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Toastr from 'vue-toastr';
-
 // Commponents
 import componentHeaderList from "../components/component-header-list.vue"
 import componentSearchList from "../components/component-search-list.vue"
@@ -40,10 +43,6 @@ import http from './http'
 import url from './url'
 import msg from './msg'
 
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
-require('vue-toastr/src/vue-toastr.scss');
-
-library.add(fas)
 
 // Global registration
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
@@ -56,7 +55,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('component-datepicker', DatePicker)
 
 Vue.use(BootstrapVueIcons)
-Vue.use(ToastPlugin)
 Vue.use(ButtonPlugin)
 Vue.use(FormPlugin)
 Vue.use(PaginationPlugin)
@@ -73,15 +71,14 @@ Vue.use(TabsPlugin)
 Vue.use(FormTagsPlugin)
 Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
+// Vue.use(VueToast)
 
-Vue.use(Toastr, {
-    defaultTimeout: 3000,
-    defaultProgressBar: false,
-    defaultProgressBarValue: 0,
-    defaultType: "success",
-    defaultPosition: "toast-bottom-right"
-})
 
+Vue.config.productionTip = false
+
+library.add(fas)
+
+// Libraries
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url)

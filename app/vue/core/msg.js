@@ -1,17 +1,18 @@
-import { BVToastPlugin } from 'bootstrap-vue'
+// import { useToast } from 'vue-toastification'
+
+// Import the CSS or use your own!
+// import "vue-toastification/dist/index.css";
 
 export default {
-
     install (Vue) {
-
         Vue.prototype.msg = {
 
-            success(text, title) {
-                vm.toast(`This is toast`, {
-                    title: "BootstrapVue Toast",
-                    autoHideDelay: 5000
-                })
+            success(message) {
+                console.log(this._vm)
+                // toast.success("incremented!")
             }
+
         }
+
     }
 }

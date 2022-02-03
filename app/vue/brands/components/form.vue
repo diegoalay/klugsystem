@@ -38,7 +38,7 @@ export default {
                 console.log(result)
                 if (result.successful) {
                     this.$router.push(`/${result.data.id}`)
-                    // this.notification('creado exitosamente.')
+                    this.notification('creado exitosamente.')
                 } else {
                     // this.notification(result.data.message.errors)
                 }

@@ -145,7 +145,6 @@ export default {
 
                             <b-form-group label="Facturación electrónica">
                                 <b-form-checkbox
-                                    id="checkbox-1"
                                     v-model="branch_office.electronic_billing"
                                 >
                                     {{ branch_office.electronic_billing ? 'Deshabilitar' : 'Habilitar'}}

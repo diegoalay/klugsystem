@@ -21,7 +21,6 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
                 let url = `${this.main_path}/${this.id}.json?`
@@ -44,6 +43,6 @@
         <component-header-form
             title="Sucursales">
         </component-header-form>
-        <component-form :main_path="main_path" :view_type="view_type" :branch_office="branch_office"></component-form>
+        <component-form :main_path="main_path" :branch_office="branch_office"></component-form>
     </section>
 </template>

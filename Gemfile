@@ -19,6 +19,9 @@ gem 'acts_as_paranoid'
 # Images
 gem 'carrierwave', '~> 2.0'
 
+# Faker
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 

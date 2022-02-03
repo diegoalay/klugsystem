@@ -1,7 +1,58 @@
-Account.find_or_create_by(name: 'Diego Alay')
+account = Account.find_or_create_by(name: 'Diego Alay')
 
-u = User.find_or_create_by(email: "diego.alay.dev@gmail.com", account: Account.first)
-u.password = "Hacker-123"
-u.save!
+user = User.find_or_create_by(email: "diego.alay.dev@gmail.com", account: account)
+user.password = "Hacker-123"
+user.save!
+
+branch_office = account.branch_offices.find_or_create_by!(
+  name: "Central",
+  telephone: "43703704",
+  user_creator: user,
+  user_modifier: user
+)
+
+[0..20].each do |n|
+  account.products.create!(
+    sku: Faker::Number.number(digits: 10).to_s,
+    name: Faker::Food.dish,
+    retail_price: rand(100),
+    quantity: rand(30),
+    user_creator: user,
+    user_modifier: user,
+    branch_office: branch_office
+  )
+end
+
+[0..20].each do |n|
+  account.clients.find_or_create_by!(
+    first_name: Faker::Name.first_name,
+    surname: Faker::Name.last_name,
+    user_creator: user,
+    user_modifier: user
+  )
+end
+
+[0..20].each do |n|
+  account.employees.find_or_create_by!(
+    first_name: Faker::Name.first_name,
+    surname: Faker::Name.last_name,
+    user_creator: user,
+    user_modifier: user
+  )
+end
+
+account.payment_methods.find_or_create_by!(
+  name: "efectivo",
+  user_creator: user,
+  user_modifier: user
+)
+
+account.payment_methods.find_or_create_by!(
+  name: "tarjeta",
+  interest_percentage: 5,
+  interest_value: 50,
+  user_creator: user,
+  user_modifier: user
+)
 
 puts "SEED EXECUTED"

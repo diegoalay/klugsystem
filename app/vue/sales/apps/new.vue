@@ -42,7 +42,12 @@
                 products: [],
                 sale: {
                     id: null,
-                    billing_date: new Date()
+                    total: 0,
+                    subtotal: 0,
+                    discount: 0,
+                    shipping_costs: 0,
+                    sale_date: new Date(),
+                    sale_type: null
                 },
                 client: {
                     id: null
@@ -69,8 +74,10 @@
                 ],
                 options: {
                     brands: [],
+                    sale_types: [],
                     departments: [],
-                    branch_offices: []
+                    branch_offices: [],
+                    paymenth_methods: []
                 },
                 filters: {
                     brand_id: null,
@@ -91,6 +98,8 @@
         methods: {
             getOptions(){
                 const url = `${this.main_path}/options.json`
+                console.log(url)
+
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.options = result.data
@@ -137,13 +146,24 @@
             setProductQuantity(product){
                 const index = this.products.findIndex(e => e.id === product.id)
 
-                if (!(product.quantity <= product.maxQuantity)) {
-                    this.products[index].subtotal = product.quantity * product.price
-                } else {
-                    const quantity = produc.maxQuantity
+                if (product.quantity <= 0) {
+                    const quantity = 1
 
                     this.products[index].quantity = quantity
                     this.products[index].subtotal = quantity * product.price
+
+                    alert('Debes agregar al menos uno de este producto')
+
+                    return
+                }
+
+                if (product.quantity > product.maxQuantity) {
+                    const quantity = product.maxQuantity
+
+                    this.products[index].quantity = quantity
+                    this.products[index].subtotal = quantity * product.price
+                } else {
+                    this.products[index].subtotal = product.quantity * product.price
                 }
 
                 this.setProductTotal(index, product)
@@ -170,26 +190,51 @@
             },
 
             addProduct(){
-                const product = this.product
-                const quantity = this.product_quantity
+                if (!this.product.id) {
+                    alert('Debe seleccionar un producto.')
+                    return
+                }
 
-                const subtotal = product.retail_price * quantity
+                const index = this.products.findIndex(e => e.id === this.product.id)
+
+                let quantity = 0
+                const max_quantity = parseFloat(this.product_quantity)
+
+                if (index !== -1) {
+                    quantity = this.products[index].quantity + max_quantity
+                } else {
+                    quantity = max_quantity
+                }
+
+                if (quantity > this.product.quantity) {
+                    alert('No cuenta con los suficientes productos.')
+
+                    quantity = this.product.quantity
+                }
+
+                const subtotal = this.product.retail_price * quantity
                 const discount_value = 0
                 const discount_percentage = (discount_value * 100) / subtotal
 
                 const total = subtotal - discount_value
 
-                this.products.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.retail_price,
-                    maxQuantity: product.quantity,
+                const new_product = {
+                    id: this.product.id,
+                    name: this.product.name,
+                    price: this.product.retail_price,
+                    maxQuantity: this.product.quantity,
                     quantity: quantity,
                     subtotal: subtotal,
                     discount_value: discount_value,
                     discount_percentage: discount_percentage,
                     total: total
-                })
+                }
+
+                if (index !== -1) {
+                    this.$set(this.products, index, new_product)
+                } else {
+                    this.products.push(new_product)
+                }
             },
 
             getSum(key){
@@ -199,7 +244,31 @@
                     value = this.products.map(e => e[key]).reduce((oldValue, newValue) => oldValue + newValue)
                 }
 
-                return `Q ${value}`
+                return value
+            },
+
+            getTotal(){
+                return parseFloat(this.getSum('total')) + parseFloat(this.sale.shipping_costs)
+            },
+
+            getSumWithFormat(key){
+                const sum = parseFloat(this.getSum(key)).toFixed(2)
+                return `Q ${sum}`
+            },
+
+            getTotalWithFormat(){
+                const total = this.getSum('total') + this.sale.shipping_costs
+                return `Q ${total}`
+            },
+
+            getProductDescription(){
+                if (!this.product) return
+
+                if (this.product.quantity === 0) {
+                    return 'We will convert your name to lowercase instantly'
+                }
+
+                return null
             },
 
             removeProduct(){
@@ -211,10 +280,22 @@
                 if(event){
                     event.preventDefault()
                 }
+            },
 
+            // validators
+            validateQuantity(){
+                if (!(parseFloat(this.product_quantity) > 0)) {
+                    alert('Valor inválido.')
+                    this.product_quantity = 1
+                }
+            },
 
+            validateShippingCosts(){
+                if (!(parseFloat(this.product_quantity) >= 0)) {
+                    alert('Costo de envío inválido.')
+                    this.product_quantity = 0
+                }
             }
-
         }
     }
 </script>
@@ -253,9 +334,12 @@
                                             @select="(option) => product = option"
                                             :required="true"
                                             :clearOptions="clearAutocompletes.product"
+                                            :description="getProductDescription()"
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
+                                                    <b-input-group-text v-if="product.id"> {{ product.quantity }} </b-input-group-text>
+
                                                     <b-button @click="removeProduct()"><font-awesome-icon icon="times" /></b-button>
                                                     &nbsp;
                                                     <b-button variant="primary"><font-awesome-icon :icon="isProductViewSearchType() ? 'search' : 'pencil-alt'" /></b-button>
@@ -271,6 +355,7 @@
                                                     type="number"
                                                     placeholder="Ingrese cantidad"
                                                     v-model="product_quantity"
+                                                    @change="validateQuantity"
                                                     min="1"
                                                     required
                                                 >
@@ -345,7 +430,7 @@
                                 </template>
 
                                 <template v-slot:cell(actions)="row">
-                                    <b-button size="sm" variant="outline-danger" @click.stop="products.fillter(e => e.id !== row.item.id)" class="mr-1">
+                                    <b-button size="sm" variant="outline-danger" @click.stop="products = products.filter(e => e.id !== row.item.id)" class="mr-1">
                                         <b-icon icon="trash-fill"></b-icon>
                                     </b-button>
                                 </template>
@@ -415,7 +500,7 @@
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
-                            {{ getSum('total') }}
+                            {{ getSumWithFormat('total') }}
                         </div>
 
                         <br>
@@ -484,28 +569,57 @@
                                 placeholder="">
                             </component-datepicker>
                         </b-form-group>
+
+                        <b-form-group label="Tipo de venta">
+                            <b-form-select v-model="sale.sale_types_id" :options="options.sale_types">
+                                <template #first>
+                                    <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </b-form-group>
+
+                        <b-form-group label="Tipo de venta">
+                            <b-form-select v-model="sale.paymment_method" :options="options.paymment_method">
+                                <template #first>
+                                    <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </b-form-group>
+
                         <hr>
 
                         <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Subtotal</b-input-group-text>
                             </template>
-                            <b-form-input readonly class="text-right" :value="getSum('subtotal')"> </b-form-input>
+                            <b-form-input readonly class="text-right" :value="getSumWithFormat('subtotal')"> </b-form-input>
                         </b-input-group>
 
                         <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Descuento</b-input-group-text>
                             </template>
-                            <b-form-input readonly class="text-right" :value="getSum('discount_value')"> </b-form-input>
+                            <b-form-input readonly class="text-right" :value="getSumWithFormat('discount_value')"> </b-form-input>
                         </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Envío</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                class="text-right"
+                                @change="validateShippingCosts"
+                                v-model="sale.shipping_costs"
+                            >
+                            </b-form-input>
+                        </b-input-group>
+                        <hr>
                         <br>
                         <b-row>
                             <b-col cols="8">
                                 <b-button block variant="primary" type="submit" @click.stop="completeSale()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
                             </b-col>
                             <b-col clas="total-value">
-                                <b-form-input readonly class="text-right" :value="getSum('total')"> </b-form-input>
+                                <b-form-input readonly class="text-right" :value="getTotalWithFormat()"> </b-form-input>
                             </b-col>
                         </b-row>
                     </b-form>

@@ -72,7 +72,7 @@
           field_name: field,
           value_from: old_field,
           value_to: new_field,
-          # field_type: field_type(field)
+          field_type: field_type(field)
         )
       end
     end

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :employees do
+    resources :activities
+  end
+  resources :employees
+  namespace :cash_register do
+    resources :activities
+  end
+  resources :cash_registers
+  resources :payment_methods
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",

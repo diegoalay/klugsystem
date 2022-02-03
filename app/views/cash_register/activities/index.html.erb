@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Cash Register Activities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cash_register_activities.each do |cash_register_activity| %>
+      <tr>
+        <td><%= link_to 'Show', cash_register_activity %></td>
+        <td><%= link_to 'Edit', edit_cash_register_activity_path(cash_register_activity) %></td>
+        <td><%= link_to 'Destroy', cash_register_activity, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cash Register Activity', new_cash_register_activity_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_140858) do
+ActiveRecord::Schema.define(version: 2022_02_37_197655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -87,6 +89,39 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.bigint "accounts_id"
     t.index ["accounts_id"], name: "index_brands_on_accounts_id"
     t.index ["deleted_at"], name: "index_brands_on_deleted_at"
+  end
+
+  create_table "cash_register_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "cash_registers_id"
+    t.index ["cash_registers_id"], name: "index_cash_register_activities_on_cash_registers_id"
+  end
+
+  create_table "cash_registers", force: :cascade do |t|
+    t.date "open_date"
+    t.date "close_date"
+    t.decimal "initial_value"
+    t.decimal "final_value"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.bigint "users_id"
+    t.index ["accounts_id"], name: "index_cash_registers_on_accounts_id"
+    t.index ["deleted_at"], name: "index_cash_registers_on_deleted_at"
+    t.index ["users_id"], name: "index_cash_registers_on_users_id"
   end
 
   create_table "catalog_client_types", force: :cascade do |t|
@@ -121,6 +156,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -148,9 +184,12 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   end
 
   create_table "clients", force: :cascade do |t|
-    t.datetime "deleted_at"
     t.string "first_name"
-    t.string "last_name"
+    t.string "second_name"
+    t.string "third_name"
+    t.string "surname"
+    t.string "second_surname"
+    t.string "married_name"
     t.string "telephone"
     t.string "mobile_number"
     t.string "fax"
@@ -165,6 +204,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.text "note"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "catalog_client_types_id"
@@ -180,6 +220,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -196,11 +237,57 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
     t.bigint "departments_id"
+    t.bigint "accounts_id"
     t.index ["accounts_id"], name: "index_departments_on_accounts_id"
     t.index ["deleted_at"], name: "index_departments_on_deleted_at"
     t.index ["departments_id"], name: "index_departments_on_departments_id"
+  end
+
+  create_table "employee_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "employees_id"
+    t.index ["employees_id"], name: "index_employee_activities_on_employees_id"
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "first_name"
+    t.string "second_name"
+    t.string "third_name"
+    t.string "surname"
+    t.string "second_surname"
+    t.string "married_name"
+    t.date "birthdate"
+    t.string "identity_document_number"
+    t.string "passport_number"
+    t.string "marital_status"
+    t.string "gender"
+    t.string "blood_type"
+    t.json "biography"
+    t.json "family_background"
+    t.json "health_details"
+    t.date "contract_date"
+    t.decimal "salary_base"
+    t.decimal "salary_administrative"
+    t.decimal "bonuses"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_employees_on_accounts_id"
+    t.index ["deleted_at"], name: "index_employees_on_deleted_at"
   end
 
   create_table "event_activities", force: :cascade do |t|
@@ -209,6 +296,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -253,12 +341,42 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.index ["accounts_id"], name: "index_items_on_accounts_id"
   end
 
+  create_table "payment_method_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "payment_methods_id"
+    t.index ["payment_methods_id"], name: "index_payment_method_activities_on_payment_methods_id"
+  end
+
+  create_table "payment_methods", force: :cascade do |t|
+    t.string "name"
+    t.decimal "interest_percentage"
+    t.decimal "interest_value"
+    t.boolean "status"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.index ["accounts_id"], name: "index_payment_methods_on_accounts_id"
+  end
+
   create_table "product_activities", force: :cascade do |t|
     t.string "description"
     t.string "field_name"
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -275,6 +393,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
 
   create_table "products", force: :cascade do |t|
     t.string "sku"
+    t.string "name"
     t.decimal "retail_price", default: "0.0"
     t.decimal "wholesale_price", default: "0.0"
     t.decimal "purchase_price", default: "0.0"
@@ -317,6 +436,7 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
     t.string "value_from"
     t.string "value_to"
     t.string "category"
+    t.string "field_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at, index: true"
@@ -327,14 +447,47 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   end
 
   create_table "sale_details", force: :cascade do |t|
+    t.text "description"
+    t.decimal "total"
+    t.decimal "quantity"
+    t.decimal "discount_value"
+    t.decimal "discount_percentage"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "accounts_id"
+    t.bigint "products_id"
+    t.bigint "sales_id"
+    t.index ["accounts_id"], name: "index_sale_details_on_accounts_id"
+    t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
+    t.index ["products_id"], name: "index_sale_details_on_products_id"
+    t.index ["sales_id"], name: "index_sale_details_on_sales_id"
   end
 
   create_table "sales", force: :cascade do |t|
     t.string "uuid"
+    t.string "sale_type"
+    t.decimal "discount_value"
+    t.decimal "shipping_costs"
+    t.decimal "subtotal"
+    t.decimal "total"
+    t.date "sale_date"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "clients_id"
+    t.bigint "accounts_id"
+    t.bigint "employees_id"
+    t.bigint "cash_registers_id"
+    t.index ["accounts_id"], name: "index_sales_on_accounts_id"
+    t.index ["cash_registers_id"], name: "index_sales_on_cash_registers_id"
+    t.index ["clients_id"], name: "index_sales_on_clients_id"
+    t.index ["deleted_at"], name: "index_sales_on_deleted_at"
+    t.index ["employees_id"], name: "index_sales_on_employees_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -395,6 +548,13 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   add_foreign_key "brands", "accounts", column: "accounts_id"
   add_foreign_key "brands", "users", column: "user_creator_id"
   add_foreign_key "brands", "users", column: "user_modifier_id"
+  add_foreign_key "cash_register_activities", "cash_registers", column: "cash_registers_id"
+  add_foreign_key "cash_register_activities", "users", column: "user_creator_id"
+  add_foreign_key "cash_register_activities", "users", column: "user_modifier_id"
+  add_foreign_key "cash_registers", "accounts", column: "accounts_id"
+  add_foreign_key "cash_registers", "users", column: "user_creator_id"
+  add_foreign_key "cash_registers", "users", column: "user_modifier_id"
+  add_foreign_key "cash_registers", "users", column: "users_id"
   add_foreign_key "catalog_client_types", "accounts", column: "accounts_id"
   add_foreign_key "catalog_client_types", "users", column: "user_creator_id"
   add_foreign_key "catalog_client_types", "users", column: "user_modifier_id"
@@ -418,6 +578,12 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   add_foreign_key "departments", "departments", column: "departments_id"
   add_foreign_key "departments", "users", column: "user_creator_id"
   add_foreign_key "departments", "users", column: "user_modifier_id"
+  add_foreign_key "employee_activities", "employees", column: "employees_id"
+  add_foreign_key "employee_activities", "users", column: "user_creator_id"
+  add_foreign_key "employee_activities", "users", column: "user_modifier_id"
+  add_foreign_key "employees", "accounts", column: "accounts_id"
+  add_foreign_key "employees", "users", column: "user_creator_id"
+  add_foreign_key "employees", "users", column: "user_modifier_id"
   add_foreign_key "event_activities", "events", column: "events_id"
   add_foreign_key "event_activities", "users", column: "user_creator_id"
   add_foreign_key "event_activities", "users", column: "user_modifier_id"
@@ -428,6 +594,12 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   add_foreign_key "items", "accounts", column: "accounts_id"
   add_foreign_key "items", "users", column: "user_creator_id"
   add_foreign_key "items", "users", column: "user_modifier_id"
+  add_foreign_key "payment_method_activities", "payment_methods", column: "payment_methods_id"
+  add_foreign_key "payment_method_activities", "users", column: "user_creator_id"
+  add_foreign_key "payment_method_activities", "users", column: "user_modifier_id"
+  add_foreign_key "payment_methods", "accounts", column: "accounts_id"
+  add_foreign_key "payment_methods", "users", column: "user_creator_id"
+  add_foreign_key "payment_methods", "users", column: "user_modifier_id"
   add_foreign_key "product_activities", "products", column: "products_id"
   add_foreign_key "product_activities", "users", column: "user_creator_id"
   add_foreign_key "product_activities", "users", column: "user_modifier_id"
@@ -441,6 +613,17 @@ ActiveRecord::Schema.define(version: 2022_01_29_140858) do
   add_foreign_key "sale_activities", "sales", column: "sales_id"
   add_foreign_key "sale_activities", "users", column: "user_creator_id"
   add_foreign_key "sale_activities", "users", column: "user_modifier_id"
+  add_foreign_key "sale_details", "accounts", column: "accounts_id"
+  add_foreign_key "sale_details", "products", column: "products_id"
+  add_foreign_key "sale_details", "sales", column: "sales_id"
+  add_foreign_key "sale_details", "users", column: "user_creator_id"
+  add_foreign_key "sale_details", "users", column: "user_modifier_id"
+  add_foreign_key "sales", "accounts", column: "accounts_id"
+  add_foreign_key "sales", "cash_registers", column: "cash_registers_id"
+  add_foreign_key "sales", "clients", column: "clients_id"
+  add_foreign_key "sales", "employees", column: "employees_id"
+  add_foreign_key "sales", "users", column: "user_creator_id"
+  add_foreign_key "sales", "users", column: "user_modifier_id"
   add_foreign_key "user_roles", "roles", column: "roles_id"
   add_foreign_key "user_roles", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "users", column: "user_modifier_id"

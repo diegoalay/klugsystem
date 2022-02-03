@@ -11,7 +11,10 @@ class Product < ApplicationRecord
 
   has_many   :activities, foreign_key: "products_id"
 
+  validates :sku, presence: true
   validates :name, presence: true
+  validates :quantity, presence: true
+  validates :retail_price, presence: true
 
   include LoggerConcern
 
@@ -20,6 +23,7 @@ class Product < ApplicationRecord
     search = filters[:search]&.downcase
 
     products = account.products.select("
+      products.id,
       products.name,
       retail_price,
       wholesale_price,

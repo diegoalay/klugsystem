@@ -42,7 +42,7 @@ module.exports = env => {
                 vue: production ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
 
             },
-            extensions: [".js"]
+            extensions: [".js", ".mjs"]
         },
 
         module: {

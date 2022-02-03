@@ -3,6 +3,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
     create_table :products do |t|
       # general information
       t.string  :sku
+      t.string  :name
 
       # price information
       t.decimal :retail_price,   default: 0

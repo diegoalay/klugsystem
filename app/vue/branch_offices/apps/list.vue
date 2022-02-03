@@ -8,7 +8,7 @@
                 data: [],
                 fields: [{
                     label: 'Nombre',
-                    key: 'first_name',
+                    key: 'name',
                     sortable: true
                 },{
                     label: 'Teléfono',
