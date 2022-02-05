@@ -38,7 +38,6 @@
                     order: false,
                 },
                 search_text: '',
-                main_path: '/products',
                 loading: false
             }
         },
@@ -49,11 +48,10 @@
             list(){
                 this.loading = true
 
-                const order = this.pagination.order ? 'desc' : 'asc'
-                let url = `${this.main_path}.json?`
-                url += `filters[search]=${this.search_text}`
-                url += `&current_page=${this.pagination.current_page}&per_page=${this.pagination.per_page}`
-                url += `&order_by=${this.pagination.order_by}&order=${order}`
+                const url = this.url.build('products')
+                .filters({search: this.search_text})
+                .paginate(this.pagination.current_page, this.pagination.per_page)
+                .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
                 this.http.get(url).then(response => {
                     if (response.successful) {
@@ -70,11 +68,10 @@
                 this.$router.push(`/${product.id}`)
             },
             deleteRecord(id){
-                let url = `${this.main_path}/${id}.json`
+                const url = this.url.build('products/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
-                        this.data = this.data.filter(e => e.id !== id)
-                        this.pagination.total -= 1
+                        this.list()
                         // this.notification('eliminado exitosamente.')
                     } else {
                         // this.notification(result.message.error)

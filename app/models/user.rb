@@ -18,7 +18,7 @@ class User < ApplicationRecord
     ") if search
   end
 
-  def full_name
-    [first_name, last_name].join(" ")
+  def name
+    [first_name, first_surname].join(" ")
   end
 end

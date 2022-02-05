@@ -82,7 +82,7 @@ library.add(fas)
 // Libraries
 Vue.use(VueRouter)
 Vue.use(http)
-Vue.use(url)
+Vue.use(url, system.url)
 Vue.use(msg)
 
 export default (base_path, routes=[]) => {
