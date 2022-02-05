@@ -249,11 +249,11 @@
                     value = this.products.map(e => e[key]).reduce((oldValue, newValue) => oldValue + newValue)
                 }
 
-                return value
+                return parseFloat(value)
             },
 
             getTotal(){
-                return parseFloat(this.getSum('subtotal')) - this.getDiscount()
+                return this.getSum('subtotal') - this.getDiscount()
             },
 
             getDiscount(){
@@ -299,7 +299,7 @@
             },
 
             getSumWithFormat(key){
-                const sum = parseFloat(this.getSum(key)).toFixed(2)
+                const sum = this.getSum(key).toFixed(2)
                 return `Q ${sum}`
             },
 
@@ -338,10 +338,33 @@
                 this.clearAutocompletes.product = true
             },
 
-            completeSale(event){
+            completeSaleorQuotation(event){
                 if(event){
                     event.preventDefault()
                 }
+
+                const url = this.url.build('sales')
+                let form = {
+                    sale: {
+                        ... this.sale,
+                        subtotal: this.getSum('subtotal'),
+                        total: this.getTotalSale(),
+                        discount: this.getDiscount(),
+                        interest: this.getInterest(),
+                        shipping_costs: this.shipping_costs,
+                        products: this.products
+                    }
+                }
+
+                this.http.post(url, form).then(result => {
+                    if (result.successful) {
+                        this.$router.push(`/${result.data.id}`)
+                    } else {
+
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
             },
 
             getPaymentInterest(){
@@ -776,7 +799,7 @@
                         <br>
                         <b-row>
                             <b-col cols="8">
-                                <b-button block variant="primary" type="submit" @click.stop="completeSale()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
+                                <b-button block variant="primary" type="submit" @click.stop="completeSaleorQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
