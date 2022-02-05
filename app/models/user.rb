@@ -5,6 +5,19 @@ class User < ApplicationRecord
 
   belongs_to :account,    foreign_key: "accounts_id"
 
+  def self.search account, query
+    search = query[:filters][:search]&.downcase
+
+    clients = account.users.select("
+      id,
+      email
+    ")
+
+    clients = clients.where("
+      lower(email) like '%#{search}%'
+    ") if search
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end

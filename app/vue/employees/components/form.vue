@@ -1,5 +1,10 @@
 <script>
+import componenentAutocomplete from '../../components/component-autocomplete.vue'
+
 export default {
+    components:{
+        'component-autocomplete': componenentAutocomplete
+    },
     props: {
         employee: {
             required: true,
@@ -8,9 +13,6 @@ export default {
         main_path: {
             required: true
         }
-    },
-    components: {
-
     },
     data() {
         return {
@@ -70,6 +72,10 @@ export default {
         <b-card>
             <b-card-body>
                 <b-container>
+                    <p class="col-header">
+                        Información general
+                    </p>
+
                     <b-row>
                         <b-col>
                             <b-form-group>
@@ -118,7 +124,7 @@ export default {
                                 <label> Primer apellido <sup class="text-danger">*</sup> </label>
 
                                 <b-form-input
-                                    v-model="employee.surname"
+                                    v-model="employee.first_surname"
                                     type="text"
                                     placeholder=""
                                     required
@@ -148,7 +154,6 @@ export default {
                                     v-model="employee.married_name"
                                     type="text"
                                     placeholder=""
-                                    required
                                 >
                                 </b-form-input>
                             </b-form-group>
@@ -164,7 +169,6 @@ export default {
                                     v-model="employee.identity_document_number"
                                     type="text"
                                     placeholder=""
-                                    required
                                 >
                                 </b-form-input>
                             </b-form-group>
@@ -180,6 +184,28 @@ export default {
                                     placeholder=""
                                 >
                                 </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+
+                    <br>
+                    <p class="col-header">
+                        Acceso al sistema
+                    </p>
+
+                    <b-row>
+                        <b-col>
+                            <b-form-group>
+                                <label> Asignar usuario </label>
+
+                                    <component-autocomplete
+                                        :placeholder="`Buscar por correo electrónico`"
+                                        text-field="email"
+                                        :endpoint="'/users/search'"
+                                        @select="(option) => employee.users_id = option.id"
+                                        :required="true"
+                                    >
+                                    </component-autocomplete>
                             </b-form-group>
                         </b-col>
                     </b-row>

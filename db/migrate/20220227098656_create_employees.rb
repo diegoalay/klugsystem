@@ -5,7 +5,7 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       t.string    :first_name
       t.string    :second_name
       t.string    :third_name
-      t.string    :surname
+      t.string    :first_surname
       t.string    :second_surname
       t.string    :married_name
       t.date      :birthdate

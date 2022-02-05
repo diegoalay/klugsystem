@@ -92,10 +92,26 @@ class EmployeesController < ApplicationSystemController
   def employee_params
     params.fetch(:employee, {}).permit(
       %i[
-        name
-        interest_value
-        interest_percentage
-        status
+        first_name
+        second_name
+        third_name
+        first_surname
+        second_surname
+        married_name
+        birthdate
+        identity_document_number
+        passport_number
+        marital_status
+        gender
+        blood_type
+        biography
+        family_background
+        health_details
+        contract_date
+        salary_base
+        salary_administrative
+        bonuses
+        users_id
       ]
     )
   end

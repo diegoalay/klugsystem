@@ -27,7 +27,8 @@ import {
     TabsPlugin,
     FormTagsPlugin,
     FormSpinbuttonPlugin,
-    ModalPlugin
+    ModalPlugin,
+    DropdownPlugin
 } from 'bootstrap-vue'
 
 // Commponents
@@ -71,7 +72,7 @@ Vue.use(TabsPlugin)
 Vue.use(FormTagsPlugin)
 Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
-// Vue.use(VueToast)
+Vue.use(DropdownPlugin)
 
 
 Vue.config.productionTip = false

@@ -8,7 +8,7 @@ class Client < ApplicationRecord
   has_many   :activities, foreign_key: "clients_id"
 
   validates :first_name, presence: true
-  validates :surname,  presence: true
+  validates :first_surname,  presence: true
 
   include LoggerConcern
 
@@ -18,7 +18,7 @@ class Client < ApplicationRecord
     clients = account.clients.select("
       id,
       first_name,
-      last_name,
+      first_surname,
       billing_identifier,
       billing_email,
       billing_name,

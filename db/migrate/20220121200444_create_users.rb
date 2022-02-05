@@ -39,7 +39,9 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :salutation
 
       t.string :first_name
-      t.string :last_name
+      t.string :second_name
+      t.string :first_surname
+      t.string :second_surname
       t.string :telephone
       t.string :address
 

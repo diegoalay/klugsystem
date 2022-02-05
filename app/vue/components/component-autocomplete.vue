@@ -344,10 +344,10 @@ export default {
     z-index: 200;
 }
 .list-group-item.list-group-item-action:hover {
-    width: 100px;
     cursor: pointer;
     background-color: rgb(220, 220, 220);
 }
+
 .list-group-item.list-group-item-action:focus {
     cursor: pointer;
     background-color: rgb(220, 220, 220);

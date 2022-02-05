@@ -12,7 +12,7 @@
                     sortable: true
                 },{
                     label: 'Apellido',
-                    key: 'surname',
+                    key: 'first_surname',
                     sortable: true
                 },{
                     label: 'DPI',
