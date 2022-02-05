@@ -33,7 +33,9 @@
                 pagination: {
                     total: 0,
                     per_page: 10,
-                    current_page: 1
+                    current_page: 1,
+                    order_by: 'name',
+                    order: false,
                 },
                 search_text: '',
                 main_path: '/products',
@@ -46,9 +48,18 @@
         methods: {
             list(){
                 this.loading = true
-                this.http.get(`${this.main_path}.json`).then(response => {
-                    this.data = response.data
-                    this.pagination.total = this.data.length
+
+                const order = this.pagination.order ? 'desc' : 'asc'
+                let url = `${this.main_path}.json?`
+                url += `filters[search]=${this.search_text}`
+                url += `&current_page=${this.pagination.current_page}&per_page=${this.pagination.per_page}`
+                url += `&order_by=${this.pagination.order_by}&order=${order}`
+
+                this.http.get(url).then(response => {
+                    if (response.successful) {
+                        this.data = response.data.products
+                        this.pagination.total = response.data.total_count
+                    }
 
                     this.loading = false
                 }).catch(error => {
@@ -74,10 +85,26 @@
             },
             onSearch(text){
                 this.search_text = text
+
+                this.list()
             },
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
+            }
+        },
+
+        watch: {
+            'pagination.current_page'() {
+                this.list()
+            },
+
+            'pagination.order_by'() {
+                this.list()
+            },
+
+            'pagination.order'(){
+                this.list()
             }
         }
     }
@@ -101,11 +128,12 @@
                     hover
                     :items="data"
                     :fields="fields"
-                    :current-page="pagination.current_page"
-                    :per-page="pagination.per_page"
-                    :filter="search_text"
                     @filtered="onFiltered"
                     @row-clicked="show"
+                    :sort-desc.sync="pagination.order"
+                    :sort-by.sync="pagination.order_by"
+                    responsive="sm"
+                    sort-icon-left
                 >
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">

@@ -11,7 +11,7 @@ branch_office = account.branch_offices.find_or_create_by!(
   user_modifier: user
 )
 
-[0..20].each do |n|
+(0..500).each do |n|
   account.products.create!(
     sku: Faker::Number.number(digits: 10).to_s,
     name: Faker::Food.dish,
@@ -23,19 +23,19 @@ branch_office = account.branch_offices.find_or_create_by!(
   )
 end
 
-[0..20].each do |n|
+(0..20).each do |n|
   account.clients.find_or_create_by!(
     first_name: Faker::Name.first_name,
-    surname: Faker::Name.last_name,
+    first_surname: Faker::Name.last_name,
     user_creator: user,
     user_modifier: user
   )
 end
 
-[0..20].each do |n|
+(0..20).each do |n|
   account.employees.find_or_create_by!(
     first_name: Faker::Name.first_name,
-    surname: Faker::Name.last_name,
+    first_surname: Faker::Name.last_name,
     user_creator: user,
     user_modifier: user
   )

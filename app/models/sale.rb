@@ -21,11 +21,11 @@ class Sale < ApplicationRecord
 
   def self.options account
     {
-      payment_methods: account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method}},
+      payment_methods: account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}},
       branch_office: account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: account.departments.map {|department| {text: department.name, value: department.id}},
       brands: account.brands.map {|brand| {text: brand.name, value: brand.id}},
-      sale_type: sale_types.map {|k, v| {text: k, value: v}}
+      sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
   end
 end

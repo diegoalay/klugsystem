@@ -20,7 +20,6 @@ export default {
         }
     },
     mounted() {
-
     },
     methods: {
         onSubmit(){
@@ -200,10 +199,10 @@ export default {
 
                                     <component-autocomplete
                                         :placeholder="`Buscar por correo electrónico`"
+                                        :default-option-id="employee.users_id"
                                         text-field="email"
                                         :endpoint="'/users/search'"
                                         @select="(option) => employee.users_id = option.id"
-                                        :required="true"
                                     >
                                     </component-autocomplete>
                             </b-form-group>

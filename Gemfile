@@ -13,6 +13,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+# Pagination
+gem "kaminari"
+
 # Paranoid
 gem 'acts_as_paranoid'
 

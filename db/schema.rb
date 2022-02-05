@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.string "first_name"
     t.string "second_name"
     t.string "third_name"
-    t.string "surname"
+    t.string "first_surname"
     t.string "second_surname"
     t.string "married_name"
     t.string "telephone"
@@ -264,7 +264,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.string "first_name"
     t.string "second_name"
     t.string "third_name"
-    t.string "surname"
+    t.string "first_surname"
     t.string "second_surname"
     t.string "married_name"
     t.date "birthdate"
@@ -286,8 +286,10 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
+    t.bigint "users_id"
     t.index ["accounts_id"], name: "index_employees_on_accounts_id"
     t.index ["deleted_at"], name: "index_employees_on_deleted_at"
+    t.index ["users_id"], name: "index_employees_on_users_id"
   end
 
   create_table "event_activities", force: :cascade do |t|
@@ -522,7 +524,9 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.string "title"
     t.string "salutation"
     t.string "first_name"
-    t.string "last_name"
+    t.string "second_name"
+    t.string "first_surname"
+    t.string "second_surname"
     t.string "telephone"
     t.string "address"
     t.bigint "user_creator_id"
@@ -584,6 +588,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
   add_foreign_key "employees", "accounts", column: "accounts_id"
   add_foreign_key "employees", "users", column: "user_creator_id"
   add_foreign_key "employees", "users", column: "user_modifier_id"
+  add_foreign_key "employees", "users", column: "users_id"
   add_foreign_key "event_activities", "events", column: "events_id"
   add_foreign_key "event_activities", "users", column: "user_creator_id"
   add_foreign_key "event_activities", "users", column: "user_modifier_id"

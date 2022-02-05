@@ -95,6 +95,8 @@ class PaymentMethodsController < ApplicationSystemController
         name
         interest_value
         interest_percentage
+        discount_value
+        discount_percentage
         status
       ]
     )

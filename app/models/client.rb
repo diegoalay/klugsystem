@@ -32,7 +32,9 @@ class Client < ApplicationRecord
 
     clients = clients.where("
       lower(first_name) like '%#{search}%' or
-      lower(last_name) like '%#{search}%' or
+      lower(first_surname) like '%#{search}%' or
+      lower(second_name) like '%#{search}%' or
+      lower(second_surname) like '%#{search}%' or
       lower(billing_name) like '%#{search}%' or
       lower(billing_identifier) like '%#{search}%' or
       lower(billing_email) like '%#{search}%'

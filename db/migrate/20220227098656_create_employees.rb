@@ -34,6 +34,7 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       t.timestamps
     end
     add_reference   :employees, :accounts,     foreign_key: true
+    add_reference   :employees, :users,        foreign_key: true
 
     add_foreign_key :employees, :users, column: :user_creator_id
     add_foreign_key :employees, :users, column: :user_modifier_id

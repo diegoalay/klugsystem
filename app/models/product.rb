@@ -18,6 +18,41 @@ class Product < ApplicationRecord
 
   include LoggerConcern
 
+  def self.index account, query
+    search = query[:filters][:search]
+
+    products = account.products.select("
+      products.id,
+      products.sku,
+      products.name,
+      products.retail_price,
+      products.wholesale_price,
+      products.quantity
+    ")
+    .joins(:branch_office)
+    .left_joins(:brand, :department)
+
+    products = products.where("
+      lower(products.sku) like '%#{search}%' or
+      lower(products.name) like '%#{search}%' or
+      cast(products.retail_price as varchar) like '%#{search}%' or
+      cast(products.wholesale_price as varchar) like '%#{search}%' or
+      cast(products.quantity as varchar) like '%#{search}%'
+    ") unless search.blank?
+
+    products = products.page(query[:pagination][:current_page])
+    .per(query[:pagination][:per_page])
+    .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
+
+    {
+      current_page: products.current_page,
+      total_pages: products.total_pages,
+      total_count: products.total_count,
+      total_lenght: products.length,
+      products: products
+    }
+  end
+
   def self.search account, query
     filters = query[:filters]
     search = filters[:search]&.downcase
@@ -52,6 +87,24 @@ class Product < ApplicationRecord
 
     products
   end
+
+  # def self.create_products
+  #   account = Account.first
+  #   user = User.first
+  #   branch_office = BranchOffice.first
+
+  #   (0..2000).each do |n|
+  #     account.products.create!(
+  #       sku: Faker::Number.number(digits: 10).to_s,
+  #       name: Faker::Food.dish,
+  #       retail_price: rand(100),
+  #       quantity: rand(30),
+  #       user_creator: user,
+  #       user_modifier: user,
+  #       branch_office: branch_office
+  #     )
+  #   end
+  # end
 
   def self.options account
     {

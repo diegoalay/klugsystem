@@ -84,6 +84,11 @@ export default {
         postNewEntries: {
             type: Boolean,
             default: false
+        },
+
+        defaultOptionId: {
+            type: Number,
+            default: null
         }
     },
 
@@ -107,6 +112,10 @@ export default {
         this.$nextTick(()=>{
             this.disable_search = false;
         });
+
+        if (this.defaultOptionId) {
+            this.setDefaultOption()
+        }
     },
 
     methods: {
@@ -159,6 +168,24 @@ export default {
             }
         },
 
+        setDefaultOption(){
+            let url = this.endpoint.replace('search', '')
+            url = `${url}/${this.defaultOptionId}.json`
+
+            this.http.get(url).then((response) => {
+                if(response.successful){
+
+                    this.$nextTick(()=>{
+                        this.select(null, response.data, false)
+                    })
+                }else{
+
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
+        },
+
         loadOptions() {
             let params = `filters[${this.searchParam}]=${this.search.toLowerCase()}`
             if(this.queryParams){
@@ -188,17 +215,22 @@ export default {
             this.$refs.input.focus()
         },
 
-        select(e, option) {
-            e.preventDefault();
+        select(e, option, focus = true) {
+            if (e) {
+                e.preventDefault();
+            }
 
             this.disable_search = true;
             this.options = [];
             this.selected_option = option;
             this.search = option[this.textField];
             this.index = -1;
-            this.focusOnInput();
             this.$emit('input', option[this.keyField]);
             this.$emit('select', option)
+
+            if (focus) {
+                this.focusOnInput();
+            }
 
             this.$nextTick(()=>{
                 this.disable_search = false;

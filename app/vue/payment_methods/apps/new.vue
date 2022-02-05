@@ -6,7 +6,9 @@
         },
         data() {
             return {
-                payment_method: {},
+                payment_method: {
+                    status: true
+                },
                 main_path: '/payment_methods'
             }
         },

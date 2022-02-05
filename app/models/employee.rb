@@ -2,6 +2,7 @@ class Employee < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :account,       class_name: "Account", foreign_key: "accounts_id"
+  belongs_to :user,          class_name: "User",    foreign_key: "users_id", optional: true
   belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id"
   belongs_to :user_modifier, class_name: "User",    foreign_key: "user_modifier_id"
 
@@ -43,7 +44,7 @@ class Employee < ApplicationRecord
         users_id: users_id
       )
 
-      self.errors.add_to_base(:base, "El usuario ya ha sido tomado") unless employee.blank?
+      errors.add(:base, "El usuario ya ha sido tomado") unless employee.blank?
     end
   end
 end

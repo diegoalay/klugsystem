@@ -6,6 +6,9 @@ class CreatePaymentMethods < ActiveRecord::Migration[6.1]
       t.decimal :interest_percentage
       t.decimal :interest_value
 
+      t.decimal :discount_percentage
+      t.decimal :discount_value
+
       t.boolean :status
 
       t.bigint :user_creator_id

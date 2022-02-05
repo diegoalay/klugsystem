@@ -23,6 +23,10 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
+$modal-backdrop-opacity: 'white';
+
+@import "bootstrap-vue/src/components/modal/index.scss";
+
 // custom variables
 @import "bootstrap/scss/variables";
 
@@ -87,6 +91,36 @@ label {
     width: 100%;
     height: 32px;
 }
+
+
+
+.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s {
+    background-image: none;
+    margin-left: 5px;
+    font-size: 1.1666em;
+    position: relative;
+}
+
+.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s:not(.ui-icon-triangle-1-s)::before {
+    content: "\f106";
+    font-family: "FontAwesome";
+    position: absolute;
+    top: -2px;
+    color: rgba(0,0,0,0.4);
+}
+
+.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s:not(.ui-icon-triangle-1-n)::after {
+    content: "\f107";
+    font-family: "FontAwesome";
+    position: absolute;
+    top: 5px;
+    color: rgba(0,0,0,1);
+}
+
+.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s.ui-icon-triangle-1-n::before {
+    color: rgba(0,0,0,1);
+}
+
 
 // .card {
 //   margin: 10px;

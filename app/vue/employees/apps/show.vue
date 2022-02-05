@@ -39,8 +39,8 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Marcas">
+            title="Empleado">
         </component-header-form>
-        <component-form :main_path="main_path" :employee="employee"></component-form>
+        <component-form v-if="employee.id" :main_path="main_path" :employee="employee"></component-form>
     </section>
 </template>

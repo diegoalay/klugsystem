@@ -138,6 +138,7 @@ export default {
                                     type="number"
                                     placeholder=""
                                     required
+                                    step="any"
                                 >
                                 </b-form-input>
                             </b-form-group>
@@ -150,6 +151,7 @@ export default {
                                     v-model="product.wholesale_price"
                                     type="number"
                                     placeholder=""
+                                    step="any"
                                 >
                                 </b-form-input>
                             </b-form-group>
@@ -162,6 +164,7 @@ export default {
                                     v-model="product.purchase_price"
                                     type="number"
                                     placeholder=""
+                                    step="any"
                                 >
                                 </b-form-input>
                             </b-form-group>
