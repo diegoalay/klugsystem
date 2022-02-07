@@ -473,7 +473,7 @@
 
                         <b-tab title="Artículos">
 
-                            <b-form @submit="submit">
+                            <b-form>
                                 <b-row>
                                     <b-col md="7" sm="12">
                                         <component-autocomplete
