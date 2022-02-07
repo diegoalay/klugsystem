@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
-    get '/signout', to: 'devise/sessions#destroy', as: :signout
+    get '/sign_out', to: 'devise/sessions#destroy', as: :signout
 
     authenticated :user do
         root 'dashboard#default', as: :authenticated_root
