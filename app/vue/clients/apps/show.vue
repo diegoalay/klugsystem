@@ -20,7 +20,6 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
                 let url = `${this.main_path}/${this.id}.json?`
@@ -40,6 +39,9 @@
 
 <template>
     <section class="application-component">
+        <component-header-form
+            title="Productos">
+        </component-header-form>
         <component-header-form
             title="Clientes">
         </component-header-form>

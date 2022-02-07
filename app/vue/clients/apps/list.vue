@@ -12,7 +12,7 @@
                     sortable: true
                 },{
                     label: 'Apellido(s)',
-                    key: 'last_name',
+                    key: 'first_surname',
                     sortable: false
                 },{
                     label: 'Teléfono',

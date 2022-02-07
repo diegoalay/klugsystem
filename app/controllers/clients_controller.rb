@@ -78,7 +78,7 @@ class ClientsController < ApplicationSystemController
 
     contact_template = contact_template
     .gsub("{{contact_first_name}}", ( self.first_name || "").strip )
-    .gsub("{{contact_last_name}}", ( self.last_name || "").strip )
+    .gsub("{{contact_first_surname}}", ( self.first_surname || "").strip )
     .gsub("{{contact_email}}", ( self.email || "").strip )
     .gsub("{{contact_telephone}}", ( self.telephone || "").strip )
     .gsub("{{contact_fax}}", ( self.company.fax || "").strip )
@@ -104,7 +104,7 @@ class ClientsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def client_params
     params.fetch(:client, {}).permit(
-      %i[first_name last_name  gender birthdate title
+      %i[first_name first_surname  gender birthdate title
         mobile_number telephone fax email note
         billing_name billing_address billing_identifier billing_email
       ]

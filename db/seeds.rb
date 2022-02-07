@@ -1,6 +1,12 @@
 account = Account.find_or_create_by(name: 'Diego Alay')
 
-user = User.find_or_create_by(email: "diego.alay.dev@gmail.com", account: account)
+user = account.users.find_or_create_by(
+  first_name: "Diego",
+  first_surname: "Alay",
+  email: "diego.alay.dev@gmail.com",
+  account: account
+)
+
 user.password = "Hacker-123"
 user.save!
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_197655) do
+ActiveRecord::Schema.define(version: 2022_02_37_197656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,6 +369,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
+    t.float "discount_value"
+    t.float "discount_percentage"
     t.index ["accounts_id"], name: "index_payment_methods_on_accounts_id"
   end
 
@@ -462,6 +464,12 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.bigint "accounts_id"
     t.bigint "products_id"
     t.bigint "sales_id"
+    t.float "price"
+    t.string "name"
+    t.float "discount"
+    t.float "interest"
+    t.float "change"
+    t.float "received_amount"
     t.index ["accounts_id"], name: "index_sale_details_on_accounts_id"
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
     t.index ["products_id"], name: "index_sale_details_on_products_id"
@@ -485,11 +493,17 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
     t.bigint "accounts_id"
     t.bigint "employees_id"
     t.bigint "cash_registers_id"
+    t.float "discount"
+    t.float "interest"
+    t.float "received_amount"
+    t.float "change"
+    t.bigint "payment_methods_id"
     t.index ["accounts_id"], name: "index_sales_on_accounts_id"
     t.index ["cash_registers_id"], name: "index_sales_on_cash_registers_id"
     t.index ["clients_id"], name: "index_sales_on_clients_id"
     t.index ["deleted_at"], name: "index_sales_on_deleted_at"
     t.index ["employees_id"], name: "index_sales_on_employees_id"
+    t.index ["payment_methods_id"], name: "index_sales_on_payment_methods_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -627,6 +641,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_197655) do
   add_foreign_key "sales", "cash_registers", column: "cash_registers_id"
   add_foreign_key "sales", "clients", column: "clients_id"
   add_foreign_key "sales", "employees", column: "employees_id"
+  add_foreign_key "sales", "payment_methods", column: "payment_methods_id"
   add_foreign_key "sales", "users", column: "user_creator_id"
   add_foreign_key "sales", "users", column: "user_modifier_id"
   add_foreign_key "user_roles", "roles", column: "roles_id"

@@ -19,7 +19,7 @@ class SalesController < ApplicationSystemController
       format.json do
         set_sale
 
-        respond_with_successful(@sale)
+        respond_with_successful(@sale.show)
       end
     end
   end
@@ -39,6 +39,20 @@ class SalesController < ApplicationSystemController
     @sale.user_modifier = current_user
 
     if @sale.save
+      products = params[:sale][:products]
+      products.each do |product|
+        @sale.details.create!(
+          account: @account,
+          products_id: product["id"],
+          name: product["name"],
+          price: product["price"],
+          total: product["total"],
+          quantity: product["quantity"],
+          subtotal: product["subtotal"],
+          discount_value: product["discount_value"],
+          discount_percentage: product["discount_percentage"]
+        )
+      end
       respond_with_successful(@sale)
     else
       respond_sale_with_error
@@ -87,7 +101,10 @@ class SalesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def sale_params
     params.fetch(:sale, {}).permit(
-      %i[name]
+      %i[
+        clients_id subtotal total discount interest shipping_costs
+        received_amount change sale_type employees_id sale_date
+      ]
     )
   end
 end

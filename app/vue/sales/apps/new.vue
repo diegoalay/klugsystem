@@ -47,7 +47,9 @@
                     discount: 0,
                     shipping_costs: 0,
                     sale_date: new Date(),
-                    sale_type: null
+                    sale_type: null,
+                    received_amount: 0,
+                    change: 0
                 },
                 client: {
                     id: null
@@ -102,6 +104,36 @@
             this.getOptions()
         },
         methods: {
+            submitSaleOrQuotation(event){
+                if(event){
+                    event.preventDefault()
+                }
+
+                const url = this.url.build('sales')
+                let form = {
+                    sale: {
+                        ... this.sale,
+                        clients_id: this.client.id,
+                        subtotal: this.getSum('subtotal'),
+                        total: this.getTotalSale(),
+                        discount: this.getDiscount(),
+                        interest: this.getInterest(),
+                        change: this.getChange(),
+                        products: this.products,
+                    }
+                }
+
+                this.http.post(url, form).then(result => {
+                    if (result.successful) {
+                        this.$router.push(`/${result.data.id}`)
+                    } else {
+                        alert(result.erros.message)
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
+
             getOptions(){
                 const url = `${this.main_path}/options.json`
 
@@ -242,6 +274,12 @@
                 }
             },
 
+            removeProduct(){
+                this.product = {id: null}
+                this.clearAutocompletes.product = true
+            },
+
+            // Getters
             getSum(key){
                 let value = 0
 
@@ -249,11 +287,11 @@
                     value = this.products.map(e => e[key]).reduce((oldValue, newValue) => oldValue + newValue)
                 }
 
-                return parseFloat(value)
+                return parseFloat(value).toFixed(2)
             },
 
             getTotal(){
-                return this.getSum('subtotal') - this.getDiscount()
+                return (this.getSum('subtotal') - this.getDiscount()).toFixed(2)
             },
 
             getDiscount(){
@@ -270,21 +308,7 @@
                     discount = this.getSum('discount_value')
                 }
 
-                return parseFloat(discount)
-            },
-
-            getInterest(){
-                let interest = 0
-
-                if (this.payment_method_interest.value) {
-                    if (this.payment_method_interest.key == 'interest_percentage') {
-                        interest = this.getTotal() * this.payment_method_interest.value
-                    } else if (this.payment_method_interest.key == 'interest_value') {
-                        interest = this.payment_method_interest.value
-                    }
-                }
-
-                return parseFloat(interest)
+                return parseFloat(discount).toFixed(2)
             },
 
             getTotalWithInterest(){
@@ -292,79 +316,6 @@
                 const interest = this.getInterest()
 
                 return parseFloat(total + interest)
-            },
-
-            getTotalSale(){
-                return parseFloat(this.getTotal() + parseFloat(this.sale.shipping_costs) + this.getInterest())
-            },
-
-            getSumWithFormat(key){
-                const sum = this.getSum(key).toFixed(2)
-                return `Q ${sum}`
-            },
-
-            getDiscountWithFormat(){
-                return `Q ${this.getDiscount().toFixed(2)}`
-            },
-
-            getTotalWithFormat(){
-                return `Q ${this.getTotal().toFixed(2)}`
-            },
-
-            getTotalSaleWithFormat(){
-                return `Q ${this.getTotalSale().toFixed(2)}`
-            },
-
-            getInterestWithFormat(){
-                return `Q ${this.getInterest().toFixed(2)}`
-            },
-
-            getTotalWithInterestAndFormat(){
-                return `Q ${this.getTotalWithInterest().toFixed(2)}`
-            },
-
-            getProductDescription(){
-                if (!this.product) return
-
-                if (this.product.quantity === 0) {
-                    return 'We will convert your name to lowercase instantly'
-                }
-
-                return null
-            },
-
-            removeProduct(){
-                this.product = {id: null}
-                this.clearAutocompletes.product = true
-            },
-
-            completeSaleorQuotation(event){
-                if(event){
-                    event.preventDefault()
-                }
-
-                const url = this.url.build('sales')
-                let form = {
-                    sale: {
-                        ... this.sale,
-                        subtotal: this.getSum('subtotal'),
-                        total: this.getTotalSale(),
-                        discount: this.getDiscount(),
-                        interest: this.getInterest(),
-                        shipping_costs: this.shipping_costs,
-                        products: this.products
-                    }
-                }
-
-                this.http.post(url, form).then(result => {
-                    if (result.successful) {
-                        this.$router.push(`/${result.data.id}`)
-                    } else {
-
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
             },
 
             getPaymentInterest(){
@@ -389,7 +340,71 @@
                 return values
             },
 
+            getInterest(){
+                let interest = 0
+
+                if (this.payment_method_interest.value) {
+                    if (this.payment_method_interest.key == 'interest_percentage') {
+                        interest = this.getTotal() * this.payment_method_interest.value
+                    } else if (this.payment_method_interest.key == 'interest_value') {
+                        interest = this.payment_method_interest.value
+                    }
+                }
+
+                return parseFloat(interest).toFixed(2)
+            },
+
+
+            getTotalSale(){
+                return (parseFloat(this.getTotal() + parseFloat(this.sale.shipping_costs) + this.getInterest())).toFixed(2)
+            },
+
+            getChange(){
+                return (parseFloat(this.sale.received_amount) - this.getTotalSale()).toFixed(2)
+            },
+
+            getSumWithFormat(key){
+                const sum = this.getSum(key)
+                return `Q ${sum}`
+            },
+
+            getDiscountWithFormat(){
+                return `Q ${this.getDiscount()}`
+            },
+
+            getTotalWithFormat(){
+                return `Q ${this.getTotal()}`
+            },
+
+            getTotalSaleWithFormat(){
+                return `Q ${this.getTotalSale()}`
+            },
+
+            getInterestWithFormat(){
+                return `Q ${this.getInterest()}`
+            },
+
+            getTotalWithInterestAndFormat(){
+                return `Q ${this.getTotalWithInterest()}`
+            },
+
+            getChangeWithFormat(){
+                return `Q ${this.getChange()}`
+            },
+
+            // Setters
+            setReceivedAmount(){
+                this.$set(this.sale, 'received_amount', this.getTotalSale())
+            },
+
             // validators
+            validateReceivedAmount(){
+                if (this.sale.received_amount <= this.getTotalSale()){
+                    alert('La cantidad es menor al valor total de la venta.')
+                    this.$set(this.sale, 'received_amount', this.getTotalSale())
+                }
+            },
+
             validateQuantity(){
                 if (!(parseFloat(this.product_quantity) > 0)) {
                     alert('Valor inválido.')
@@ -462,7 +477,6 @@
                                             @select="(option) => product = option"
                                             :required="true"
                                             :clearOptions="clearAutocompletes.product"
-                                            :description="getProductDescription()"
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
@@ -513,7 +527,7 @@
 
                                 <template v-slot:cell(quantity)="row">
                                     <b-row>
-                                        <b-col md="7">
+                                        <b-col md="10">
                                             <b-form-input
                                                 @change="setProductQuantity(row.item)"
                                                 size="sm"
@@ -529,7 +543,7 @@
 
                                 <template v-slot:cell(discount_percentage)="row">
                                     <b-row v-if="!payment_method_discount.value">
-                                        <b-col md="7">
+                                        <b-col md="10">
                                             <b-form-input
                                                 @change="setProductDiscountPercentage(row.item)"
                                                 size="sm"
@@ -548,7 +562,7 @@
 
                                 <template v-slot:cell(discount_value)="row">
                                     <b-row v-if="!payment_method_discount.value">
-                                        <b-col md="7">
+                                        <b-col md="10">
                                             <b-form-input
                                                 @change="setProductDiscountValue(row.item)"
                                                 size="sm"
@@ -635,7 +649,7 @@
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
-                            {{ getTotalSaleWithFormat() }}
+                            {{ 'Q ' + getTotalSaleWithFormat() }}
                         </div>
 
                         <br>
@@ -797,16 +811,39 @@
                         </b-input-group>
                         <hr>
                         <br>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cantidad recibida</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                class="text-right"
+                                type="number"
+                                @change="validateReceivedAmount()"
+                                v-model="sale.received_amount"
+                                :min="getTotalSale()"
+                            >
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cambio</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getChangeWithFormat()"> </b-form-input>
+                        </b-input-group>
+                        <hr>
+                        <br>
                         <b-row>
-                            <b-col cols="8">
-                                <b-button block variant="primary" type="submit" @click.stop="completeSaleorQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
+                            <b-col cols="6">
+                                <b-button block variant="primary" @click.stop="submitSaleOrQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
                             </b-col>
                         </b-row>
                     </b-form>
-
                 </b-card>
             </b-col>
         </b-row>

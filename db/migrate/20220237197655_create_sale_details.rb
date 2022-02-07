@@ -4,6 +4,7 @@ class CreateSaleDetails < ActiveRecord::Migration[6.1]
       t.text    :description
 
       t.decimal :total
+      t.decimal :subtotal
       t.decimal :quantity
       t.decimal :discount_value
       t.decimal :discount_percentage

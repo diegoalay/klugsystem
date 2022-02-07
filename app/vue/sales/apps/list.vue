@@ -7,24 +7,36 @@
             return {
                 data: [],
                 fields: [{
-                    label: 'SKU',
-                    key: 'sku',
+                    label: 'Fecha',
+                    key: 'sale_date',
                     sortable: true
                 },{
-                    label: 'Nombre',
-                    key: 'name',
+                    label: 'Subtotal',
+                    key: 'subtotal',
                     sortable: true
                 },{
-                    label: 'Precio',
-                    key: 'retail_price',
+                    label: 'Descuento',
+                    key: 'discount',
                     sortable: true
                 },{
-                    label: 'Precio mayoreo',
-                    key: 'wholesale_price',
+                    label: 'Intéres',
+                    key: 'interest',
                     sortable: true
                 },{
-                    label: 'Cantidad',
-                    key: 'quantity',
+                    label: 'Total',
+                    key: 'total',
+                    sortable: true
+                },{
+                    label: 'Cantidad recibida',
+                    key: 'received_amount',
+                    sortable: true
+                },{
+                    label: 'Cambio',
+                    key: 'change',
+                    sortable: true
+                },{
+                    label: 'Usuario creador',
+                    key: 'user_creator_name',
                     sortable: true
                 },{
                     label: '',

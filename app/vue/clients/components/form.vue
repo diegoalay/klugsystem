@@ -93,7 +93,7 @@ export default {
                             <b-form-group>
                                 <label> Apellido<sup class="text-danger">*</sup> </label>
                                 <b-form-input
-                                    v-model="client.last_name"
+                                    v-model="client.first_surname"
                                     type="text"
                                     placeholder=""
                                     required
