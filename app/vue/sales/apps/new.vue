@@ -456,6 +456,10 @@
                 <b-button variant="outline-dark" class="mb-2" to="/">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
+
+                <b-button variant="outline-primary" class="mb-2" href="#finish-sale">
+                    <font-awesome-icon icon="shopping-cart" />
+                </b-button>
             </slot>
         </component-header-form>
         <b-row>
@@ -708,34 +712,42 @@
                         </b-row>
                         <hr>
 
-                        <b-form-group label="Fecha de emisión">
+                        <b-form-group>
+                            <label> Fecha de emisión <sup class="text-danger">*</sup> </label>
                             <component-datepicker
                                 :focus="false"
                                 lang="es"
                                 valueType="format"
                                 format="DD-MM-YYYY"
                                 v-model="sale.billing_date"
-                                placeholder="">
+                                placeholder=""
+                                required
+                            >
                             </component-datepicker>
                         </b-form-group>
 
-                        <b-form-group>
-                            <label> Tipo de venta <sup class="text-danger">*</sup> </label>
-                            <b-form-select required v-model="sale.sale_types_id" :options="options.sale_types">
-                                <template #first>
-                                    <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
-                                </template>
-                            </b-form-select>
-                        </b-form-group>
-
-                        <b-form-group>
-                            <label> Método de pago <sup class="text-danger">*</sup> </label>
-                            <b-form-select required v-model="payment_method" :options="options.payment_methods">
-                                <template #first>
-                                    <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
-                                </template>
-                            </b-form-select>
-                        </b-form-group>
+                        <b-row>
+                            <b-col>
+                                <b-form-group>
+                                    <label> Tipo de venta <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="sale.sale_types_id" :options="options.sale_types">
+                                        <template #first>
+                                            <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
+                                        </template>
+                                    </b-form-select>
+                                </b-form-group>
+                            </b-col>
+                            <b-col>
+                                <b-form-group>
+                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
+                                        <template #first>
+                                            <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                        </template>
+                                    </b-form-select>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
 
                         <template v-if="payment_method.id">
                             <b-row>
@@ -837,7 +849,7 @@
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button block variant="primary" @click.stop="submitSaleOrQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
+                                <b-button id="finish-sale" block variant="primary" @click.stop="submitSaleOrQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>

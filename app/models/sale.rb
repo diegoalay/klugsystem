@@ -49,11 +49,13 @@ class Sale < ApplicationRecord
       lower(sales.sale_type) like '%#{search}%' or
       lower(users.first_name) like '%#{search}%' or
       lower(users.first_surname) like '%#{search}%' or
-      lower(employees.first_name) like '%#{search}%' or,
+      lower(employees.first_name) like '%#{search}%' or
       lower(employees.first_surname) like '%#{search}%' or
       cast(sales.subtotal as varchar) like '%#{search}%' or
       cast(sales.total as varchar) like '%#{search}%' or
-      cast(sales.sale_date as varchar) like '%#{search}%'
+      cast(sales.sale_date as varchar) like '%#{search}%' or
+      lower(concat(users.first_name, ' ', users.first_surname)) like '%#{search}%' or
+      lower(concat(employees.first_name, ' ', employees.first_surname)) like '%#{search}%'
     ") unless search.blank?
 
     sales = sales.page(query[:pagination][:current_page])
