@@ -60,8 +60,8 @@ export default {
         },
 
         focus: {
-            type: Function,
-            default: ()=>{}
+            type: Boolean,
+            default: false,
         },
 
         required: {
@@ -285,6 +285,7 @@ export default {
             this.disable_search = true;
             this.options = [];
             this.index = -1;
+            this.search = ''
             this.$nextTick(()=>{
                 this.disable_search = false;
             });
@@ -322,6 +323,7 @@ export default {
             if(this.clearOptions){
                 this.$emit('update:clear-options', false)
                 this.clearAutocompleteOptions()
+                this.focusOnInput()
             }
         }
     }

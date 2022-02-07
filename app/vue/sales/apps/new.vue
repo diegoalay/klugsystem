@@ -129,7 +129,7 @@
                     } else {
                         console.log(result)
 
-                        alert(result.erros.message)
+                        alert(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -278,7 +278,7 @@
 
             removeProduct(){
                 this.product = {id: null}
-                this.clearAutocompletes.product = true
+                this.$set(this.clearAutocompletes, 'product', true)
             },
 
             // Getters
@@ -473,7 +473,7 @@
 
                         <b-tab title="Artículos">
 
-                            <b-form>
+                            <b-form @submit="submit">
                                 <b-row>
                                     <b-col md="7" sm="12">
                                         <component-autocomplete
@@ -490,8 +490,6 @@
 
                                                     <b-button @click="removeProduct()"><font-awesome-icon icon="times" /></b-button>
                                                     &nbsp;
-                                                    <b-button variant="primary"><font-awesome-icon :icon="isProductViewSearchType() ? 'search' : 'pencil-alt'" /></b-button>
-
                                                 </b-input-group-prepend>
                                             </slot>
                                         </component-autocomplete>
@@ -851,7 +849,7 @@
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish-sale" block variant="primary" @click.stop="submitSaleOrQuotation()"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
+                                <b-button id="finish-sale" block variant="primary" type="submit" @click.prevent="submitSaleOrQuotation"> {{ isViewSaleType() ? 'Vender' : 'Cotizar' }} </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
