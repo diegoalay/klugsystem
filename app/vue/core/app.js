@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import DatePicker from 'vue2-datepicker';
+// import DatePicker from 'vue2-datepicker';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -53,7 +53,7 @@ Vue.component('component-search-list', componentSearchList)
 Vue.component('component-header-form', componentHeaderForm)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('component-datepicker', DatePicker)
+// Vue.component('component-datepicker', DatePicker)
 
 Vue.use(BootstrapVueIcons)
 Vue.use(ButtonPlugin)
