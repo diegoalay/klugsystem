@@ -103,7 +103,7 @@ class SalesController < ApplicationSystemController
     params.fetch(:sale, {}).permit(
       %i[
         clients_id subtotal total discount interest shipping_costs
-        received_amount change sale_type employees_id sale_date
+        received_amount change sale_type employees_id sale_date payment_methods_id
       ]
     )
   end

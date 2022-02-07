@@ -127,6 +127,8 @@
                     if (result.successful) {
                         this.$router.push(`/${result.data.id}`)
                     } else {
+                        console.log(result)
+
                         alert(result.erros.message)
                     }
                 }).catch(error => {
