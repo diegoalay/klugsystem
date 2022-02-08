@@ -61,15 +61,18 @@ module.exports = env => {
                         'css-loader'
                     ]
                 },{
-                  test: /\.scss$/,
-                  use: [
-                      'style-loader', // creates style nodes from JS strings
-                      'css-loader',   // translates CSS into CommonJS
-                      {
-                          loader: 'sass-loader', // compiles Sass to CSS, using Node Sass by default
-                      }
-
-                  ]
+                    test: /\.scss$/,
+                    use: [
+                        'style-loader', // creates style nodes from JS strings
+                        'css-loader',   // translates CSS into CommonJS
+                        {
+                            loader: 'sass-loader', // compiles Sass to CSS, using Node Sass by default
+                        }
+                    ]
+                },{
+                    test: /\.mjs$/,
+                    include: /node_modules/,
+                    type: "javascript/auto"
                 }
             ]
         },

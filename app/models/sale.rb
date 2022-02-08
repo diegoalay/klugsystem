@@ -12,6 +12,8 @@ class Sale < ApplicationRecord
   has_many   :activities, foreign_key: "sales_id"
   has_many   :details,    foreign_key: "sales_id"
 
+  validate :sale_data
+
   include LoggerConcern
 
   enum sale_type: {
@@ -89,5 +91,13 @@ class Sale < ApplicationRecord
       brands: account.brands.map {|brand| {text: brand.name, value: brand.id}},
       sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
+  end
+
+  private
+
+  def sale_data
+    if received_amount < total
+      errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta.")
+    end
   end
 end

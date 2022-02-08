@@ -1,16 +1,10 @@
 import Vue from 'vue'
-import DatePicker from 'vue2-datepicker';
+import DatePicker from 'vue2-datepicker'; import 'vue2-datepicker/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// import useToastr from 'vue-toastr';  require('vue-toastr/src/vue-toastr.scss')
+import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
-
-import 'vue2-datepicker/index.css';
-
-const options = {
-  draggable: false
-}
 
 import {
     ButtonPlugin,
@@ -44,7 +38,6 @@ import VueRouter from 'vue-router'
 // plugins
 import http from './http'
 import url from './url'
-import msg from './msg'
 
 
 // Global registration
@@ -76,16 +69,16 @@ Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
 Vue.use(DropdownPlugin)
 
-
-Vue.config.productionTip = false
-
 library.add(fas)
 
 // Libraries
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
-Vue.use(msg)
+Vue.use(Toast, {
+    timeout: 2000,
+    hideProgressBar: true
+});
 
 export default (base_path, routes=[]) => {
     //app builder

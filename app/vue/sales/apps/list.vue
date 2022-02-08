@@ -55,6 +55,8 @@
         },
         mounted() {
             this.list()
+
+            this.msg.success('asd')
         },
         methods: {
             list(){

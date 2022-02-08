@@ -36,12 +36,12 @@ export default {
             }
 
             this.http.post(url, form).then(result => {
-                console.log(result)
                 if (result.successful) {
+                    this.$toast.success('El empleado se actualizó exitosamente.')
+
                     this.$router.push(`/${result.data.id}`)
-
                 } else {
-
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
@@ -54,9 +54,9 @@ export default {
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-
+                    this.$toast.success('El empleado se actualizó exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

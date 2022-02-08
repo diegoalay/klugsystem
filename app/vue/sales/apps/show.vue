@@ -117,6 +117,15 @@ export default {
     <section class="application-componeent">
         <component-header-form
             title="Ventas">
+            <slot name="buttons">
+                <b-button variant="outline-primary" to="/new" class="mb-2">
+                    Vender <font-awesome-icon icon="shopping-cart" />
+                </b-button>
+
+                <b-button variant="outline-dark" class="mb-2" to="/">
+                    Listado <font-awesome-icon icon="list" />
+                </b-button>
+            </slot>
         </component-header-form>
         <b-container>
             <b-row class="justify-content-md-center">

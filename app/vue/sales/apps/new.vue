@@ -125,11 +125,10 @@
 
                 this.http.post(url, form).then(result => {
                     if (result.successful) {
+                        this.$toast.success('Venta realizada.')
                         this.$router.push(`/${result.data.id}`)
                     } else {
-                        console.log(result)
-
-                        alert(result.error.message)
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -191,7 +190,7 @@
                     this.products[index].quantity = quantity
                     this.products[index].subtotal = quantity * product.price
 
-                    alert('Debes agregar al menos uno de este producto')
+                    this.$toast.warning('Debe agregar al menos un artículo.')
 
                     return
                 }
@@ -230,7 +229,7 @@
 
             addProduct(){
                 if (!this.product.id) {
-                    alert('Debe seleccionar un producto.')
+                    this.$toast.warning('Debes seleccionar un producto.')
                     return
                 }
 
@@ -246,7 +245,7 @@
                 }
 
                 if (quantity > this.product.quantity) {
-                    alert('No cuenta con los suficientes productos.')
+                    this.$toast.error('Artículos agotados!.')
 
                     quantity = this.product.quantity
                 }
@@ -402,21 +401,19 @@
             // validators
             validateReceivedAmount(){
                 if (this.sale.received_amount <= this.getTotalSale()){
-                    alert('La cantidad es menor al valor total de la venta.')
+                    this.$toast.error('La cantidad es menor al valor total de la venta.')
                     this.$set(this.sale, 'received_amount', this.getTotalSale())
                 }
             },
 
             validateQuantity(){
                 if (!(parseFloat(this.product_quantity) > 0)) {
-                    alert('Valor inválido.')
                     this.product_quantity = 1
                 }
             },
 
             validateShippingCosts(){
                 if (!(parseFloat(this.product_quantity) >= 0)) {
-                    alert('Costo de envío inválido.')
                     this.product_quantity = 0
                 }
             }
