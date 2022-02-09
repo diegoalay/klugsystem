@@ -1,6 +1,6 @@
 account = Account.find_or_create_by(name: 'Diego Alay')
 
-account.users.find_or_create_by(
+user = account.users.find_or_create_by(
   first_name: "Mafer",
   first_surname: "Brand",
   email: "mafer@klugsystem.com",
