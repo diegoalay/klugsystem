@@ -4,22 +4,19 @@ export default {
         payment_method: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
-    components: {
 
-    },
+    components: {},
+
     data() {
         return {
 
         }
     },
-    mounted() {
 
-    },
+    mounted() {},
+
     methods: {
         onSubmit(){
             if (this.payment_method.id) {
@@ -29,33 +26,34 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
-            let form = {
+            const url = this.url.build('payment_methods')
+            const form = {
                 payment_method: this.payment_method
             }
 
             this.http.post(url, form).then(result => {
-                console.log(result)
                 if (result.successful) {
+                    this.$toast.success('Método de pago creado exitosamente.')
+
                     this.$router.push(`/${result.data.id}`)
-                    this.notification('creado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.payment_method.id}.json`
-            let form = {
+            const url = this.url.build('payment_methods/:id', {id: this.payment_method.id})
+            const form = {
                 payment_method: this.payment_method
             }
+
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Método de pago actualizado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
@@ -66,7 +64,7 @@ export default {
             const value = this.payment_method[key]
 
             if (value > 100 || value < 0) {
-                alert('Porcentaje inválido')
+                this.$toast.warn('El porcentaje debe ser mayor a 0 y menor a 100.')
 
                 this.payment_method[key] = 0
             }

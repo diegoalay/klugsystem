@@ -20,7 +20,6 @@
                     current_page: 1
                 },
                 search_text: '',
-                main_path: '/departments',
                 loading: false
             }
         },
@@ -30,7 +29,9 @@
         methods: {
             list(){
                 this.loading = true
-                this.http.get(`${this.main_path}.json`).then(response => {
+                const url = this.url.build('departments')
+
+                this.http.get(url).then(response => {
                     this.data = response.data
                     this.pagination.total = this.data.length
 
@@ -43,14 +44,15 @@
                 this.$router.push(`/${department.id}`)
             },
             deleteRecord(id){
-                let url = `${this.main_path}/${id}.json`
+                const url = this.url.build('departments/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
-                        // this.notification('eliminado exitosamente.')
+
+                        this.$toast.success('Departamento eliminado exitosamente.')
                     } else {
-                        // this.notification(result.message.error)
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

@@ -50,13 +50,12 @@
                     order: true,
                 },
                 search_text: '',
+                sale_type: null,
                 loading: false
             }
         },
         mounted() {
             this.list()
-
-            this.msg.success('asd')
         },
         methods: {
             list(){
@@ -80,20 +79,6 @@
             },
             show(sale){
                 this.$router.push(`/${sale.id}`)
-            },
-            deleteRecord(id){
-                const url = this.url.build('sales/:id', {id: id})
-                this.http.delete(url).then(result => {
-                    if (result.successful) {
-                        this.data = this.data.filter(e => e.id !== id)
-                        this.pagination.total -= 1
-                        // this.notification('eliminado exitosamente.')
-                    } else {
-                        // this.notification(result.message.error)
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
             },
             onSearch(text){
                 this.search_text = text
@@ -133,7 +118,18 @@
         </component-header-list>
 
         <b-card>
-            <component-search-list :loading="loading" @search="onSearch"/>
+            <component-search-list :loading="loading" @search="onSearch">
+                <slot name="filters">
+                <b-form-select
+                    v-model="sale_type"
+                    :options="options.sale_types"
+                >
+                    <template #first>
+                    <option :value="null">-- Todas las ventas --</option>
+                    </template>
+                </b-form-select>
+                </slot>
+            </component-search-list>
             <b-card-body>
                 <b-table
                     striped
@@ -148,8 +144,8 @@
                     sort-icon-left
                 >
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
+                        <b-button variant="outline-dark" class="mr-1">
+                            <font-awesome-icon icon="print" />
                         </b-button>
                     </template>
                 </b-table>

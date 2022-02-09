@@ -4,9 +4,6 @@ export default {
         department: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
     components: {
@@ -31,45 +28,44 @@ export default {
             }
         },
         postForm(){
-            const url = `${this.main_path}.json`
+            const url = this.url.build('departments')
             let form = {
                 department: this.department
             }
 
             this.http.post(url, form).then(result => {
-                console.log(result)
                 if (result.successful) {
+                    this.$toast.success('Departament creado exitosamente.')
                     this.$router.push(`/${result.data.id}`)
-
                 } else {
-
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            const url = `${this.main_path}/${this.department.id}.json`
+            const url = this.url.build('departments/:id', {id: this.department.id})
             let form = {
                 department: this.department
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-
+                    this.$toast.success('Departament actualizado exitosamente.')
                 } else {
-
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         getOptions(){
-            const url = `${this.main_path}/${this.department.id}.json`
-            this.http.get(`${this.main_path}/options.json`).then(result => {
+            const url = this.url.build('departments/options')
+            this.http.get(url).then(result => {
                 if (result.successful) {
                     this.options = result.data
                 } else {
-
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

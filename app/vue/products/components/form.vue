@@ -4,9 +4,6 @@ export default {
         product: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
     components: {
@@ -33,45 +30,45 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
+            const url = this.url.build('products')
             let form = {
                 product: this.product
             }
 
             this.http.post(url, form).then(result => {
-                console.log(result)
                 if (result.successful) {
                     this.$router.push(`/${result.data.id}`)
-                    // this.notification('creado exitosamente.')
+                    this.$toast.success('Producto creado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.product.id}.json`
+            const url = this.url.build('products/:id', {id: this.id})
             let form = {
                 product: this.product
             }
+
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Producto actualizado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         getOptions(){
-            const url = `${this.main_path}/options.json`
+            const url = this.url.build('products/options')
             this.http.get(url).then(result => {
                 if (result.successful) {
                     this.options = result.data
                 } else {
-
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

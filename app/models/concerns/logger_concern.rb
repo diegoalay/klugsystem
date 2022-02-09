@@ -3,6 +3,8 @@
     extend ActiveSupport::Concern
 
     included do
+      # acts_as_paranoid
+
       after_create  :log_create
       after_destroy :log_destroy
       after_update  :log_update

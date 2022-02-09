@@ -9,9 +9,6 @@ export default {
         employee: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
     data() {
@@ -30,14 +27,14 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
+            const url = this.url.build('employees')
             let form = {
                 employee: this.employee
             }
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('El empleado se actualizó exitosamente.')
+                    this.$toast.success('Empleado creado exitosamente.')
 
                     this.$router.push(`/${result.data.id}`)
                 } else {
@@ -48,13 +45,14 @@ export default {
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.employee.id}.json`
+            const url = this.url.build('employees/:id', {id: this.employee.id})
             let form = {
                 employee: this.employee
             }
+
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('El empleado se actualizó exitosamente.')
+                    this.$toast.success('Empleado actualizado exitosamente.')
                 } else {
                     this.$toast.error(result.error.message)
                 }

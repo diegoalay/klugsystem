@@ -1,6 +1,4 @@
 class Employee < ApplicationRecord
-  acts_as_paranoid
-
   belongs_to :account,       class_name: "Account", foreign_key: "accounts_id"
   belongs_to :user,          class_name: "User",    foreign_key: "users_id", optional: true
   belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id"

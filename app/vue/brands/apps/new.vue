@@ -6,8 +6,7 @@
         },
         data() {
             return {
-                brand: {},
-                main_path: '/brands'
+                brand: {}
             }
         },
     }
@@ -18,6 +17,6 @@
         <component-header-form
             title="Crear marca">
         </component-header-form>
-        <component-form :main_path="main_path" :brand="brand"></component-form>
+        <component-form :brand="brand"></component-form>
     </section>
 </template>

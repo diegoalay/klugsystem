@@ -8,8 +8,7 @@
             return {
                 payment_method: {
                     status: true
-                },
-                main_path: '/payment_methods'
+                }
             }
         },
     }
@@ -20,6 +19,6 @@
         <component-header-form
             title="Crear método de pago">
         </component-header-form>
-        <component-form :main_path="main_path" :payment_method="payment_method"></component-form>
+        <component-form :payment_method="payment_method"></component-form>
     </section>
 </template>

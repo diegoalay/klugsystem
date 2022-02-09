@@ -81,6 +81,10 @@ class SalesController < ApplicationSystemController
     end
   end
 
+  def index_options
+    respond_with_successful(Sale.index_options(@account))
+  end
+
   def options
     respond_with_successful(Sale.options(@account))
   end

@@ -16,6 +16,8 @@ class Product < ApplicationRecord
   validates :quantity, presence: true
   validates :retail_price, presence: true
 
+  before_destroy :can_be_destroyed
+
   include LoggerConcern
 
   def self.index account, query
@@ -88,29 +90,17 @@ class Product < ApplicationRecord
     products
   end
 
-  # def self.create_products
-  #   account = Account.first
-  #   user = User.first
-  #   branch_office = BranchOffice.first
-
-  #   (0..2000).each do |n|
-  #     account.products.create!(
-  #       sku: Faker::Number.number(digits: 10).to_s,
-  #       name: Faker::Food.dish,
-  #       retail_price: rand(100),
-  #       quantity: rand(30),
-  #       user_creator: user,
-  #       user_modifier: user,
-  #       branch_office: branch_office
-  #     )
-  #   end
-  # end
-
   def self.options account
     {
       branch_offices: account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: account.departments.map {|department| {text: department.name, value: department.id}},
       brands: account.brands.map {|brand| {text: brand.name, value: brand.id}}
     }
+  end
+
+  private
+
+  def can_be_destroyed
+    errors.add(:base, "Existen ventas asignadas a este producto'") and throw(:abort) unless account.sales_details.where(product: self).blank?
   end
 end

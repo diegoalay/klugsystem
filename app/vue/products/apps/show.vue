@@ -18,15 +18,14 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
-                let url = `${this.main_path}/${this.id}.json?`
+                const url = this.url.build('products/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.product = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -41,6 +40,6 @@
         <component-header-form
             title="Productos">
         </component-header-form>
-        <component-form :main_path="main_path" :product="product"></component-form>
+        <component-form :product="product"></component-form>
     </section>
 </template>

@@ -6,8 +6,7 @@
         },
         data() {
             return {
-                employee: {},
-                main_path: '/employees'
+                employee: {}
             }
         },
     }
@@ -18,6 +17,6 @@
         <component-header-form
             title="Crear empleado">
         </component-header-form>
-        <component-form :main_path="main_path" :employee="employee"></component-form>
+        <component-form :employee="employee"></component-form>
     </section>
 </template>

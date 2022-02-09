@@ -6,7 +6,6 @@
         },
         data() {
             return {
-                main_path: '/payment_methods',
                 payment_method: {},
                 id: null
             }
@@ -18,15 +17,14 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
-                let url = `${this.main_path}/${this.id}.json?`
+                const url = this.url.build('payment_methods/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.payment_method = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -41,6 +39,6 @@
         <component-header-form
             title="Marcas">
         </component-header-form>
-        <component-form :main_path="main_path" :payment_method="payment_method"></component-form>
+        <component-form :payment_method="payment_method"></component-form>
     </section>
 </template>

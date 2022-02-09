@@ -1,13 +1,33 @@
 account = Account.find_or_create_by(name: 'Diego Alay')
 
-user = account.users.find_or_create_by(
-  first_name: "Diego",
-  first_surname: "Alay",
-  email: "diego.alay.dev@gmail.com",
+account.users.find_or_create_by(
+  first_name: "Mafer",
+  first_surname: "Brand",
+  email: "mafer@klugsystem.com",
   account: account
 )
 
-user.password = "Hacker-123"
+user.password = "123456"
+user.save!
+
+user = account.users.find_or_create_by(
+  first_name: "Diego",
+  first_surname: "Alay",
+  email: "diego.alay@klugsystem.com",
+  account: account
+)
+
+user.password = "123456"
+user.save!
+
+user = account.users.find_or_create_by(
+  first_name: "Allan",
+  first_surname: "Oneal",
+  email: "allan@klugsystem.com",
+  account: account
+)
+
+user.password = "123456"
 user.save!
 
 branch_office = account.branch_offices.find_or_create_by!(

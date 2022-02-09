@@ -4,22 +4,15 @@ export default {
         brand: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
-    components: {
-
-    },
+    components: {},
     data() {
         return {
 
         }
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
         onSubmit(){
             if (this.brand.id) {
@@ -29,7 +22,7 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
+            const url = this.url.build('brands')
             let form = {
                 brand: this.brand
             }
@@ -37,25 +30,25 @@ export default {
             this.http.post(url, form).then(result => {
                 console.log(result)
                 if (result.successful) {
+                    this.$toast.success('Marca creada exitosamente.')
                     this.$router.push(`/${result.data.id}`)
-                    this.notification('creado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.brand.id}.json`
+            const url = this.url.build('brands/:id', {id: this.brand.id})
             let form = {
                 brand: this.brand
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Marca actualizada exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

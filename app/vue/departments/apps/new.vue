@@ -6,8 +6,7 @@
         },
         data() {
             return {
-                department: {},
-                main_path: '/departments'
+                department: {}
             }
         },
     }
@@ -18,6 +17,6 @@
         <component-header-form
             title="Crear departamento">
         </component-header-form>
-        <component-form :main_path="main_path" :department="department"></component-form>
+        <component-form :department="department"></component-form>
     </section>
 </template>

@@ -71,10 +71,10 @@
                 const url = this.url.build('products/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
+                        this.$toast.success('Producto eliminado exitosamente.')
                         this.list()
-                        // this.notification('eliminado exitosamente.')
                     } else {
-                        // this.notification(result.message.error)
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

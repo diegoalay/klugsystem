@@ -519,7 +519,7 @@
                             <br>
                             <br>
                             <b-table
-                                class="table-scroll"
+                                responsive
                                 striped
                                 hover
                                 :items="products"

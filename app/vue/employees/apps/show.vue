@@ -6,7 +6,6 @@
         },
         data() {
             return {
-                main_path: '/employees',
                 employee: {},
                 id: null
             }
@@ -18,15 +17,14 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
-                let url = `${this.main_path}/${this.id}.json?`
+                const url = this.url.build('employees/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.employee = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -41,6 +39,6 @@
         <component-header-form
             title="Empleado">
         </component-header-form>
-        <component-form v-if="employee.id" :main_path="main_path" :employee="employee"></component-form>
+        <component-form v-if="employee.id" :employee="employee"></component-form>
     </section>
 </template>

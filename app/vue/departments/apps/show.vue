@@ -21,12 +21,12 @@
                 console.log(this.id)
             },
             getData(){
-                let url = `${this.main_path}/${this.id}.json?`
+                const url = this.url.build('departments/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.department = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -41,6 +41,6 @@
         <component-header-form
             title="Departamentos">
         </component-header-form>
-        <component-form :main_path="main_path" :department="department"></component-form>
+        <component-form :department="department"></component-form>
     </section>
 </template>

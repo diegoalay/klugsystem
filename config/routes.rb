@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         resources :sales do
           collection do
             get :options
+            get :index_options
           end
         end
         resources :roles

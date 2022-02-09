@@ -6,8 +6,7 @@
         },
         data() {
             return {
-                product: {},
-                main_path: '/products'
+                product: {}
             }
         },
     }
@@ -18,6 +17,6 @@
         <component-header-form
             title="Crear producto">
         </component-header-form>
-        <component-form :main_path="main_path" :product="product"></component-form>
+        <component-form :product="product"></component-form>
     </section>
 </template>

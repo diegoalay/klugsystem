@@ -22,7 +22,7 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                let url = `${this.main_path}/${this.id}.json?`
+                const url = this.url.build('departments/:id', {id: id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.client = result.data

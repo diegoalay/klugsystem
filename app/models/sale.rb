@@ -1,6 +1,4 @@
 class Sale < ApplicationRecord
-  acts_as_paranoid
-
   belongs_to :account,        class_name: "Account",       foreign_key: "accounts_id"
   belongs_to :client,         class_name: "Client",        foreign_key: "clients_id"
   belongs_to :user_creator,   class_name: "User",          foreign_key: "user_creator_id"
@@ -80,6 +78,12 @@ class Sale < ApplicationRecord
       details: details,
       employee: employee,
       payment_method: payment_method
+    }
+  end
+
+  def self.options account
+    {
+      sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
   end
 

@@ -4,22 +4,15 @@ export default {
         branch_office: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
-    components: {
-
-    },
+    components: {},
     data() {
         return {
 
         }
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
         onSubmit(){
             if (this.branch_office.id) {
@@ -29,32 +22,32 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
+            const url = this.url.build('branch_offices')
             let form = {
                 branch_office: this.branch_office
             }
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
+                    this.$toast.success('Sucursal creada exitosamente.')
                     this.$router.push(`/${result.data.id}`)
-                    // this.notification('creado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.branch_office.id}.json`
+            const url = this.url.build('branch_offices/:id', {id: this.branch_office.id})
             let form = {
                 branch_office: this.branch_office
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Sucursal actualizada exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

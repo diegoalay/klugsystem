@@ -36,25 +36,26 @@ export default {
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
+                    this.$toast.success('Cliente creado exitosamente.')
                     this.$router.push(`/${result.data.id}`)
-                    // this.notification('creado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
         },
         putForm(){
-            let url = `${this.main_path}/${this.client.id}.json`
+            const url = this.url.build('clients/:id', {id: this.client.id})
+
             let form = {
                 client: this.client
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Cliente actualizado exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

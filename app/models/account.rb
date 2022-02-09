@@ -8,6 +8,7 @@ class Account < ApplicationRecord
   has_many :brands,          class_name: "Brand",         foreign_key: "accounts_id"
   has_many :users,           class_name: "User",          foreign_key: "accounts_id"
   has_many :sales,           class_name: "Sale",          foreign_key: "accounts_id"
+  has_many :sales_details,   class_name: "Sale::Detail",  foreign_key: "accounts_id"
 
 
   # Catalogs

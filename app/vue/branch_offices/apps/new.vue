@@ -11,8 +11,7 @@
         },
         data() {
             return {
-                branch_office: {},
-                main_path: '/branch_offices'
+                branch_office: {}
             }
         },
     }
@@ -23,6 +22,6 @@
         <component-header-form
             title="Crear sucursal">
         </component-header-form>
-        <component-form :main_path="main_path" :view_type="view_type" :branch_office="branch_office"></component-form>
+        <component-form :view_type="view_type" :branch_office="branch_office"></component-form>
     </section>
 </template>

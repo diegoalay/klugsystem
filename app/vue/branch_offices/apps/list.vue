@@ -42,7 +42,9 @@
         methods: {
             list(){
                 this.loading = true
-                this.http.get(`${this.main_path}.json`).then(response => {
+                const url = this.url.build('branch_offices')
+
+                this.http.get(url).then(response => {
                     this.data = response.data
                     this.pagination.total = this.data.length
 
@@ -51,8 +53,8 @@
                     console.log(error)
                 })
             },
-            show(client){
-                this.$router.push(`/${client.id}`)
+            show(branch_office){
+                this.$router.push(`/${branch_office.id}`)
             },
             deleteRecord(id){
                 let url = `${this.main_path}/${id}.json`
@@ -61,8 +63,9 @@
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
 
+                        this.$toast.error('Sucursal eliminada exitosamente.')
                     } else {
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -95,7 +98,7 @@
                 <b-table
                     striped
                     hover
-                    class="table-scroll"
+                    responsive
                     :items="data"
                     :fields="fields"
                     :current-page="pagination.current_page"
