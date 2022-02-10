@@ -83,53 +83,13 @@ label {
     height: 32px;
 }
 
-
-
-.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s {
-    background-image: none;
-    margin-left: 5px;
-    font-size: 1.1666em;
-    position: relative;
+@media (max-width: 768px) {
+    /* Applied to a wrapper div when using a custom component as content */
+    .Vue-Toastification__container.top-right
+    .Vue-Toastification__toast,
+    .Vue-Toastification__container.bottom-right
+    .Vue-Toastification__toast {
+        margin-left: auto;
+        max-width: 60%;
+    }
 }
-
-.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s:not(.ui-icon-triangle-1-s)::before {
-    content: "\f106";
-    font-family: "FontAwesome";
-    position: absolute;
-    top: -2px;
-    color: rgba(0,0,0,0.4);
-}
-
-.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s:not(.ui-icon-triangle-1-n)::after {
-    content: "\f107";
-    font-family: "FontAwesome";
-    position: absolute;
-    top: 5px;
-    color: rgba(0,0,0,1);
-}
-
-.ui-sortable-column-icon.ui-icon.ui-icon-carat-2-n-s.ui-icon-triangle-1-n::before {
-    color: rgba(0,0,0,1);
-}
-
-
-// .card {
-//   margin: 10px;
-// }
-
-// .dashboard-top-box {
-//     height: 100px;
-//     padding: 2rem;
-// }
-
-// .dashboard-value {
-
-// }
-
-// .dashboard-graph {
-//     height: 100vh - 20vh;
-// }
-
-// .dashboard-products {
-//     height: 91.5vh;
-// }

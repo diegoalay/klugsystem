@@ -76,7 +76,7 @@ Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
 Vue.use(Toast, {
-    timeout: 2000,
+    timeout: 100000,
     hideProgressBar: true,
     position: 'bottom-right'
 });

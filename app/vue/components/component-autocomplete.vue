@@ -212,7 +212,7 @@ export default {
         },
 
         focusOnInput(){
-            this.$refs.input.focus()
+            this.$refs['input'].focus()
         },
 
         select(e, option, focus = true) {
@@ -340,7 +340,7 @@ export default {
                 ref="input"
                 :required="required"
                 @change.native="verifySelectedOption"
-                @focus="focus"
+                :focus="focus"
                 autocomplete="off"
             >
             </b-form-input>

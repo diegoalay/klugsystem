@@ -84,7 +84,7 @@ export default {
             <b-card-body>
                 <b-container>
                     <b-row>
-                        <b-col cols="6">
+                        <b-col md="6" sm="12">
                             <b-form-group>
                                 <label> Nombre <sup class="text-danger">*</sup> </label>
 
@@ -97,7 +97,7 @@ export default {
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Sku <sup class="text-danger">*</sup> </label>
 
@@ -110,7 +110,7 @@ export default {
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Cantidad <sup class="text-danger">*</sup> </label>
 
@@ -126,7 +126,7 @@ export default {
                     </b-row>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Precio <sup class="text-danger">*</sup> </label>
 
@@ -140,7 +140,7 @@ export default {
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Precio mayoreo </label>
 
@@ -153,7 +153,7 @@ export default {
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Precio compra </label>
 

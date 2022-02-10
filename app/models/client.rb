@@ -5,8 +5,9 @@ class Client < ApplicationRecord
 
   has_many   :activities, foreign_key: "clients_id"
 
-  validates :first_name, presence: true
-  validates :first_surname,  presence: true
+  validates :billing_name, presence: true
+  validates :billing_address, presence: true
+  validates :billing_identifier, presence: true
 
   before_destroy :can_be_destroyed
 

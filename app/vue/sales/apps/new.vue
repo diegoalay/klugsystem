@@ -7,6 +7,7 @@
         },
         data() {
             return {
+                timer_client: null,
                 product_text: null,
                 product_quantity: 1,
                 main_path: '/sales',
@@ -437,6 +438,18 @@
                         this.$set(this.products[key], 'discount_value', 0)
                     }
                 }
+            },
+
+            client(value){
+                clearTimeout(this.timer_client)
+
+                this.timer_client = setTimeout(() => {
+                    this.$toast.info('Cliente no encontrado')
+
+                    this.$nextTick(()=>{
+                        this.ref['client-name'].focus()
+                    })
+                }, 5000)
             }
         }
     }
@@ -519,7 +532,7 @@
                             <br>
                             <br>
                             <b-table
-                                responsive
+                                class="table-scroll"
                                 striped
                                 hover
                                 :items="products"
@@ -674,9 +687,11 @@
                                 <b-form-group>
                                     <label> Nombre <sup class="text-danger">* </sup> </label>
                                     <b-form-input
+                                        ref="client-name"
                                         v-model="client.billing_name"
                                         type="text"
                                         placeholder=""
+                                        required
                                     >
                                     </b-form-input>
                                 </b-form-group>
@@ -691,6 +706,7 @@
                                         v-model="client.billing_address"
                                         type="text"
                                         placeholder=""
+                                        required
                                     >
                                     </b-form-input>
                                 </b-form-group>

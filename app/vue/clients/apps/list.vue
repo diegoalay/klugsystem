@@ -53,7 +53,7 @@
         methods: {
             list(){
                 this.loading = true
-                const url = this.url.build('departments')
+                const url = this.url.build('clients')
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -68,7 +68,7 @@
                 this.$router.push(`/${client.id}`)
             },
             deleteRecord(id){
-                const url = this.url.build('departments/:id', {id: id})
+                const url = this.url.build('clients/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)

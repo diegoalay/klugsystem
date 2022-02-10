@@ -38,6 +38,12 @@ class SalesController < ApplicationSystemController
     @sale.user_creator = current_user
     @sale.user_modifier = current_user
 
+    if (params[:client][:id].blank?)
+      create_client
+
+      @sale.client = @new_client
+    end
+
     if @sale.save
       products = params[:sale][:products]
       products.each do |product|
@@ -90,6 +96,15 @@ class SalesController < ApplicationSystemController
   end
 
   private
+
+  def create_client
+    @new_client = @account.clients.create(
+      billing_name: params[:client][:billing_name],
+      billing_address: params[:client][:billing_address],
+      billing_email: params[:client][:billing_email],
+      billing_identifier: params[:client][:billing_identifier]
+    )
+  end
 
   def respond_sale_with_error
     return respond_with_error(@sale.errors.full_messages.to_sentence)

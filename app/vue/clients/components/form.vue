@@ -5,9 +5,6 @@ export default {
         client: {
             required: true,
             type: Object
-        },
-        main_path: {
-            required: true
         }
     },
     components: {
@@ -29,7 +26,7 @@ export default {
             }
         },
         postForm(){
-            let url = `${this.main_path}.json`
+            const url = this.url.build('clients')
             let form = {
                 client: this.client
             }
@@ -60,9 +57,6 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
-        },
-        exportCsv(){
-
         }
     }
 }
@@ -74,30 +68,28 @@ export default {
             <b-card-body>
                 <b-container>
                     <b-row>
-                        <b-col cols="8">
+                        <b-col md="8" sm="12">
                             <p class="col-header">
                                 Información general
                             </p>
 
                             <b-form-group>
-                                <label> Nombre <sup class="text-danger">*</sup> </label>
+                                <label> Nombre </label>
 
                                 <b-form-input
                                     v-model="client.first_name"
                                     type="text"
                                     placeholder=""
-                                    required
                                 >
                                 </b-form-input>
                             </b-form-group>
 
                             <b-form-group>
-                                <label> Apellido<sup class="text-danger">*</sup> </label>
+                                <label> Apellido </label>
                                 <b-form-input
                                     v-model="client.first_surname"
                                     type="text"
                                     placeholder=""
-                                    required
                                 >
                                 </b-form-input>
                             </b-form-group>
@@ -169,30 +161,33 @@ export default {
                                 Información de facturación
                             </p>
 
-                            <b-form-group label="Nit">
+                            <b-form-group>
+                                <label> Nit <sup class="text-danger">*</sup> </label>
                                 <b-form-input
                                     v-model="client.billing_identifier"
                                     type="text"
                                     placeholder=""
-                                    >
+                                >
                                 </b-form-input>
                             </b-form-group>
 
-                            <b-form-group label="Nombre de facturación">
+                            <b-form-group>
+                                <label> Nombre de facturación <sup class="text-danger">*</sup> </label>
                                 <b-form-input
                                     v-model="client.billing_name"
                                     type="text"
                                     placeholder=""
-                                    >
+                                >
                                 </b-form-input>
                             </b-form-group>
 
-                            <b-form-group label="Dirección de facturación">
+                            <b-form-group>
+                                <label> Dirección de facturación <sup class="text-danger">*</sup> </label>
                                 <b-form-input
                                     v-model="client.billing_address"
                                     type="text"
                                     placeholder=""
-                                    >
+                                >
                                 </b-form-input>
                             </b-form-group>
 
@@ -201,7 +196,7 @@ export default {
                                     v-model="client.billing_email"
                                     type="email"
                                     placeholder=""
-                                    >
+                                >
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
@@ -211,7 +206,6 @@ export default {
                 <b-container>
                     <b-button type="submit" variant="primary">Guardar</b-button>
                     <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                    <b-button variant="outline-dark" v-if="client.id">Exportar CSV</b-button>
                 </b-container>
             </b-card-body>
         </b-card>

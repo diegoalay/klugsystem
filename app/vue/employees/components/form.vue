@@ -74,7 +74,7 @@ export default {
                     </p>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Primer nombre <sup class="text-danger">*</sup> </label>
 
@@ -88,7 +88,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Segundo nombre </label>
 
@@ -101,7 +101,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Tercer nombre </label>
 
@@ -116,7 +116,7 @@ export default {
                     </b-row>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Primer apellido <sup class="text-danger">*</sup> </label>
 
@@ -130,7 +130,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Segundo nombre </label>
 
@@ -143,7 +143,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Nombre por matrimonio </label>
 
@@ -158,7 +158,7 @@ export default {
                     </b-row>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> DPI </label>
 
@@ -171,7 +171,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Número de pasaporte </label>
 
@@ -191,7 +191,7 @@ export default {
                     </p>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Asignar usuario </label>
 
