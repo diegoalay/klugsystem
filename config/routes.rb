@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     authenticated :user do
         root 'dashboard#default', as: :authenticated_root
 
+        get :dashboard, to: "dashboard#default"
+
         resources :users do
           collection do
             get :search

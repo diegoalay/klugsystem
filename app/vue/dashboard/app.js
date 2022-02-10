@@ -2,7 +2,7 @@ import app from '../core/app'
 
 import appList  from './apps/list.vue'
 
-app( "/products", [{
+app( "/", [{
     path: "/",
     component: appList
 }])

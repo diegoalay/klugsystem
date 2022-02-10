@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_197656) do
+ActiveRecord::Schema.define(version: 2022_02_37_197655) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -363,15 +363,17 @@ ActiveRecord::Schema.define(version: 2022_02_37_197656) do
     t.string "name"
     t.decimal "interest_percentage"
     t.decimal "interest_value"
+    t.decimal "discount_percentage"
+    t.decimal "discount_value"
     t.boolean "status"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "accounts_id"
-    t.float "discount_value"
-    t.float "discount_percentage"
     t.index ["accounts_id"], name: "index_payment_methods_on_accounts_id"
+    t.index ["deleted_at"], name: "index_payment_methods_on_deleted_at"
   end
 
   create_table "product_activities", force: :cascade do |t|
@@ -453,6 +455,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_197656) do
   create_table "sale_details", force: :cascade do |t|
     t.text "description"
     t.decimal "total"
+    t.decimal "subtotal"
     t.decimal "quantity"
     t.decimal "discount_value"
     t.decimal "discount_percentage"
@@ -464,12 +467,6 @@ ActiveRecord::Schema.define(version: 2022_02_37_197656) do
     t.bigint "accounts_id"
     t.bigint "products_id"
     t.bigint "sales_id"
-    t.float "price"
-    t.string "name"
-    t.float "discount"
-    t.float "interest"
-    t.float "change"
-    t.float "received_amount"
     t.index ["accounts_id"], name: "index_sale_details_on_accounts_id"
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
     t.index ["products_id"], name: "index_sale_details_on_products_id"
@@ -479,10 +476,13 @@ ActiveRecord::Schema.define(version: 2022_02_37_197656) do
   create_table "sales", force: :cascade do |t|
     t.string "uuid"
     t.string "sale_type"
-    t.decimal "discount_value"
     t.decimal "shipping_costs"
     t.decimal "subtotal"
     t.decimal "total"
+    t.decimal "discount"
+    t.decimal "interest"
+    t.decimal "received_amount"
+    t.decimal "change"
     t.date "sale_date"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
@@ -493,10 +493,6 @@ ActiveRecord::Schema.define(version: 2022_02_37_197656) do
     t.bigint "accounts_id"
     t.bigint "employees_id"
     t.bigint "cash_registers_id"
-    t.float "discount"
-    t.float "interest"
-    t.float "received_amount"
-    t.float "change"
     t.bigint "payment_methods_id"
     t.index ["accounts_id"], name: "index_sales_on_accounts_id"
     t.index ["cash_registers_id"], name: "index_sales_on_cash_registers_id"

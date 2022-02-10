@@ -42,6 +42,9 @@ export default {
         <div class="float-right">
             <template name="buttons">
                 <slot>
+                    <b-button variant="outline-dark" class="mb-2" to="/new">
+                        {{ titleButtonCreate }} <font-awesome-icon icon="list" />
+                    </b-button>
                 </slot>
             </template>
         </div>

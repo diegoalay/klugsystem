@@ -9,6 +9,6 @@ module HtmlHelper
   end
 
   def controller_asset(controller_path, type)
-    [controller_path.to_s, ".", type].join("")
+    [controller_path.gsub("/", "_").to_s, ".", type].join("")
   end
 end

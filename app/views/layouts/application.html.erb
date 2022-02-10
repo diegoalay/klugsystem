@@ -23,6 +23,12 @@
 
         <!-- Page Footer -->
         <%#= render 'layouts/partials/footer' %>
+      <% else %>
+        <!-- Page Content -->
+        <div id="content">
+            <%= render 'layouts/partials/public_data' %>
+            <%= render 'layouts/partials/content' %>
+        </div>
       <% end %>
       <%= yield %>
     </div>
@@ -30,4 +36,4 @@
 </html>
 
 <%= render 'layouts/partials/loaders' %>
-<%= javascript_include_tag 'sidebar' %>
+<%= javascript_include_tag 'sidebar' if current_user.present? %>
