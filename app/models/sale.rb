@@ -59,6 +59,7 @@ class Sale < ApplicationRecord
     ") unless search.blank?
 
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
+    sales = sales.where("sales.payment_methods_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
 
     sales = sales.page(query[:pagination][:current_page])
     .per(query[:pagination][:per_page])
@@ -85,7 +86,7 @@ class Sale < ApplicationRecord
 
   def self.index_options account
     {
-      payment_methods: account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method}},
+      payment_methods: account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}},
       sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
   end

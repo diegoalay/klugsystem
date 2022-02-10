@@ -54,9 +54,9 @@
                     sale_types: []
                 },
                 filters: {
-                    search: null,
-                    sale_type: null,
-                    payment_method: null
+                    search: '',
+                    sale_type: '',
+                    payment_method: ''
                 },
                 loading: false
             }
@@ -149,18 +149,20 @@
                         <b-form-select
                             v-model="filters.sale_type"
                             :options="options.sale_types"
+                            @change="list()"
                         >
                             <template #first>
-                                <option :value="null"> Todos los tipos de ventas </option>
+                                <option value=""> Todos los tipos de ventas </option>
                             </template>
                         </b-form-select>
                         &nbsp;
                         <b-form-select
                             v-model="filters.payment_method"
                             :options="options.payment_methods"
+                            @change="list()"
                         >
                             <template #first>
-                                <option :value="null"> Todas los métodos de pago </option>
+                                <option value=""> Todas los métodos de pago </option>
                             </template>
                         </b-form-select>
                 </slot>

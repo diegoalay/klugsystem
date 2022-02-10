@@ -42,6 +42,11 @@ export default {
         <div class="float-right">
             <template name="buttons">
                 <slot>
+                    <b-button :disabled="loading" variant="primary" class="mb-2" @click="reloadList">
+                        {{ loading ? "Cargando" : 'Recargar' }}
+                        <font-awesome-icon v-if="loading" icon="spinner" spin />
+                        <font-awesome-icon v-else icon="sync" />
+                    </b-button>
                     <b-button variant="outline-dark" class="mb-2" to="/new">
                         {{ titleButtonCreate }} <font-awesome-icon icon="list" />
                     </b-button>
