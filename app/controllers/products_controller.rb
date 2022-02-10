@@ -38,6 +38,8 @@ class ProductsController < ApplicationSystemController
     @product.user_creator = current_user
     @product.user_modifier = current_user
 
+    respond_with_error("Debe agregar artículos a la venta.") if params[:products].blank?
+
     if @product.save
       respond_with_successful(@product)
     else

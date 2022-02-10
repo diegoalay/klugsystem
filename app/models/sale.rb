@@ -103,8 +103,8 @@ class Sale < ApplicationRecord
   private
 
   def sale_data
-    if received_amount < total
-      errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta.")
-    end
+
+    errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta") if (received_amount < total)
+    errors.add(:base, "Debe seleccionar un tipo de venta") if sale_type.blank?
   end
 end

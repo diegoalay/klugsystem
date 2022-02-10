@@ -38,10 +38,12 @@ class SalesController < ApplicationSystemController
     @sale.user_creator = current_user
     @sale.user_modifier = current_user
 
-    if (params[:client][:id].blank?)
+    if (params[:sale][:client][:id].blank?)
       create_client
 
       @sale.client = @new_client
+    else
+      set_client
     end
 
     if @sale.save
@@ -99,10 +101,20 @@ class SalesController < ApplicationSystemController
 
   def create_client
     @new_client = @account.clients.create(
-      billing_name: params[:client][:billing_name],
-      billing_address: params[:client][:billing_address],
-      billing_email: params[:client][:billing_email],
-      billing_identifier: params[:client][:billing_identifier]
+      billing_name: params[:sale][:client][:billing_name],
+      billing_address: params[:sale][:client][:billing_address],
+      billing_email: params[:sale][:client][:billing_email],
+      billing_identifier: params[:sale][:client][:billing_identifier],
+      user_creator: current_user
+    )
+  end
+
+  def set_client
+    @account.clients.find_by(id: params[:sale][:client][:id]).update(
+      billing_name: params[:sale][:client][:billing_name],
+      billing_address: params[:sale][:client][:billing_address],
+      billing_email: params[:sale][:client][:billing_email],
+      user_modifier: current_user
     )
   end
 

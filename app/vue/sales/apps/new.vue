@@ -121,6 +121,7 @@
                         interest: this.getInterest(),
                         change: this.getChange(),
                         products: this.products,
+                        client: this.client
                     }
                 }
 
@@ -438,18 +439,6 @@
                         this.$set(this.products[key], 'discount_value', 0)
                     }
                 }
-            },
-
-            client(value){
-                clearTimeout(this.timer_client)
-
-                this.timer_client = setTimeout(() => {
-                    this.$toast.info('Cliente no encontrado')
-
-                    this.$nextTick(()=>{
-                        this.ref['client-name'].focus()
-                    })
-                }, 5000)
             }
         }
     }
@@ -533,6 +522,7 @@
                             <br>
                             <b-table
                                 class="table-scroll"
+                                responsive
                                 striped
                                 hover
                                 :items="products"
@@ -663,12 +653,17 @@
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
-                            {{ 'Q ' + getTotalSaleWithFormat() }}
+                            {{ getTotalSaleWithFormat() }}
                         </div>
 
                         <br>
 
-                        <component-autocomplete @select="(option) => client = option" text-field="details" placeholder="Buscar cliente ..." :endpoint="'/clients/search'" />
+                        <component-autocomplete
+                            @select="(option) => client = option !== null ? option : {}"
+                            text-field="billing_identifier"
+                            placeholder="Buscar por número de nit"
+                            :endpoint="'/clients/search'"
+                        />
 
                         <b-row>
                             <b-col>
@@ -743,7 +738,7 @@
                             <b-col>
                                 <b-form-group>
                                     <label> Tipo de venta <sup class="text-danger">*</sup> </label>
-                                    <b-form-select required v-model="sale.sale_types_id" :options="options.sale_types">
+                                    <b-form-select required v-model="sale.sale_type" :options="options.sale_types">
                                         <template #first>
                                             <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
                                         </template>

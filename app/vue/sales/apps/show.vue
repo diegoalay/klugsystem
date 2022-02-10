@@ -62,11 +62,11 @@ export default {
         },
 
         getSubtotal1(){
-            return this.sale.subtotal - this.sale.discount
+            return parseFloat(this.sale.subtotal) - parseFloat(this.sale.discount)
         },
 
         getSubtotal2(){
-            return this.getSubtotal1() + this.sale.interest
+            return this.getSubtotal1() + parseFloat(this.sale.interest)
         },
 
         getData(){

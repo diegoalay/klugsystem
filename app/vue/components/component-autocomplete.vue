@@ -264,6 +264,7 @@ export default {
                 }
             }else{
                 this.selected_option = null;
+                this.$emit('select', null);
                 this.$emit('input', null);
                 this.$emit('clear')
             }
