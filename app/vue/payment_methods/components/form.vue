@@ -91,7 +91,7 @@ export default {
                     </b-form-group>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Interés (%) </label>
 
@@ -107,7 +107,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Interés (Q.) </label>
 
@@ -122,7 +122,7 @@ export default {
                     </b-row>
 
                     <b-row>
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Descuento (%) </label>
 
@@ -138,7 +138,7 @@ export default {
                             </b-form-group>
                         </b-col>
 
-                        <b-col>
+                        <b-col sm="12">
                             <b-form-group>
                                 <label> Descuento (Q.) </label>
 

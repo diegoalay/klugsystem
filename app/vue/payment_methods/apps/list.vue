@@ -104,6 +104,7 @@
                     :filter="search_text"
                     @filtered="onFiltered"
                     @row-clicked="show"
+                    responsive
                 >
 
                     <template v-slot:cell(status)="row">
