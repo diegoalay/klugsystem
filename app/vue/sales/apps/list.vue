@@ -49,20 +49,28 @@
                     order_by: 'sale_date',
                     order: true,
                 },
-                search_text: '',
-                sale_type: null,
+                options: {
+                    payment_methods: [],
+                    sale_types: []
+                },
+                filters: {
+                    search: null,
+                    sale_type: null,
+                    payment_method: null
+                },
                 loading: false
             }
         },
         mounted() {
             this.list()
+            this.getOptions()
         },
         methods: {
             list(){
                 this.loading = true
 
                 const url = this.url.build('sales')
-                .filters({search: this.search_text})
+                .filters(this.filters)
                 .paginate(this.pagination.current_page, this.pagination.per_page)
                 .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
@@ -77,14 +85,31 @@
                     console.log(error)
                 })
             },
+
+            getOptions(){
+                const url = this.url.build('sales/index_options')
+
+                this.http.get(url).then(result => {
+                    if (result.successful) {
+                        this.options = result.data
+                    } else {
+                        this.$toast.error(result.error.message)
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
+
             show(sale){
                 this.$router.push(`/${sale.id}`)
             },
+
             onSearch(text){
-                this.search_text = text
+                this.filters.search = text
 
                 this.list()
             },
+
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
@@ -120,14 +145,24 @@
         <b-card>
             <component-search-list :loading="loading" @search="onSearch">
                 <slot name="filters">
-                <b-form-select
-                    v-model="sale_type"
-                    :options="options.sale_types"
-                >
-                    <template #first>
-                    <option :value="null">-- Todas las ventas --</option>
-                    </template>
-                </b-form-select>
+
+                        <b-form-select
+                            v-model="filters.sale_type"
+                            :options="options.sale_types"
+                        >
+                            <template #first>
+                                <option :value="null"> Todos los tipos de ventas </option>
+                            </template>
+                        </b-form-select>
+                        &nbsp;
+                        <b-form-select
+                            v-model="filters.payment_method"
+                            :options="options.payment_methods"
+                        >
+                            <template #first>
+                                <option :value="null"> Todas los métodos de pago </option>
+                            </template>
+                        </b-form-select>
                 </slot>
             </component-search-list>
             <b-card-body>

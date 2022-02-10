@@ -137,13 +137,13 @@
             },
 
             getOptions(){
-                const url = `${this.main_path}/options.json`
+                const url = this.url.build('sales/options')
 
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.options = result.data
                     } else {
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

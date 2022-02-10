@@ -28,6 +28,15 @@
         methods: {
             search(){
                 this.$emit("search", this.text)
+            },
+
+            isMobile() {
+                if( screen.width <= 760 ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         },
 
@@ -55,9 +64,20 @@
                     </b-input-group-append>
                 </b-input-group>
             </b-col>
-            <b-col cols="0">
+            <b-col cols="0" v-if="!isMobile()">
                 <div class="float-right">
                     <template name="filters">
+                        <b-input-group>
+                            <slot>
+                            </slot>
+                        </b-input-group>
+                    </template>
+                </div>
+            </b-col>
+            <b-col v-if="isMobile()" sm="12">
+                <div class="float-right">
+                    <template name="filters">
+                        <br>
                         <slot>
                         </slot>
                     </template>

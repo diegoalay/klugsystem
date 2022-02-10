@@ -28,7 +28,7 @@ class Sale < ApplicationRecord
       sales.id,
       sales.uuid,
       sales.sale_type,
-      sales.discount_value,
+      sales.discount,
       sales.shipping_costs,
       sales.subtotal,
       sales.total,
@@ -58,6 +58,8 @@ class Sale < ApplicationRecord
       lower(concat(employees.first_name, ' ', employees.first_surname)) like '%#{search}%'
     ") unless search.blank?
 
+    sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
+
     sales = sales.page(query[:pagination][:current_page])
     .per(query[:pagination][:per_page])
     .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
@@ -81,8 +83,9 @@ class Sale < ApplicationRecord
     }
   end
 
-  def self.options account
+  def self.index_options account
     {
+      payment_methods: account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method}},
       sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
   end
