@@ -84,7 +84,7 @@ end
   first_surname = Faker::Name.last_name
 
   account.clients.find_or_create_by!(
-    billing_name: Faker::Number.number(digits: 7),
+    billing_name: first_name + " " + first_surname,
     billing_email: Faker::Internet.email,
     billing_address: Faker::Address.country,
     billing_identifier: Faker::Number.number(digits: 7),
@@ -115,7 +115,8 @@ account.payment_methods.find_or_create_by!(
   interest_percentage: 5,
   interest_value: 50,
   user_creator: user,
-  user_modifier: user
+  user_modifier: user,
+  status: true
 )
 
 puts "SEED EXECUTED"

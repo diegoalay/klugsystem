@@ -1,9 +1,10 @@
 class CreateSaleDetails < ActiveRecord::Migration[6.1]
   def change
     create_table :sale_details do |t|
-      t.text    :description
+      t.text    :name
 
       t.decimal :total
+      t.decimal :price
       t.decimal :subtotal
       t.decimal :quantity
       t.decimal :discount_value
