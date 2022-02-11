@@ -37,3 +37,8 @@ twilio.env
 twilio.env
 
 /config/credentials/development.key
+
+/config/credentials/production.yml.enc
+deploy.sh
+.gitignore
+Gemfile.lock
