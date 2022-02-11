@@ -5,6 +5,8 @@ class CreateCatalogClientTypes < ActiveRecord::Migration[6.1]
 
       t.string :name
 
+      t.text :note
+
       t.bigint   :user_creator_id
       t.bigint   :user_modifier_id
 

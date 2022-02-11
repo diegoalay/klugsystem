@@ -1,0 +1,2 @@
+class Expediture < ApplicationRecord
+end

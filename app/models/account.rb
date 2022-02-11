@@ -12,6 +12,7 @@ class Account < ApplicationRecord
 
 
   # Catalogs
-  has_many :client_types, class_name: "Catalog::ClientType", foreign_key: "accounts_id"
-  has_many :event_types,  class_name: "Catalog::EventType",  foreign_key: "accounts_id"
+  has_many :catalog_client_types,      class_name: "Catalog::ClientType",      foreign_key: "accounts_id"
+  has_many :catalog_event_types,       class_name: "Catalog::EventType",       foreign_key: "accounts_id"
+  has_many :catalog_expediture_types,  class_name: "Catalog::ExpeditureType",  foreign_key: "accounts_id"
 end

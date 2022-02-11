@@ -1,69 +1,89 @@
-class Catalog::EventTypesController < ApplicationController
-  before_action :set_catalog_event_type, only: %i[ show edit update destroy ]
+class Catalog::EventTypesController < ApplicationSystemController
+  before_action :set_catalog_event_type, only: %i[update destroy]
 
-  # GET /catalog/event_types or /catalog/event_types.json
+  # GET /catalog_event_types or /catalog_event_types.json
   def index
-    @catalog_event_types = Catalog::EventType.all
+    respond_to do |format|
+      format.html {}
+      format.json do
+
+        respond_with_successful(@account.catalog_event_types)
+      end
+    end
   end
 
-  # GET /catalog/event_types/1 or /catalog/event_types/1.json
+  # GET /catalog_event_types/1 or /catalog_event_types/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json do
+        set_catalog_event_type
+
+        respond_with_successful(@catalog_event_type)
+      end
+    end
   end
 
-  # GET /catalog/event_types/new
+  # GET /catalog_event_types/new
   def new
-    @catalog_event_type = Catalog::EventType.new
   end
 
-  # GET /catalog/event_types/1/edit
+  # GET /catalog_event_types/1/edit
   def edit
   end
 
-  # POST /catalog/event_types or /catalog/event_types.json
+  # POST /catalog_event_types or /catalog_event_types.json
   def create
-    @catalog_event_type = Catalog::EventType.new(catalog_event_type_params)
+    @catalog_event_type = @account.catalog_event_types.new(catalog_event_type_params)
+    @catalog_event_type.user_creator = current_user
+    @catalog_event_type.user_modifier = current_user
 
-    respond_to do |format|
-      if @catalog_event_type.save
-        format.html { redirect_to @catalog_event_type, notice: "Event type was successfully created." }
-        format.json { render :show, status: :created, location: @catalog_event_type }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @catalog_event_type.errors, status: :unprocessable_entity }
-      end
+    if @catalog_event_type.save
+      respond_with_successful(@catalog_event_type)
+    else
+      respond_catalog_event_type_with_error
     end
   end
 
-  # PATCH/PUT /catalog/event_types/1 or /catalog/event_types/1.json
+  # PATCH/PUT /catalog_event_types/1 or /catalog_event_types/1.json
   def update
-    respond_to do |format|
-      if @catalog_event_type.update(catalog_event_type_params)
-        format.html { redirect_to @catalog_event_type, notice: "Event type was successfully updated." }
-        format.json { render :show, status: :ok, location: @catalog_event_type }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @catalog_event_type.errors, status: :unprocessable_entity }
-      end
+    @catalog_event_type.user_modifier = current_user
+
+    if @catalog_event_type.update(catalog_event_type_params)
+      respond_with_successful(@catalog_event_type)
+    else
+      respond_catalog_event_type_with_error
     end
   end
 
-  # DELETE /catalog/event_types/1 or /catalog/event_types/1.json
+  # DELETE /catalog_event_types/1 or /catalog_event_types/1.json
   def destroy
-    @catalog_event_type.destroy
-    respond_to do |format|
-      format.html { redirect_to catalog_event_types_url, notice: "Event type was successfully destroyed." }
-      format.json { head :no_content }
+    @catalog_event_type.user_modifier = current_user
+
+    if @catalog_event_type.destroy
+      respond_with_successful(@catalog_event_type)
+    else
+      respond_catalog_event_type_with_error
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_catalog_event_type
-      @catalog_event_type = Catalog::EventType.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def catalog_event_type_params
-      params.fetch(:catalog_event_type, {})
-    end
+  def respond_catalog_event_type_with_error
+    return respond_with_error(@catalog_event_type.errors.full_messages.to_sentence)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_catalog_event_type
+    @catalog_event_type = @account.catalog_event_types.find_by(id: params[:id])
+
+    return respond_with_not_found unless @catalog_event_type
+  end
+
+  # Only allow a list of trusted parameters through.
+  def catalog_event_type_params
+    params.fetch(:catalog_event_type, {}).permit(
+      %i[name]
+    )
+  end
 end

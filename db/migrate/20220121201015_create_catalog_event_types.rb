@@ -4,6 +4,9 @@ class CreateCatalogEventTypes < ActiveRecord::Migration[6.1]
       t.datetime :deleted_at, index: true
 
       t.string :name
+
+      t.text :note
+
       t.string :model_type, index: true
 
       t.bigint   :user_creator_id

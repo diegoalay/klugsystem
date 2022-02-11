@@ -1,69 +1,89 @@
-class Catalog::ClientTypesController < ApplicationController
-  before_action :set_catalog_client_type, only: %i[ show edit update destroy ]
+class Catalog::ClientTypesController < ApplicationSystemController
+  before_action :set_catalog_client_type, only: %i[update destroy]
 
-  # GET /catalog/client_types or /catalog/client_types.json
+  # GET /catalog_client_types or /catalog_client_types.json
   def index
-    @catalog_client_types = Catalog::ClientType.all
+    respond_to do |format|
+      format.html {}
+      format.json do
+
+        respond_with_successful(@account.catalog_client_types)
+      end
+    end
   end
 
-  # GET /catalog/client_types/1 or /catalog/client_types/1.json
+  # GET /catalog_client_types/1 or /catalog_client_types/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json do
+        set_catalog_client_type
+
+        respond_with_successful(@catalog_client_type)
+      end
+    end
   end
 
-  # GET /catalog/client_types/new
+  # GET /catalog_client_types/new
   def new
-    @catalog_client_type = Catalog::ClientType.new
   end
 
-  # GET /catalog/client_types/1/edit
+  # GET /catalog_client_types/1/edit
   def edit
   end
 
-  # POST /catalog/client_types or /catalog/client_types.json
+  # POST /catalog_client_types or /catalog_client_types.json
   def create
-    @catalog_client_type = Catalog::ClientType.new(catalog_client_type_params)
+    @catalog_client_type = @account.catalog_client_types.new(catalog_client_type_params)
+    @catalog_client_type.user_creator = current_user
+    @catalog_client_type.user_modifier = current_user
 
-    respond_to do |format|
-      if @catalog_client_type.save
-        format.html { redirect_to @catalog_client_type, notice: "Client type was successfully created." }
-        format.json { render :show, status: :created, location: @catalog_client_type }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @catalog_client_type.errors, status: :unprocessable_entity }
-      end
+    if @catalog_client_type.save
+      respond_with_successful(@catalog_client_type)
+    else
+      respond_catalog_client_type_with_error
     end
   end
 
-  # PATCH/PUT /catalog/client_types/1 or /catalog/client_types/1.json
+  # PATCH/PUT /catalog_client_types/1 or /catalog_client_types/1.json
   def update
-    respond_to do |format|
-      if @catalog_client_type.update(catalog_client_type_params)
-        format.html { redirect_to @catalog_client_type, notice: "Client type was successfully updated." }
-        format.json { render :show, status: :ok, location: @catalog_client_type }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @catalog_client_type.errors, status: :unprocessable_entity }
-      end
+    @catalog_client_type.user_modifier = current_user
+
+    if @catalog_client_type.update(catalog_client_type_params)
+      respond_with_successful(@catalog_client_type)
+    else
+      respond_catalog_client_type_with_error
     end
   end
 
-  # DELETE /catalog/client_types/1 or /catalog/client_types/1.json
+  # DELETE /catalog_client_types/1 or /catalog_client_types/1.json
   def destroy
-    @catalog_client_type.destroy
-    respond_to do |format|
-      format.html { redirect_to catalog_client_types_url, notice: "Client type was successfully destroyed." }
-      format.json { head :no_content }
+    @catalog_client_type.user_modifier = current_user
+
+    if @catalog_client_type.destroy
+      respond_with_successful(@catalog_client_type)
+    else
+      respond_catalog_client_type_with_error
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_catalog_client_type
-      @catalog_client_type = Catalog::ClientType.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def catalog_client_type_params
-      params.fetch(:catalog_client_type, {})
-    end
+  def respond_catalog_client_type_with_error
+    return respond_with_error(@catalog_client_type.errors.full_messages.to_sentence)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_catalog_client_type
+    @catalog_client_type = @account.catalog_client_types.find_by(id: params[:id])
+
+    return respond_with_not_found unless @catalog_client_type
+  end
+
+  # Only allow a list of trusted parameters through.
+  def catalog_client_type_params
+    params.fetch(:catalog_client_type, {}).permit(
+      %i[name]
+    )
+  end
 end

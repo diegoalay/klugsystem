@@ -1,13 +1,4 @@
 Rails.application.routes.draw do
-  namespace :employees do
-    resources :activities
-  end
-  resources :employees
-  namespace :cash_register do
-    resources :activities
-  end
-  resources :cash_registers
-  resources :payment_methods
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -69,8 +60,9 @@ Rails.application.routes.draw do
         end
 
         namespace :catalog do
-          resources :event_types
+          resources :expediture_types
           resources :client_types
+          resources :event_types
         end
     end
 
