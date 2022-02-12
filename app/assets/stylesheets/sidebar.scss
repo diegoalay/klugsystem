@@ -28,28 +28,6 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-@media (max-width: 768px) {
-    .card {
-        .card-body {
-            padding: 1rem 0.5rem 0.5rem 0.5rem;
-            width: 100%;
-        }
-    }
-
-    .table-scroll {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .sidebar {
-        margin-left: -250px;
-    }
-    .sidebar.active {
-        margin-left: 0;
-    }
-}
-
 p {
     line-height: 1.7em;
     color: #999;
@@ -94,9 +72,10 @@ a, a:hover, a:focus {
 }
 
 .sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #D8D8D8;
+    color: #1C1C1C;
+    background: $leftbar-hover-color;
     text-decoration: none;
+    border-right: 6px solid #1ABB9C;
 }
 
 .sidebar.active .dropdown-toggle::after {
@@ -106,6 +85,10 @@ a, a:hover, a:focus {
     -webkit-transform: translateX(50%);
     -ms-transform: translateX(50%);
     transform: translateX(50%);
+}
+
+ul ul a i {
+    margin-left: 0.5rem;
 }
 
 ul ul a {
@@ -129,4 +112,26 @@ ul li ul:hover {
     visibility: visible;
     opacity: 1;
     display: block;
+}
+
+@media (max-width: 768px) {
+    .card {
+        .card-body {
+            padding: 1rem 0.5rem 0.5rem 0.5rem;
+            width: 100%;
+        }
+    }
+
+    .table-scroll {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .sidebar {
+        margin-left: -250px;
+    }
+    .sidebar.active {
+        margin-left: 0;
+    }
 }
