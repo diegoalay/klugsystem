@@ -4,11 +4,12 @@
         components:{
             'component-form': componentForm
         },
+        mounted(){
+        },
         props: {},
         data() {
             return {
-                client: {},
-                main_path: '/clients'
+                client: {}
             }
         },
     }

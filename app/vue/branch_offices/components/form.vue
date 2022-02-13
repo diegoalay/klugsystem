@@ -30,7 +30,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Sucursal creada exitosamente.')
-                    this.$router.push(`/${result.data.id}`)
+                    this.$router.push(`/branch_offices/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }

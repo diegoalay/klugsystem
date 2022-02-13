@@ -28,10 +28,9 @@ export default {
             }
 
             this.http.post(url, form).then(result => {
-                console.log(result)
                 if (result.successful) {
                     this.$toast.success('Marca creada exitosamente.')
-                    this.$router.push(`/${result.data.id}`)
+                    this.$router.push(`/brands/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }

@@ -14,10 +14,10 @@ import catalogEventTypes from './catalog_event_types/routes.js';
 import paymentMethods from './payment_methods/routes.js';
 import branchOffices from './branch_offices/routes.js';
 
-app( "/",
+app("",
     dashboardRoutes
-    .concat(clientsRoutes)
     .concat(salesRoutes)
+    .concat(clientsRoutes)
     .concat(productsRoutes)
     .concat(brandsRoutes)
     .concat(departmentsRoutes)

@@ -16,9 +16,7 @@ if (document) {
 
             if (classes.includes('dropdown')) {
                 if (!(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
-                    el.parentElement.style.opacity = 0
-                    el.parentElement.style.visibility = "hidden"
-                    el.parentElement.style.display = "none"
+                    el.parentElement.style = '';
                 }
             }
         }

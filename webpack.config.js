@@ -1,9 +1,11 @@
 // · Including plugins and dependencies
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
-var fs = require('fs')
-var path = require('path')
-var webpack = require('webpack')
-var VueLoaderPlugin = require('vue-loader/lib/plugin')
+const fs = require('fs')
+const path = require('path')
+const webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+
 let webpackConfig = []
 
 // ·

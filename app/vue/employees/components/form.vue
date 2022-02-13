@@ -35,8 +35,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Empleado creado exitosamente.')
-
-                    this.$router.push(`/${result.data.id}`)
+                    this.$router.push(`/employees/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }

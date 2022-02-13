@@ -31,7 +31,7 @@ export default {
                 console.log(result)
                 if (result.successful) {
                     this.$toast.success('Tipo de gasto creado exitosamente.')
-                    this.$router.push(`/${result.data.id}`)
+                    this.$router.push(`/catalog/expediture_types/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }

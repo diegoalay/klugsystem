@@ -36,10 +36,10 @@ export default {
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    this.$router.push(`/${result.data.id}`)
-                    // this.notification('creado exitosamente.')
+                    this.$router.push(`/sales/${result.data.id}`)
+                    this.$toast.success('Venta creada exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
@@ -52,9 +52,9 @@ export default {
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    // this.notification('actualizado exitosamente.')
+                    this.$toast.success('Venta actualizada exitosamente.')
                 } else {
-                    // this.notification(result.data.message.errors)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)

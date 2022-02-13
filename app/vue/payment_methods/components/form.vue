@@ -34,8 +34,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Método de pago creado exitosamente.')
-
-                    this.$router.push(`/${result.data.id}`)
+                    this.$router.push(`/payment_methods/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }

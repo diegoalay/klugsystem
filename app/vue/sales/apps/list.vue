@@ -177,7 +177,7 @@
                     @row-clicked="show"
                     :sort-desc.sync="pagination.order"
                     :sort-by.sync="pagination.order_by"
-                    responsive="sm"
+                    responsive
                     sort-icon-left
                 >
                     <template v-slot:cell(actions)="row">

@@ -37,8 +37,8 @@ export default {
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    this.$router.push(`/${result.data.id}`)
                     this.$toast.success('Producto creado exitosamente.')
+                    this.$router.push(`/products/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -97,7 +97,7 @@ export default {
                                 </b-form-input>
                             </b-form-group>
                         </b-col>
-                        <b-col sm="12">
+                        <b-col md="6" sm="12">
                             <b-form-group>
                                 <label> Sku <sup class="text-danger">*</sup> </label>
 
