@@ -1,3 +1,1 @@
-<%= javascript_include_tag controller_path.gsub("/", "_").to_s if controller_asset_exists?(controller_path, "js") %>
-
 <%= javascript_include_tag("klug_app.js") if current_user.present? %>
