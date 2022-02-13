@@ -19,6 +19,8 @@ class DepartmentsController < ApplicationSystemController
       format.json do
         set_department
 
+        return respond_with_not_found unless @department
+
         respond_with_successful(@department)
       end
     end
@@ -47,6 +49,8 @@ class DepartmentsController < ApplicationSystemController
 
   # PATCH/PUT /departments/1 or /departments/1.json
   def update
+    return respond_with_not_found unless @department
+
     @department.user_modifier = current_user
 
     if @department.update(department_params)
@@ -62,6 +66,8 @@ class DepartmentsController < ApplicationSystemController
 
   # DELETE /departments/1 or /departments/1.json
   def destroy
+    return respond_with_not_found unless @department
+
     @department.user_modifier = current_user
 
     if @department.destroy
@@ -80,8 +86,6 @@ class DepartmentsController < ApplicationSystemController
   # Use callbacks to share common setup or constraints between actions.
   def set_department
     @department = @account.departments.find_by(id: params[:id])
-
-    return respond_with_not_found unless @department
   end
 
   # Only allow a list of trusted parameters through.

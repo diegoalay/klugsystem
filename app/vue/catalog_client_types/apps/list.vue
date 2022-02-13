@@ -41,7 +41,7 @@
                 })
             },
             show(catalog_client_type){
-                this.$router.push(`/${catalog_client_type.id}`)
+                this.$router.push(this.url.build('catalog/client_types/:id', {id: catalog_client_type.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('catalog/client_types/:id', {id: id})

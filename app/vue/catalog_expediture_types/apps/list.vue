@@ -41,7 +41,7 @@
                 })
             },
             show(catalog_expediture_type){
-                this.$router.push(`/${catalog_expediture_type.id}`)
+                this.$router.push(this.url.build('catalog/expediture_types/:id', {id: catalog_expediture_type.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('catalog/expediture_types/:id', {id: id})
@@ -71,8 +71,8 @@
 <template>
     <section class="application-component">
         <component-header-list
-            title="Tipos de expeditureo"
-            title-button-create="Agregar tipo de expeditureo"
+            title="Tipos de gastos"
+            title-button-create="Agregar tipo de gastos"
             :loading="loading"
             @reloadList="list"
         >

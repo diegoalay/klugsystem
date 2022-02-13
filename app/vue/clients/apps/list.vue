@@ -65,7 +65,7 @@
                 })
             },
             show(client){
-                this.$router.push(`/${client.id}`)
+                this.$router.push(this.url.build('clients/:id', {id: client.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('clients/:id', {id: id})

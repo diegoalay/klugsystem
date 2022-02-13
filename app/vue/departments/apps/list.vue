@@ -41,7 +41,7 @@
                 })
             },
             show(department){
-                this.$router.push(`/${department.id}`)
+                this.$router.push(this.url.build('departments/:id', {id: department.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('departments/:id', {id: id})

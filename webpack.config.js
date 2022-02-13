@@ -2,7 +2,7 @@
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
 var fs = require('fs')
 var path = require('path')
-var webpack = require("webpack")
+var webpack = require('webpack')
 var VueLoaderPlugin = require('vue-loader/lib/plugin')
 let webpackConfig = []
 
@@ -12,12 +12,12 @@ module.exports = env => {
     // set mode
     env.mode = env.mode ? env.mode : 'development'
     env.watch = env.watch ? env.watch : false
-    var production = env.mode == "production" ? true : false
+    var production = env.mode == 'production' ? true : false
 
     // ·
     let webpackBase = {
         watch: env.watch == 'true',
-        mode: production ? "production" : "development",
+        mode: production ? 'production' : 'development',
         performance: { hints: false },
         optimization: !production ? { minimize: false } :  {
             minimizer: [
@@ -33,7 +33,7 @@ module.exports = env => {
         entry: {},
         output: {
             path: __dirname,
-            filename: "app/assets/javascripts/[name].js"
+            filename: 'app/assets/javascripts/[name].js'
         },
         resolve: {
             alias: {
@@ -42,7 +42,7 @@ module.exports = env => {
                 vue: production ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
 
             },
-            extensions: [".js", ".mjs"]
+            extensions: ['.js', '.mjs']
         },
 
         module: {
@@ -72,7 +72,7 @@ module.exports = env => {
                 },{
                     test: /\.mjs$/,
                     include: /node_modules/,
-                    type: "javascript/auto"
+                    type: 'javascript/auto'
                 }
             ]
         },
@@ -88,13 +88,20 @@ module.exports = env => {
 
     }
 
+    // OPA
+    let filePath = './'+path.join('app', 'vue', 'app.js')
+    let fileName = 'klug_app'
+
+    webpackBase.entry[fileName] = filePath
+
     fs.readdirSync(path.join('app', 'vue')).forEach(action => {
-        if (action === 'core' || action === 'components') {
+        if (action !== 'users_sessions') {
             return
         }
 
         let filePath = './'+path.join('app', 'vue', action, 'app.js')
         let fileName = `${action.replace('.js')}`
+
         webpackBase.entry[fileName] = filePath
 
     })

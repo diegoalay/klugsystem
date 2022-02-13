@@ -54,7 +54,7 @@
                 })
             },
             show(branch_office){
-                this.$router.push(`/${branch_office.id}`)
+                this.$router.push(this.url.build('branch_offices/:id', {id: branch_office.id}).toString(false))
             },
             deleteRecord(id){
                 let url = `${this.main_path}/${id}.json`

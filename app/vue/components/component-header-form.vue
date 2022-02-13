@@ -8,12 +8,18 @@ export default {
             default: null
         },
     },
-    mounted(){
-
+    data(){
+        return {
+            main_path: null
+        }
     },
-    methods: {
-
-    }
+    mounted(){
+        this.main_path = this.$route.path
+        this.main_path = this.main_path.replace(/[0-9]/g, '')
+        this.main_path = this.main_path.replace('new', '')
+        this.main_path = this.main_path.replace('/', '')
+    },
+    methods: {}
 }
 </script>
 <template>
@@ -26,7 +32,7 @@ export default {
         <div class="float-right">
             <template name="buttons">
                 <slot>
-                    <b-button variant="outline-dark" class="mb-2" to="/">
+                    <b-button variant="outline-dark" class="mb-2" :to="`/${main_path}`">
                         Listado <font-awesome-icon icon="list" />
                     </b-button>
                 </slot>

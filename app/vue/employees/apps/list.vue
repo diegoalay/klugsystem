@@ -50,7 +50,7 @@
                 })
             },
             show(employee){
-                this.$router.push(`/${employee.id}`)
+                this.$router.push(this.url.build('employees/:id', {id: employee.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('employees/:id', {id: id})

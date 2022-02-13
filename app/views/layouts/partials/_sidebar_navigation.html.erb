@@ -1,16 +1,14 @@
-<nav class="top-navbar">
-</nav>
+
 <nav class="sidebar">
   <div class="sidebar-header">
     <h3> Klugsystem </h3>
   </div>
   <ul class="list-unstyled">
     <li>
-      <a href="/">
-        <i class="fas fa-th-large">
-        </i>
-        <span>Inicio </span>
-      </a>
+      <%= navigation_vue_item("/") do %>
+        <i class="fas fa-th-large"></i>
+        <span> Inicio </span>
+      <% end %>
     </li>
     <li>
       <a href="#" >
@@ -20,11 +18,10 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/clients" >
-            <i class="fas fa-user-friends">
-            </i>
-            <span>Clientes</span>
-          </a>
+          <%= navigation_vue_item("/clients") do %>
+            <i class="fas fa-user-friends"></i>
+            <span> Clientes </span>
+          <% end %>
         </li>
       </ul>
     </li>
@@ -36,25 +33,16 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/sales" >
-            <i class="fas fa-bars">
-            </i>
-            <span>Ventas </span>
-          </a>
+          <%= navigation_vue_item("/sales") do %>
+            <i class="fas fa-bars"></i>
+            <span> Ventas </span>
+          <% end %>
         </li>
         <li>
-          <a href="/sales/new" >
-            <i class="fas fa-shopping-cart">
-            </i>
-            <span>Vender </span>
-          </a>
-        </li>
-        <li>
-          <a href="/discounts" >
-            <i class="fas fa-percentage">
-            </i>
-            <span>Descuentos </span>
-          </a>
+          <%= navigation_vue_item("/sales/new") do %>
+            <i class="fas fa-shopping-cart"></i>
+            <span> Ventas </span>
+          <% end %>
         </li>
       </ul>
     </li>
@@ -66,25 +54,22 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/departments" >
-            <i class="fas fa-boxes">
-            </i>
-            <span>Departamentos</span>
-          </a>
+          <%= navigation_vue_item("/products") do %>
+            <i class="fas fa-boxes"></i>
+            <span> Productos </span>
+          <% end %>
         </li>
         <li>
-          <a href="/brands" >
-            <i class="fas fa-tag">
-            </i>
-            <span>Marcas</span>
-          </a>
+          <%= navigation_vue_item("/brands") do %>
+            <i class="fas fa-shopping-basket"></i>
+            <span> Marcas </span>
+          <% end %>
         </li>
         <li>
-          <a href="/products" >
-            <i class="fas fa-shopping-basket">
-            </i>
-            <span>Productos</span>
-          </a>
+          <%= navigation_vue_item("/departments") do %>
+            <i class="fas fa-boxes"></i>
+            <span> Departamentos </span>
+          <% end %>
         </li>
       </ul>
     </li>
@@ -96,25 +81,22 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/catalog/client_types" >
+          <%= navigation_vue_item("/catalog/client_types") do %>
             <i class="fas fa-briefcase"></i>
-            </i>
-            <span>Tipos de clientes</span>
-          </a>
+            <span> Tipos de clientes </span>
+          <% end %>
         </li>
         <li>
-          <a href="/catalog/expediture_types" >
-            <i class="fas fa-money-bill"></i>
-            </i>
-            <span>Tipos de gastos</span>
-          </a>
+          <%= navigation_vue_item("/catalog/expediture_types") do %>
+            <i class="fas fa-boxes"></i>
+            <span> Tipos de gastos </span>
+          <% end %>
         </li>
         <li>
-          <a href="/catalog/event_types" >
+          <%= navigation_vue_item("/catalog/event_types") do %>
             <i class="fas fa-calendar-check"></i>
-            </i>
-            <span>Tipos de eveentos</span>
-          </a>
+            <span> Tipos de evento </span>
+          <% end %>
         </li>
       </ul>
     </li>
@@ -126,11 +108,10 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/employees" >
-            <i class="fas fa-portrait">
-            </i>
-            <span>Empleados</span>
-          </a>
+          <%= navigation_vue_item("/employees") do %>
+            <i class="fas fa-portrait"></i>
+            <span> Empleados </span>
+          <% end %>
         </li>
       </ul>
     </li>
@@ -142,18 +123,16 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <a href="/branch_offices" >
-            <i class="fas fa-store-alt">
-            </i>
-            <span>Sucursales</span>
-          </a>
+          <%= navigation_vue_item("/employees") do %>
+            <i class="fas fa-store-alt"></i>
+            <span> Sucursales </span>
+          <% end %>
         </li>
         <li>
-          <a href="/payment_methods" >
-            <i class="fas fa-money-bill-wave">
-            </i>
-            <span>Métodos de pago</span>
-          </a>
+          <%= navigation_vue_item("/employees") do %>
+            <i class="fas fa-money-bill-wave"></i>
+            <span> Métodos de pago </span>
+          <% end %>
         </li>
       </ul>
     </li>

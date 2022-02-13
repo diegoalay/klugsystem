@@ -42,7 +42,7 @@
                 })
             },
             show(brand){
-                this.$router.push(`/${brand.id}`)
+                this.$router.push(this.url.build('brands/:id', {id: brand.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('brands/:id', {id: id})

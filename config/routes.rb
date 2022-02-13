@@ -29,6 +29,20 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :payment_methods do
+          collection do
+            get :options
+            get :search
+          end
+        end
+
+        resources :employees do
+          collection do
+            get :options
+            get :search
+          end
+        end
+
         resources :products do
           collection do
             get :options

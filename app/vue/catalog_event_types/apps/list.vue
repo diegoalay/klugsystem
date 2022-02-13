@@ -41,7 +41,7 @@
                 })
             },
             show(catalog_event_type){
-                this.$router.push(`/${catalog_event_type.id}`)
+                this.$router.push(this.url.build('catalog/event_types/:id', {id: catalog_event_type.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('catalog/event_types/:id', {id: id})

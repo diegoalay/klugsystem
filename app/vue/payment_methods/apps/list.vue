@@ -53,7 +53,7 @@
                 })
             },
             show(payment_method){
-                this.$router.push(`/${payment_method.id}`)
+                this.$router.push(this.url.build('payment_methods/:id', {id: payment_method.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.build('payment_methods/:id', {id: id})

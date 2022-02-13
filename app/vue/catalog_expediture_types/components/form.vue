@@ -63,31 +63,30 @@ export default {
         <b-card>
             <b-card-body>
                 <b-container>
-                    <b-row>
-                        <b-col cols="8">
-                            <b-form-group>
-                                <label> Nombre <sup class="text-danger">*</sup> </label>
+                    <b-form-group>
+                        <label> Nombre <sup class="text-danger">*</sup> </label>
 
-                                <b-form-input
-                                    v-model="catalog_expediture_type.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
+                        <b-form-input
+                            v-model="catalog_expediture_type.name"
+                            type="text"
+                            placeholder=""
+                            required
+                        >
+                        </b-form-input>
+                    </b-form-group>
 
-                        <b-form-group label="Nota">
-                            <b-form-textarea
-                                v-model="catalog_expediture_type.note"
-                                placeholder="Ingrese observaciones"
-                                rows="3"
-                            >
-                            </b-form-textarea>
-                        </b-form-group>
-                    </b-row>
+                    <b-form-group>
+                        <label> Nota </label>
+
+                        <b-form-textarea
+                            v-model="catalog_expediture_type.note"
+                            placeholder="Ingrese observaciones"
+                            rows="3"
+                        >
+                        </b-form-textarea>
+                    </b-form-group>
                 </b-container>
+                <br>
 
                 <b-container>
                     <b-button type="submit" variant="primary">Guardar</b-button>

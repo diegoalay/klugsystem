@@ -101,7 +101,7 @@
             },
 
             show(sale){
-                this.$router.push(`/${sale.id}`)
+                this.$router.push(this.url.build('sales/:id', {id: sale.id}).toString(false))
             },
 
             onSearch(text){

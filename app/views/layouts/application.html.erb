@@ -8,32 +8,36 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <div class="wrapper">
-      <% if current_user %>
+    <% if current_user %>
+      <%= render 'layouts/partials/cors' %>
+      <%= render 'layouts/partials/data' %>
+
+     <div id="app" class="wrapper">
+
         <!-- Side Bar Navigation -->
         <%= render 'layouts/partials/sidebar_navigation' %>
 
         <!-- Page Content -->
         <div id="content">
-          <%= render 'layouts/partials/data' %>
           <%= render 'layouts/partials/top_navigation' %>
           <%= render 'layouts/partials/content' %>
-          <%= render 'layouts/partials/cors' %>
         </div>
 
         <!-- Page Footer -->
         <%#= render 'layouts/partials/footer' %>
-      <% else %>
+      </div>
+    <% else %>
+      <%= render 'layouts/partials/public_data' %>
+      <div id="app" class="wrapper">
         <!-- Page Content -->
         <div id="content">
-            <%= render 'layouts/partials/public_data' %>
             <%= render 'layouts/partials/content' %>
         </div>
-      <% end %>
-      <%= yield %>
-    </div>
+      </div>
+    <% end %>
+    <%= yield %>
   </body>
 </html>
 
-<%= render 'layouts/partials/loaders' %>
+<%= render 'layouts/partials/js_loader' %>
 <%= javascript_include_tag 'sidebar' if current_user.present? %>

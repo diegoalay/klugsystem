@@ -1,51 +1,45 @@
 
 if (document) {
-    const current_sub_tab = this.localStorage.getItem('current_sub_tab')
-    const current_tab = this.localStorage.getItem('current_tab')
+    const current_page = location.pathname
 
-    if (current_sub_tab) {
-        const el = document.querySelectorAll('a[href="' + (current_sub_tab) + '"]')[0]
+    const gethrefElement = (path) => {
+        return document.querySelectorAll('a[href="' + path + '"]')[0]
+    }
+
+    const disableActiveItems = (activeEl) => {
+        const el = document.querySelector(".sidebar ul li.active")
 
         if (el) {
-            el.parentElement.classList.add('active')
-            el.parentElement.parentElement.style.opacity = 1
-            el.parentElement.parentElement.style.visibility = "visible"
-            el.parentElement.parentElement.style.display = "block"
+            el.classList.remove("active");
+
+            const classes = Array.from(el.parentElement.classList)
+
+            if (classes.includes('dropdown')) {
+                if (!(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
+                    el.parentElement.style.opacity = 0
+                    el.parentElement.style.visibility = "hidden"
+                    el.parentElement.style.display = "none"
+                }
+            }
         }
     }
 
-    if (current_tab) {
-        const el = document.querySelectorAll('a[href="' + (current_tab) + '"]')[0]
-
-        if (el ){
-            el.parentElement.classList.add('active')
-        }
+    const setActiveWithDropdown = (el) => {
+        el.parentElement.classList.add('active')
+        el.parentElement.parentElement.style.opacity = 1
+        el.parentElement.parentElement.style.visibility = "visible"
+        el.parentElement.parentElement.style.display = "block"
     }
 
-    const first_elements = document.querySelectorAll(".sidebar ul li a")
-    for (var i = 0, length = first_elements.length; i < length; i++) {
-        first_elements[i].onclick = function() {
-            const b = document.querySelector(".sidebar ul li.active")
-            if (b) b.classList.remove("active");
-            this.parentNode.classList.add('active')
-
-            const url = getRelativePath(this.href)
-            if (url === "/#") return
-
-            localStorage.setItem("current_sub_tab", null)
-            localStorage.setItem("current_tab", url)
-        };
+    const setActive = (el) => {
+        el.parentElement.classList.add('active')
     }
 
-    const second_elements = document.querySelectorAll(".sidebar ul li ul li a")
-    for (var i = 0, length = second_elements.length; i < length; i++) {
-        second_elements[i].onclick = function() {
-            const b = document.querySelector("sidebar ul li ul li.active")
-            if (b) b.classList.remove("active");
+    const getRelativePath = (url) => {
+        url = url.replace('http://localhost:3000', '')
+        url = url.replace('https://klugsystem.com', '')
 
-            localStorage.setItem("current_tab", null)
-            localStorage.setItem("current_sub_tab", getRelativePath(this.href))
-        }
+        return url
     }
 
     // Watch on click for sidebar icon
@@ -56,12 +50,45 @@ if (document) {
                 sidebar.classList.toggle('active')
             })
         }
-    }
 
-    getRelativePath = (url) => {
-        url = url.replace('http://localhost:3000', '')
-        url = url.replace('https://klugsystem.com', '')
+        let el = null
 
-        return url
+        if (current_page) {
+            let path = ('/'+current_page.split('/')[1])
+
+            el = gethrefElement(path)
+        }
+
+        if (el) {
+            const classes = Array.from(el.parentElement.parentElement.classList)
+
+            if (classes.includes('dropdown')) {
+                setActiveWithDropdown(el)
+            } else {
+                setActive(el)
+            }
+        }
+
+        const first_elements = document.querySelectorAll(".sidebar ul li a")
+        for (var i = 0, length = first_elements.length; i < length; i++) {
+            first_elements[i].onclick = function() {
+                const url = getRelativePath(this.href)
+                if (url === "/#") return
+                disableActiveItems(this)
+
+                setActive(this)
+            };
+        }
+
+        const second_elements = document.querySelectorAll(".sidebar ul li ul li a")
+        for (var i = 0, length = second_elements.length; i < length; i++) {
+            second_elements[i].onclick = function() {
+                disableActiveItems(this)
+
+                setTimeout(() => {
+                    setActiveWithDropdown(this)
+                }, 200);
+            }
+        }
     }
 }
