@@ -2,6 +2,29 @@
 if (document) {
     const current_page = location.pathname
 
+    const sideBarIsActive = () => {
+        const sidebar = document.getElementsByClassName("sidebar")[0]
+
+        const classes = Array.from(sidebar.classList)
+
+        if (classes.includes('active')) return true
+
+        return false
+    }
+
+    const toggleMobile = () => {
+        const w = window.innerWidth;
+
+        if (w <= 768) {
+            tooggleSideBar()
+        }
+    }
+
+    const tooggleSideBar = () => {
+        const sidebar = document.getElementsByClassName("sidebar")[0]
+        sidebar.classList.toggle('active')
+    }
+
     const gethrefElement = (path) => {
         return document.querySelectorAll('a[href="' + path + '"]')[0]
     }
@@ -27,10 +50,14 @@ if (document) {
         el.parentElement.parentElement.style.opacity = 1
         el.parentElement.parentElement.style.visibility = "visible"
         el.parentElement.parentElement.style.display = "block"
+
+        toggleMobile()
     }
 
     const setActive = (el) => {
         el.parentElement.classList.add('active')
+
+        toggleMobile()
     }
 
     const getRelativePath = (url) => {
@@ -44,8 +71,7 @@ if (document) {
     document.onreadystatechange = () => {
         if (document.readyState === 'complete') {
             document.getElementById("sidebarCollapse").addEventListener('click', () => {
-                const sidebar = document.getElementsByClassName("sidebar")[0]
-                sidebar.classList.toggle('active')
+                tooggleSideBar()
             })
         }
 
@@ -70,10 +96,11 @@ if (document) {
         const first_elements = document.querySelectorAll(".sidebar ul li a")
         for (var i = 0, length = first_elements.length; i < length; i++) {
             first_elements[i].onclick = function() {
-                const url = getRelativePath(this.href)
-                if (url === "/#") return
-                disableActiveItems(this)
+                const tag = this.getAttribute('href')
 
+                if (tag === "#") return
+
+                disableActiveItems(this)
                 setActive(this)
             };
         }
@@ -82,6 +109,7 @@ if (document) {
         for (var i = 0, length = second_elements.length; i < length; i++) {
             second_elements[i].onclick = function() {
                 disableActiveItems(this)
+                console.log(2)
 
                 setTimeout(() => {
                     setActiveWithDropdown(this)

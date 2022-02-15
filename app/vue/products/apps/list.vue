@@ -121,16 +121,11 @@
             <component-search-list :loading="loading" @search="onSearch"/>
             <b-card-body>
                 <b-table
+                    class="table-scroll"
                     striped
                     hover
                     :items="data"
                     :fields="fields"
-                    @filtered="onFiltered"
-                    @row-clicked="show"
-                    :sort-desc.sync="pagination.order"
-                    :sort-by.sync="pagination.order_by"
-                    responsive="sm"
-                    sort-icon-left
                 >
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">

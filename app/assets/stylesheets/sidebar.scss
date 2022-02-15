@@ -114,6 +114,10 @@ ul li ul:hover {
 }
 
 @media (max-width: 768px) {
+    .wrapper {
+        overflow-x:hidden;
+    }
+
     .card {
         .card-body {
             padding: 1rem 0.5rem 0.5rem 0.5rem;
@@ -130,6 +134,7 @@ ul li ul:hover {
     .sidebar {
         margin-left: -250px;
     }
+
     .sidebar.active {
         margin-left: 0;
     }
