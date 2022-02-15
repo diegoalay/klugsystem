@@ -15,7 +15,7 @@ class CreateDepartmentActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :department_activities, :departments, foreign_key: true
+    add_reference   :department_activities, :department, foreign_key: true
 
     add_foreign_key :department_activities, :users,   column: :user_creator_id
     add_foreign_key :department_activities, :users,   column: :user_modifier_id

@@ -15,7 +15,7 @@ class CreateCatalogEventTypeActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :catalog_event_type_activities, :catalog_event_types, foreign_key: true
+    add_reference   :catalog_event_type_activities, :catalog_event_type, foreign_key: true
 
     add_foreign_key :catalog_event_type_activities, :users,   column: :user_creator_id
     add_foreign_key :catalog_event_type_activities, :users,   column: :user_modifier_id

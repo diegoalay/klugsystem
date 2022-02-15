@@ -23,11 +23,10 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :products, :accounts,           foreign_key: true
-    add_reference   :products, :brands,             foreign_key: true
-    add_reference   :products, :branch_offices,     foreign_key: true
-    add_reference   :products, :items,              foreign_key: true
-    add_reference   :products, :departments,        foreign_key: true
+    add_reference   :products, :account,           foreign_key: true
+    add_reference   :products, :brand,             foreign_key: true
+    add_reference   :products, :branch_office,     foreign_key: true
+    add_reference   :products, :department,        foreign_key: true
 
     add_foreign_key :products, :users, column: :user_creator_id
     add_foreign_key :products, :users, column: :user_modifier_id

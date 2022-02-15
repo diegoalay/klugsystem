@@ -15,7 +15,7 @@ class CreateEmployeesActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :employee_activities, :employees, foreign_key: true
+    add_reference   :employee_activities, :employee, foreign_key: true
 
     add_foreign_key :employee_activities, :users,   column: :user_creator_id
     add_foreign_key :employee_activities, :users,   column: :user_modifier_id

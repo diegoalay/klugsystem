@@ -14,7 +14,7 @@ class CreateEventActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :event_activities, :events, foreign_key: true
+    add_reference   :event_activities, :event, foreign_key: true
 
     add_foreign_key :event_activities, :users,   column: :user_creator_id
     add_foreign_key :event_activities, :users,   column: :user_modifier_id

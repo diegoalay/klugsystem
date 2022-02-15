@@ -2,7 +2,7 @@ import appDashboardList  from './apps/list.vue'
 
 const routes =  [
     {
-        path: "/",
+        path: "/dashboard",
         component: appDashboardList
     }
 ]

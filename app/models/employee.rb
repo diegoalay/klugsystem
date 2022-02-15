@@ -1,16 +1,11 @@
 class Employee < ApplicationRecord
-  belongs_to :account,       class_name: "Account", foreign_key: "accounts_id"
-  belongs_to :user,          class_name: "User",    foreign_key: "users_id", optional: true
-  belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id"
-  belongs_to :user_modifier, class_name: "User",    foreign_key: "user_modifier_id"
+  include LoggerConcern
 
-  has_many   :activities, foreign_key: "employees_id"
+  belongs_to :user,          class_name: "User",    foreign_key: "user_id", optional: true
 
   validates :first_name, presence: true
   validates :first_surname, presence: true
   validate  :user_assignment
-
-  include LoggerConcern
 
   def self.search account, query
     search = query[:filters][:search]&.downcase
@@ -36,10 +31,10 @@ class Employee < ApplicationRecord
   private
 
   def user_assignment
-    unless users_id.blank?
+    unless user_id.blank?
       # find if there is other employee with this user
       employee = account.employees.where.not(id: id).find_by(
-        users_id: users_id
+        user_id: user_id
       )
 
       errors.add(:base, "El usuario ya ha sido tomado") unless employee.blank?

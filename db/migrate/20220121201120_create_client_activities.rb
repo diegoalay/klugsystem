@@ -15,7 +15,7 @@ class CreateClientActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :client_activities, :clients, foreign_key: true
+    add_reference   :client_activities, :client, foreign_key: true
 
     add_foreign_key :client_activities, :users,   column: :user_creator_id
     add_foreign_key :client_activities, :users,   column: :user_modifier_id

@@ -11,7 +11,7 @@ class CreateBrands < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :brands, :accounts,     foreign_key: true
+    add_reference   :brands, :account,     foreign_key: true
     add_foreign_key :brands, :users, column: :user_creator_id
     add_foreign_key :brands, :users, column: :user_modifier_id
   end

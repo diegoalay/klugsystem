@@ -9,8 +9,8 @@ class CreateUserRoles < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference :user_roles, :users, foreign_key: true
-    add_reference :user_roles, :roles, foreign_key: true
+    add_reference :user_roles, :user, foreign_key: true
+    add_reference :user_roles, :role, foreign_key: true
 
     add_foreign_key :user_roles, :users, column: :user_creator_id
     add_foreign_key :user_roles, :users, column: :user_modifier_id

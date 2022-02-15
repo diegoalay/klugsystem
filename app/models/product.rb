@@ -1,15 +1,9 @@
 class Product < ApplicationRecord
-  acts_as_paranoid
+  include LoggerConcern
 
-  belongs_to :account,       class_name: "Account", foreign_key: "accounts_id"
-  belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id"
-  belongs_to :user_modifier, class_name: "User",    foreign_key: "user_modifier_id"
-
-  belongs_to :brand,          class_name: "Brand",        foreign_key: "brands_id",        optional: :true
-  belongs_to :department,     class_name: "Department",   foreign_key: "departments_id",   optional: :true
-  belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_offices_id"
-
-  has_many   :activities, foreign_key: "products_id"
+  belongs_to :brand,          class_name: "Brand",        foreign_key: "brand_id",        optional: :true
+  belongs_to :department,     class_name: "Department",   foreign_key: "department_id",   optional: :true
+  belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_office_id"
 
   validates :sku, presence: true
   validates :name, presence: true
@@ -17,8 +11,6 @@ class Product < ApplicationRecord
   validates :retail_price, presence: true
 
   before_destroy :can_be_destroyed
-
-  include LoggerConcern
 
   def self.index account, query
     search = query[:filters][:search]
@@ -83,9 +75,9 @@ class Product < ApplicationRecord
       lower(products.name) like '%#{search}%'
     ") if search
 
-    products = products.where("brands_id = ? ", filters[:brands_id]) if filters[:brands_id]
-    products = products.where("departments_id = ? ", filters[:department_id]) if filters[:department_id]
-    products = products.where("branch_offices_id = ? ", filters[:branch_office_id]) if filters[:branch_office_id]
+    products = products.where("brand_id = ? ", filters[:brand_id]) if filters[:brand_id]
+    products = products.where("department_id = ? ", filters[:department_id]) if filters[:department_id]
+    products = products.where("branch_office_id = ? ", filters[:branch_office_id]) if filters[:branch_office_id]
 
     products
   end

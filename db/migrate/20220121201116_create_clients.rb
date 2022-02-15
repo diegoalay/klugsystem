@@ -32,8 +32,8 @@ class CreateClients < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
-    add_reference   :clients, :catalog_client_types, foreign_key: true
-    add_reference   :clients, :accounts,     foreign_key: true
+    add_reference   :clients, :catalog_client_type, foreign_key: true
+    add_reference   :clients, :account,     foreign_key: true
 
     add_foreign_key :clients, :users, column: :user_creator_id
     add_foreign_key :clients, :users, column: :user_modifier_id

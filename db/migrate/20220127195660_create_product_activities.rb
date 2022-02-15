@@ -14,7 +14,7 @@ class CreateProductActivities < ActiveRecord::Migration[6.1]
     t.timestamps
   end
 
-  add_reference   :product_activities, :products, foreign_key: true
+  add_reference   :product_activities, :product, foreign_key: true
 
   add_foreign_key :product_activities, :users,   column: :user_creator_id
   add_foreign_key :product_activities, :users,   column: :user_modifier_id

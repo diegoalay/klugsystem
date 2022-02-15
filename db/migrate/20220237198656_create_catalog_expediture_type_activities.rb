@@ -15,7 +15,7 @@ class CreateCatalogExpeditureTypeActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :catalog_expediture_type_activities, :catalog_expediture_types, foreign_key: true, index: { name: "catalog_expediture_type_activities_catalog_expediture_types" }
+    add_reference   :catalog_expediture_type_activities, :catalog_expediture_type, foreign_key: true, index: { name: "catalog_expediture_type_activities_catalog_expediture_types" }
 
     add_foreign_key :catalog_expediture_type_activities, :users,   column: :user_creator_id
     add_foreign_key :catalog_expediture_type_activities, :users,   column: :user_modifier_id

@@ -14,7 +14,7 @@ class CreatePaymentMethodActivities < ActiveRecord::Migration[6.1]
     t.timestamps
   end
 
-  add_reference   :payment_method_activities, :payment_methods, foreign_key: true
+  add_reference   :payment_method_activities, :payment_method, foreign_key: true
 
   add_foreign_key :payment_method_activities, :users,   column: :user_creator_id
   add_foreign_key :payment_method_activities, :users,   column: :user_modifier_id

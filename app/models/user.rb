@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
-  belongs_to :account,    foreign_key: "accounts_id"
+  belongs_to :account,    foreign_key: "account_id"
 
   def self.search account, query
     search = query[:filters][:search]&.downcase

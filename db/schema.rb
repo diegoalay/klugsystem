@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "branch_offices_id"
-    t.index ["branch_offices_id"], name: "index_branch_office_activities_on_branch_offices_id"
+    t.bigint "branch_office_id"
+    t.index ["branch_office_id"], name: "index_branch_office_activities_on_branch_office_id"
   end
 
   create_table "branch_offices", force: :cascade do |t|
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_branch_offices_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_branch_offices_on_account_id"
     t.index ["deleted_at"], name: "index_branch_offices_on_deleted_at"
   end
 
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "brands_id"
-    t.index ["brands_id"], name: "index_brand_activities_on_brands_id"
+    t.bigint "brand_id"
+    t.index ["brand_id"], name: "index_brand_activities_on_brand_id"
   end
 
   create_table "brands", force: :cascade do |t|
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_brands_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_brands_on_account_id"
     t.index ["deleted_at"], name: "index_brands_on_deleted_at"
   end
 
@@ -103,8 +103,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "cash_registers_id"
-    t.index ["cash_registers_id"], name: "index_cash_register_activities_on_cash_registers_id"
+    t.bigint "cash_register_id"
+    t.index ["cash_register_id"], name: "index_cash_register_activities_on_cash_register_id"
   end
 
   create_table "cash_registers", force: :cascade do |t|
@@ -117,11 +117,11 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.bigint "users_id"
-    t.index ["accounts_id"], name: "index_cash_registers_on_accounts_id"
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.index ["account_id"], name: "index_cash_registers_on_account_id"
     t.index ["deleted_at"], name: "index_cash_registers_on_deleted_at"
-    t.index ["users_id"], name: "index_cash_registers_on_users_id"
+    t.index ["user_id"], name: "index_cash_registers_on_user_id"
   end
 
   create_table "catalog_client_type_activities", force: :cascade do |t|
@@ -143,12 +143,13 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
   create_table "catalog_client_types", force: :cascade do |t|
     t.datetime "deleted_at"
     t.string "name"
+    t.text "note"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_catalog_client_types_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_catalog_client_types_on_account_id"
     t.index ["deleted_at"], name: "index_catalog_client_types_on_deleted_at"
   end
 
@@ -171,13 +172,14 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
   create_table "catalog_event_types", force: :cascade do |t|
     t.datetime "deleted_at"
     t.string "name"
+    t.text "note"
     t.string "model_type"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_catalog_event_types_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_catalog_event_types_on_account_id"
     t.index ["deleted_at"], name: "index_catalog_event_types_on_deleted_at"
     t.index ["model_type"], name: "index_catalog_event_types_on_model_type"
   end
@@ -200,13 +202,14 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
 
   create_table "catalog_expediture_types", force: :cascade do |t|
     t.string "name"
+    t.text "note"
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_catalog_expediture_types_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_catalog_expediture_types_on_account_id"
     t.index ["deleted_at"], name: "index_catalog_expediture_types_on_deleted_at"
   end
 
@@ -222,25 +225,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "clients_id"
-    t.index ["clients_id"], name: "index_client_activities_on_clients_id"
-  end
-
-  create_table "client_files", force: :cascade do |t|
-    t.string "name"
-    t.string "attachment"
-    t.string "attachment_s3"
-    t.string "attachment_public"
-    t.string "file_extension"
-    t.string "file_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.decimal "size_mb"
-    t.datetime "deleted_at, index: true"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "clients_id"
-    t.index ["clients_id"], name: "index_client_files_on_clients_id"
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_client_activities_on_client_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -267,10 +253,10 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_client_types_id"
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_clients_on_accounts_id"
-    t.index ["catalog_client_types_id"], name: "index_clients_on_catalog_client_types_id"
+    t.bigint "catalog_client_type_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_clients_on_account_id"
+    t.index ["catalog_client_type_id"], name: "index_clients_on_catalog_client_type_id"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
   end
 
@@ -286,8 +272,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "departments_id"
-    t.index ["departments_id"], name: "index_department_activities_on_departments_id"
+    t.bigint "department_id"
+    t.index ["department_id"], name: "index_department_activities_on_department_id"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -297,11 +283,11 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "departments_id"
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_departments_on_accounts_id"
+    t.bigint "department_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_departments_on_account_id"
     t.index ["deleted_at"], name: "index_departments_on_deleted_at"
-    t.index ["departments_id"], name: "index_departments_on_departments_id"
+    t.index ["department_id"], name: "index_departments_on_department_id"
   end
 
   create_table "employee_activities", force: :cascade do |t|
@@ -316,8 +302,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "employees_id"
-    t.index ["employees_id"], name: "index_employee_activities_on_employees_id"
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_employee_activities_on_employee_id"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -345,11 +331,11 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.bigint "users_id"
-    t.index ["accounts_id"], name: "index_employees_on_accounts_id"
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.index ["account_id"], name: "index_employees_on_account_id"
     t.index ["deleted_at"], name: "index_employees_on_deleted_at"
-    t.index ["users_id"], name: "index_employees_on_users_id"
+    t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
   create_table "event_activities", force: :cascade do |t|
@@ -364,8 +350,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "events_id"
-    t.index ["events_id"], name: "index_event_activities_on_events_id"
+    t.bigint "event_id"
+    t.index ["event_id"], name: "index_event_activities_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -382,12 +368,12 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
+    t.bigint "account_id"
     t.string "model_type"
     t.bigint "model_id"
-    t.bigint "catalog_event_types_id"
-    t.index ["accounts_id"], name: "index_events_on_accounts_id"
-    t.index ["catalog_event_types_id"], name: "index_events_on_catalog_event_types_id"
+    t.bigint "catalog_event_type_id"
+    t.index ["account_id"], name: "index_events_on_account_id"
+    t.index ["catalog_event_type_id"], name: "index_events_on_catalog_event_type_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
     t.index ["model_type", "model_id"], name: "index_events_on_model"
   end
@@ -404,8 +390,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "expeditures_id"
-    t.index ["expeditures_id"], name: "index_expediture_activities_on_expeditures_id"
+    t.bigint "expediture_id"
+    t.index ["expediture_id"], name: "index_expediture_activities_on_expediture_id"
   end
 
   create_table "expeditures", force: :cascade do |t|
@@ -418,24 +404,13 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_expediture_types_id"
-    t.bigint "accounts_id"
-    t.bigint "cash_registers_id"
-    t.index ["accounts_id"], name: "index_expeditures_on_accounts_id"
-    t.index ["cash_registers_id"], name: "index_expeditures_on_cash_registers_id"
-    t.index ["catalog_expediture_types_id"], name: "index_expeditures_on_catalog_expediture_types_id"
+    t.bigint "catalog_expediture_type_id"
+    t.bigint "account_id"
+    t.bigint "cash_register_id"
+    t.index ["account_id"], name: "index_expeditures_on_account_id"
+    t.index ["cash_register_id"], name: "index_expeditures_on_cash_register_id"
+    t.index ["catalog_expediture_type_id"], name: "index_expeditures_on_catalog_expediture_type_id"
     t.index ["deleted_at"], name: "index_expeditures_on_deleted_at"
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_items_on_accounts_id"
   end
 
   create_table "payment_method_activities", force: :cascade do |t|
@@ -450,8 +425,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "payment_methods_id"
-    t.index ["payment_methods_id"], name: "index_payment_method_activities_on_payment_methods_id"
+    t.bigint "payment_method_id"
+    t.index ["payment_method_id"], name: "index_payment_method_activities_on_payment_method_id"
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -466,8 +441,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_payment_methods_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_payment_methods_on_account_id"
     t.index ["deleted_at"], name: "index_payment_methods_on_deleted_at"
   end
 
@@ -483,13 +458,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "products_id"
-    t.index ["products_id"], name: "index_product_activities_on_products_id"
-  end
-
-  create_table "product_files", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_product_activities_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -507,17 +477,15 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.bigint "brands_id"
-    t.bigint "branch_offices_id"
-    t.bigint "items_id"
-    t.bigint "departments_id"
-    t.index ["accounts_id"], name: "index_products_on_accounts_id"
-    t.index ["branch_offices_id"], name: "index_products_on_branch_offices_id"
-    t.index ["brands_id"], name: "index_products_on_brands_id"
+    t.bigint "account_id"
+    t.bigint "brand_id"
+    t.bigint "branch_office_id"
+    t.bigint "department_id"
+    t.index ["account_id"], name: "index_products_on_account_id"
+    t.index ["branch_office_id"], name: "index_products_on_branch_office_id"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
-    t.index ["departments_id"], name: "index_products_on_departments_id"
-    t.index ["items_id"], name: "index_products_on_items_id"
+    t.index ["department_id"], name: "index_products_on_department_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -528,6 +496,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_roles_on_account_id"
     t.index ["deleted_at"], name: "index_roles_on_deleted_at"
   end
 
@@ -543,13 +513,14 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at, index: true"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "sales_id"
-    t.index ["sales_id"], name: "index_sale_activities_on_sales_id"
+    t.bigint "sale_id"
+    t.index ["sale_id"], name: "index_sale_activities_on_sale_id"
   end
 
   create_table "sale_details", force: :cascade do |t|
-    t.text "description"
+    t.text "name"
     t.decimal "total"
+    t.decimal "price"
     t.decimal "subtotal"
     t.decimal "quantity"
     t.decimal "discount_value"
@@ -559,15 +530,13 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.bigint "products_id"
-    t.bigint "sales_id"
-    t.string "name"
-    t.float "price"
-    t.index ["accounts_id"], name: "index_sale_details_on_accounts_id"
+    t.bigint "account_id"
+    t.bigint "product_id"
+    t.bigint "sale_id"
+    t.index ["account_id"], name: "index_sale_details_on_account_id"
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
-    t.index ["products_id"], name: "index_sale_details_on_products_id"
-    t.index ["sales_id"], name: "index_sale_details_on_sales_id"
+    t.index ["product_id"], name: "index_sale_details_on_product_id"
+    t.index ["sale_id"], name: "index_sale_details_on_sale_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -586,17 +555,17 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "clients_id"
-    t.bigint "accounts_id"
-    t.bigint "employees_id"
-    t.bigint "cash_registers_id"
-    t.bigint "payment_methods_id"
-    t.index ["accounts_id"], name: "index_sales_on_accounts_id"
-    t.index ["cash_registers_id"], name: "index_sales_on_cash_registers_id"
-    t.index ["clients_id"], name: "index_sales_on_clients_id"
+    t.bigint "client_id"
+    t.bigint "account_id"
+    t.bigint "employee_id"
+    t.bigint "cash_register_id"
+    t.bigint "payment_method_id"
+    t.index ["account_id"], name: "index_sales_on_account_id"
+    t.index ["cash_register_id"], name: "index_sales_on_cash_register_id"
+    t.index ["client_id"], name: "index_sales_on_client_id"
     t.index ["deleted_at"], name: "index_sales_on_deleted_at"
-    t.index ["employees_id"], name: "index_sales_on_employees_id"
-    t.index ["payment_methods_id"], name: "index_sales_on_payment_methods_id"
+    t.index ["employee_id"], name: "index_sales_on_employee_id"
+    t.index ["payment_method_id"], name: "index_sales_on_payment_method_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -605,11 +574,11 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "users_id"
-    t.bigint "roles_id"
+    t.bigint "user_id"
+    t.bigint "role_id"
     t.index ["deleted_at"], name: "index_user_roles_on_deleted_at"
-    t.index ["roles_id"], name: "index_user_roles_on_roles_id"
-    t.index ["users_id"], name: "index_user_roles_on_users_id"
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -640,127 +609,121 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "accounts_id"
-    t.index ["accounts_id"], name: "index_users_on_accounts_id"
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "branch_office_activities", "branch_offices", column: "branch_offices_id"
+  add_foreign_key "branch_office_activities", "branch_offices"
   add_foreign_key "branch_office_activities", "users", column: "user_creator_id"
   add_foreign_key "branch_office_activities", "users", column: "user_modifier_id"
-  add_foreign_key "branch_offices", "accounts", column: "accounts_id"
+  add_foreign_key "branch_offices", "accounts"
   add_foreign_key "branch_offices", "users", column: "user_creator_id"
   add_foreign_key "branch_offices", "users", column: "user_modifier_id"
-  add_foreign_key "brand_activities", "brands", column: "brands_id"
+  add_foreign_key "brand_activities", "brands"
   add_foreign_key "brand_activities", "users", column: "user_creator_id"
   add_foreign_key "brand_activities", "users", column: "user_modifier_id"
-  add_foreign_key "brands", "accounts", column: "accounts_id"
+  add_foreign_key "brands", "accounts"
   add_foreign_key "brands", "users", column: "user_creator_id"
   add_foreign_key "brands", "users", column: "user_modifier_id"
-  add_foreign_key "cash_register_activities", "cash_registers", column: "cash_registers_id"
+  add_foreign_key "cash_register_activities", "cash_registers"
   add_foreign_key "cash_register_activities", "users", column: "user_creator_id"
   add_foreign_key "cash_register_activities", "users", column: "user_modifier_id"
-  add_foreign_key "cash_registers", "accounts", column: "accounts_id"
+  add_foreign_key "cash_registers", "accounts"
+  add_foreign_key "cash_registers", "users"
   add_foreign_key "cash_registers", "users", column: "user_creator_id"
   add_foreign_key "cash_registers", "users", column: "user_modifier_id"
-  add_foreign_key "cash_registers", "users", column: "users_id"
   add_foreign_key "catalog_client_type_activities", "catalog_client_types"
   add_foreign_key "catalog_client_type_activities", "users", column: "user_creator_id"
   add_foreign_key "catalog_client_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_client_types", "accounts", column: "accounts_id"
+  add_foreign_key "catalog_client_types", "accounts"
   add_foreign_key "catalog_client_types", "users", column: "user_creator_id"
   add_foreign_key "catalog_client_types", "users", column: "user_modifier_id"
   add_foreign_key "catalog_event_type_activities", "catalog_event_types"
   add_foreign_key "catalog_event_type_activities", "users", column: "user_creator_id"
   add_foreign_key "catalog_event_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_event_types", "accounts", column: "accounts_id"
+  add_foreign_key "catalog_event_types", "accounts"
   add_foreign_key "catalog_event_types", "users", column: "user_creator_id"
   add_foreign_key "catalog_event_types", "users", column: "user_modifier_id"
   add_foreign_key "catalog_expediture_type_activities", "catalog_expediture_types"
   add_foreign_key "catalog_expediture_type_activities", "users", column: "user_creator_id"
   add_foreign_key "catalog_expediture_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_expediture_types", "accounts", column: "accounts_id"
+  add_foreign_key "catalog_expediture_types", "accounts"
   add_foreign_key "catalog_expediture_types", "users", column: "user_creator_id"
   add_foreign_key "catalog_expediture_types", "users", column: "user_modifier_id"
-  add_foreign_key "client_activities", "clients", column: "clients_id"
+  add_foreign_key "client_activities", "clients"
   add_foreign_key "client_activities", "users", column: "user_creator_id"
   add_foreign_key "client_activities", "users", column: "user_modifier_id"
-  add_foreign_key "client_files", "clients", column: "clients_id"
-  add_foreign_key "client_files", "users", column: "user_creator_id"
-  add_foreign_key "client_files", "users", column: "user_modifier_id"
-  add_foreign_key "clients", "accounts", column: "accounts_id"
-  add_foreign_key "clients", "catalog_client_types", column: "catalog_client_types_id"
+  add_foreign_key "clients", "accounts"
+  add_foreign_key "clients", "catalog_client_types"
   add_foreign_key "clients", "users", column: "user_creator_id"
   add_foreign_key "clients", "users", column: "user_modifier_id"
-  add_foreign_key "department_activities", "departments", column: "departments_id"
+  add_foreign_key "department_activities", "departments"
   add_foreign_key "department_activities", "users", column: "user_creator_id"
   add_foreign_key "department_activities", "users", column: "user_modifier_id"
-  add_foreign_key "departments", "accounts", column: "accounts_id"
-  add_foreign_key "departments", "departments", column: "departments_id"
+  add_foreign_key "departments", "accounts"
+  add_foreign_key "departments", "departments"
   add_foreign_key "departments", "users", column: "user_creator_id"
   add_foreign_key "departments", "users", column: "user_modifier_id"
-  add_foreign_key "employee_activities", "employees", column: "employees_id"
+  add_foreign_key "employee_activities", "employees"
   add_foreign_key "employee_activities", "users", column: "user_creator_id"
   add_foreign_key "employee_activities", "users", column: "user_modifier_id"
-  add_foreign_key "employees", "accounts", column: "accounts_id"
+  add_foreign_key "employees", "accounts"
+  add_foreign_key "employees", "users"
   add_foreign_key "employees", "users", column: "user_creator_id"
   add_foreign_key "employees", "users", column: "user_modifier_id"
-  add_foreign_key "employees", "users", column: "users_id"
-  add_foreign_key "event_activities", "events", column: "events_id"
+  add_foreign_key "event_activities", "events"
   add_foreign_key "event_activities", "users", column: "user_creator_id"
   add_foreign_key "event_activities", "users", column: "user_modifier_id"
-  add_foreign_key "events", "accounts", column: "accounts_id"
-  add_foreign_key "events", "catalog_event_types", column: "catalog_event_types_id"
+  add_foreign_key "events", "accounts"
+  add_foreign_key "events", "catalog_event_types"
   add_foreign_key "events", "users", column: "user_creator_id"
   add_foreign_key "events", "users", column: "user_modifier_id"
-  add_foreign_key "expediture_activities", "expeditures", column: "expeditures_id"
+  add_foreign_key "expediture_activities", "expeditures"
   add_foreign_key "expediture_activities", "users", column: "user_creator_id"
   add_foreign_key "expediture_activities", "users", column: "user_modifier_id"
-  add_foreign_key "expeditures", "accounts", column: "accounts_id"
-  add_foreign_key "expeditures", "cash_registers", column: "cash_registers_id"
-  add_foreign_key "expeditures", "catalog_expediture_types", column: "catalog_expediture_types_id"
+  add_foreign_key "expeditures", "accounts"
+  add_foreign_key "expeditures", "cash_registers"
+  add_foreign_key "expeditures", "catalog_expediture_types"
   add_foreign_key "expeditures", "users", column: "user_creator_id"
   add_foreign_key "expeditures", "users", column: "user_modifier_id"
-  add_foreign_key "items", "accounts", column: "accounts_id"
-  add_foreign_key "items", "users", column: "user_creator_id"
-  add_foreign_key "items", "users", column: "user_modifier_id"
-  add_foreign_key "payment_method_activities", "payment_methods", column: "payment_methods_id"
+  add_foreign_key "payment_method_activities", "payment_methods"
   add_foreign_key "payment_method_activities", "users", column: "user_creator_id"
   add_foreign_key "payment_method_activities", "users", column: "user_modifier_id"
-  add_foreign_key "payment_methods", "accounts", column: "accounts_id"
+  add_foreign_key "payment_methods", "accounts"
   add_foreign_key "payment_methods", "users", column: "user_creator_id"
   add_foreign_key "payment_methods", "users", column: "user_modifier_id"
-  add_foreign_key "product_activities", "products", column: "products_id"
+  add_foreign_key "product_activities", "products"
   add_foreign_key "product_activities", "users", column: "user_creator_id"
   add_foreign_key "product_activities", "users", column: "user_modifier_id"
-  add_foreign_key "products", "accounts", column: "accounts_id"
-  add_foreign_key "products", "branch_offices", column: "branch_offices_id"
-  add_foreign_key "products", "brands", column: "brands_id"
-  add_foreign_key "products", "departments", column: "departments_id"
-  add_foreign_key "products", "items", column: "items_id"
+  add_foreign_key "products", "accounts"
+  add_foreign_key "products", "branch_offices"
+  add_foreign_key "products", "brands"
+  add_foreign_key "products", "departments"
   add_foreign_key "products", "users", column: "user_creator_id"
   add_foreign_key "products", "users", column: "user_modifier_id"
-  add_foreign_key "sale_activities", "sales", column: "sales_id"
+  add_foreign_key "roles", "accounts"
+  add_foreign_key "sale_activities", "sales"
   add_foreign_key "sale_activities", "users", column: "user_creator_id"
   add_foreign_key "sale_activities", "users", column: "user_modifier_id"
-  add_foreign_key "sale_details", "accounts", column: "accounts_id"
-  add_foreign_key "sale_details", "products", column: "products_id"
-  add_foreign_key "sale_details", "sales", column: "sales_id"
+  add_foreign_key "sale_details", "accounts"
+  add_foreign_key "sale_details", "products"
+  add_foreign_key "sale_details", "sales"
   add_foreign_key "sale_details", "users", column: "user_creator_id"
   add_foreign_key "sale_details", "users", column: "user_modifier_id"
-  add_foreign_key "sales", "accounts", column: "accounts_id"
-  add_foreign_key "sales", "cash_registers", column: "cash_registers_id"
-  add_foreign_key "sales", "clients", column: "clients_id"
-  add_foreign_key "sales", "employees", column: "employees_id"
-  add_foreign_key "sales", "payment_methods", column: "payment_methods_id"
+  add_foreign_key "sales", "accounts"
+  add_foreign_key "sales", "cash_registers"
+  add_foreign_key "sales", "clients"
+  add_foreign_key "sales", "employees"
+  add_foreign_key "sales", "payment_methods"
   add_foreign_key "sales", "users", column: "user_creator_id"
   add_foreign_key "sales", "users", column: "user_modifier_id"
-  add_foreign_key "user_roles", "roles", column: "roles_id"
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
   add_foreign_key "user_roles", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "users", column: "user_modifier_id"
-  add_foreign_key "user_roles", "users", column: "users_id"
-  add_foreign_key "users", "accounts", column: "accounts_id"
+  add_foreign_key "users", "accounts"
   add_foreign_key "users", "users", column: "user_creator_id"
 end

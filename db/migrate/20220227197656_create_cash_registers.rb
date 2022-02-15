@@ -15,8 +15,8 @@ class CreateCashRegisters < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :cash_registers, :accounts,     foreign_key: true
-    add_reference   :cash_registers, :users,        foreign_key: true
+    add_reference   :cash_registers, :account,     foreign_key: true
+    add_reference   :cash_registers, :user,        foreign_key: true
 
     add_foreign_key :cash_registers, :users, column: :user_creator_id
     add_foreign_key :cash_registers, :users, column: :user_modifier_id

@@ -15,7 +15,7 @@ class CreateSaleActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :sale_activities, :sales, foreign_key: true
+    add_reference   :sale_activities, :sale, foreign_key: true
 
     add_foreign_key :sale_activities, :users,   column: :user_creator_id
     add_foreign_key :sale_activities, :users,   column: :user_modifier_id

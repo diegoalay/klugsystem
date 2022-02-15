@@ -54,7 +54,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
     add_index       :users, :email,                unique: true
     add_index       :users, :reset_password_token, unique: true
-    add_reference   :users, :accounts, foreign_key: true
+    add_reference   :users, :account, foreign_key: true
 
     add_foreign_key :users, :users, column: :user_creator_id
   end

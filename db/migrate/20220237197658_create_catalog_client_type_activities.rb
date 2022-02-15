@@ -15,7 +15,7 @@ class CreateCatalogClientTypeActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :catalog_client_type_activities, :catalog_client_types, foreign_key: true
+    add_reference   :catalog_client_type_activities, :catalog_client_type, foreign_key: true
 
     add_foreign_key :catalog_client_type_activities, :users,   column: :user_creator_id
     add_foreign_key :catalog_client_type_activities, :users,   column: :user_modifier_id

@@ -15,7 +15,7 @@ class CreateBranchOfficesActivities < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :branch_office_activities, :branch_offices, foreign_key: true
+    add_reference   :branch_office_activities, :branch_office, foreign_key: true
 
     add_foreign_key :branch_office_activities, :users,   column: :user_creator_id
     add_foreign_key :branch_office_activities, :users,   column: :user_modifier_id
