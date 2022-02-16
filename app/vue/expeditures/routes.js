@@ -4,15 +4,15 @@ import appBrandsShow from './apps/show.vue'
 
 const routes =  [
     {
-        path: "/brands",
+        path: "/expeditures",
         component: appBrandsList
     },
     {
-        path: "/brands/new",
+        path: "/expeditures/new",
         component: appBrandsNew
     },
     {
-        path: "/brands/:id",
+        path: "/expeditures/:id",
         component: appBrandsShow
     }
 ]

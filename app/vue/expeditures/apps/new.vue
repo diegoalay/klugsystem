@@ -6,7 +6,7 @@
         },
         data() {
             return {
-                brand: {}
+                expediture: {}
             }
         },
     }
@@ -17,6 +17,6 @@
         <component-header-form
             title="Crear marca">
         </component-header-form>
-        <component-form :brand="brand"></component-form>
+        <component-form :expediture="expediture"></component-form>
     </section>
 </template>

@@ -29,6 +29,9 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :expeditures do
+        end
+
         resources :payment_methods do
           collection do
             get :options

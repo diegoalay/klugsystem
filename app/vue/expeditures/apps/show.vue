@@ -6,8 +6,7 @@
         },
         data() {
             return {
-                main_path: '/brands',
-                brand: {},
+                expediture: {},
                 id: null
             }
         },
@@ -21,10 +20,10 @@
                 console.log(this.id)
             },
             getData(){
-                const url = this.url.build('brands/:id', {id: this.id})
+                const url = this.url.build('expeditures/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        this.brand = result.data
+                        this.expediture = result.data
                     }else{
 
                     }
@@ -39,8 +38,8 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Marcas">
+            title="Gastos">
         </component-header-form>
-        <component-form :main_path="main_path" :brand="brand"></component-form>
+        <component-form :main_path="main_path" :expediture="expediture"></component-form>
     </section>
 </template>

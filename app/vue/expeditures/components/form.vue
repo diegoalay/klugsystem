@@ -1,7 +1,7 @@
 <script>
 export default {
     props: {
-        brand: {
+        expediture: {
             required: true,
             type: Object
         }
@@ -15,22 +15,22 @@ export default {
     mounted() {},
     methods: {
         onSubmit(){
-            if (this.brand.id) {
+            if (this.expediture.id) {
                 this.putForm()
             } else {
                 this.postForm()
             }
         },
         postForm(){
-            const url = this.url.build('brands')
+            const url = this.url.build('expeditures')
             let form = {
-                brand: this.brand
+                expediture: this.expediture
             }
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('Marca creada exitosamente.')
-                    this.$router.push(`/brands/${result.data.id}`)
+                    this.$toast.success('Gasto creado exitosamente.')
+                    this.$router.push(`/expeditures/${result.data.id}`)
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -39,13 +39,13 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.build('brands/:id', {id: this.brand.id})
+            const url = this.url.build('expeditures/:id', {id: this.expediture.id})
             let form = {
-                brand: this.brand
+                expediture: this.expediture
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('Marca actualizada exitosamente.')
+                    this.$toast.success('Marca actualizado exitosamente.')
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -68,7 +68,7 @@ export default {
                                 <label> Nombre de la marca <sup class="text-danger">*</sup> </label>
 
                                 <b-form-input
-                                    v-model="brand.name"
+                                    v-model="expediture.name"
                                     type="text"
                                     placeholder=""
                                     required

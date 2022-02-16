@@ -20,7 +20,6 @@
                     current_page: 1
                 },
                 search_text: '',
-                main_path: '/brands',
                 loading: false
             }
         },
@@ -30,7 +29,7 @@
         methods: {
             list(){
                 this.loading = true
-                const url = this.url.build('brands')
+                const url = this.url.build('expeditures')
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -41,16 +40,16 @@
                     console.log(error)
                 })
             },
-            show(brand){
-                this.$router.push(this.url.build('brands/:id', {id: brand.id}).toString(false))
+            show(expediture){
+                this.$router.push(this.url.build('expeditures/:id', {id: expediture.id}).toString(false))
             },
             deleteRecord(id){
-                const url = this.url.build('brands/:id', {id: id})
+                const url = this.url.build('expeditures/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
-                        this.$toast.success('Marca eliminada exitosamente.')
+                        this.$toast.success('Gasto eliminado exitosamente.')
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -72,7 +71,7 @@
 <template>
     <section class="application-component">
         <component-header-list
-            title="Marcas"
+            title="Gastos"
             title-button-create="Agregar marca"
             :loading="loading"
             @reloadList="list"
