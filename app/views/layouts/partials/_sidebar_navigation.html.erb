@@ -27,6 +27,31 @@
     </li>
     <li>
       <a href="#">
+        <i class="fas fa-cash-register"></i>
+        <span> Caja </span>
+      </a>
+      <ul class="list-unstyled dropdown">
+        <li>
+          <%= navigation_vue_item("/expeditures") do %>
+            <% if true %>
+                <i class="fas fa-box"></i>
+                <span> Abrir caja </span>
+            <% else %>
+                <i class="fas fa-box-open"></i>
+                <span> Cerrar caja </span>
+            <% end %>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/expeditures") do %>
+            <i class="fas fa-money-bill-wave"></i>
+            <span> Gastos </span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="#">
         <i class="fas fa-store">
         </i>
         <span>Ventas & Faturación </span>
@@ -104,7 +129,7 @@
       <a href="#">
         <i class="fas fa-address-card">
         </i>
-        <span>Planilla </span>
+        <span>Recursos Humanos </span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>
@@ -123,13 +148,13 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <%= navigation_vue_item("/employees") do %>
+          <%= navigation_vue_item("/branch_offices") do %>
             <i class="fas fa-store-alt"></i>
             <span> Sucursales </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/employees") do %>
+          <%= navigation_vue_item("/payment_methods") do %>
             <i class="fas fa-money-bill-wave"></i>
             <span> Métodos de pago </span>
           <% end %>

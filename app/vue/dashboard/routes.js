@@ -4,6 +4,10 @@ const routes =  [
     {
         path: "/dashboard",
         component: appDashboardList
+    },
+    {
+        path: "/",
+        component: appDashboardList
     }
 ]
 

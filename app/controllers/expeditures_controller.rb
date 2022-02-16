@@ -1,70 +1,89 @@
-class ExpedituresController < ApplicationController
-  before_action :set_expediture, only: %i[ show edit update destroy ]
+class ExpedituresController < ApplicationSystemController
+    before_action :set_expediture, only: %i[update destroy]
 
-  # GET /expeditures or /expeditures.json
-  def index
-    @expeditures = Expediture.all
-  end
+    # GET /expeditures or /expeditures.json
+    def index
+      respond_to do |format|
+        format.html {}
+        format.json do
 
-  # GET /expeditures/1 or /expeditures/1.json
-  def show
-  end
+          respond_with_successful(@account.expeditures)
+        end
+      end
+    end
 
-  # GET /expeditures/new
-  def new
-    @expediture = Expediture.new
-  end
+    # GET /expeditures/1 or /expeditures/1.json
+    def show
+      respond_to do |format|
+        format.html {}
+        format.json do
+          set_expediture
 
-  # GET /expeditures/1/edit
-  def edit
-  end
+          respond_with_successful(@expediture)
+        end
+      end
+    end
 
-  # POST /expeditures or /expeditures.json
-  def create
-    @expediture = Expediture.new(expediture_params)
+    # GET /expeditures/new
+    def new
+    end
 
-    respond_to do |format|
+    # GET /expeditures/1/edit
+    def edit
+    end
+
+    # POST /expeditures or /expeditures.json
+    def create
+      @expediture = @account.expeditures.new(expediture_params)
+      @expediture.user_creator = current_user
+      @expediture.user_modifier = current_user
+
       if @expediture.save
-        format.html { redirect_to expediture_url(@expediture), notice: "Expediture was successfully created." }
-        format.json { render :show, status: :created, location: @expediture }
+        respond_with_successful(@expediture)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @expediture.errors, status: :unprocessable_entity }
+        respond_expediture_with_error
       end
     end
-  end
 
-  # PATCH/PUT /expeditures/1 or /expeditures/1.json
-  def update
-    respond_to do |format|
+    # PATCH/PUT /expeditures/1 or /expeditures/1.json
+    def update
+      @expediture.user_modifier = current_user
+
       if @expediture.update(expediture_params)
-        format.html { redirect_to expediture_url(@expediture), notice: "Expediture was successfully updated." }
-        format.json { render :show, status: :ok, location: @expediture }
+        respond_with_successful(@expediture)
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @expediture.errors, status: :unprocessable_entity }
+        respond_expediture_with_error
       end
     end
-  end
 
-  # DELETE /expeditures/1 or /expeditures/1.json
-  def destroy
-    @expediture.destroy
+    # DELETE /expeditures/1 or /expeditures/1.json
+    def destroy
+      @expediture.user_modifier = current_user
 
-    respond_to do |format|
-      format.html { redirect_to expeditures_url, notice: "Expediture was successfully destroyed." }
-      format.json { head :no_content }
+      if @expediture.destroy
+        respond_with_successful(@expediture)
+      else
+        respond_expediture_with_error
+      end
     end
-  end
 
-  private
+    private
+
+    def respond_expediture_with_error
+      return respond_with_error(@expediture.errors.full_messages.to_sentence)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_expediture
-      @expediture = Expediture.find(params[:id])
+      @expediture = @account.expeditures.find_by(id: params[:id])
+
+      return respond_with_not_found unless @expediture
     end
 
     # Only allow a list of trusted parameters through.
     def expediture_params
-      params.fetch(:expediture, {})
+      params.fetch(:expediture, {}).permit(
+        %i[description note amount expediture_date]
+      )
     end
-end
+  end
