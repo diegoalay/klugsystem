@@ -6,7 +6,7 @@ class CreateExpeditures < ActiveRecord::Migration[6.1]
       t.text    :note
 
       t.decimal :amount
-      t.date    :expediture_date
+      t.timestamp :expediture_date
 
       t.bigint :user_creator_id
       t.bigint :user_modifier_id

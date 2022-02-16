@@ -7,12 +7,14 @@ export default {
         }
     },
     components: {},
-    data() {
+    data(){
         return {
-
+            options: []
         }
     },
-    mounted() {},
+    mounted() {
+        this.getOptions()
+    },
     methods: {
         onSubmit(){
             if (this.expediture.id) {
@@ -45,10 +47,19 @@ export default {
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('Marca actualizado exitosamente.')
+                    this.$toast.success('Gasto actualizado exitosamente.')
                 } else {
                     this.$toast.error(result.error.message)
                 }
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        getOptions(){
+            const url = this.url.build('expeditures/options')
+
+            this.http.get(url).then(response => {
+                this.options = response.data
             }).catch(error => {
                 console.log(error)
             })
@@ -62,26 +73,65 @@ export default {
         <b-card>
             <b-card-body>
                 <b-container>
-                    <b-row>
-                        <b-col cols="8">
-                            <b-form-group>
-                                <label> Nombre de la marca <sup class="text-danger">*</sup> </label>
+                    <b-form-group>
+                        <label> Descripción <sup class="text-danger">*</sup> </label>
 
-                                <b-form-input
-                                    v-model="expediture.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
+                        <b-form-input
+                            v-model="expediture.description"
+                            type="text"
+                            placeholder=""
+                            required
+                        >
+                        </b-form-input>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <label> Monto <sup class="text-danger">*</sup> </label>
+                        <b-form-input
+                            v-model="expediture.amount"
+                            type="text"
+                            placeholder=""
+                            required
+                        >
+                        </b-form-input>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <label> Fecha de emisión </label>
+                        <br>
+                        <component-datepicker
+                            v-model="expediture.expediture_date"
+                            lang="es"
+                            format="DD-MM-YYYY hh:mm"
+                            type="datetime"
+                            placeholder=""
+                        >
+                        </component-datepicker>
+                    </b-form-group>
+
+                    <b-form-group label="Tipo de gasto">
+                        <b-form-select
+                            v-model="expediture.catalog_expediture_type_id"
+                            :options="options.expediture_types"
+                        >
+                            <template #first>
+                                <option :value="null"> Seleccione un tipo de gasto </option>
+                            </template>
+                        </b-form-select>
+                    </b-form-group>
+
+                    <b-form-group label="Nota">
+                        <b-form-textarea
+                            v-model="expediture.note"
+                            rows="3"
+                        >
+                        </b-form-textarea>
+                    </b-form-group>
                 </b-container>
 
                 <b-container>
                     <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
+                    <b-button v-if="!expediture.id" type="reset" variant="outline-dark">Limpiar</b-button>
                 </b-container>
             </b-card-body>
         </b-card>

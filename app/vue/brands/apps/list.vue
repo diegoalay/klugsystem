@@ -20,7 +20,6 @@
                     current_page: 1
                 },
                 search_text: '',
-                main_path: '/brands',
                 loading: false
             }
         },

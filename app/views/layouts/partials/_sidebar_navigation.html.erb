@@ -31,14 +31,16 @@
         <span> Caja </span>
       </a>
       <ul class="list-unstyled dropdown">
-        <li>
-          <%= navigation_vue_item("/cash_register") do %>
-            <% if true %>
-                <i class="fas fa-box"></i>
-                <span> Abrir caja </span>
-            <% else %>
-                <i class="fas fa-box-open"></i>
-                <span> Cerrar caja </span>
+      <li>
+          <% if current_user.cash_register.present? %>
+            <%= navigation_vue_item("/cash_registers/#{current_user.cash_register.id}") do %>
+              <i class="fas fa-box-open"></i>
+              <span> Cerrar caja </span>
+            <% end %>
+          <% else %>
+            <%= navigation_vue_item("/cash_registers/new") do %>
+              <i class="fas fa-box"></i>
+              <span> Abrir caja </span>
             <% end %>
           <% end %>
         </li>
@@ -66,7 +68,7 @@
         <li>
           <%= navigation_vue_item("/sales/new") do %>
             <i class="fas fa-shopping-cart"></i>
-            <span> Ventas </span>
+            <span> Punto de venta </span>
           <% end %>
         </li>
       </ul>

@@ -6,9 +6,22 @@
         data() {
             return {
                 data: [],
+                expeditures: [],
                 fields: [{
-                    label: 'Nombre',
-                    key: 'name',
+                    label: 'Fecha de gasto',
+                    key: 'expediture_date',
+                    sortable: true
+                },{
+                    label: 'Description',
+                    key: 'description',
+                    sortable: true
+                },{
+                    label: 'Tipo de gasto',
+                    key: 'expediture_type_name',
+                    sortable: true
+                },{
+                    label: 'Monto',
+                    key: 'amount',
                     sortable: true
                 },{
                     label: '',
@@ -20,21 +33,36 @@
                     current_page: 1
                 },
                 search_text: '',
-                loading: false
+                filters: {
+                    expediture_type: ''
+                },
+                loading: false,
+                options: []
             }
         },
         mounted() {
+            this.getOptions()
             this.list()
         },
         methods: {
+            getOptions(){
+                const url = this.url.build('expeditures/index_options')
+
+                this.http.get(url).then(response => {
+                    this.options = response.data
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
             list(){
                 this.loading = true
                 const url = this.url.build('expeditures')
+                .filters(this.filters)
 
                 this.http.get(url).then(response => {
                     this.data = response.data
-                    this.pagination.total = this.data.length
-
+                    this.pagination.total = response.data.length
+                    this.expeditures = this.data
                     this.loading = false
                 }).catch(error => {
                     console.log(error)
@@ -48,6 +76,7 @@
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
+                        this.expeditures = this.data
                         this.pagination.total -= 1
                         this.$toast.success('Gasto eliminado exitosamente.')
                     } else {
@@ -72,19 +101,31 @@
     <section class="application-component">
         <component-header-list
             title="Gastos"
-            title-button-create="Agregar marca"
+            title-button-create="Agregar gasto"
             :loading="loading"
             @reloadList="list"
         >
         </component-header-list>
 
         <b-card>
-            <component-search-list :loading="loading" @search="onSearch"/>
+            <component-search-list :loading="loading" @search="onSearch">
+                <slot name="filters">
+                    <b-form-select
+                        v-model="filters.expediture_type"
+                        :options="options.expediture_types"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Todos los tipo de gasto </option>
+                        </template>
+                    </b-form-select>
+                </slot>
+            </component-search-list>
             <b-card-body>
                 <b-table
                     striped
                     hover
-                    :items="data"
+                    :items="expeditures"
                     :fields="fields"
                     :current-page="pagination.current_page"
                     :per-page="pagination.per_page"

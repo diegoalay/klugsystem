@@ -20,6 +20,10 @@ export default {
         loading: {
             default: false,
             type: Boolean
+        },
+        hideCreationButton: {
+            default: false,
+            type: Boolean
         }
     },
     methods: {
@@ -47,7 +51,7 @@ export default {
                         <font-awesome-icon v-if="loading" icon="spinner" spin />
                         <font-awesome-icon v-else icon="sync" />
                     </b-button>
-                    <b-button variant="outline-dark" class="mb-2" :to="`${$route.path}/new`">
+                    <b-button v-if="!hideCreationButton" variant="outline-dark" class="mb-2" :to="`${$route.path}/new`">
                         {{ titleButtonCreate }} <font-awesome-icon icon="plus" />
                     </b-button>
                 </slot>

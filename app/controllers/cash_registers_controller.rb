@@ -1,69 +1,89 @@
-class CashRegistersController < ApplicationController
-  before_action :set_cash_register, only: %i[ show edit update destroy ]
+class CashRegistersController < ApplicationSystemController
+  before_action :set_brand, only: %i[update destroy]
 
-  # GET /cash_registers or /cash_registers.json
+  # GET /brands or /brands.json
   def index
-    @cash_registers = CashRegister.all
+    respond_to do |format|
+      format.html {}
+      format.json do
+
+        respond_with_successful(CashRegister.index(@account, @query))
+      end
+    end
   end
 
-  # GET /cash_registers/1 or /cash_registers/1.json
+  # GET /brands/1 or /brands/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.json do
+        set_brand
+
+        respond_with_successful(@cash_register)
+      end
+    end
   end
 
-  # GET /cash_registers/new
+  # GET /brands/new
   def new
-    @cash_register = CashRegister.new
   end
 
-  # GET /cash_registers/1/edit
+  # GET /brands/1/edit
   def edit
   end
 
-  # POST /cash_registers or /cash_registers.json
+  # POST /brands or /brands.json
   def create
-    @cash_register = CashRegister.new(cash_register_params)
+    @cash_register = @account.brands.new(brand_params)
+    @cash_register.user_creator = current_user
+    @cash_register.user_modifier = current_user
 
-    respond_to do |format|
-      if @cash_register.save
-        format.html { redirect_to @cash_register, notice: "Cash register was successfully created." }
-        format.json { render :show, status: :created, location: @cash_register }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @cash_register.errors, status: :unprocessable_entity }
-      end
+    if @cash_register.save
+      respond_with_successful(@cash_register)
+    else
+      respond_brand_with_error
     end
   end
 
-  # PATCH/PUT /cash_registers/1 or /cash_registers/1.json
+  # PATCH/PUT /brands/1 or /brands/1.json
   def update
-    respond_to do |format|
-      if @cash_register.update(cash_register_params)
-        format.html { redirect_to @cash_register, notice: "Cash register was successfully updated." }
-        format.json { render :show, status: :ok, location: @cash_register }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @cash_register.errors, status: :unprocessable_entity }
-      end
+    @cash_register.user_modifier = current_user
+
+    if @cash_register.update(brand_params)
+      respond_with_successful(@cash_register)
+    else
+      respond_brand_with_error
     end
   end
 
-  # DELETE /cash_registers/1 or /cash_registers/1.json
+  # DELETE /brands/1 or /brands/1.json
   def destroy
-    @cash_register.destroy
-    respond_to do |format|
-      format.html { redirect_to cash_registers_url, notice: "Cash register was successfully destroyed." }
-      format.json { head :no_content }
+    @cash_register.user_modifier = current_user
+
+    if @cash_register.destroy
+      respond_with_successful(@cash_register)
+    else
+      respond_brand_with_error
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cash_register
-      @cash_register = CashRegister.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def cash_register_params
-      params.fetch(:cash_register, {})
-    end
+  def respond_brand_with_error
+    return respond_with_error(@cash_register.errors.full_messages.to_sentence)
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_brand
+    @cash_register = @account.brands.find_by(id: params[:id])
+
+    return respond_with_not_found unless @cash_register
+  end
+
+  # Only allow a list of trusted parameters through.
+  def brand_params
+    params.fetch(:cash_register, {}).permit(
+      %i[open_date close_date initial_value @]
+    )
+  end
 end

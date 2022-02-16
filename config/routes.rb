@@ -29,7 +29,14 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :cash_registers do
+        end
+
         resources :expeditures do
+          collection do
+            get :options
+            get :index_options
+          end
         end
 
         resources :payment_methods do

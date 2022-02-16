@@ -17,13 +17,17 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
                 const url = this.url.build('expeditures/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        this.expediture = result.data
+                        this.expediture = {
+                            ...result.data,
+                            expediture_date: result.data.expediture_date ?
+                                new Date(result.data.expediture_date) :
+                                null
+                        }
                     }else{
 
                     }
@@ -40,6 +44,6 @@
         <component-header-form
             title="Gastos">
         </component-header-form>
-        <component-form :main_path="main_path" :expediture="expediture"></component-form>
+        <component-form :expediture="expediture"></component-form>
     </section>
 </template>

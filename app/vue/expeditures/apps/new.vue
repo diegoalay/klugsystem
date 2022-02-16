@@ -6,16 +6,20 @@
         },
         data() {
             return {
-                expediture: {}
+                expediture: {
+                    expediture_date: new Date(),
+                    amount: 0
+                }
             }
         },
+        mounted(){}
     }
 </script>
 
 <template>
     <section class="application-component">
         <component-header-form
-            title="Crear marca">
+            title="Crear gasto">
         </component-header-form>
         <component-form :expediture="expediture"></component-form>
     </section>

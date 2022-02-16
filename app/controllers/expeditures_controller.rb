@@ -1,3 +1,4 @@
+
 class ExpedituresController < ApplicationSystemController
     before_action :set_expediture, only: %i[update destroy]
 
@@ -7,7 +8,7 @@ class ExpedituresController < ApplicationSystemController
         format.html {}
         format.json do
 
-          respond_with_successful(@account.expeditures)
+          respond_with_successful(Expediture.index(@account, @query))
         end
       end
     end
@@ -18,6 +19,8 @@ class ExpedituresController < ApplicationSystemController
         format.html {}
         format.json do
           set_expediture
+
+          return respond_with_not_found unless @expediture
 
           respond_with_successful(@expediture)
         end
@@ -47,6 +50,8 @@ class ExpedituresController < ApplicationSystemController
 
     # PATCH/PUT /expeditures/1 or /expeditures/1.json
     def update
+      return respond_with_not_found unless @expediture
+
       @expediture.user_modifier = current_user
 
       if @expediture.update(expediture_params)
@@ -58,6 +63,8 @@ class ExpedituresController < ApplicationSystemController
 
     # DELETE /expeditures/1 or /expeditures/1.json
     def destroy
+      return respond_with_not_found unless @expediture
+
       @expediture.user_modifier = current_user
 
       if @expediture.destroy
@@ -65,6 +72,14 @@ class ExpedituresController < ApplicationSystemController
       else
         respond_expediture_with_error
       end
+    end
+
+    def index_options
+      respond_with_successful(Expediture.index_options(@account))
+    end
+
+    def options
+      respond_with_successful(Expediture.options(@account))
     end
 
     private
@@ -76,14 +91,12 @@ class ExpedituresController < ApplicationSystemController
     # Use callbacks to share common setup or constraints between actions.
     def set_expediture
       @expediture = @account.expeditures.find_by(id: params[:id])
-
-      return respond_with_not_found unless @expediture
     end
 
     # Only allow a list of trusted parameters through.
     def expediture_params
       params.fetch(:expediture, {}).permit(
-        %i[description note amount expediture_date]
+        %i[description note amount expediture_date catalog_expediture_type_id]
       )
     end
   end

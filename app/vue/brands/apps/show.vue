@@ -6,7 +6,6 @@
         },
         data() {
             return {
-                main_path: '/brands',
                 brand: {},
                 id: null
             }
@@ -41,6 +40,6 @@
         <component-header-form
             title="Marcas">
         </component-header-form>
-        <component-form :main_path="main_path" :brand="brand"></component-form>
+        <component-form :brand="brand"></component-form>
     </section>
 </template>
