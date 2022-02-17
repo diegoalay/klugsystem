@@ -109,7 +109,6 @@ if (document) {
         for (var i = 0, length = second_elements.length; i < length; i++) {
             second_elements[i].onclick = function() {
                 disableActiveItems(this)
-                console.log(2)
 
                 setTimeout(() => {
                     setActiveWithDropdown(this)
