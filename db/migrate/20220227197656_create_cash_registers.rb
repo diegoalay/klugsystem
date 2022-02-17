@@ -1,8 +1,8 @@
 class CreateCashRegisters < ActiveRecord::Migration[6.1]
   def change
     create_table :cash_registers do |t|
-      t.date    :open_date
-      t.date    :close_date
+      t.datetime    :open_date
+      t.datetime    :close_date
 
       t.decimal :initial_value
       t.decimal :final_value

@@ -60,6 +60,7 @@ class Sale < ApplicationRecord
 
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
+    sales = sales.where("sales.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
 
     sales = sales.page(query[:pagination][:current_page])
     .per(query[:pagination][:per_page])

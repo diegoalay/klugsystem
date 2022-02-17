@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    import componentForm from '../components/form.vue'
+    import componentForm from '../components/form_new.vue'
     export default {
         components:{
             'component-form': componentForm
@@ -15,7 +15,7 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Crear marca">
+            title="Apertura de caja">
         </component-header-form>
         <component-form :cash_register="cash_register"></component-form>
     </section>

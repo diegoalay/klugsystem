@@ -735,7 +735,7 @@
                         </b-form-group>
 
                         <b-row>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Tipo de venta <sup class="text-danger">*</sup> </label>
                                     <b-form-select required v-model="sale.sale_type" :options="options.sale_types">
@@ -745,7 +745,7 @@
                                     </b-form-select>
                                 </b-form-group>
                             </b-col>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Método de pago <sup class="text-danger">*</sup> </label>
                                     <b-form-select required v-model="payment_method" :options="options.payment_methods">

@@ -30,9 +30,6 @@
                     label: 'Usuario creador',
                     key: 'user_creator_name',
                     sortable: true
-                },{
-                    label: '',
-                    key: 'actions'
                 }],
                 pagination: {
                     total: 0,
@@ -42,12 +39,15 @@
                     order: true,
                 },
                 options: {
-                    payment_methods: [],
-                    cash_register_types: []
+                    cash_register_statuses: [
+                        {text: 'Abierta', value: 'open'},
+                        {text: 'Cerrada', value: 'close'}
+                    ]
                 },
                 filters: {
                     search: '',
-                    date_range: ''
+                    date_range: ['', ''],
+                    cash_register_status: ''
                 },
                 loading: false
             }
@@ -60,7 +60,16 @@
                 this.loading = true
 
                 const url = this.url.build('cash_registers')
-                .filters(this.filters)
+                .filters({
+                    search: this.filters.search,
+                    start_date: this.filters.date_range[0] ?
+                        this.filters.date_range[0].toString() :
+                        '',
+                    end_date: this.filters.date_range[1] ?
+                        this.filters.date_range[1].toString() :
+                        '',
+                    cash_register_status: this.filters.cash_register_status
+                })
                 .paginate(this.pagination.current_page, this.pagination.per_page)
                 .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
@@ -143,11 +152,20 @@
                         v-model="filters.date_range"
                         lang="es"
                         format="DD-MM-YYYY"
-                        type="datetime"
                         range
                         placeholder="Seleccione un rango de fechas"
                     >
                     </component-datepicker>
+                        &nbsp;
+                    <b-form-select
+                        v-model="filters.cash_register_status"
+                        :options="options.cash_register_statuses"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Estado de la caja </option>
+                        </template>
+                    </b-form-select>
                 </slot>
             </component-search-list>
             <b-card-body>
@@ -163,11 +181,6 @@
                     responsive
                     sort-icon-left
                 >
-                    <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-dark" class="mr-1">
-                            <font-awesome-icon icon="print" />
-                        </b-button>
-                    </template>
                 </b-table>
                 <b-col sm="4" md="4" class="my-1">
                     <b-pagination

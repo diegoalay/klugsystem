@@ -29,7 +29,7 @@
                                 null
                         }
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

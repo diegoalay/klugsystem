@@ -27,5 +27,6 @@ class User < ApplicationRecord
     .where(account: self.account)
     .where(user_creator_id: self.id)
     .where(close_date: nil)
+    .last
   end
 end

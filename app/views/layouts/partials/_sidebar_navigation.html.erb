@@ -32,6 +32,12 @@
       </a>
       <ul class="list-unstyled dropdown">
       <li>
+        <li>
+          <%= navigation_vue_item("/cash_registers") do %>
+            <i class="fas fa-bars"></i>
+            <span> Listado de cajas </span>
+          <% end %>
+        </li>
           <% if current_user.cash_register.present? %>
             <%= navigation_vue_item("/cash_registers/#{current_user.cash_register.id}") do %>
               <i class="fas fa-box-open"></i>

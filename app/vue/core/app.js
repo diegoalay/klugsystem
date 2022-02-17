@@ -5,6 +5,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
+import VueApexCharts from 'vue-apexcharts'
 
 import {
     ButtonPlugin,
@@ -38,9 +39,11 @@ import VueRouter from 'vue-router'
 // plugins
 import http from './http'
 import url from './url'
+import tools from './tools'
 
 
 // Global registration
+Vue.component('apexchart', VueApexCharts)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
 Vue.component('component-header-list', componentHeaderList)
@@ -69,12 +72,15 @@ Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
 Vue.use(DropdownPlugin)
 
+Vue.use(VueApexCharts)
+
 library.add(fas)
 
 // Libraries
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
+Vue.use(tools)
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,

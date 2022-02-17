@@ -17,7 +17,8 @@
 
         data(){
             return {
-                text: ''
+                text: '',
+                timer: null
             }
         },
 
@@ -27,16 +28,11 @@
 
         methods: {
             search(){
-                this.$emit("search", this.text)
-            },
+                clearTimeout(this.timer)
 
-            isMobile() {
-                if( screen.width <= 760 ) {
-                    return true;
-                }
-                else {
-                    return false;
-                }
+                this.timer = setTimeout(() => {
+                    this.$emit("search", this.text)
+                }, 500);
             }
         },
 
@@ -64,7 +60,7 @@
                     </b-input-group-append>
                 </b-input-group>
             </b-col>
-            <b-col cols="0" v-if="!isMobile()">
+            <b-col cols="0" v-if="!tools.isMobile()">
                 <div class="float-right">
                     <template name="filters">
                         <b-input-group>
@@ -74,7 +70,7 @@
                     </template>
                 </div>
             </b-col>
-            <b-col v-if="isMobile()" sm="12">
+            <b-col v-if="tools.isMobile()" sm="12">
                 <div class="float-right">
                     <template name="filters">
                         <br>

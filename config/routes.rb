@@ -92,6 +92,8 @@ Rails.application.routes.draw do
 
     unauthenticated do
         root 'users/sessions#new', as: :unauthenticated_root
+
+        get '*path' => redirect('/')
     end
   end
 

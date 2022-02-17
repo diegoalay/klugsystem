@@ -119,4 +119,29 @@ account.payment_methods.find_or_create_by!(
   status: true
 )
 
+account = Account.find_or_create_by(name: 'Transnunfio')
+
+[
+  {
+    first_name: "Diego",
+    first_surname: "Alay",
+    email: "diego.alay@transnunfio.com"
+  },
+  {
+    first_name: "Henry",
+    first_surname: "Alay",
+    email: "transnunfio@hotmail.com"
+  }
+].each do |user|
+  user = account.users.find_or_create_by(
+    first_name: user[:first_name],
+    first_surname: user[:first_surname],
+    email: user[:email],
+    account: account
+  )
+
+  user.password = "123456"
+  user.save!
+end
+
 puts "SEED EXECUTED"

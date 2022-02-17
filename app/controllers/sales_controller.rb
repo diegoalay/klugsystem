@@ -37,6 +37,7 @@ class SalesController < ApplicationSystemController
     @sale = @account.sales.new(sale_params)
     @sale.user_creator = current_user
     @sale.user_modifier = current_user
+    @sale.cash_register = current_user.cash_register
 
     if (params[:sale][:client][:id].blank?)
       create_client

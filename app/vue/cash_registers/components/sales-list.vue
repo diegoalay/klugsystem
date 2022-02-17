@@ -1,5 +1,11 @@
 <script type="text/javascript">
     export default {
+        props: {
+            cash_register: {
+                required: true,
+                type: Object
+            }
+        },
         components: {
 
         },
@@ -70,7 +76,10 @@
                 this.loading = true
 
                 const url = this.url.build('sales')
-                .filters(this.filters)
+                .filters({
+                    ...this.filters,
+                    cash_register_id: this.cash_register.id
+                })
                 .paginate(this.pagination.current_page, this.pagination.per_page)
                 .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
@@ -133,18 +142,9 @@
 </script>
 
 <template>
-    <section class="application-component">
-        <component-header-list
-            title="Ventas"
-            title-button-create="Vender"
-            :loading="loading"
-            @reloadList="list"
-        >
-        </component-header-list>
-
-        <b-card>
-            <component-search-list :loading="loading" @search="onSearch">
-                <slot name="filters">
+    <section>
+        <component-search-list :loading="loading" @search="onSearch">
+            <slot name="filters">
 
                     <b-form-select
                         v-model="filters.sale_type"
@@ -165,39 +165,36 @@
                             <option value=""> Todas los métodos de pago </option>
                         </template>
                     </b-form-select>
-                </slot>
-            </component-search-list>
-            <b-card-body>
-                <b-table
-                    striped
-                    hover
-                    :items="data"
-                    :fields="fields"
-                    @filtered="onFiltered"
-                    @row-clicked="show"
-                    :sort-desc.sync="pagination.order"
-                    :sort-by.sync="pagination.order_by"
-                    responsive
-                    sort-icon-left
-                >
-                    <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-dark" class="mr-1">
-                            <font-awesome-icon icon="print" />
-                        </b-button>
-                    </template>
-                </b-table>
-                <b-col sm="4" md="4" class="my-1">
-                    <b-pagination
-                        v-model="pagination.current_page"
-                        :simple="false"
-                        :total-rows="pagination.total"
-                        :per-page="pagination.per_page"
-                        align="fill"
-                        size="sm"
-                        class="my-0"
-                    ></b-pagination>
-                </b-col>
-            </b-card-body>
-        </b-card>
+            </slot>
+        </component-search-list>
+            <b-table
+                striped
+                hover
+                :items="data"
+                :fields="fields"
+                @filtered="onFiltered"
+                @row-clicked="show"
+                :sort-desc.sync="pagination.order"
+                :sort-by.sync="pagination.order_by"
+                responsive
+                sort-icon-left
+            >
+                <template v-slot:cell(actions)="">
+                    <b-button variant="outline-dark" class="mr-1">
+                        <font-awesome-icon icon="eye" />
+                    </b-button>
+                </template>
+            </b-table>
+            <b-col sm="4" md="4" class="my-1">
+                <b-pagination
+                    v-model="pagination.current_page"
+                    :simple="false"
+                    :total-rows="pagination.total"
+                    :per-page="pagination.per_page"
+                    align="fill"
+                    size="sm"
+                    class="my-0"
+                ></b-pagination>
+            </b-col>
     </section>
 </template>

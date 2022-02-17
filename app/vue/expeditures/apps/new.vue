@@ -7,8 +7,7 @@
         data() {
             return {
                 expediture: {
-                    expediture_date: new Date(),
-                    amount: 0
+                    expediture_date: new Date()
                 }
             }
         },

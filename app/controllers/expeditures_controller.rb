@@ -40,6 +40,7 @@ class ExpedituresController < ApplicationSystemController
       @expediture = @account.expeditures.new(expediture_params)
       @expediture.user_creator = current_user
       @expediture.user_modifier = current_user
+      @expediture.cash_register = current_user.cash_register
 
       if @expediture.save
         respond_with_successful(@expediture)

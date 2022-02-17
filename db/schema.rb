@@ -108,8 +108,8 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
   end
 
   create_table "cash_registers", force: :cascade do |t|
-    t.date "open_date"
-    t.date "close_date"
+    t.datetime "open_date"
+    t.datetime "close_date"
     t.decimal "initial_value"
     t.decimal "final_value"
     t.bigint "user_creator_id"
@@ -398,7 +398,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.string "description"
     t.text "note"
     t.decimal "amount"
-    t.date "expediture_date"
+    t.datetime "expediture_date"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "deleted_at"

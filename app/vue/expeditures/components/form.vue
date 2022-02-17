@@ -89,7 +89,7 @@ export default {
                         <label> Monto <sup class="text-danger">*</sup> </label>
                         <b-form-input
                             v-model="expediture.amount"
-                            type="text"
+                            type="number"
                             placeholder=""
                             required
                         >

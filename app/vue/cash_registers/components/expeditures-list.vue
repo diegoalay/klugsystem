@@ -1,7 +1,10 @@
 <script type="text/javascript">
     export default {
-        components: {
-
+        props: {
+            cash_register: {
+                required: true,
+                type: Object
+            }
         },
         data() {
             return {
@@ -57,7 +60,10 @@
             list(){
                 this.loading = true
                 const url = this.url.build('expeditures')
-                .filters(this.filters)
+                .filters({
+                    ...this.filters,
+                    cash_register_id: this.cash_register.id
+                })
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -98,61 +104,48 @@
 </script>
 
 <template>
-    <section class="application-component">
-        <component-header-list
-            title="Gastos"
-            title-button-create="Agregar gasto"
-            :loading="loading"
-            @reloadList="list"
-        >
-        </component-header-list>
-
-        <b-card>
-            <component-search-list :loading="loading" @search="onSearch">
-                <slot name="filters">
-                    <b-form-select
-                        v-model="filters.expediture_type"
-                        :options="options.expediture_types"
-                        @change="list()"
-                    >
-                        <template #first>
-                            <option value=""> Todos los tipo de gasto </option>
-                        </template>
-                    </b-form-select>
-                    &nbsp;
-                </slot>
-            </component-search-list>
-            <b-card-body>
-                <b-table
-                    striped
-                    hover
-                    :items="expeditures"
-                    :fields="fields"
-                    :current-page="pagination.current_page"
-                    :per-page="pagination.per_page"
-                    :filter="search_text"
-                    @filtered="onFiltered"
-                    @row-clicked="show"
-                    responsive
+    <section>
+        <component-search-list :loading="loading" @search="onSearch">
+            <slot name="filters">
+                <b-form-select
+                    v-model="filters.expediture_type"
+                    :options="options.expediture_types"
+                    @change="list()"
                 >
-                    <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
-                        </b-button>
+                    <template #first>
+                        <option value=""> Todos los tipo de gasto </option>
                     </template>
-                </b-table>
-                <b-col sm="4" md="4" class="my-1">
-                    <b-pagination
-                        v-model="pagination.current_page"
-                        :simple="false"
-                        :total-rows="pagination.total"
-                        :per-page="pagination.per_page"
-                        align="fill"
-                        size="sm"
-                        class="my-0"
-                    ></b-pagination>
-                </b-col>
-            </b-card-body>
-        </b-card>
+                </b-form-select>
+            </slot>
+        </component-search-list>
+        <b-table
+            striped
+            hover
+            :items="expeditures"
+            :fields="fields"
+            :current-page="pagination.current_page"
+            :per-page="pagination.per_page"
+            :filter="search_text"
+            @filtered="onFiltered"
+            @row-clicked="show"
+            responsive
+        >
+            <template v-slot:cell(actions)="row" v-if="!cash_register.closed">
+                <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                    <b-icon icon="trash-fill"></b-icon>
+                </b-button>
+            </template>
+        </b-table>
+        <b-col sm="4" md="4" class="my-1">
+            <b-pagination
+                v-model="pagination.current_page"
+                :simple="false"
+                :total-rows="pagination.total"
+                :per-page="pagination.per_page"
+                align="fill"
+                size="sm"
+                class="my-0"
+            ></b-pagination>
+        </b-col>
     </section>
 </template>

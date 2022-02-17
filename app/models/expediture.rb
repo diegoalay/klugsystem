@@ -1,6 +1,8 @@
 class Expediture < ApplicationRecord
     belongs_to :expediture_type, class_name: "Catalog::ExpeditureType", foreign_key: "catalog_expediture_type_id", optional: true
 
+    belongs_to :cash_register
+
     include LoggerConcern
 
     validates :description, presence: true
@@ -16,6 +18,7 @@ class Expediture < ApplicationRecord
       .left_joins(:expediture_type)
 
       expeditures = expeditures.where("catalog_expediture_types.id = ?", query[:filters][:expediture_type]) unless query[:filters][:expediture_type].blank?
+      expeditures = expeditures.where("expeditures.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
 
       expeditures
     end

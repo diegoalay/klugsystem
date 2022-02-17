@@ -25,7 +25,7 @@
                     if (result.successful) {
                         this.brand = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

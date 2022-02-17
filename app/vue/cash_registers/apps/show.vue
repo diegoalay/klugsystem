@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    import componentForm from '../components/form.vue'
+    import componentForm from '../components/form_show.vue'
     export default {
         components:{
             'component-form': componentForm
@@ -17,15 +17,15 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
             },
             getData(){
                 const url = this.url.build('cash_registers/:id', {id: this.id})
+
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.cash_register = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)
@@ -38,8 +38,22 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Marcas">
+            title="Caja"
+        >
+            <slot name="buttons">
+                <b-button variant="outline-dark" class="mb-2" to="/cash_registers">
+                    Listado <font-awesome-icon icon="list" />
+                </b-button>
+
+                <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/sales/new">
+                    Vender <font-awesome-icon icon="shopping-cart" />
+                </b-button>
+
+                <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/expeditures/new">
+                    Gasto <font-awesome-icon icon="money-bill-wave" />
+                </b-button>
+            </slot>
         </component-header-form>
-        <component-form :cash_register="cash_register"></component-form>
+        <component-form v-if="cash_register.id" :cash_register="cash_register"></component-form>
     </section>
 </template>
