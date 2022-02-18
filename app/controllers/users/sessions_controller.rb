@@ -5,7 +5,7 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def create
-    resource = User.find_for_database_authentication(email: sign_in_params[:email]&.downcase)
+    resource = User.find_for_database_authentication(email: sign_in_params[:email]&.downcase&.strip)
 
     return respond_with_error('Usuario no encontrado') unless resource
 

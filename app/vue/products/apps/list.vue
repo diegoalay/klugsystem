@@ -128,6 +128,8 @@
                     :fields="fields"
                     :sort-desc.sync="pagination.order"
                     :sort-by.sync="pagination.order_by"
+                    @row-clicked="show"
+                    responsive
                 >
                     <template #head()="{ label, field: { key, sortable }}">
                         {{ label }}

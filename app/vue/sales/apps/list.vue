@@ -178,8 +178,16 @@
                     :sort-desc.sync="pagination.order"
                     :sort-by.sync="pagination.order_by"
                     responsive
-                    sort-icon-left
                 >
+                    <template #head()="{ label, field: { key, sortable }}">
+                        {{ label }}
+                        <template v-if="sortable">
+                            <template>
+                                <font-awesome-icon v-if="((pagination.order) && (pagination.order_by === key))" icon="sort-down" />
+                                <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
+                            </template>
+                        </template>
+                    </template>
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
