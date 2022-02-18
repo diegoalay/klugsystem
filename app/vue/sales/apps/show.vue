@@ -122,7 +122,7 @@ export default {
                     Vender <font-awesome-icon icon="shopping-cart" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" to="/">
+                <b-button variant="outline-dark" class="mb-2" to="/sales">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>

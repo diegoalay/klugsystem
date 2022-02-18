@@ -5,7 +5,26 @@ class Employee < ApplicationRecord
 
   validates :first_name, presence: true
   validates :first_surname, presence: true
+
   validate  :user_assignment
+
+  def self.index account
+    clients = account.employees.select("
+      employees.id,
+      trim(
+        concat(
+          employees.first_name,
+          ' ',
+          employees.second_name
+        )
+      ) as full_name,
+      employees.third_name,
+      employees.first_surname,
+      employees.second_surname,
+      users.email as user_email
+    ")
+    .left_joins(:user)
+  end
 
   def self.search account, query
     search = query[:filters][:search]&.downcase
@@ -16,10 +35,13 @@ class Employee < ApplicationRecord
       second_name
       third_name,
       first_surname,
-      second_surname
+      second_surname,
+      users.email as user_email
     ")
+    .left_joins(:user)
 
     clients = clients.where("
+      lower(users.email) like '%#{search}%' or
       lower(first_name) like '%#{search}%' or
       lower(last_name) like '%#{search}%' or
       lower(billing_name) like '%#{search}%' or

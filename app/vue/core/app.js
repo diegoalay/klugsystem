@@ -8,6 +8,7 @@ import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import VueApexCharts from 'vue-apexcharts'
 
 import {
+    NavbarPlugin,
     ButtonPlugin,
     FormPlugin,
     PaginationPlugin,
@@ -71,6 +72,7 @@ Vue.use(FormTagsPlugin)
 Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
 Vue.use(DropdownPlugin)
+Vue.use(NavbarPlugin)
 
 Vue.use(VueApexCharts)
 

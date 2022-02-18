@@ -2,28 +2,26 @@
 @import "colors";
 
 .top-navbar {
-    display: flex;
-    overflow: hidden;
-    position: fixed;
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
     margin-bottom: 1em;
     background-color: $topbar-color;
     border-bottom: 0.2em solid $topbar-border-color;
+    font-size: 16px;
+
+    .nav-link:hover {
+        text-decoration: none;
+        background: $topbar-color;
+        color: black;
+    }
+
+    .dropdown-item {
+        padding: 10px;
+    }
 }
 
-.top-navbar a {
-    float: left;
-    display: block;
-    color:  $topbar-font-color;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-}
-
-.navbar a:hover {
-    text-decoration: none;
-    background: $topbar-hover-color;
-    color: black;
+.navbar-light .navbar-nav .nav-link{
+    color:black!important;
+    font-size: 16px;
 }

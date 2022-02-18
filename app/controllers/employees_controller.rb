@@ -7,7 +7,7 @@ class EmployeesController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(@account.employees)
+        respond_with_successful(Employee.index(@account))
       end
     end
   end
@@ -111,7 +111,7 @@ class EmployeesController < ApplicationSystemController
         salary_base
         salary_administrative
         bonuses
-        users_id
+        user_id
       ]
     )
   end

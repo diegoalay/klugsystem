@@ -1,5 +1,4 @@
 class Sale < ApplicationRecord
-  belongs_to :account,        class_name: "Account",       foreign_key: "account_id"
   belongs_to :client,         class_name: "Client",        foreign_key: "client_id"
   belongs_to :user_creator,   class_name: "User",          foreign_key: "user_creator_id"
   belongs_to :user_modifier,  class_name: "User",          foreign_key: "user_modifier_id"
@@ -7,7 +6,6 @@ class Sale < ApplicationRecord
   belongs_to :cash_register,  class_name: "CashRegister",  foreign_key: "cash_register_id", optional: true
   belongs_to :payment_method, class_name: "PaymentMethod", foreign_key: "payment_method_id"
 
-  has_many   :activities, foreign_key: "sale_id"
   has_many   :details,    foreign_key: "sale_id"
 
   validate :sale_data

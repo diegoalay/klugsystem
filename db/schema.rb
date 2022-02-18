@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_198656) do
+ActiveRecord::Schema.define(version: 2022_02_37_198657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -568,6 +568,22 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
     t.index ["payment_method_id"], name: "index_sales_on_payment_method_id"
   end
 
+  create_table "user_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_activities_on_user_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
@@ -720,6 +736,9 @@ ActiveRecord::Schema.define(version: 2022_02_37_198656) do
   add_foreign_key "sales", "payment_methods"
   add_foreign_key "sales", "users", column: "user_creator_id"
   add_foreign_key "sales", "users", column: "user_modifier_id"
+  add_foreign_key "user_activities", "users"
+  add_foreign_key "user_activities", "users", column: "user_creator_id"
+  add_foreign_key "user_activities", "users", column: "user_modifier_id"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_roles", "users", column: "user_creator_id"

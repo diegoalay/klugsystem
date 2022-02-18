@@ -1,4 +1,32 @@
-<nav class="top-navbar navbar navbar-light d-flex">
+<template>
+  <div>
+    <b-navbar class="top-navbar" variant="default">
+      <b-navbar-nav>
+        <b-nav-item  id="sidebarCollapse">
+            <i class="fas fa-bars"></i>
+        </b-nav-item>
+      </b-navbar-nav>
+
+      <!-- Navbar dropdowns -->
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item-dropdown class="ml-auto" text="<%= current_user.name %>" right>
+          <b-dropdown-item to="/profile">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <span> Mi perfil </span>
+          </b-dropdown-item>
+
+          <b-dropdown-item href="/sign_out">
+              <i class="fas fa-sign-out-alt" ></i>
+              <span> Salir </span>
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-navbar>
+  </div>
+</template>
+
+
+<%# <nav class="top-navbar navbar navbar-light d-flex">
   <a href="#" class="mr-auto p-2" id="sidebarCollapse">
     <i class="fas fa-bars"></i>
   </a>
@@ -18,4 +46,4 @@
     <i class="fas fa-sign-out-alt"></i>
     <span> Salir </span>
   </a>
-</nav>
+</nav> %>

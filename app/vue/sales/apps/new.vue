@@ -114,7 +114,7 @@
                 let form = {
                     sale: {
                         ... this.sale,
-                        clients_id: this.client.id,
+                        client_id: this.client.id,
                         subtotal: this.getSum('subtotal'),
                         total: this.getTotalSale(),
                         discount: this.getDiscount(),
@@ -128,7 +128,7 @@
                 this.http.post(url, form).then(result => {
                     if (result.successful) {
                         this.$toast.success('Venta realizada.')
-                        this.$router.push(`/${result.data.id}`)
+                        this.$router.push(`/sales/${result.data.id}`)
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -424,9 +424,9 @@
         watch: {
             payment_method(value){
                 if (value.id) {
-                    this.$set(this.sale, 'payment_methods_id', value.id)
+                    this.$set(this.sale, 'payment_method_id', value.id)
                 } else {
-                    this.$set(this.sale, 'payment_methods_id', null)
+                    this.$set(this.sale, 'payment_method_id', null)
                 }
 
                 this.payment_method_discount = {}

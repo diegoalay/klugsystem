@@ -126,7 +126,19 @@
                     hover
                     :items="data"
                     :fields="fields"
+                    :sort-desc.sync="pagination.order"
+                    :sort-by.sync="pagination.order_by"
                 >
+                    <template #head()="{ label, field: { key, sortable }}">
+                        {{ label }}
+                        <template v-if="sortable">
+                            <template>
+                                <font-awesome-icon v-if="((pagination.order) && (pagination.order_by === key))" icon="sort-down" />
+                                <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
+                            </template>
+                        </template>
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <b-icon icon="trash-fill"></b-icon>

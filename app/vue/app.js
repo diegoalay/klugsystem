@@ -15,12 +15,14 @@ import brandsRoutes from './brands/routes.js';
 import employeeRoutes from './employees/routes.js';
 
 import departmentsRoutes from './departments/routes.js';
-import catalogClientTypes from './catalog_client_types/routes.js';
-import catalogExpeditureTypes from './catalog_expediture_types/routes.js';
-import catalogEventTypes from './catalog_event_types/routes.js';
+import catalogClientTypesRoutes from './catalog_client_types/routes.js';
+import catalogExpeditureTypesRoutes from './catalog_expediture_types/routes.js';
+import catalogEventTypesRoutes from './catalog_event_types/routes.js';
 
-import paymentMethods from './payment_methods/routes.js';
-import branchOffices from './branch_offices/routes.js';
+import paymentMethodsRoutes from './payment_methods/routes.js';
+import branchOfficesRoutes from './branch_offices/routes.js';
+
+import profileRoutes from './profile/routes.js'
 
 app("",
     dashboardRoutes
@@ -32,9 +34,10 @@ app("",
     .concat(brandsRoutes)
     .concat(departmentsRoutes)
     .concat(employeeRoutes)
-    .concat(catalogClientTypes)
-    .concat(catalogExpeditureTypes)
-    .concat(catalogEventTypes)
-    .concat(paymentMethods)
-    .concat(branchOffices)
+    .concat(catalogClientTypesRoutes)
+    .concat(catalogExpeditureTypesRoutes)
+    .concat(catalogEventTypesRoutes)
+    .concat(paymentMethodsRoutes)
+    .concat(branchOfficesRoutes)
+    .concat(profileRoutes)
 )

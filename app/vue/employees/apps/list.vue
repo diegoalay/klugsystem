@@ -8,15 +8,15 @@
                 data: [],
                 fields: [{
                     label: 'Nombre',
-                    key: 'first_name',
-                    sortable: true
-                },{
-                    label: 'Apellido',
-                    key: 'first_surname',
+                    key: 'full_name',
                     sortable: true
                 },{
                     label: 'DPI',
                     key: 'identity_document_number',
+                    sortable: true
+                },{
+                    label: 'User e-mail',
+                    key: 'user_email',
                     sortable: true
                 },{
                     label: '',
@@ -26,6 +26,10 @@
                     total: 0,
                     per_page: 10,
                     current_page: 1
+                },
+                sorting: {
+                    desc: false,
+                    column: 'full_name'
                 },
                 search_text: '',
                 main_path: '/employees',
@@ -101,7 +105,19 @@
                     :filter="search_text"
                     @filtered="onFiltered"
                     @row-clicked="show"
+                    :sort-desc.sync="sorting.desc"
+                    :sort-by.sync="sorting.column"
                 >
+                    <template #head()="{ label, field: { key, sortable }}">
+                        {{ label }}
+                        <template v-if="sortable">
+                            <template>
+                                <font-awesome-icon v-if="((sorting.desc) && (sorting.column === key))" icon="sort-down" />
+                                <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
+                            </template>
+                        </template>
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <b-icon icon="trash-fill"></b-icon>

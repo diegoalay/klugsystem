@@ -131,7 +131,7 @@ export default {
 
                         <b-col sm="12">
                             <b-form-group>
-                                <label> Segundo nombre </label>
+                                <label> Segundo apellido </label>
 
                                 <b-form-input
                                     v-model="employee.second_surname"
@@ -196,10 +196,10 @@ export default {
 
                                     <component-autocomplete
                                         :placeholder="`Buscar por correo electrónico`"
-                                        :default-option-id="employee.users_id"
+                                        :default-option-id="employee.user_id"
                                         text-field="email"
                                         :endpoint="'/users/search'"
-                                        @select="(option) => employee.users_id = option.id"
+                                        @select="(option) => employee.user_id = option.id"
                                     >
                                     </component-autocomplete>
                             </b-form-group>

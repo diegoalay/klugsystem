@@ -52,7 +52,7 @@ class SalesController < ApplicationSystemController
       products.each do |product|
         @sale.details.create!(
           account: @account,
-          products_id: product["id"],
+          product_id: product["id"],
           name: product["name"],
           price: product["price"],
           total: product["total"],
@@ -134,8 +134,8 @@ class SalesController < ApplicationSystemController
   def sale_params
     params.fetch(:sale, {}).permit(
       %i[
-        clients_id subtotal total discount interest shipping_costs
-        received_amount change sale_type employees_id sale_date payment_methods_id
+        client_id subtotal total discount interest shipping_costs
+        received_amount change sale_type employees_id sale_date payment_method_id
       ]
     )
   end

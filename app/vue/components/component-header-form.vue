@@ -7,6 +7,9 @@ export default {
         subtitle: {
             default: null
         },
+        showButtons: {
+            default: true
+        }
     },
     data(){
         return {
@@ -34,7 +37,7 @@ export default {
                 <h3 class="is-size-3"> {{ title }} </h3>
             </div>
         </div>
-        <div class="float-right">
+        <div class="float-right" v-if="showButtons">
             <template name="buttons">
                 <slot>
                     <b-button variant="outline-dark" class="mb-2" :to="main_path">
