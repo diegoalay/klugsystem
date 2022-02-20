@@ -27,7 +27,7 @@
 body {
     background-color: #F6F6F6;
     font-family: 'Space Grotesk', sans-serif  !important;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 
@@ -46,6 +46,10 @@ body {
         text-decoration: none;
         background-color: #FFF;
     }
+}
+
+.card {
+  margin-top: 20px;
 }
 
 label {

@@ -7,6 +7,25 @@ class Client < ApplicationRecord
 
   before_destroy :can_be_destroyed
 
+  def self.index account
+    account.clients.select("
+      id,
+      email,
+      telephone,
+      billing_identifier,
+      billing_email,
+      billing_address,
+      billing_name,
+      first_name,
+      first_surname,
+      concat(
+        first_name,
+        ' ',
+        first_surname
+      ) as name
+    ")
+  end
+
   def self.search account, query
     search = query[:filters][:search]&.downcase
 
@@ -34,6 +53,10 @@ class Client < ApplicationRecord
       lower(billing_identifier) like '%#{search}%' or
       lower(billing_email) like '%#{search}%'
     ") if search
+  end
+
+  def name
+    [first_name, first_surname].join(" ")
   end
 
   private

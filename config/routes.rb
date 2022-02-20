@@ -57,6 +57,9 @@ Rails.application.routes.draw do
         end
 
         resources :products do
+          scope module: :product do
+            resources :files
+          end
           collection do
             get :options
             get :search

@@ -30,6 +30,7 @@ import {
 } from 'bootstrap-vue'
 
 // Commponents
+import componentFiles from "../components/component-files.vue"
 import componentHeaderList from "../components/component-header-list.vue"
 import componentSearchList from "../components/component-search-list.vue"
 import componentHeaderForm from "../components/component-header-form.vue"
@@ -47,6 +48,7 @@ import tools from './tools'
 Vue.component('apexchart', VueApexCharts)
 Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
+Vue.component('component-files', componentFiles)
 Vue.component('component-header-list', componentHeaderList)
 Vue.component('component-search-list', componentSearchList)
 Vue.component('component-header-form', componentHeaderForm)

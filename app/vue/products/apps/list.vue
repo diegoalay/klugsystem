@@ -125,7 +125,6 @@
             <component-search-list :loading="loading" @search="onSearch"/>
             <b-card-body>
                 <b-table
-                    class="table-scroll"
                     striped
                     hover
                     :items="data"
@@ -169,7 +168,8 @@
                         align="fill"
                         size="sm"
                         class="my-0"
-                    ></b-pagination>
+                    >
+                    </b-pagination>
                 </b-col>
             </b-card-body>
         </b-card>

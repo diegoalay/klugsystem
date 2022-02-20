@@ -107,6 +107,7 @@
                     @row-clicked="show"
                     :sort-desc.sync="sorting.desc"
                     :sort-by.sync="sorting.column"
+                    responsive
                 >
                     <template #head()="{ label, field: { key, sortable }}">
                         {{ label }}

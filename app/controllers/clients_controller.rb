@@ -7,7 +7,7 @@ class ClientsController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(@account.clients)
+        respond_with_successful(Client.index(@account))
       end
     end
   end

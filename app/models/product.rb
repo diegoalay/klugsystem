@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   belongs_to :department,     class_name: "Department",   foreign_key: "department_id",   optional: :true
   belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_office_id"
 
+  has_many :files
+
   validates :sku, presence: true
   validates :name, presence: true
   validates :quantity, presence: true

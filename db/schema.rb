@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_198657) do
+ActiveRecord::Schema.define(version: 2022_02_37_198658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -462,6 +462,23 @@ ActiveRecord::Schema.define(version: 2022_02_37_198657) do
     t.index ["product_id"], name: "index_product_activities_on_product_id"
   end
 
+  create_table "product_files", force: :cascade do |t|
+    t.string "name"
+    t.string "attachment"
+    t.string "attachment_s3"
+    t.string "attachment_public"
+    t.string "file_extension"
+    t.string "file_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.decimal "size_mb"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_product_files_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "sku"
     t.string "name"
@@ -714,6 +731,9 @@ ActiveRecord::Schema.define(version: 2022_02_37_198657) do
   add_foreign_key "product_activities", "products"
   add_foreign_key "product_activities", "users", column: "user_creator_id"
   add_foreign_key "product_activities", "users", column: "user_modifier_id"
+  add_foreign_key "product_files", "products"
+  add_foreign_key "product_files", "users", column: "user_creator_id"
+  add_foreign_key "product_files", "users", column: "user_modifier_id"
   add_foreign_key "products", "accounts"
   add_foreign_key "products", "branch_offices"
   add_foreign_key "products", "brands"

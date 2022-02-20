@@ -31,6 +31,10 @@
                     per_page: 10,
                     current_page: 1
                 },
+                sorting: {
+                    desc: false,
+                    column: 'name'
+                },
                 search_text: '',
                 loading: false
             }
@@ -104,8 +108,19 @@
                     :filter="search_text"
                     @filtered="onFiltered"
                     @row-clicked="show"
+                    :sort-desc.sync="sorting.desc"
+                    :sort-by.sync="sorting.column"
                     responsive
                 >
+                    <template #head()="{ label, field: { key, sortable }}">
+                        {{ label }}
+                        <template v-if="sortable">
+                            <template>
+                                <font-awesome-icon v-if="((sorting.desc) && (sorting.column === key))" icon="sort-down" />
+                                <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
+                            </template>
+                        </template>
+                    </template>
 
                     <template v-slot:cell(status)="row">
                         {{ row.item.status ? 'Habilitado' : 'Deshabilitado' }}

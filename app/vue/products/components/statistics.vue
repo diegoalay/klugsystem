@@ -28,7 +28,7 @@ export default {
                 month: this.tools.getCurrentMonth()
             },
             chart: {
-                bar: null
+                bar: {}
             }
         }
     },
@@ -131,8 +131,10 @@ export default {
                 }
             )
 
+            this.chartData()
+
             setTimeout(() => {
-                this.chartData()
+                this.$refs.salesChart.refresh()
             }, 500);
         },
 
@@ -158,8 +160,6 @@ export default {
             this.total = labels.reduce((previousValue, currentValue) => {
                 return previousValue + currentValue;
             })
-
-            this.$refs.salesChart.refresh()
         },
 
         chartYears(){
@@ -197,59 +197,57 @@ export default {
 <template>
     <b-card>
         <b-card-body>
-            <b-container>
-                <b-row v-if="tools.isMobile()">
-                    <b-col sm="12">
-                        <b-form-select
-                            v-model="filters.year"
-                            :options="chartYears()"
-                            @change="chartData()"
-                        >
-                        </b-form-select>
-                    </b-col>
-                    <b-col sm="12">
-                        <b-form-select
-                            v-model="filters.month"
-                            :options="monthsOptions()"
-                            @change="chartData()"
-                        >
-                        </b-form-select>
-                    </b-col>
-                    <b-col sm="12">
-                        <b-input-group>
-                            <template #prepend>
-                                <b-input-group-text >Total</b-input-group-text>
-                            </template>
-                            <b-form-input disabled readonly class="text-right" :value="total"> </b-form-input>
-                        </b-input-group>
-                    </b-col>
-                </b-row>
-                <b-row v-else>
-                    <b-col md="7">
-                        <b-form-select
-                            v-model="filters.year"
-                            :options="chartYears()"
-                            @change="chartData()"
-                        >
-                        </b-form-select>
-                    </b-col>
-                    <b-col md="5">
-                        <b-input-group>
-                            <template #prepend>
-                                <b-input-group-text >Total</b-input-group-text>
-                            </template>
-                            <b-form-input disabled readonly class="text-right" :value="total"> </b-form-input>
-                        </b-input-group>
-                    </b-col>
-                </b-row>
+            <b-row v-if="tools.isMobile()">
+                <b-col sm="12">
+                    <b-form-select
+                        v-model="filters.year"
+                        :options="chartYears()"
+                        @change="chartData()"
+                    >
+                    </b-form-select>
+                </b-col>
+                <b-col sm="12">
+                    <b-form-select
+                        v-model="filters.month"
+                        :options="monthsOptions()"
+                        @change="chartData()"
+                    >
+                    </b-form-select>
+                </b-col>
+                <b-col sm="12">
+                    <b-input-group>
+                        <template #prepend>
+                            <b-input-group-text >Total</b-input-group-text>
+                        </template>
+                        <b-form-input disabled readonly class="text-right" :value="total"> </b-form-input>
+                    </b-input-group>
+                </b-col>
+            </b-row>
+            <b-row v-else>
+                <b-col md="7">
+                    <b-form-select
+                        v-model="filters.year"
+                        :options="chartYears()"
+                        @change="chartData()"
+                    >
+                    </b-form-select>
+                </b-col>
+                <b-col md="5">
+                    <b-input-group>
+                        <template #prepend>
+                            <b-input-group-text >Total</b-input-group-text>
+                        </template>
+                        <b-form-input disabled readonly class="text-right" :value="total"> </b-form-input>
+                    </b-input-group>
+                </b-col>
+            </b-row>
 
-                <br>
-                <br>
+            <br>
+            <br>
 
-                <div class="d-flex justify-content-center">
-                    <apexchart v-if="chart.bar.series" ref="salesChart" class="align-middle text-center" type="bar" :options="chart.bar.options" :series="chart.bar.series"></apexchart>
-                </div>
-            </b-container>
+            <div class="d-flex justify-content-center">
+                <apexchart v-if="chart.bar.series" ref="salesChart" class="align-middle text-center" type="bar" :options="chart.bar.options" :series="chart.bar.series"></apexchart>
+            </div>
         </b-card-body>
     </b-card>
 </template>

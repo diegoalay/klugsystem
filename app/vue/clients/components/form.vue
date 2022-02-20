@@ -205,7 +205,6 @@ export default {
                 <br>
                 <b-container>
                     <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
                 </b-container>
             </b-card-body>
         </b-card>

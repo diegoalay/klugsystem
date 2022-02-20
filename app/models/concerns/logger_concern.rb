@@ -20,7 +20,9 @@
         create: "create",
         show: "show",
         update: "update",
-        destroy: "destroy"
+        destroy: "destroy",
+        create_file: "create_file",
+        destroy_file: "destroy_file",
       }, _prefix: :categories
 
       def log_show(current_user)
