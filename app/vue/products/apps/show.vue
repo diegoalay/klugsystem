@@ -1,14 +1,19 @@
 <script type="text/javascript">
     import componentForm from '../components/form.vue'
+    import componentImages from '../components/images.vue'
+    import componentStatistics from '../components/statistics.vue'
     export default {
         components:{
-            'component-form': componentForm
+            'component-form': componentForm,
+            'component-images': componentImages,
+            'component-statistics': componentStatistics
         },
         data() {
             return {
-                main_path: '/products',
+                statistics: null,
                 product: {},
-                id: null
+                id: null,
+                tabIndex: 0
             }
         },
         mounted(){
@@ -23,7 +28,8 @@
                 const url = this.url.build('products/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        this.product = result.data
+                        this.product = result.data.product
+                        this.statistics = result.data.statistics
                     }else{
                         this.$toast.error(result.error.message)
                     }
@@ -38,8 +44,20 @@
 <template>
     <section class="application-component">
         <component-header-form
-            title="Productos">
+            title="Producto">
         </component-header-form>
-        <component-form :product="product"></component-form>
+        <b-card no-body>
+            <b-tabs card pills fill v-model="tabIndex">
+                <b-tab title="Formulario" fill>
+                    <component-form :product="product"></component-form>
+                </b-tab>
+                <b-tab title="Imágenes" fill>
+                    <component-images :product="product"></component-images>
+                </b-tab>
+                <b-tab title="Estadísticas" fill>
+                    <component-statistics :activeTab="tabIndex === 2" v-if="product && statistics" :product="product" :statistics="statistics"></component-statistics>
+                </b-tab>
+            </b-tabs>
+        </b-card>
     </section>
 </template>

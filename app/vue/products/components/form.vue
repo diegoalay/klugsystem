@@ -47,7 +47,7 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.build('products/:id', {id: this.id})
+            const url = this.url.build('products/:id', {id: this.product.id})
             let form = {
                 product: this.product
             }
@@ -176,7 +176,7 @@ export default {
 
                     <b-form-group>
                         <label> Sucursal <sup class="text-danger">*</sup> </label>
-                        <b-form-select required v-model="product.branch_offices_id" :options="options.branch_offices">
+                        <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
                         </b-form-select>
                     </b-form-group>
 

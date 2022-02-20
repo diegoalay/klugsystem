@@ -27,6 +27,10 @@
                     key: 'quantity',
                     sortable: true
                 },{
+                    label: 'Estado',
+                    key: 'status',
+                    sortable: true
+                },{
                     label: '',
                     key: 'actions'
                 }],
@@ -139,6 +143,15 @@
                                 <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(status)="row">
+                        <div v-if="row.item.quantity <= 0" class="p-1 text-danger">
+                            {{ row.item.status }}
+                        </div>
+                        <div v-else class="p-1 text-success">
+                            {{  row.item.status }}
+                        </div>
                     </template>
 
                     <template v-slot:cell(actions)="row">

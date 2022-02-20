@@ -660,7 +660,7 @@
 
                         <component-autocomplete
                             @select="(option) => client = option !== null ? option : {}"
-                            text-field="billing_identifier"
+                            text-field="details"
                             placeholder="Buscar por número de nit"
                             :endpoint="'/clients/search'"
                         />
@@ -725,9 +725,9 @@
                             <component-datepicker
                                 :focus="false"
                                 lang="es"
-                                valueType="format"
+                                type="date"
                                 format="DD-MM-YYYY"
-                                v-model="sale.billing_date"
+                                v-model="sale.sale_date"
                                 placeholder=""
                                 required
                             >

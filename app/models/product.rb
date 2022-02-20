@@ -13,7 +13,7 @@ class Product < ApplicationRecord
   before_destroy :can_be_destroyed
 
   def self.index account, query
-    search = query[:filters][:search]
+    search = query[:filters][:search]&.downcase
 
     products = account.products.select("
       products.id,
@@ -21,12 +21,17 @@ class Product < ApplicationRecord
       products.name,
       products.retail_price,
       products.wholesale_price,
-      products.quantity
+      products.quantity,
+      case
+        when products.quantity <= 0 then 'Agotado'
+        else 'Disponible'
+      end as status
     ")
     .joins(:branch_office)
     .left_joins(:brand, :department)
 
     products = products.where("
+      lower(products.status) like '%#{search}%' or
       lower(products.sku) like '%#{search}%' or
       lower(products.name) like '%#{search}%' or
       cast(products.retail_price as varchar) like '%#{search}%' or
@@ -80,6 +85,46 @@ class Product < ApplicationRecord
     products = products.where("branch_office_id = ? ", filters[:branch_office_id]) if filters[:branch_office_id]
 
     products
+  end
+
+  def sale_statistics
+    statistics = self.account.sales_details.joins(:sale).where(product: self)
+    .select(
+        "sum(sale_details.quantity) as total",
+        "to_char(sales.sale_date, 'MM') as month",
+        "to_char(sales.sale_date, 'YYYY') as year"
+    )
+    .group(
+        "to_char(sales.sale_date, 'MM')",
+        "to_char(sales.sale_date, 'YYYY')"
+    )
+
+    data = {}
+
+    years = [Time.current.year.to_i]
+    years.concat(statistics.map{|statistic| statistic.year.to_i })
+    years = years.uniq
+
+    years.each do |year|
+        data[year] = [] if data[year].blank?
+
+        (1..12).each do |month|
+            sales = statistics.find {|statistic|
+                statistic["month"].to_i == month.to_i &&
+                statistic["year"].to_i == year.to_i }
+
+            data[year].push(sales ? sales["total"].to_f : 0)
+        end
+    end
+
+    data
+  end
+
+  def show
+    {
+        product: self,
+        statistics: self.sale_statistics
+    }
   end
 
   def self.options account

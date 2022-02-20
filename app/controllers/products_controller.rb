@@ -19,7 +19,7 @@ class ProductsController < ApplicationSystemController
       format.json do
         set_product
 
-        respond_with_successful(@product)
+        respond_with_successful(@product.show)
       end
     end
   end
@@ -96,7 +96,7 @@ class ProductsController < ApplicationSystemController
       %i[
         name sku retail_price wholesale_price
         purchase_price quantity note status product_type
-        brands_id branch_offices_id items_id departments_id
+        brand_id branch_office_id department_id
       ]
     )
   end
