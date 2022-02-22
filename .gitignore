@@ -42,3 +42,5 @@ twilio.env
 deploy.sh
 .gitignore
 Gemfile.lock
+
+/public/uploads/
