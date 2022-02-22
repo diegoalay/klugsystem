@@ -10,6 +10,21 @@ export default {
             required: true
         },
 
+        hasPicture: {
+            type: Boolean,
+            default: true
+        },
+
+        fileId: {
+            type: Number,
+            default: null
+        },
+
+        defaultFileKey: {
+            type: String,
+            default: null
+        },
+
         maxFiles: {
             type: Number,
             default: 1
@@ -18,7 +33,7 @@ export default {
         fileExtensions: {
             type: Array,
             default: () => {
-                return ['.png', '.jpg', '.jpeg']
+                return ['.png', '.jpg', '.jpeg', '.pdf', '.docx']
             }
         }
     },
@@ -77,11 +92,14 @@ export default {
             },
             search_text: '',
             files: [],
-            tabIndex: 0
+            tabIndex: 0,
+            defaultFileId: null
         }
     },
 
     mounted(){
+        this.defaultFileId = this.fileId
+
         this.setDropzoneOptions()
         this.getFiles()
     },
@@ -118,6 +136,29 @@ export default {
             }
 
             this.postFile()
+        },
+
+        putObjectDefaultFile(file_id){
+            const url = this.url.replace('/files', '.json')
+
+            const attribute = this.defaultFileKey + '_file_id'
+            const form = {
+                [this.defaultFileKey]: {
+                    [attribute]: file_id
+                }
+            }
+
+            this.http.put(url, form).then(result => {
+                if (result.successful) {
+                    this.defaultFileId = file_id
+
+                    this.$toast.success('Imagen por defecto actualizada exitosamente.')
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
         },
 
         postFile(){
@@ -264,6 +305,16 @@ export default {
                             </b-form-input>
                         </b-form-group>
 
+                        <!-- <b-form-input label="Asignar documento" v-if="hasPicture">
+                            <b-form-input
+                                v-model="file.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-input> -->
+
                         <b-container>
                             <b-button type="submit" variant="primary">Guardar</b-button>
                         </b-container>
@@ -295,12 +346,21 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
+                        <template v-if="hasPicture">
+                            <b-button v-if="defaultFileId == row.item.id" variant="success" class="mr-1">
+                                <b-icon icon="image"></b-icon>
+                            </b-button>
+
+                            <b-button v-else variant="outline-info" @click.stop="putObjectDefaultFile(row.item.id)" class="mr-1">
+                                <b-icon icon="image"></b-icon>
+                            </b-button>
+                        </template>
 
                         <b-button variant="outline-dark" @click.stop="downloadFile(row.item.id)" class="mr-1">
                             <b-icon icon="download"></b-icon>
                         </b-button>
 
-                        <b-button variant="outline-danger" @click.stop="deleteFile(row.item.id)" class="mr-1">
+                        <b-button v-if="defaultFileId !== row.item.id" variant="outline-danger" @click.stop="deleteFile(row.item.id)" class="mr-1">
                             <b-icon icon="trash-fill"></b-icon>
                         </b-button>
                     </template>

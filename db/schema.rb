@@ -498,11 +498,13 @@ ActiveRecord::Schema.define(version: 2022_02_37_198658) do
     t.bigint "brand_id"
     t.bigint "branch_office_id"
     t.bigint "department_id"
+    t.bigint "product_file_id"
     t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["branch_office_id"], name: "index_products_on_branch_office_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["department_id"], name: "index_products_on_department_id"
+    t.index ["product_file_id"], name: "index_products_on_product_file_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -738,6 +740,7 @@ ActiveRecord::Schema.define(version: 2022_02_37_198658) do
   add_foreign_key "products", "branch_offices"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "departments"
+  add_foreign_key "products", "product_files"
   add_foreign_key "products", "users", column: "user_creator_id"
   add_foreign_key "products", "users", column: "user_modifier_id"
   add_foreign_key "roles", "accounts"

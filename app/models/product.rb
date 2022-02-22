@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   belongs_to :department,     class_name: "Department",   foreign_key: "department_id",   optional: :true
   belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_office_id"
 
+  has_many :sale_details,  class_name: "Sale::Detail", foreign_key: "product_id"
+
   has_many :files
 
   validates :sku, presence: true
@@ -24,6 +26,7 @@ class Product < ApplicationRecord
       products.retail_price,
       products.wholesale_price,
       products.quantity,
+      products.product_file_id,
       case
         when products.quantity <= 0 then 'Agotado'
         else 'Disponible'
@@ -40,6 +43,32 @@ class Product < ApplicationRecord
       cast(products.wholesale_price as varchar) like '%#{search}%' or
       cast(products.quantity as varchar) like '%#{search}%'
     ") unless search.blank?
+
+    if (!!query[:filters][:top_products])
+      # most seller products in the last 30 days
+      return products
+      .group(
+        "products.id",
+        "products.sku",
+        "products.name",
+        "products.retail_price",
+        "products.wholesale_price",
+        "products.quantity",
+        "products.product_file_id"
+      )
+      .select("count(*) as sales")
+      .joins("
+        left join sale_details
+          on sale_details.product_id = products.id
+        left join sales
+          on sales.id = sale_details.sale_id
+          and sales.created_at >= '#{query[:filters][:start_date]}'
+          and date(sales.created_at) <= '#{query[:filters][:end_date]}'
+      ")
+      .where("products.quantity > ?", 0)
+      .order("sales desc")
+      .limit(16)
+    end
 
     products = products.page(query[:pagination][:current_page])
     .per(query[:pagination][:per_page])
@@ -64,7 +93,7 @@ class Product < ApplicationRecord
       retail_price,
       wholesale_price,
       retail_price,
-      quantity,
+      products.quantity,
       brands.name as brand_name,
       departments.name as department_name,
       branch_offices.name as branch_office_name,
@@ -73,7 +102,8 @@ class Product < ApplicationRecord
         ' [',
         products.sku,
         ']'
-      ) as details
+      ) as details,
+      products.product_file_id
     ")
     .left_joins(:brand, :department, :branch_office)
 
@@ -123,10 +153,10 @@ class Product < ApplicationRecord
   end
 
   def show
-    {
-        product: self,
-        statistics: self.sale_statistics
-    }
+    self.attributes.merge({
+      details: name.to_s + " [" + sku.to_s + "]",
+      statistics: self.sale_statistics
+    })
   end
 
   def self.options account

@@ -1,45 +1,45 @@
 <script type="text/javascript">
-import ComponentFiles from '../../components/component-files.vue'
-    import componentForm from '../components/form.vue'
-    import componentStatistics from '../components/statistics.vue'
+import componentForm from '../components/form.vue'
+import componentStatistics from '../components/statistics.vue'
 
-    export default {
-        components:{
-            'component-form': componentForm,
-            'component-statistics': componentStatistics,
-                ComponentFiles
+export default {
+    components:{
+        'component-form': componentForm,
+        'component-statistics': componentStatistics,
+    },
+    data() {
+        return {
+            statistics: null,
+            product: {},
+            id: null,
+            tabIndex: 0
+        }
+    },
+    mounted(){
+        this.setId()
+        this.getData()
+    },
+    methods:{
+        setId(){
+            this.id = this.$route.params.id
         },
-        data() {
-            return {
-                statistics: null,
-                product: {},
-                id: null,
-                tabIndex: 0
-            }
-        },
-        mounted(){
-            this.setId()
-            this.getData()
-        },
-        methods:{
-            setId(){
-                this.id = this.$route.params.id
-            },
-            getData(){
-                const url = this.url.build('products/:id', {id: this.id})
-                this.http.get(url).then(result => {
-                    if (result.successful) {
-                        this.product = result.data.product
-                        this.statistics = result.data.statistics
-                    }else{
-                        this.$toast.error(result.error.message)
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
-            }
+        getData(){
+            const url = this.url.build('products/:id', {id: this.id})
+            this.http.get(url).then(result => {
+                if (result.successful) {
+                    this.product = result.data
+                    delete this.products.statistics
+
+                    this.statistics = result.data.statistics
+                }else{
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
         }
     }
+}
 </script>
 
 <template>
@@ -52,8 +52,8 @@ import ComponentFiles from '../../components/component-files.vue'
                 <b-tab title="Formulario" fill>
                     <component-form :product="product"></component-form>
                 </b-tab>
-                <b-tab title="Imágenes" fill>
-                    <component-files v-if="product.id" :url="url.build('products/:id/files', {id: this.product.id}).toString(false)"> </component-files>
+                <b-tab title="Archivos" fill>
+                    <component-files v-if="product.id" default-file-key="product" :has-picture="true" :file-id="product.product_file_id" :url="url.build('products/:id/files', {id: this.product.id}).toString(false)"> </component-files>
                 </b-tab>
                 <b-tab title="Estadísticas" fill>
                     <component-statistics :activeTab="tabIndex === 2" v-if="product && statistics" :product="product" :statistics="statistics"></component-statistics>

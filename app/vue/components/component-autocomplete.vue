@@ -174,7 +174,6 @@ export default {
 
             this.http.get(url).then((response) => {
                 if(response.successful){
-
                     this.$nextTick(()=>{
                         this.select(null, response.data, false)
                     })
@@ -326,6 +325,10 @@ export default {
                 this.clearAutocompleteOptions()
                 this.focusOnInput()
             }
+        },
+
+        defaultOptionId(){
+            this.setDefaultOption()
         }
     }
 };

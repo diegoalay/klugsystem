@@ -7,6 +7,9 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Imágen',
+                    key: 'thumbnail',
+                },{
                     label: 'SKU',
                     key: 'sku',
                     sortable: true
@@ -92,6 +95,20 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
+            },
+            getProductImage(product){
+                if (product.product_file_id) {
+                    const url = this.url.build('products/:product_id/files/:id',
+                        {
+                            product_id: product.id,
+                            id: product.product_file_id,
+                        }
+                    ).toString(false)
+
+                    return url
+                }
+
+                return this.tools.getProductImage()
             }
         },
 
@@ -142,6 +159,10 @@
                                 <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(thumbnail)="row">
+                        <b-img :src="getProductImage(row.item)" width="75" rounded alt="image"> </b-img>
                     </template>
 
                     <template v-slot:cell(status)="row">

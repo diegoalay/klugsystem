@@ -26,11 +26,12 @@ import {
     FormTagsPlugin,
     FormSpinbuttonPlugin,
     ModalPlugin,
-    DropdownPlugin
+    DropdownPlugin,
+    ImagePlugin
 } from 'bootstrap-vue'
 
 // Commponents
-import componentFiles from "../components/component-files.vue"
+import componentFiles from "../components/shared/component-files.vue"
 import componentHeaderList from "../components/component-header-list.vue"
 import componentSearchList from "../components/component-search-list.vue"
 import componentHeaderForm from "../components/component-header-form.vue"
@@ -75,6 +76,7 @@ Vue.use(FormSpinbuttonPlugin)
 Vue.use(ModalPlugin)
 Vue.use(DropdownPlugin)
 Vue.use(NavbarPlugin)
+Vue.use(ImagePlugin)
 
 Vue.use(VueApexCharts)
 

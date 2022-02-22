@@ -19,5 +19,8 @@ class ProductFiles < ActiveRecord::Migration[6.1]
 
     add_foreign_key :product_files, :users,   column: :user_creator_id
     add_foreign_key :product_files, :users,   column: :user_modifier_id
+
+    # add reference to projects
+    add_reference   :products, :product_file, foreign_key: true
   end
 end

@@ -7,7 +7,6 @@
         },
         data() {
             return {
-                timer_client: null,
                 product_text: null,
                 product_quantity: 1,
                 main_path: '/sales',
@@ -83,6 +82,10 @@
                     payment_methods: []
                 },
                 filters: {
+                    date_range: [
+                        new Date((new Date().setDate((new Date().getDate()) - 30))),
+                        new Date()
+                    ],
                     brand_id: null,
                     department_id: null,
                     branch_office_id: null,
@@ -99,10 +102,42 @@
                 },
                 payment_method_discount: {},
                 payment_method_interest: {},
+                showFilters: false,
+                topProducts: [],
+                topProductsfields: [{
+                    label: 'Imágen',
+                    key: 'thumbnail',
+                },{
+                    label: 'SKU',
+                    key: 'sku',
+                    sortable: true
+                },{
+                    label: 'Nombre',
+                    key: 'name',
+                    sortable: true
+                },{
+                    label: 'Precio',
+                    key: 'retail_price',
+                    sortable: true
+                },{
+                    label: 'Cantidad',
+                    key: 'quantity',
+                    sortable: true
+                },{
+                    label: 'Ventas',
+                    key: 'sales',
+                    sortable: true
+                },{
+                    label: '',
+                    key: 'actions'
+                }],
+                selectedProductId:  null,
+                tabIndex: 0
             }
         },
         mounted(){
             this.getOptions()
+            this.getProductsTopSelled()
         },
         methods: {
             submitSaleOrQuotation(event){
@@ -129,6 +164,29 @@
                     if (result.successful) {
                         this.$toast.success('Venta realizada.')
                         this.$router.push(`/sales/${result.data.id}`)
+                    } else {
+                        this.$toast.error(result.error.message)
+                    }
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
+
+            getProductsTopSelled(){
+                const url = this.url.build('products')
+                .filters({
+                    top_products: true,
+                    start_date: this.filters.date_range[0] ?
+                        this.filters.date_range[0].toISOString() :
+                        '',
+                    end_date: this.filters.date_range[1] ?
+                        this.filters.date_range[1].toISOString() :
+                        '',
+                })
+
+                this.http.get(url).then(result => {
+                    if (result.successful) {
+                        this.topProducts = result.data
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -229,6 +287,17 @@
                 this.products[index].total = product.subtotal - product.discount_value
             },
 
+            setProduct(option){
+                this.product = option ? option : {}
+
+                console.log(this.product)
+            },
+
+            selectProduct(product_id){
+                this.selectedProductId = product_id
+                this.tabIndex = 0
+            },
+
             addProduct(){
                 if (!this.product.id) {
                     this.$toast.warning('Debes seleccionar un producto.')
@@ -278,8 +347,30 @@
             },
 
             removeProduct(){
-                this.product = {id: null}
+                this.product = {
+                    id: null
+                }
+
                 this.$set(this.clearAutocompletes, 'product', true)
+
+                setTimeout(() => {
+                    this.$set(this.clearAutocompletes, 'product', false)
+                }, 500)
+            },
+
+            getProductImage(product){
+                if (product.product_file_id) {
+                    const url = this.url.build('products/:product_id/files/:id',
+                        {
+                            product_id: product.id,
+                            id: product.product_file_id,
+                        }
+                    ).toString(false)
+
+                    return url
+                }
+
+                return this.tools.getProductImage()
             },
 
             // Getters
@@ -465,42 +556,45 @@
         </component-header-form>
         <b-row>
             <b-col md="8" sm="12">
-                <b-card>
-                    <b-tabs nav-class="font-weight-bold" fill>
-                        <br>
-                        <br>
-
+                <b-card no-body>
+                    <b-tabs nav-class="font-weight-bold" card pills fill v-model="tabIndex">
                         <b-tab title="Artículos">
-
+                            <br>
+                            <br>
                             <b-form>
                                 <b-row>
-                                    <b-col md="7" sm="12">
+                                    <b-col md="5" sm="12">
                                         <component-autocomplete
                                             :placeholder="`Buscar por nombre o sku`"
+                                            :default-option-id="selectedProductId"
+                                            :search-on-focus="true"
                                             text-field="details"
                                             :endpoint="'/products/search'"
-                                            @select="(option) => product = option"
+                                            @select="(option) => setProduct(option)"
                                             :required="true"
                                             :clearOptions="clearAutocompletes.product"
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
-                                                    <b-input-group-text v-if="product.id"> {{ product.quantity }} </b-input-group-text>
-
                                                     <b-button @click="removeProduct()"><font-awesome-icon icon="times" /></b-button>
                                                     &nbsp;
                                                 </b-input-group-prepend>
                                             </slot>
                                         </component-autocomplete>
                                     </b-col>
-                                    <b-col md="3" sm="12">
+                                    <b-col md="4" sm="12">
                                         <b-form-group>
                                             <b-input-group>
+                                                <b-input-group-prepend>
+                                                    <b-input-group-text v-show="product.id"> {{  'Q. ' + product.retail_price }} </b-input-group-text>
+                                                    <b-input-group-text v-show="product.id"> {{ product.quantity }} </b-input-group-text>
+                                                </b-input-group-prepend>
                                                 <b-form-input
                                                     type="number"
-                                                    placeholder="Ingrese cantidad"
+                                                    placeholder="Cantidad"
                                                     v-model="product_quantity"
                                                     @change="validateQuantity"
+                                                    :max="product.quantity"
                                                     min="1"
                                                     required
                                                 >
@@ -511,13 +605,53 @@
                                             </b-input-group>
                                         </b-form-group>
                                     </b-col>
-                                    <b-col cols="2">
+                                    <b-col md="3" sm="12">
                                         <b-form-group>
-                                            <b-button variant="primary" @click.stop="addProduct()"> Agregar </b-button>
+                                            <b-button variant="primary" @click.stop="addProduct()">
+                                                Agregar
+                                            </b-button>
+
+                                            <b-button variant="outline-primary" @click.stop="showFilters = !showFilters">
+                                                <font-awesome-icon v-if="showFilters" icon="eye-slash" />
+                                                <font-awesome-icon v-else icon="filter" />
+                                            </b-button>
                                         </b-form-group>
                                     </b-col>
                                 </b-row>
                             </b-form>
+
+                            <b-row v-if="showFilters">
+                                <b-col md="4" sm="12">
+                                    <b-form-group label="Marca">
+                                        <b-form-select v-model="filters.brand_id" :options="options.brands">
+                                            <template #first>
+                                                <b-form-select-option :value="null"> Todas las marcas  </b-form-select-option>
+                                            </template>
+                                        </b-form-select>
+                                    </b-form-group>
+                                </b-col>
+
+                                <b-col md="4" sm="12">
+                                    <b-form-group label="Sucursal">
+                                        <b-form-select v-model="filters.branch_office_id" :options="options.branch_offices">
+                                            <template #first>
+                                                <b-form-select-option :value="null"> Todas las sucursales  </b-form-select-option>
+                                            </template>
+                                        </b-form-select>
+                                    </b-form-group>
+                                </b-col>
+
+                                <b-col md="4" sm="12">
+                                    <b-form-group label="Departamento">
+                                        <b-form-select v-model="filters.department_id" :options="options.departments">
+                                            <template #first>
+                                                <b-form-select-option :value="null"> Todos los departamentos </b-form-select-option>
+                                            </template>
+                                        </b-form-select>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+
                             <br>
                             <br>
                             <b-table
@@ -590,61 +724,38 @@
                             </b-table>
                         </b-tab>
                         <b-tab title="Buscar">
-                            <b-tabs vertical fill>
-                                <b-tab title="Filtros">
-                                    <br>
-                                    <b-form-group label="Marca">
-                                        <b-form-select v-model="filters.brand_id" :options="options.brands">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todas las marcas  </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
+                            <br>
+                            <div class="d-flex justify-content-center">
+                                <b-form-group label="Productos con mayor venta durante">
+                                    <component-datepicker
+                                        v-model="filters.date_range"
+                                        lang="es"
+                                        format="DD-MM-YYYY"
+                                        range
+                                        placeholder="Seleccione un rango de fechas"
+                                    >
+                                    </component-datepicker>
+                                </b-form-group>
+                            </div>
+                            <br>
+                            <b-table
+                                striped
+                                hover
+                                :items="topProducts"
+                                :fields="topProductsfields"
+                                responsive
+                            >
 
-                                    <b-form-group label="Sucursal">
-                                        <b-form-select v-model="filters.branch_office_id" :options="options.branch_offices">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todas las sucursales  </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
+                                <template v-slot:cell(actions)="row">
+                                    <b-button variant="outline-success" @click.stop="selectProduct(row.item.id)">
+                                        <font-awesome-icon icon="cart-plus" />
+                                    </b-button>
+                                </template>
 
-                                    <b-form-group label="Departamento">
-                                        <b-form-select v-model="filters.department_id" :options="options.departments">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todos los departamentos </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-tab>
-                                <b-tab title="Productos">
-                                    <br>
-
-                                    <p> <b> Buscar productos más vendidos </b> </p>
-                                    <b-row>
-                                        <b-col>
-                                            <component-datepicker
-                                                :focus="false"
-                                                lang="es"
-                                                valueType="format"
-                                                format="DD-MM-YYYY"
-                                                v-model="filters.products_start_date"
-                                                placeholder="Desde">
-                                            </component-datepicker>
-                                        </b-col>
-                                        <b-col>
-                                            <component-datepicker
-                                                :focus="false"
-                                                lang="es"
-                                                valueType="format"
-                                                format="DD-MM-YYYY"
-                                                v-model="filters.products_end_date"
-                                                placeholder="Hasta">
-                                            </component-datepicker>
-                                        </b-col>
-                                    </b-row>
-                                </b-tab>
-                            </b-tabs>
+                                <template v-slot:cell(thumbnail)="row">
+                                    <b-img :src="getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
+                                </template>
+                            </b-table>
                         </b-tab>
                     </b-tabs>
                 </b-card>
@@ -666,7 +777,7 @@
                         />
 
                         <b-row>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Nit <sup class="text-danger">*</sup> </label>
                                     <b-form-input
@@ -678,7 +789,7 @@
                                     </b-form-input>
                                 </b-form-group>
                             </b-col>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Nombre <sup class="text-danger">* </sup> </label>
                                     <b-form-input
@@ -694,7 +805,7 @@
                         </b-row>
 
                         <b-row>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Dirección </label>
                                     <b-form-input
@@ -706,7 +817,7 @@
                                     </b-form-input>
                                 </b-form-group>
                             </b-col>
-                            <b-col>
+                            <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> E-Mail </label>
                                     <b-form-input
@@ -721,7 +832,9 @@
                         <hr>
 
                         <b-form-group>
-                            <label> Fecha de emisión <sup class="text-danger">*</sup> </label>
+                            <template #label>
+                                Fecha de emisión <sup class="text-danger">*</sup>
+                            </template>
                             <component-datepicker
                                 :focus="false"
                                 lang="es"
