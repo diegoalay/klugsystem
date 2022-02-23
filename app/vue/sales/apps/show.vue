@@ -138,20 +138,20 @@ export default {
 
                         <b-row>
                             <b-col md="4" sm="12">
-                                <h5> Datos generales </h5>
+                                <br> <h5> Datos generales </h5> </br>
                                 <b> Fecha: </b> {{ sale.sale_date }} <br>
                                 <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
                                 <b> Método de pago: </b> {{ payment_method.name }} <br>
                             </b-col>
 
                             <b-col md="4">
-                                <h5> Detalles de factura </h5>
+                                <br> <h5> Detalles de factura </h5> </br>
                                 <b> Cantidad recibida: </b> {{ sale.received_amount }} <br>
                                 <b> Vuelto: </b> {{ sale.change }} <br>
                             </b-col>
 
                             <b-col md="4" sm="12">
-                                <h5> Datos de cliente </h5>
+                                <br> <h5> Datos de cliente </h5> </br>
                                 <b> Nit: </b> {{ client.billing_identifier }} <br>
                                 <b> Nombre: </b> {{ client.billing_name }} <br>
                                 <b> Dirección: </b> {{ client.billing_address }} <br>
@@ -161,6 +161,7 @@ export default {
 
                         <br>
                         <b-table
+                            responsive
                             :fields="fields"
                             :items="details"
                         >

@@ -14,11 +14,11 @@ class Shared::File < ApplicationRecord
   end
 
   def self.verify_file_extension(filename)
-    allowed_file_extensions_ = self.allowed_file_extensions
+    allowed_file_extensions = self.allowed_file_extensions
 
-    return true unless allowed_file_extensions_
+    return true unless allowed_file_extensions
 
-    allowed_file_extensions_.each do |file_extesion|
+    allowed_file_extensions.each do |file_extesion|
         if filename.downcase.end_with?(file_extesion)
             return true
         end
@@ -44,7 +44,8 @@ class Shared::File < ApplicationRecord
       "jpg",
       "gif",
       "pdf",
-      "docx"
+      "docx",
+      "webp"
     ]
   end
 end

@@ -28,13 +28,6 @@ export default {
         maxFiles: {
             type: Number,
             default: 1
-        },
-
-        fileExtensions: {
-            type: Array,
-            default: () => {
-                return ['.png', '.jpg', '.jpeg', '.pdf', '.docx']
-            }
         }
     },
 
@@ -93,7 +86,8 @@ export default {
             search_text: '',
             files: [],
             tabIndex: 0,
-            defaultFileId: null
+            defaultFileId: null,
+            fileExtensions: []
         }
     },
 
@@ -102,6 +96,7 @@ export default {
 
         this.setDropzoneOptions()
         this.getFiles()
+        this.getFileExtensions()
     },
 
     methods: {
@@ -116,6 +111,18 @@ export default {
                 }
 
                 this.loading = false
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+
+        getFileExtensions(){
+            const url = this.url.replace(/\/[0-9]+/g, '') + '/extensions.json'
+
+            this.http.get(url).then(result => {
+                if (result.successful) {
+                    this.fileExtensions = result.data
+                }
             }).catch(error => {
                 console.log(error)
             })
@@ -196,7 +203,10 @@ export default {
 
             if(! acceptedFile){
 
-                this.$toast.error('Extensión no permitida.')
+                this.$toast.error(`Extensión no permitida, las extensiones válidas son [${this.fileExtensions.join(', ')}].`, {
+                    timeout: 4000
+                })
+
                 this.$refs['dropzone'].removeFile(file)
             } else {
                 if (!this.file.name) {
@@ -263,6 +273,10 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
+        },
+
+        extensionIsValid(extension){
+            return ['png', 'jpg', 'jpeg', 'webp'].includes(extension)
         }
     }
 }
@@ -351,7 +365,7 @@ export default {
                                 <b-icon icon="image"></b-icon>
                             </b-button>
 
-                            <b-button v-else variant="outline-info" @click.stop="putObjectDefaultFile(row.item.id)" class="mr-1">
+                            <b-button v-else-if="extensionIsValid(row.item.file_extension)" variant="outline-info" @click.stop="putObjectDefaultFile(row.item.id)" class="mr-1">
                                 <b-icon icon="image"></b-icon>
                             </b-button>
                         </template>

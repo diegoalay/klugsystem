@@ -92,6 +92,7 @@ class EmployeesController < ApplicationSystemController
   def employee_params
     params.fetch(:employee, {}).permit(
       %i[
+        employee_file_id
         first_name
         second_name
         third_name

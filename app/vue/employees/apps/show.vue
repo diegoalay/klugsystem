@@ -7,7 +7,8 @@
         data() {
             return {
                 employee: {},
-                id: null
+                id: null,
+                tabIndex: 0
             }
         },
         mounted(){
@@ -39,6 +40,15 @@
         <component-header-form
             title="Empleado">
         </component-header-form>
-        <component-form v-if="employee.id" :employee="employee"></component-form>
+        <b-card no-body>
+            <b-tabs card pills fill v-model="tabIndex">
+                <b-tab title="Formulario" fill>
+                    <component-form v-if="employee.id" :employee="employee"></component-form>
+                </b-tab>
+                <b-tab title="Archivos" fill>
+                    <component-files v-if="employee.id" default-file-key="employee" :has-picture="true" :file-id="employee.employee_file_id" :url="url.build('employees/:id/files', {id: this.employee.id}).toString(false)"> </component-files>
+                </b-tab>
+            </b-tabs>
+        </b-card>
     </section>
 </template>

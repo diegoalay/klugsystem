@@ -1,8 +1,9 @@
 <script type="text/javascript">
     import componenentAutocomplete from '../../components/component-autocomplete.vue'
-
+    import componentCarousel from '../components/product-carousel.vue'
     export default {
         components:{
+            'component-carousel': componentCarousel,
             'component-autocomplete': componenentAutocomplete
         },
         data() {
@@ -289,8 +290,6 @@
 
             setProduct(option){
                 this.product = option ? option : {}
-
-                console.log(this.product)
             },
 
             selectProduct(product_id){
@@ -509,6 +508,10 @@
                 if (!(parseFloat(this.product_quantity) >= 0)) {
                     this.product_quantity = 0
                 }
+            },
+
+            showProduct(){
+                this.$modal.show('carousel')
             }
         },
 
@@ -537,6 +540,10 @@
 
 <template>
     <section class="application-component">
+        <modal name="carousel" :adaptive="true" height="auto">
+            <component-carousel :product="product"/>
+        </modal>
+
         <component-header-form
             :title="isViewSaleType() ? 'Vender' : 'Cotizar'"
         >
@@ -547,6 +554,11 @@
 
                 <b-button variant="outline-dark" class="mb-2" to="/sales">
                     Listado <font-awesome-icon icon="list" />
+                </b-button>
+
+                <b-button variant="outline-primary" class="mb-2" @click.stop="showFilters = !showFilters">
+                    <font-awesome-icon v-if="showFilters" icon="eye-slash" />
+                    <font-awesome-icon v-else icon="filter" />
                 </b-button>
 
                 <b-button variant="outline-primary" class="mb-2" href="#finish-sale">
@@ -562,8 +574,41 @@
                             <br>
                             <br>
                             <b-form>
+
+                                <b-row v-show="showFilters">
+                                    <b-col md="4" sm="12">
+                                        <b-form-group label="Marca">
+                                            <b-form-select v-model="filters.brand_id" :options="options.brands">
+                                                <template #first>
+                                                    <b-form-select-option :value="null"> Todas las marcas  </b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="4" sm="12">
+                                        <b-form-group label="Sucursal">
+                                            <b-form-select v-model="filters.branch_office_id" :options="options.branch_offices">
+                                                <template #first>
+                                                    <b-form-select-option :value="null"> Todas las sucursales  </b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                        </b-form-group>
+                                    </b-col>
+
+                                    <b-col md="4" sm="12">
+                                        <b-form-group label="Departamento">
+                                            <b-form-select v-model="filters.department_id" :options="options.departments">
+                                                <template #first>
+                                                    <b-form-select-option :value="null"> Todos los departamentos </b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                        </b-form-group>
+                                    </b-col>
+                                </b-row>
+
                                 <b-row>
-                                    <b-col md="5" sm="12">
+                                    <b-col :md="product.id ? '6' : '9' " sm="12">
                                         <component-autocomplete
                                             :placeholder="`Buscar por nombre o sku`"
                                             :default-option-id="selectedProductId"
@@ -572,7 +617,10 @@
                                             :endpoint="'/products/search'"
                                             @select="(option) => setProduct(option)"
                                             :required="true"
+                                            :thumbnail="getProductImage"
+                                            :show-thumbnail="true"
                                             :clearOptions="clearAutocompletes.product"
+                                            component-id="sales-products"
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
@@ -582,13 +630,9 @@
                                             </slot>
                                         </component-autocomplete>
                                     </b-col>
-                                    <b-col md="4" sm="12">
+                                    <b-col md="3" sm="12">
                                         <b-form-group>
                                             <b-input-group>
-                                                <b-input-group-prepend>
-                                                    <b-input-group-text v-show="product.id"> {{  'Q. ' + product.retail_price }} </b-input-group-text>
-                                                    <b-input-group-text v-show="product.id"> {{ product.quantity }} </b-input-group-text>
-                                                </b-input-group-prepend>
                                                 <b-form-input
                                                     type="number"
                                                     placeholder="Cantidad"
@@ -605,52 +649,23 @@
                                             </b-input-group>
                                         </b-form-group>
                                     </b-col>
-                                    <b-col md="3" sm="12">
+                                    <b-col md="3" sm="12" v-if="product.id">
                                         <b-form-group>
                                             <b-button variant="primary" @click.stop="addProduct()">
                                                 Agregar
                                             </b-button>
-
-                                            <b-button variant="outline-primary" @click.stop="showFilters = !showFilters">
-                                                <font-awesome-icon v-if="showFilters" icon="eye-slash" />
-                                                <font-awesome-icon v-else icon="filter" />
+                                            <b-button variant="outline-primary" @click.stop="showProduct()">
+                                                <font-awesome-icon icon="info" />
                                             </b-button>
                                         </b-form-group>
                                     </b-col>
                                 </b-row>
                             </b-form>
 
-                            <b-row v-if="showFilters">
-                                <b-col md="4" sm="12">
-                                    <b-form-group label="Marca">
-                                        <b-form-select v-model="filters.brand_id" :options="options.brands">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todas las marcas  </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-col>
+                            <template v-if="product.id">
+                                <hr>
 
-                                <b-col md="4" sm="12">
-                                    <b-form-group label="Sucursal">
-                                        <b-form-select v-model="filters.branch_office_id" :options="options.branch_offices">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todas las sucursales  </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-col>
-
-                                <b-col md="4" sm="12">
-                                    <b-form-group label="Departamento">
-                                        <b-form-select v-model="filters.department_id" :options="options.departments">
-                                            <template #first>
-                                                <b-form-select-option :value="null"> Todos los departamentos </b-form-select-option>
-                                            </template>
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
+                            </template>
 
                             <br>
                             <br>
@@ -829,7 +844,6 @@
                                 </b-form-group>
                             </b-col>
                         </b-row>
-                        <hr>
 
                         <b-form-group>
                             <template #label>

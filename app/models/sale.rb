@@ -14,9 +14,9 @@ class Sale < ApplicationRecord
 
   enum sale_type: {
     sale: 'sale',
+    receipt: 'receipt',
     bill: 'bill',
-    electronic_bill: 'electronic_bill',
-    receipt: 'receipt'
+    electronic_bill: 'electronic_bill'
   }
 
   def self.index account, query
@@ -96,7 +96,7 @@ class Sale < ApplicationRecord
       branch_office: account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: account.departments.map {|department| {text: department.name, value: department.id}},
       brands: account.brands.map {|brand| {text: brand.name, value: brand.id}},
-      sale_types: sale_types.map {|k, v| {text: k, value: v}}
+      sale_types: sale_types.map {|k, v| {text: I18n.t("models.sales.column_enum_sale_type_#{k}"), value: v}}
     }
   end
 

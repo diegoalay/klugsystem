@@ -153,10 +153,12 @@ class Product < ApplicationRecord
   end
 
   def show
-    self.attributes.merge({
+    product = self.attributes.merge({
       details: name.to_s + " [" + sku.to_s + "]",
       statistics: self.sale_statistics
     })
+
+    product
   end
 
   def self.options account

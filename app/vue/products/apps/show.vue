@@ -27,10 +27,10 @@ export default {
             const url = this.url.build('products/:id', {id: this.id})
             this.http.get(url).then(result => {
                 if (result.successful) {
-                    this.product = result.data
-                    delete this.products.statistics
-
                     this.statistics = result.data.statistics
+
+                    this.product = result.data
+                    delete this.product.statistics
                 }else{
                     this.$toast.error(result.error.message)
                 }

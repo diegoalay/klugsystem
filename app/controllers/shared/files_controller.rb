@@ -148,6 +148,10 @@ class Shared::FilesController < ApplicationController
     params.fetch(:file).permit(%i[name attachment])
   end
 
+  def extensions
+    respond_with_successful(file_model.allowed_file_extensions)
+  end
+
   protected
 
   def handle_zip_download(files)
@@ -182,6 +186,8 @@ class Shared::FilesController < ApplicationController
     extension = ""
 
     if file_params[:attachment]
+      file_extension = file_params[:attachment].original_filename&.split(".")[-1]
+
       if file_params[:attachment].is_a? String
         # Base64 images
 
@@ -198,14 +204,14 @@ class Shared::FilesController < ApplicationController
         begin
           extension = /(png|jpg|jpeg|exif|jfif)/.match(img_from_base64[0,16].downcase)[0]
         rescue
-          return respond_with_error(I18n.t("core.shared.messages_warning_files_extension_not_allowed"))
+          return invalid_extensions() unless file_model.verify_file_extension(extension)
         end
 
         # Due a encode issue, jpeg images are sent as jfif
         extension = "jpeg" if extension == "jfif"
         extension = "png"  if extension == "exif"
 
-        return respond_with_error("Extensión inválida") unless file_model.verify_file_extension(extension)
+        return invalid_extensions() unless file_model.verify_file_extension(extension)
 
         file_path = Rails.root.join("public", "uploads", "tmp", file_name << '.' << extension)
         File.open(file_path, 'wb') do|f|
@@ -217,12 +223,18 @@ class Shared::FilesController < ApplicationController
       else
         extension = file_params[:attachment].original_filename
 
-        return respond_with_error(I18n.t("core.shared.messages_warning_files_extension_not_allowed")) unless file_model.verify_file_extension(extension)
+        return invalid_extensions() unless file_model.verify_file_extension(extension)
       end
     end
+
+    file_params[:file_extension] = file_extension
 
     if block_given?
       yield(file_params)
     end
+  end
+
+  def invalid_extensions()
+    respond_with_error("Extensión inválida, las extensiones permitidas son [#{file_model.verify_file_extension.join(", ")}]")
   end
 end

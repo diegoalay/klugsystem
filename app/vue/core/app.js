@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import VueApexCharts from 'vue-apexcharts'
+import VModal from 'vue-js-modal'
 
 import {
     NavbarPlugin,
@@ -27,7 +28,8 @@ import {
     FormSpinbuttonPlugin,
     ModalPlugin,
     DropdownPlugin,
-    ImagePlugin
+    ImagePlugin,
+    CarouselPlugin
 } from 'bootstrap-vue'
 
 // Commponents
@@ -77,12 +79,14 @@ Vue.use(ModalPlugin)
 Vue.use(DropdownPlugin)
 Vue.use(NavbarPlugin)
 Vue.use(ImagePlugin)
-
+Vue.use(VModal)
+Vue.use(CarouselPlugin)
 Vue.use(VueApexCharts)
 
 library.add(fas)
 
 // Libraries
+Vue.use(VModal, { componentName: 'modal' })
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)

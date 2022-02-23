@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_198658) do
+ActiveRecord::Schema.define(version: 2022_02_37_198659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -306,6 +306,23 @@ ActiveRecord::Schema.define(version: 2022_02_37_198658) do
     t.index ["employee_id"], name: "index_employee_activities_on_employee_id"
   end
 
+  create_table "employee_files", force: :cascade do |t|
+    t.string "name"
+    t.string "attachment"
+    t.string "attachment_s3"
+    t.string "attachment_public"
+    t.string "file_extension"
+    t.string "file_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.decimal "size_mb"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_employee_files_on_employee_id"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "first_name"
     t.string "second_name"
@@ -333,8 +350,10 @@ ActiveRecord::Schema.define(version: 2022_02_37_198658) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.bigint "user_id"
+    t.bigint "employee_file_id"
     t.index ["account_id"], name: "index_employees_on_account_id"
     t.index ["deleted_at"], name: "index_employees_on_deleted_at"
+    t.index ["employee_file_id"], name: "index_employees_on_employee_file_id"
     t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
@@ -705,7 +724,11 @@ ActiveRecord::Schema.define(version: 2022_02_37_198658) do
   add_foreign_key "employee_activities", "employees"
   add_foreign_key "employee_activities", "users", column: "user_creator_id"
   add_foreign_key "employee_activities", "users", column: "user_modifier_id"
+  add_foreign_key "employee_files", "employees"
+  add_foreign_key "employee_files", "users", column: "user_creator_id"
+  add_foreign_key "employee_files", "users", column: "user_modifier_id"
   add_foreign_key "employees", "accounts"
+  add_foreign_key "employees", "employee_files"
   add_foreign_key "employees", "users"
   add_foreign_key "employees", "users", column: "user_creator_id"
   add_foreign_key "employees", "users", column: "user_modifier_id"

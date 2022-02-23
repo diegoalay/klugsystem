@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :employee do
+    resources :files
+  end
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -50,7 +53,11 @@ Rails.application.routes.draw do
         end
 
         resources :employees do
+          scope module: :employee do
+            resources :files
+          end
           collection do
+            get "files/extensions", to: "employee/files#extensions"
             get :options
             get :search
           end
@@ -61,6 +68,7 @@ Rails.application.routes.draw do
             resources :files
           end
           collection do
+            get "files/extensions", to: "product/files#extensions"
             get :options
             get :search
           end

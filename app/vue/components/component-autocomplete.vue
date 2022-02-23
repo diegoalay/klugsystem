@@ -75,7 +75,7 @@ export default {
 
         fullWidth: {
             type: Boolean,
-            default: false
+            default: true
         },
 
         tabindex: {
@@ -88,6 +88,21 @@ export default {
 
         defaultOptionId: {
             type: Number,
+            default: null
+        },
+
+        showThumbnail: {
+            type: Boolean,
+            default: false
+        },
+
+        thumbnail: {
+            type: Function,
+            default: null
+        },
+
+        componentId: {
+            type: String,
             default: null
         }
     },
@@ -358,7 +373,7 @@ export default {
         </div>
 
         <ul
-            :class="['list', 'is-hoverable', 'autocomplete-wrap', {'w-100': Boolean(fullWidth), 'w-20-rem': ! Boolean(fullWidth)}]"
+            :class="['list', 'is-hoverable', 'autocomplete-wrap', {'w-100': Boolean(fullWidth), 'w-25-rem': ! Boolean(fullWidth)}]"
             v-show="options.length > 0"
             ref="list"
         >
@@ -369,7 +384,24 @@ export default {
                 @click="select($event, option)"
                 :tabindex="index + 1"
             >
-                {{ option[textField] }}
+                <b-row v-if="componentId == 'sales-products'" align-v="center">
+                    <b-col class="text-center" cols="3">
+                        <b-img v-if="showThumbnail" :src="thumbnail(option)" :width="tools.isMobile() ? '50' : '75'" rounded alt="image"> </b-img>
+                    </b-col>
+                    <b-col cols="9">
+                        {{ option[textField] }} <br>
+                        <small> <b> Disponibles: </b> {{ option.quantity }} <br> </small>
+                        <small> <b> Precio: </b> {{ 'Q ' + option.retail_price }} </small> <br>
+                        <template v-if="option.brand_name"> <small> <b> Marca: </b> {{ option.brand_name }} </small> <br> </template>
+                        <template v-if="option.branch_office_name"> <small> <b> Sucursal: </b> {{ option.branch_office_name }} </small> <br> </template>
+                        <template v-if="option.department_name"> <small> <b> Departament: </b> {{ option.department_name }} </small> </template>
+                    </b-col>
+                </b-row>
+                <template v-else>
+                    <b-img v-if="showThumbnail" :src="thumbnail(option)" :width="tools.isMobile() ? '50' : '75'" rounded alt="image"> </b-img>
+
+                    {{ option[textField] }}
+                </template>
             </li>
         </ul>
         <br>
@@ -377,7 +409,7 @@ export default {
 </template>
 <style>
 .autocomplete-wrap {
-    background-color: #FFFFFF;
+    /* background-color: #FFFFFF; */
     position: absolute;
     z-index: 200;
 }
@@ -396,7 +428,7 @@ export default {
 .w-100 {
     width: 80%;
 }
-.w-20-rem {
-    width: 20rem;
+.w-25-rem {
+    width: 25rem;
 }
 </style>

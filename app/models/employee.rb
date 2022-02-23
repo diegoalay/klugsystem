@@ -3,6 +3,8 @@ class Employee < ApplicationRecord
 
   belongs_to :user,          class_name: "User",    foreign_key: "user_id", optional: true
 
+  has_many :files
+
   validates :first_name, presence: true
   validates :first_surname, presence: true
 
@@ -21,7 +23,8 @@ class Employee < ApplicationRecord
       employees.third_name,
       employees.first_surname,
       employees.second_surname,
-      users.email as user_email
+      users.email as user_email,
+      employees.employee_file_id
     ")
     .left_joins(:user)
   end

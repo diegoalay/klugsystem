@@ -7,6 +7,9 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Imágen',
+                    key: 'thumbnail',
+                },{
                     label: 'Nombre',
                     key: 'full_name',
                     sortable: true
@@ -77,6 +80,20 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
+            },
+            getEmployeeImage(employee){
+                if (employee.employee_file_id) {
+                    const url = this.url.build('employees/:employee_id/files/:id',
+                        {
+                            employee_id: employee.id,
+                            id: employee.employee_file_id,
+                        }
+                    ).toString(false)
+
+                    return url
+                }
+
+                return this.tools.getEmployeeImage()
             }
         }
     }
@@ -117,6 +134,10 @@
                                 <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(thumbnail)="row">
+                        <b-img :src="getEmployeeImage(row.item)" width="50" rounded alt="image"> </b-img>
                     </template>
 
                     <template v-slot:cell(actions)="row">
