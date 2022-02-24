@@ -15,6 +15,8 @@ class Users::SessionsController < Devise::SessionsController
 
     sign_in :user, resource
 
+    resource.remember_me!
+
     return respond_with_successful
   end
 
