@@ -132,7 +132,7 @@ export default {
                 <b-col md="10" sm="12">
                     <b-card>
                         <div class="bg-primary total-header text-center">
-                            {{ 'Q ' + sale.total }}
+                            {{ 'Q ' + sale.total ? sale.total : '' }}
                         </div>
                         <br>
 

@@ -19,7 +19,7 @@ class Sale < ApplicationRecord
     electronic_bill: 'electronic_bill'
   }
 
-  def self.index account, query
+  def self.index account, current_user, query
     search = query[:filters][:search]&.downcase
 
     sales = account.sales.select("
@@ -56,6 +56,11 @@ class Sale < ApplicationRecord
       lower(concat(employees.first_name, ' ', employees.first_surname)) like '%#{search}%'
     ") unless search.blank?
 
+    unless query[:filters][:user_creator_type].blank?
+      sales = sales.where("sales.user_creator_id = ?", current_user.id) if query[:filters][:user_creator_type].eql? "mine"
+      sales = sales.where("sales.cash_register_id = ?", current_user.cash_register&.id) if query[:filters][:user_creator_type].eql? "current_cash_register"
+    end
+
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
     sales = sales.where("sales.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
@@ -87,6 +92,7 @@ class Sale < ApplicationRecord
 
   def self.index_options account
     {
+      user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
       payment_methods: account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}},
       sale_types: sale_types.map {|k, v| {text: k, value: v}}
     }
@@ -106,7 +112,9 @@ class Sale < ApplicationRecord
 
   def sale_data
 
-    errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta") if (received_amount < total)
-    errors.add(:base, "Debe seleccionar un tipo de venta") if sale_type.blank?
+    errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta") and throw(:abort) if (received_amount < total)
+    errors.add(:base, "Debe seleccionar un cliente") and throw(:abort) if client.blank?
+    errors.add(:base, "Debe seleccionar un método de pago") and throw(:abort) if payment_method.blank?
+    errors.add(:base, "Debe seleccionar un tipo de venta") and throw(:abort) if sale_type.blank?
   end
 end

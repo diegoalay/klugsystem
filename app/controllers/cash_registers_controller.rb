@@ -58,7 +58,7 @@ class CashRegistersController < ApplicationSystemController
     end
 
     if @cash_register.update(cash_register_params)
-      respond_with_successful(@cash_register.show)
+      respond_with_successful(@cash_register)
     else
       respond_cash_register_with_error
     end

@@ -56,7 +56,8 @@
                 filters: {
                     search: '',
                     sale_type: '',
-                    payment_method: ''
+                    payment_method: '',
+                    user_creator_type: ''
                 },
                 loading: false
             }
@@ -145,7 +146,16 @@
         <b-card>
             <component-search-list :loading="loading" @search="onSearch">
                 <slot name="filters">
-
+                    <b-form-select
+                        v-model="filters.user_creator_type"
+                        :options="options.user_creator_types"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Todas </option>
+                        </template>
+                    </b-form-select>
+                    &nbsp;
                     <b-form-select
                         v-model="filters.sale_type"
                         :options="options.sale_types"

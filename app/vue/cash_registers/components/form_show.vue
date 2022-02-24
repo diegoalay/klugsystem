@@ -56,7 +56,7 @@ export default {
 
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    for (let key in result.successful.data) {
+                    for (let key in result.data) {
                         this.$set(this.cash_register, key, result.data[key])
                     }
 
@@ -111,7 +111,7 @@ export default {
                             </b-form-group>
                         </b-container>
 
-                        <b-container>
+                        <b-container v-if="!cash_register.close_date">
                             <b-button type="submit" variant="primary">Guardar</b-button>
                             <b-button @click.prevent="closeCashRegister()" variant="dark">Cerrar caja</b-button>
                         </b-container>

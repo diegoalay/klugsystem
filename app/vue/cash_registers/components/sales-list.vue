@@ -145,7 +145,6 @@
     <section>
         <component-search-list :loading="loading" @search="onSearch">
             <slot name="filters">
-
                     <b-form-select
                         v-model="filters.sale_type"
                         :options="options.sale_types"

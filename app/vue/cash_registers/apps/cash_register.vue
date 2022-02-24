@@ -14,10 +14,11 @@
 
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        if (result.data.id) {
+                        const cash_register = result.data
+                        if (cash_register) {
                             const url = this.url.build('cash_registers/:id',
                                 {
-                                    id: result.data.id
+                                    id: cash_register.id
                                 }
                             ).toString(false)
 
