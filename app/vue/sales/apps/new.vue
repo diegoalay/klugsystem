@@ -133,7 +133,8 @@
                     key: 'actions'
                 }],
                 selectedProductId:  null,
-                tabIndex: 0
+                tabIndex: 0,
+                loadingTopProducts: false
             }
         },
         mounted(){
@@ -185,12 +186,16 @@
                         '',
                 })
 
+                this.loadingTopProducts = true
                 this.http.get(url).then(result => {
                     if (result.successful) {
+
                         this.topProducts = result.data
                     } else {
                         this.$toast.error(result.error.message)
                     }
+
+                    this.loadingTopProducts = false
                 }).catch(error => {
                     console.log(error)
                 })
@@ -743,6 +748,7 @@
                             <div class="d-flex justify-content-center">
                                 <b-form-group label="Productos con mayor venta durante">
                                     <component-datepicker
+                                        @change="getProductsTopSelled()"
                                         v-model="filters.date_range"
                                         lang="es"
                                         format="DD-MM-YYYY"
@@ -754,6 +760,7 @@
                             </div>
                             <br>
                             <b-table
+                                v-if="!loadingTopProducts"
                                 striped
                                 hover
                                 :items="topProducts"

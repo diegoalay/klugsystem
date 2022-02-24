@@ -45,6 +45,8 @@ class Product < ApplicationRecord
     ") unless search.blank?
 
     if (!!query[:filters][:top_products])
+      return [] if (query[:filters][:start_date].blank?||query[:filters][:end_date].blank?)
+
       # most seller products in the last 30 days
       return products
       .group(
@@ -58,9 +60,9 @@ class Product < ApplicationRecord
       )
       .select("count(*) as sales")
       .joins("
-        left join sale_details
+        inner join sale_details
           on sale_details.product_id = products.id
-        left join sales
+        inner join sales
           on sales.id = sale_details.sale_id
           and sales.created_at >= '#{query[:filters][:start_date]}'
           and date(sales.created_at) <= '#{query[:filters][:end_date]}'
