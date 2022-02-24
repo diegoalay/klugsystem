@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     authenticated :user do
         root 'dashboard#default', as: :authenticated_root
 
+        get "profile/cash_register", to: "profile#cash_register"
         get :profile, to: "profile#show"
         put :profile, to: "profile#update"
 

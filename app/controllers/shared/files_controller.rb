@@ -48,10 +48,10 @@ class Shared::FilesController < ApplicationController
       if @file.size_mb && @file.size_mb > file_model.size_threshold
         redirect_to @file.refresh_external_url
       else
-        send_data(@file.attachment_s3.read, filename: @file.attachment_s3_identifier, disposition: disposition, stream: "true")
+        send_data(@file.attachment_s3.read, filename: @file.name_with_extension, disposition: disposition, stream: "true")
       end
     else
-      send_data(@file.attachment.file.read, filename: @file.attachment_identifier, disposition: disposition, stream: "true")
+      send_data(@file.attachment.file.read, filename: @file.name_with_extension, disposition: disposition, stream: "true")
     end
   end
 
@@ -187,14 +187,13 @@ class Shared::FilesController < ApplicationController
 
     if file_params[:attachment]
       file_extension = file_params[:attachment].original_filename&.split(".")[-1]
+      file_name = file_params[:name]
 
       if file_params[:attachment].is_a? String
         # Base64 images
 
-        if file_params[:name]
-          file_name = file_params[:name].downcase.gsub(" ","_")
-        elsif @file
-          file_name = @file.name.downcase.gsub(" ","_")
+        if @file
+          file_name = @file.name.downcase
         else
           file_name = "file_#{DateTime.now.strftime("%Y%m%d%H%M%S")}"
         end
@@ -228,6 +227,7 @@ class Shared::FilesController < ApplicationController
     end
 
     file_params[:file_extension] = file_extension
+    file_params[:name] = file_name
 
     if block_given?
       yield(file_params)

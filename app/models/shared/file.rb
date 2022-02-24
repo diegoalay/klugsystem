@@ -27,6 +27,10 @@ class Shared::File < ApplicationRecord
     return false
   end
 
+  def  name_with_extension
+    return [name, ".", file_extension].join("")
+  end
+
   def destroy
     update(
       attachment: nil,

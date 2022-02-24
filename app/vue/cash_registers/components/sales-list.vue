@@ -109,8 +109,8 @@
                 })
             },
 
-            show(sale){
-                this.$router.push(this.url.build('sales/:id', {id: sale.id}).toString(false))
+            show(sale_id){
+                this.$router.push(this.url.build('sales/:id', {id: sale_id}).toString(false))
             },
 
             onSearch(text){
@@ -173,14 +173,13 @@
                 :items="data"
                 :fields="fields"
                 @filtered="onFiltered"
-                @row-clicked="show"
                 :sort-desc.sync="pagination.order"
                 :sort-by.sync="pagination.order_by"
                 responsive
                 sort-icon-left
             >
-                <template v-slot:cell(actions)="">
-                    <b-button variant="outline-dark" class="mr-1">
+                <template v-slot:cell(actions)="row">
+                    <b-button variant="outline-dark" class="mr-1" @click="show(row.item.id)">
                         <font-awesome-icon icon="eye" />
                     </b-button>
                 </template>

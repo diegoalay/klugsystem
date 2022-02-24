@@ -75,7 +75,9 @@ class Sale < ApplicationRecord
 
   def show
     {
-      sale: self,
+      sale: self.attributes.merge({
+        sale_type: I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
+      }),
       client: client,
       details: details,
       employee: employee,

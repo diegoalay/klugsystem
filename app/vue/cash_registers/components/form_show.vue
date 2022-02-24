@@ -82,7 +82,7 @@ export default {
 <template>
     <b-card no-body>
         <b-tabs card pills fill>
-            <b-tab title="Resumen" fill active>
+            <b-tab title="Formulario" fill active>
                 <b-container>
                     <b-form @submit.prevent="onSubmit">
                         <b-container>

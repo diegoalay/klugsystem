@@ -71,7 +71,8 @@ export default {
             loading: false,
             file: {
                 id: null,
-                name: null
+                name: null,
+                extension: ''
             },
             acceptedFile: false,
             pagination: {
@@ -212,6 +213,8 @@ export default {
                 if (!this.file.name) {
                     this.$set(this.file, 'name', file.name.replace('.' + extension, ''))
                 }
+
+                this.$set(this.file, 'extension', extension)
             }
         },
 
@@ -231,6 +234,7 @@ export default {
 
         removeFile(file){
             this.$set(this.file, 'name', '')
+            this.$set(this.file, 'extension', '')
         },
 
         displayUploadError(_file, message){
@@ -250,7 +254,7 @@ export default {
         },
 
         addCustomParams(file, xhr, formData){
-
+            formData.append('file[name]', this.file.name)
         },
 
         onFiltered(filteredItems) {
@@ -290,7 +294,11 @@ export default {
             <b-tab title="Cargar archivo">
                 <b-container>
                     <form @submit="submitForm">
-                        <b-form-group label="Archivo">
+                        <b-form-group>
+                            <template #label>
+                                Archivo <sup class="text-danger">*</sup>
+                            </template>
+
                             <vue-dropzone
                                 id="vue-dropzone"
                                 ref="dropzone"
@@ -308,26 +316,23 @@ export default {
                         </b-form-group>
 
                         <b-form-group>
-                            <label> Nombre <sup class="text-danger">*</sup> </label>
+                            <template #label>
+                                Nombre <sup class="text-danger">*</sup>
+                            </template>
 
-                            <b-form-input
-                                v-model="file.name"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
+                            <b-input-group>
+                                <b-form-input
+                                    v-model="file.name"
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                                <b-input-group-append>
+                                    <b-input-group-text > {{ '.' + file.extension }} </b-input-group-text>
+                                </b-input-group-append>
+                            </b-input-group>
                         </b-form-group>
-
-                        <!-- <b-form-input label="Asignar documento" v-if="hasPicture">
-                            <b-form-input
-                                v-model="file.name"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-input> -->
 
                         <b-container>
                             <b-button type="submit" variant="primary">Guardar</b-button>

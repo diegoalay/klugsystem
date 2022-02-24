@@ -38,17 +38,11 @@
             <span> Listado de cajas </span>
           <% end %>
         </li>
-          <% if current_user.cash_register.present? %>
-            <%= navigation_vue_item("/cash_registers/#{current_user.cash_register.id}") do %>
-              <i class="fas fa-box-open"></i>
-              <span> Cerrar caja </span>
+        <li>
+            <%= navigation_vue_item("/profile/cash_register") do %>
+                <i class="fas fa-box"></i>
+                <span> Mi caja </span>
             <% end %>
-          <% else %>
-            <%= navigation_vue_item("/cash_registers/new") do %>
-              <i class="fas fa-box"></i>
-              <span> Abrir caja </span>
-            <% end %>
-          <% end %>
         </li>
         <li>
           <%= navigation_vue_item("/expeditures") do %>

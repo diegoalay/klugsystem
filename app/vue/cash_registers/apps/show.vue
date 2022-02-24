@@ -1,6 +1,12 @@
 <script type="text/javascript">
     import componentForm from '../components/form_show.vue'
     export default {
+        props: {
+            user_cash_register: {
+                type: Object,
+                default: null
+            }
+        },
         components:{
             'component-form': componentForm
         },
@@ -11,8 +17,12 @@
             }
         },
         mounted(){
-            this.setId()
-            this.getData()
+            if (this.user_cash_register) {
+                this.cash_register = this.user_cash_register
+            } else {
+                this.setId()
+                this.getData()
+            }
         },
         methods:{
             setId(){

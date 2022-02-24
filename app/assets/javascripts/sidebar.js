@@ -1,4 +1,3 @@
-
 if (document) {
     const current_page = location.pathname
 
@@ -38,7 +37,7 @@ if (document) {
             const classes = Array.from(el.parentElement.classList)
 
             if (classes.includes('dropdown')) {
-                if (!(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
+                if (!activeEl || !(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
                     el.parentElement.style = '';
                 }
             }
@@ -67,7 +66,55 @@ if (document) {
         return url
     }
 
+    const activeCurrentPage = (current_path = null) => {
+
+        if (!current_path) {
+            current_path = current_page
+        }
+
+        let path = ''
+
+        // special cases
+        const regex = RegExp(`cash_registers/${system.current_user.cash_register_id}`)
+
+        if (current_path.match(regex, current_path) || 
+            current_path.match(/cash_registers\/new/)
+        ) {
+            path = '/profile/cash_register'
+        } else {
+            path = ('/'+current_path.split('/')[1])
+        }
+
+        el = gethrefElement(path)
+
+        if (el) {
+            const classes = Array.from(el.parentElement.parentElement.classList)
+
+            if (classes.includes('dropdown')) {
+                setActiveWithDropdown(el)
+            } else {
+                setActive(el)
+            }
+        }
+    }
+
     // Watch on click for sidebar icon
+    let lastUrl = location.href;
+    new MutationObserver(() => {
+      const url = location.href;
+      if (url !== lastUrl) {
+        lastUrl = url;
+        onUrlChange();
+      }
+    }).observe(document, {subtree: true, childList: true});
+
+
+    onUrlChange = () => {
+        disableActiveItems()
+
+        activeCurrentPage(getRelativePath(location.href))
+    }
+
     document.onreadystatechange = () => {
         if (document.readyState === 'complete') {
             document.getElementById("sidebarCollapse").addEventListener('click', () => {
@@ -78,19 +125,7 @@ if (document) {
         let el = null
 
         if (current_page) {
-            let path = ('/'+current_page.split('/')[1])
-
-            el = gethrefElement(path)
-        }
-
-        if (el) {
-            const classes = Array.from(el.parentElement.parentElement.classList)
-
-            if (classes.includes('dropdown')) {
-                setActiveWithDropdown(el)
-            } else {
-                setActive(el)
-            }
+            activeCurrentPage()
         }
 
         const first_elements = document.querySelectorAll(".sidebar ul li a")

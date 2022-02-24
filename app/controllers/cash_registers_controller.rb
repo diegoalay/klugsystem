@@ -34,6 +34,8 @@ class CashRegistersController < ApplicationSystemController
 
   # POST /cash_registers or /cash_registers.json
   def create
+    return respond_with_error("Ya posee una caja abierta.") unless (@current_user.cash_register.blank?)
+
     @cash_register = @account.cash_registers.new(cash_register_params)
     @cash_register.user_creator = current_user
     @cash_register.user_modifier = current_user

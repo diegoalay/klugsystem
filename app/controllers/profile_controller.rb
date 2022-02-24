@@ -19,6 +19,15 @@ class ProfileController < ApplicationSystemController
       end
     end
 
+    def cash_register
+      respond_to do |format|
+        format.html {}
+        format.json do
+          respond_with_successful(@current_user.cash_register)
+        end
+      end
+    end
+
     def respond_user_with_error
         return respond_with_error(@current_user.errors.full_messages.to_sentence)
     end
