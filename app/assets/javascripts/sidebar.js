@@ -49,14 +49,10 @@ if (document) {
         el.parentElement.parentElement.style.opacity = 1
         el.parentElement.parentElement.style.visibility = "visible"
         el.parentElement.parentElement.style.display = "block"
-
-        toggleMobile()
     }
 
     const setActive = (el) => {
         el.parentElement.classList.add('active')
-
-        toggleMobile()
     }
 
     const getRelativePath = (url) => {
@@ -136,6 +132,7 @@ if (document) {
                 if (tag === "#") return
 
                 disableActiveItems(this)
+                toggleMobile()
                 setActive(this)
             };
         }
@@ -146,6 +143,7 @@ if (document) {
                 disableActiveItems(this)
 
                 setTimeout(() => {
+                    toggleMobile()
                     setActiveWithDropdown(this)
                 }, 200);
             }
