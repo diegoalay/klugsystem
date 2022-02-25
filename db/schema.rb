@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_198659) do
+ActiveRecord::Schema.define(version: 2022_02_37_198669) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,36 @@ ActiveRecord::Schema.define(version: 2022_02_37_198659) do
     t.bigint "account_id"
     t.index ["account_id"], name: "index_catalog_expediture_types_on_account_id"
     t.index ["deleted_at"], name: "index_catalog_expediture_types_on_deleted_at"
+  end
+
+  create_table "catalog_product_transaction_type_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "catalog_product_transaction_type_id"
+    t.index ["catalog_product_transaction_type_id"], name: "product_transaction_type_activities_product_transaction_type"
+  end
+
+  create_table "catalog_product_transaction_types", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.text "note"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "catalog_product_transaction_types_accounts"
+    t.index ["deleted_at"], name: "index_catalog_product_transaction_types_on_deleted_at"
   end
 
   create_table "client_activities", force: :cascade do |t|
@@ -498,6 +528,22 @@ ActiveRecord::Schema.define(version: 2022_02_37_198659) do
     t.index ["product_id"], name: "index_product_files_on_product_id"
   end
 
+  create_table "product_transactions", force: :cascade do |t|
+    t.text "description"
+    t.string "category"
+    t.float "quantity"
+    t.bigint "user_creator_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "catalog_product_transaction_type_id"
+    t.string "model_type"
+    t.bigint "model_id"
+    t.bigint "product_id"
+    t.index ["catalog_product_transaction_type_id"], name: "catalog_product_transaction_types_product_transactions"
+    t.index ["model_type", "model_id"], name: "index_product_transactions_on_model"
+    t.index ["product_id"], name: "index_product_transactions_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "sku"
     t.string "name"
@@ -707,6 +753,12 @@ ActiveRecord::Schema.define(version: 2022_02_37_198659) do
   add_foreign_key "catalog_expediture_types", "accounts"
   add_foreign_key "catalog_expediture_types", "users", column: "user_creator_id"
   add_foreign_key "catalog_expediture_types", "users", column: "user_modifier_id"
+  add_foreign_key "catalog_product_transaction_type_activities", "catalog_product_transaction_types"
+  add_foreign_key "catalog_product_transaction_type_activities", "users", column: "user_creator_id"
+  add_foreign_key "catalog_product_transaction_type_activities", "users", column: "user_modifier_id"
+  add_foreign_key "catalog_product_transaction_types", "accounts"
+  add_foreign_key "catalog_product_transaction_types", "users", column: "user_creator_id"
+  add_foreign_key "catalog_product_transaction_types", "users", column: "user_modifier_id"
   add_foreign_key "client_activities", "clients"
   add_foreign_key "client_activities", "users", column: "user_creator_id"
   add_foreign_key "client_activities", "users", column: "user_modifier_id"
@@ -759,6 +811,9 @@ ActiveRecord::Schema.define(version: 2022_02_37_198659) do
   add_foreign_key "product_files", "products"
   add_foreign_key "product_files", "users", column: "user_creator_id"
   add_foreign_key "product_files", "users", column: "user_modifier_id"
+  add_foreign_key "product_transactions", "catalog_product_transaction_types"
+  add_foreign_key "product_transactions", "products"
+  add_foreign_key "product_transactions", "users", column: "user_creator_id"
   add_foreign_key "products", "accounts"
   add_foreign_key "products", "branch_offices"
   add_foreign_key "products", "brands"

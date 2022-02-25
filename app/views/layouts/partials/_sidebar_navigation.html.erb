@@ -6,8 +6,8 @@
   <ul class="list-unstyled">
     <li>
       <%= navigation_vue_item("/dashboard") do %>
-        <i class="fas fa-th-large"></i>
-        <span> Inicio </span>
+          <i class="fas fa-th-large"></i>
+          <span> Inicio </span>
       <% end %>
     </li>
     <li>
@@ -125,6 +125,12 @@
             <span> Tipos de evento </span>
           <% end %>
         </li>
+        <li>
+          <%= navigation_vue_item("/catalog/product_transaction_types") do %>
+            <i class="fas fa-sitemap"></i>
+            <span> Tipos de transacciones </span>
+          <% end %>
+        </li>
       </ul>
     </li>
     <li>
@@ -141,6 +147,13 @@
           <% end %>
         </li>
       </ul>
+    </li>
+    <li>
+      <a href="#">
+        <i class="fas fa-book"></i>
+        </i>
+        <span> Contabilidad </span>
+      </a>
     </li>
     <li>
       <a href="#">

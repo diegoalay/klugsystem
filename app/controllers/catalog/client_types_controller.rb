@@ -83,7 +83,7 @@ class Catalog::ClientTypesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def catalog_client_type_params
     params.fetch(:catalog_client_type, {}).permit(
-      %i[name]
+      %i[name note]
     )
   end
 end

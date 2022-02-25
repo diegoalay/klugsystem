@@ -7,12 +7,16 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Fecha de apertura',
+                    key: 'open_date',
+                    sortable: true
+                },{
                     label: 'Usuario',
                     key: 'user_creator_name',
                     sortable: true
                 },{
-                    label: 'Fecha de apertura',
-                    key: 'open_date',
+                    label: 'Estado',
+                    key: 'status',
                     sortable: true
                 },{
                     label: 'Fecha de cierre',
@@ -47,7 +51,7 @@
                 filters: {
                     search: '',
                     date_range: ['', ''],
-                    cash_register_status: ''
+                    cash_register_status: 'open'
                 },
                 loading: false
             }
@@ -181,6 +185,15 @@
                     responsive
                     sort-icon-left
                 >
+
+                    <template v-slot:cell(status)="row">
+                        <div v-if="row.item.close_date" class="p-1 text-danger">
+                            {{ 'Cerrada' }}
+                        </div>
+                        <div v-else class="p-1 text-success">
+                            {{  'Abierta' }}
+                        </div>
+                    </template>
                 </b-table>
                 <b-col sm="4" md="4" class="my-1">
                     <b-pagination

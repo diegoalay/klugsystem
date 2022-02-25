@@ -79,32 +79,27 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-row>
-                        <b-col cols="12">
-                            <b-form-group>
-                                <label> Nombre del departmento <sup class="text-danger">*</sup> </label>
+                <b-row>
+                    <b-col cols="12">
+                        <b-form-group>
+                            <label> Nombre del departmento <sup class="text-danger">*</sup> </label>
 
-                                <b-form-input
-                                    v-model="department.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
+                            <b-form-input
+                                v-model="department.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group label="Departamento mayor">
-                                <b-form-select v-model="department.departments_id" :options="options.departments"></b-form-select>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
+                        <b-form-group label="Departamento mayor">
+                            <b-form-select v-model="department.departments_id" :options="options.departments"></b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
-                <b-container>
-                    <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>

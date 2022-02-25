@@ -6,6 +6,7 @@ class Product < ApplicationRecord
   belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_office_id"
 
   has_many :sale_details,  class_name: "Sale::Detail", foreign_key: "product_id"
+  has_many :transactions
 
   has_many :files
 

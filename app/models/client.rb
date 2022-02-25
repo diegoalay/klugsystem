@@ -6,6 +6,7 @@ class Client < ApplicationRecord
   validates :billing_identifier, presence: true
 
   before_destroy :can_be_destroyed
+  before_save :sanitize_billing_identifier
 
   def self.index account
     account.clients.select("
@@ -60,6 +61,10 @@ class Client < ApplicationRecord
   end
 
   private
+
+  def sanitize_billing_identifier
+    billing_identifier = billing_identifier.gsub("-", "")
+  end
 
   def can_be_destroyed
     errors.add(:base, "Existen ventas asignadas a este cliente'") and throw(:abort) unless account.sales.where(client: self).blank?

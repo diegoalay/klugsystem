@@ -83,7 +83,7 @@ class Catalog::EventTypesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def catalog_event_type_params
     params.fetch(:catalog_event_type, {}).permit(
-      %i[name]
+      %i[name note]
     )
   end
 end

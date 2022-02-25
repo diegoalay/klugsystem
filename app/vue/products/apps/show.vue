@@ -1,11 +1,13 @@
 <script type="text/javascript">
 import componentForm from '../components/form.vue'
 import componentStatistics from '../components/statistics.vue'
+import componentTransactions from '../components/transactions.vue'
 
 export default {
     components:{
         'component-form': componentForm,
         'component-statistics': componentStatistics,
+        'component-transactions': componentTransactions
     },
     data() {
         return {
@@ -54,6 +56,9 @@ export default {
                 </b-tab>
                 <b-tab title="Archivos" fill>
                     <component-files v-if="product.id" default-file-key="product" :has-picture="true" :file-id="product.product_file_id" :url="url.build('products/:id/files', {id: this.product.id}).toString(false)"> </component-files>
+                </b-tab>
+                <b-tab title="Transacciones" fill>
+                    <component-transactions v-if="product.id" :product="product"> </component-transactions>
                 </b-tab>
                 <b-tab title="Estadísticas" fill>
                     <component-statistics :activeTab="tabIndex === 2" v-if="product && statistics" :product="product" :statistics="statistics"></component-statistics>

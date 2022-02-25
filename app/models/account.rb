@@ -14,7 +14,25 @@ class Account < ApplicationRecord
 
 
   # Catalogs
-  has_many :catalog_client_types,      class_name: "Catalog::ClientType",      foreign_key: "account_id"
-  has_many :catalog_event_types,       class_name: "Catalog::EventType",       foreign_key: "account_id"
-  has_many :catalog_expediture_types,  class_name: "Catalog::ExpeditureType",  foreign_key: "account_id"
+  has_many :catalog_client_types,               class_name: "Catalog::ClientType",              foreign_key: "account_id"
+  has_many :catalog_event_types,                class_name: "Catalog::EventType",               foreign_key: "account_id"
+  has_many :catalog_expediture_types,           class_name: "Catalog::ExpeditureType",          foreign_key: "account_id"
+  has_many :catalog_product_transaction_types,  class_name: "Catalog::ProductTransactionType",  foreign_key: "account_id"
+
+  after_create :setup_account
+
+  # private
+
+  def setup_account
+    # create default sale catalog type
+    type = catalog_product_transaction_types.find_or_create_by!(
+      name: "Venta"
+    )
+
+    type.update(code: "product-sale") # special code
+  end
+
+  def catalog_product_transaction_sale_type
+    return catalog_product_transaction_types.find_by(code: "product-sale")
+  end
 end

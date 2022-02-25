@@ -83,7 +83,7 @@ class Catalog::ExpeditureTypesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def catalog_expediture_type_params
     params.fetch(:catalog_expediture_type, {}).permit(
-      %i[name]
+      %i[name note]
     )
   end
 end

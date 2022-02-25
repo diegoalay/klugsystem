@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  namespace :employee do
-    resources :files
-  end
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -22,93 +19,96 @@ Rails.application.routes.draw do
     get '/sign_out', to: 'devise/sessions#destroy', as: :signout
 
     authenticated :user do
-        root 'dashboard#default', as: :authenticated_root
+      root 'dashboard#default', as: :authenticated_root
 
-        get "profile/cash_register", to: "profile#cash_register"
-        get :profile, to: "profile#show"
-        put :profile, to: "profile#update"
+      get "profile/cash_register", to: "profile#cash_register"
+      get :profile, to: "profile#show"
+      put :profile, to: "profile#update"
 
-        get :dashboard, to: "dashboard#default"
+      get :dashboard, to: "dashboard#default"
 
-        resources :users do
-          collection do
-            get :search
-          end
+      resources :users do
+        collection do
+          get :search
         end
+      end
 
-        resources :cash_registers do
-        end
+      resources :cash_registers do
+      end
 
-        resources :expeditures do
-          collection do
-            get :options
-            get :index_options
-          end
+      resources :expeditures do
+        collection do
+          get :options
+          get :index_options
         end
+      end
 
-        resources :payment_methods do
-          collection do
-            get :options
-            get :search
-          end
+      resources :payment_methods do
+        collection do
+          get :options
+          get :search
         end
+      end
 
-        resources :employees do
-          scope module: :employee do
-            resources :files
-          end
-          collection do
-            get "files/extensions", to: "employee/files#extensions"
-            get :options
-            get :search
-          end
+      resources :employees do
+        scope module: :employee do
+          resources :files
         end
+        collection do
+          get "files/extensions", to: "employee/files#extensions"
+          get :options
+          get :search
+        end
+      end
 
-        resources :products do
-          scope module: :product do
-            resources :files
-          end
-          collection do
-            get "files/extensions", to: "product/files#extensions"
-            get :options
-            get :search
-          end
+      resources :products do
+        scope module: :product do
+          resources :files
+          resources :transactions
         end
+        collection do
+          get "transactions/options", to: "product/transactions#options"
+          get "files/extensions", to: "product/files#extensions"
+          get :options
+          get :search
+        end
+      end
 
-        resources :branch_offices
-        resources :clients do
-          collection do
-            get :search
-          end
+      resources :branch_offices
+      resources :clients do
+        collection do
+          get :search
         end
+      end
 
-        resources :brands
-        resources :sales do
-          collection do
-            get :options
-            get :index_options
-          end
+      resources :brands
+      resources :sales do
+        collection do
+          get :options
+          get :index_options
         end
-        resources :roles
-        resources :accounts
-        resources :events
-        resources :departments do
-          collection do
-            get :options
-          end
+      end
+      resources :roles
+      resources :accounts
+      resources :events
+      resources :departments do
+        collection do
+          get :options
         end
+      end
 
-        namespace :catalog do
-          resources :expediture_types
-          resources :client_types
-          resources :event_types
-        end
+      namespace :catalog do
+        resources :product_transaction_types
+        resources :expediture_types
+        resources :client_types
+        resources :event_types
+      end
     end
 
     unauthenticated do
-        root 'users/sessions#new', as: :unauthenticated_root
+      root 'users/sessions#new', as: :unauthenticated_root
 
-        get '*path' => redirect('/')
+      get '*path' => redirect('/')
     end
   end
 

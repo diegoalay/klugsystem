@@ -77,6 +77,8 @@ if (document) {
             current_path.match(/cash_registers\/new/)
         ) {
             path = '/profile/cash_register'
+        } else if (current_path.includes('catalog')) {
+            path = ('/'+current_path.split('/')[1] + "/" + current_path.split('/')[2])
         } else {
             path = ('/'+current_path.split('/')[1])
         }

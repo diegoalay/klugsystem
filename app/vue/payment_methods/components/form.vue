@@ -76,94 +76,89 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-form-group>
-                        <label> Método de pago <sup class="text-danger">*</sup> </label>
+                <b-form-group>
+                    <label> Método de pago <sup class="text-danger">*</sup> </label>
 
-                        <b-form-input
-                            v-model="payment_method.name"
-                            type="text"
-                            placeholder=""
-                            required
-                        >
-                        </b-form-input>
-                    </b-form-group>
+                    <b-form-input
+                        v-model="payment_method.name"
+                        type="text"
+                        placeholder=""
+                        required
+                    >
+                    </b-form-input>
+                </b-form-group>
 
-                    <b-row>
-                        <b-col sm="12">
-                            <b-form-group>
-                                <label> Interés (%) </label>
+                <b-row>
+                    <b-col sm="12">
+                        <b-form-group>
+                            <label> Interés (%) </label>
 
-                                <b-form-input
-                                    :change="validatePercentage('interest_percentage')"
-                                    v-model="payment_method.interest_percentage"
-                                    type="number"
-                                    placeholder=""
-                                    min=0
-                                    max=100
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
+                            <b-form-input
+                                :change="validatePercentage('interest_percentage')"
+                                v-model="payment_method.interest_percentage"
+                                type="number"
+                                placeholder=""
+                                min=0
+                                max=100
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
 
-                        <b-col sm="12">
-                            <b-form-group>
-                                <label> Interés (Q.) </label>
+                    <b-col sm="12">
+                        <b-form-group>
+                            <label> Interés (Q.) </label>
 
-                                <b-form-input
-                                    v-model="payment_method.interest_value"
-                                    type="number"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
+                            <b-form-input
+                                v-model="payment_method.interest_value"
+                                type="number"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
-                    <b-row>
-                        <b-col sm="12">
-                            <b-form-group>
-                                <label> Descuento (%) </label>
+                <b-row>
+                    <b-col sm="12">
+                        <b-form-group>
+                            <label> Descuento (%) </label>
 
-                                <b-form-input
-                                    :change="validatePercentage('discount_percentage')"
-                                    v-model="payment_method.discount_percentage"
-                                    type="number"
-                                    placeholder=""
-                                    min=0
-                                    max=100
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
+                            <b-form-input
+                                :change="validatePercentage('discount_percentage')"
+                                v-model="payment_method.discount_percentage"
+                                type="number"
+                                placeholder=""
+                                min=0
+                                max=100
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
 
-                        <b-col sm="12">
-                            <b-form-group>
-                                <label> Descuento (Q.) </label>
+                    <b-col sm="12">
+                        <b-form-group>
+                            <label> Descuento (Q.) </label>
 
-                                <b-form-input
-                                    v-model="payment_method.discount_value"
-                                    type="number"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
+                            <b-form-input
+                                v-model="payment_method.discount_value"
+                                type="number"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
-                    <b-form-group>
-                        <label> Estado </label>
+                <b-form-group>
+                    <label> Estado </label>
 
-                            <b-form-checkbox v-model="payment_method.status">
-                            {{ payment_method.status ? 'Deshabilitar pago' : 'Habilitar pago' }}
-                            </b-form-checkbox>
-                    </b-form-group>
-                </b-container>
+                        <b-form-checkbox v-model="payment_method.status">
+                        {{ payment_method.status ? 'Deshabilitar pago' : 'Habilitar pago' }}
+                        </b-form-checkbox>
+                </b-form-group>
 
-                <b-container>
-                    <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>

@@ -48,19 +48,41 @@ class SalesController < ApplicationSystemController
     end
 
     if @sale.save
-      products = params[:sale][:products]
-      products.each do |product|
-        @sale.details.create!(
-          account: @account,
-          product_id: product["id"],
-          name: product["name"],
-          price: product["price"],
-          total: product["total"],
-          quantity: product["quantity"],
-          subtotal: product["subtotal"],
-          discount_value: product["discount_value"],
-          discount_percentage: product["discount_percentage"]
-        )
+      sale_products = params[:sale][:products]
+
+      ActiveRecord::Base.transaction do
+        sale_products.each do |sale_product|
+          sale_detail = @sale.details.new(
+            account: @account,
+            product_id: sale_product["id"],
+            name: sale_product["name"],
+            price: sale_product["price"],
+            total: sale_product["total"],
+            quantity: sale_product["quantity"],
+            subtotal: sale_product["subtotal"],
+            discount_value: sale_product["discount_value"],
+            discount_percentage: sale_product["discount_percentage"]
+          )
+
+          if (sale_detail.save!)
+            ActiveRecord::Base.transaction do
+              sale_detail.transactions.create!(
+                transaction_type: @account.catalog_product_transaction_sale_type,
+                quantity: sale_product["quantity"],
+                model_id: @sale.id,
+                model_type: "Sale",
+              )
+
+              product = @account.products.find_by(id: sale_product["id"])
+
+              if (product)
+                product.update!(
+                  quantity: product.quantity - sale_product["quantity"].to_f
+                )
+              end
+            end
+          end
+        end
       end
       respond_with_successful(@sale)
     else

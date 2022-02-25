@@ -66,146 +66,140 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-row>
-                        <b-col md="8" sm="12">
-                            <p class="col-header">
-                                Información general
-                            </p>
+                <b-row>
+                    <b-col>
+                        <p class="col-header">
+                            Información de facturación
+                        </p>
 
-                            <b-form-group>
-                                <label> Nombre </label>
+                        <b-form-group>
+                            <label> Nit <sup class="text-danger">*</sup> </label>
+                            <b-form-input
+                                v-model="client.billing_identifier"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
 
-                                <b-form-input
-                                    v-model="client.first_name"
-                                    type="text"
-                                    placeholder=""
+                        <b-form-group>
+                            <label> Nombre de facturación <sup class="text-danger">*</sup> </label>
+                            <b-form-input
+                                v-model="client.billing_name"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <label> Dirección de facturación <sup class="text-danger">*</sup> </label>
+                            <b-form-input
+                                v-model="client.billing_address"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group label="E-Mail de facturación">
+                            <b-form-input
+                                v-model="client.billing_email"
+                                type="email"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <hr>
+                <b-row>
+                    <b-col md="8" sm="12">
+                        <p class="col-header">
+                            Información general
+                        </p>
+
+                        <b-form-group>
+                            <label> Nombre </label>
+
+                            <b-form-input
+                                v-model="client.first_name"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <label> Apellido </label>
+                            <b-form-input
+                                v-model="client.first_surname"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group label="Fecha de nacimiento">
+                            <component-datepicker
+                                :focus="false"
+                                lang="es"
+                                valueType="format"
+                                format="DD-MM-YYYY"
+                                v-model="client.birthdate"
+                                placeholder="">
+                            </component-datepicker>
+                        </b-form-group>
+
+                        <b-form-group label="Nota">
+                            <b-form-textarea
+                                v-model="client.note"
+                                placeholder="Ingrese observaciones"
+                                rows="3"
+                            >
+                            </b-form-textarea>
+                        </b-form-group>
+
+                    </b-col>
+                    <b-col>
+                        <p class="col-header">
+                            Información de contacto
+                        </p>
+                        <b-form-group label="Teléfono">
+                            <b-form-input
+                                v-model="client.telephone"
+                                type="text"
+                                placeholder=""
                                 >
-                                </b-form-input>
-                            </b-form-group>
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group>
-                                <label> Apellido </label>
-                                <b-form-input
-                                    v-model="client.first_surname"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
+                        <b-form-group label="Celular">
+                            <b-form-input
+                                v-model="client.mobile_number"
+                                type="text"
+                                placeholder="">
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group label="Fecha de nacimiento">
-                                <component-datepicker
-                                    :focus="false"
-                                    lang="es"
-                                    valueType="format"
-                                    format="DD-MM-YYYY"
-                                    v-model="client.birthdate"
-                                    placeholder="">
-                                </component-datepicker>
-                            </b-form-group>
+                        <b-form-group label="E-Mail">
+                            <b-form-input
+                                v-model="client.email"
+                                type="email"
+                                placeholder="">
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group label="Nota">
-                                <b-form-textarea
-                                    v-model="client.note"
-                                    placeholder="Ingrese observaciones"
-                                    rows="3"
-                                >
-                                </b-form-textarea>
-                            </b-form-group>
-
-                        </b-col>
-                        <b-col>
-                            <p class="col-header">
-                                Información de contacto
-                            </p>
-                            <b-form-group label="Teléfono">
-                                <b-form-input
-                                    v-model="client.telephone"
-                                    type="text"
-                                    placeholder=""
-                                    >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="Celular">
-                                <b-form-input
-                                    v-model="client.mobile_number"
-                                    type="text"
-                                    placeholder="">
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="E-Mail">
-                                <b-form-input
-                                    v-model="client.email"
-                                    type="email"
-                                    placeholder="">
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="Fax">
-                                <b-form-input
-                                    v-model="client.fax"
-                                    type="text"
-                                    placeholder="">
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
-                <b-container>
-                    <b-row>
-                        <b-col>
-                            <p class="col-header">
-                                Información de facturación
-                            </p>
-
-                            <b-form-group>
-                                <label> Nit <sup class="text-danger">*</sup> </label>
-                                <b-form-input
-                                    v-model="client.billing_identifier"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group>
-                                <label> Nombre de facturación <sup class="text-danger">*</sup> </label>
-                                <b-form-input
-                                    v-model="client.billing_name"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group>
-                                <label> Dirección de facturación <sup class="text-danger">*</sup> </label>
-                                <b-form-input
-                                    v-model="client.billing_address"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="E-Mail de facturación">
-                                <b-form-input
-                                    v-model="client.billing_email"
-                                    type="email"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
-                <br>
-                <b-container>
-                    <b-button type="submit" variant="primary">Guardar</b-button>
-                </b-container>
+                        <b-form-group label="Fax">
+                            <b-form-input
+                                v-model="client.fax"
+                                type="text"
+                                placeholder="">
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>

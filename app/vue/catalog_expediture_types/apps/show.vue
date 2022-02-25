@@ -25,7 +25,7 @@
                     if (result.successful) {
                         this.catalog_expediture_type = result.data
                     }else{
-
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

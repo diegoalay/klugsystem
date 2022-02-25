@@ -64,6 +64,8 @@
                     if (response.successful) {
                         this.data = response.data.products
                         this.pagination.total = response.data.total_count
+                    } else {
+                        this.$toast.error(result.error.message)
                     }
 
                     this.loading = false
@@ -176,7 +178,7 @@
 
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
+                            <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>
                 </b-table>

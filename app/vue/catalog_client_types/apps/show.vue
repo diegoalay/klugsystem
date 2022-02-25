@@ -24,8 +24,8 @@
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.catalog_client_type = result.data
-                    }else{
-
+                    } else {
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

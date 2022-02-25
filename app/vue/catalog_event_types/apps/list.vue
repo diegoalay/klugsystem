@@ -7,6 +7,10 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Fecha de creación',
+                    key: 'created_at',
+                    sortable: true
+                },{
                     label: 'Nombre',
                     key: 'name',
                     sortable: true
@@ -94,7 +98,7 @@
                 >
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
+                            <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>
                 </b-table>

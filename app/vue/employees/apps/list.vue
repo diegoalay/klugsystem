@@ -142,7 +142,7 @@
 
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
+                            <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>
                 </b-table>

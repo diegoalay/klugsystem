@@ -62,36 +62,30 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-form-group>
-                        <label> Nombre <sup class="text-danger">*</sup> </label>
+                <b-form-group>
+                    <label> Nombre <sup class="text-danger">*</sup> </label>
 
-                        <b-form-input
-                            v-model="catalog_expediture_type.name"
-                            type="text"
-                            placeholder=""
-                            required
-                        >
-                        </b-form-input>
-                    </b-form-group>
+                    <b-form-input
+                        v-model="catalog_expediture_type.name"
+                        type="text"
+                        placeholder=""
+                        required
+                    >
+                    </b-form-input>
+                </b-form-group>
 
-                    <b-form-group>
-                        <label> Nota </label>
+                <b-form-group>
+                    <label> Nota </label>
 
-                        <b-form-textarea
-                            v-model="catalog_expediture_type.note"
-                            placeholder="Ingrese observaciones"
-                            rows="3"
-                        >
-                        </b-form-textarea>
-                    </b-form-group>
-                </b-container>
-                <br>
+                    <b-form-textarea
+                        v-model="catalog_expediture_type.note"
+                        placeholder="Ingrese observaciones"
+                        rows="3"
+                    >
+                    </b-form-textarea>
+                </b-form-group>
 
-                <b-container>
-                    <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>

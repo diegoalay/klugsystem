@@ -57,103 +57,99 @@ export default {
         <b-form @submit.prevent="onSubmit">
             <b-card>
                 <b-card-body>
-                    <b-container>
-                        <b-row>
-                            <b-col md="6" sm="6">
-                                <b-form-group>
-                                    <label> Primer Nombre <sup class="text-danger">*</sup> </label>
+                    <b-row>
+                        <b-col md="6" sm="6">
+                            <b-form-group>
+                                <label> Primer Nombre <sup class="text-danger">*</sup> </label>
 
-                                    <b-form-input
-                                        v-model="user.first_name"
-                                        type="text"
-                                        placeholder=""
-                                        required
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                            <b-col md="6" sm="6">
-                                <b-form-group>
-                                    <label> Primer apellido <sup class="text-danger">*</sup> </label>
+                                <b-form-input
+                                    v-model="user.first_name"
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="6" sm="6">
+                            <b-form-group>
+                                <label> Primer apellido <sup class="text-danger">*</sup> </label>
 
-                                    <b-form-input
-                                        v-model="user.first_surname"
-                                        type="text"
-                                        placeholder=""
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                        </b-row>
+                                <b-form-input
+                                    v-model="user.first_surname"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
 
-                        <b-row>
-                            <b-col md="6" sm="6">
-                                <b-form-group label="Segundo nombre">
-                                    <b-form-input
-                                        v-model="user.second_name"
-                                        type="text"
-                                        placeholder=""
-                                        required
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                            <b-col md="6" sm="6">
-                                <b-form-group>
-                                    <label> Segundo nombre </label>
+                    <b-row>
+                        <b-col md="6" sm="6">
+                            <b-form-group label="Segundo nombre">
+                                <b-form-input
+                                    v-model="user.second_name"
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="6" sm="6">
+                            <b-form-group>
+                                <label> Segundo nombre </label>
 
-                                    <b-form-input
-                                        v-model="user.second_surname"
-                                        type="text"
-                                        placeholder=""
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                        </b-row>
+                                <b-form-input
+                                    v-model="user.second_surname"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
 
-                        <b-row>
-                            <b-col md="6" sm="6">
-                                <b-form-group label="Teléfono">
-                                    <b-form-input
-                                        v-model="user.telephone"
-                                        type="text"
-                                        placeholder=""
-                                        required
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                            <b-col md="6" sm="6">
-                                <b-form-group label="Dirección">
-                                    <b-form-input
-                                        v-model="user.address"
-                                        type="text"
-                                        placeholder=""
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                        </b-row>
+                    <b-row>
+                        <b-col md="6" sm="6">
+                            <b-form-group label="Teléfono">
+                                <b-form-input
+                                    v-model="user.telephone"
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="6" sm="6">
+                            <b-form-group label="Dirección">
+                                <b-form-input
+                                    v-model="user.address"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
 
-                        <b-form-group>
-                            <label> E-Mail <sup class="text-danger">*</sup> </label>
+                    <b-form-group>
+                        <label> E-Mail <sup class="text-danger">*</sup> </label>
 
-                            <b-form-input
-                                v-model="user.email"
-                                type="text"
-                                placeholder=""
-                                required
-                                disabled
-                                readonly
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-container>
+                        <b-form-input
+                            v-model="user.email"
+                            type="text"
+                            placeholder=""
+                            required
+                            disabled
+                            readonly
+                        >
+                        </b-form-input>
+                    </b-form-group>
 
-                    <b-container>
-                        <b-button type="submit" variant="primary">Guardar</b-button>
-                    </b-container>
+                    <b-button type="submit" variant="primary">Guardar</b-button>
                 </b-card-body>
             </b-card>
         </b-form>

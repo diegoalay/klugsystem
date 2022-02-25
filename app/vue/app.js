@@ -15,9 +15,10 @@ import brandsRoutes from './brands/routes.js';
 import employeeRoutes from './employees/routes.js';
 
 import departmentsRoutes from './departments/routes.js';
+import catalogEventTypesRoutes from './catalog_event_types/routes.js';
 import catalogClientTypesRoutes from './catalog_client_types/routes.js';
 import catalogExpeditureTypesRoutes from './catalog_expediture_types/routes.js';
-import catalogEventTypesRoutes from './catalog_event_types/routes.js';
+import catalogProductTransactionTypesRoutes from './catalog_product_transaction_types/routes.js';
 
 import paymentMethodsRoutes from './payment_methods/routes.js';
 import branchOfficesRoutes from './branch_offices/routes.js';
@@ -36,6 +37,7 @@ app("",
     .concat(employeeRoutes)
     .concat(catalogClientTypesRoutes)
     .concat(catalogExpeditureTypesRoutes)
+    .concat(catalogProductTransactionTypesRoutes)
     .concat(catalogEventTypesRoutes)
     .concat(paymentMethodsRoutes)
     .concat(branchOfficesRoutes)

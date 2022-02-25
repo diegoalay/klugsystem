@@ -11,6 +11,14 @@
                     key: 'sale_date',
                     sortable: true
                 },{
+                    label: 'Cliente',
+                    key: 'client_blling_name',
+                    sortable: true
+                },{
+                    label: 'Nit',
+                    key: 'client_billing_identifier',
+                    sortable: true
+                },{
                     label: 'Subtotal',
                     key: 'subtotal',
                     sortable: true

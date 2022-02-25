@@ -1,7 +1,25 @@
 es: 
+  support:
+    array:
+      words_connector: " o "
+      two_words_connector: " "
+      last_word_connector: " o al menos "
+  errors:
+    format: "%{message}"
   models: 
     sales: 
       column_enum_sale_type_receipt: "Recibo"
       column_enum_sale_type_sale: "Venta"
       column_enum_sale_type_bill: "Factura"
       column_enum_sale_type_electronic_bill: "Factura electrónica"
+      en:
+  activerecord:
+    errors:
+      format: 
+      models:
+        sale:
+          attributes:
+            payment_method:
+              required: "Debe seleccionar un método de pago."
+            client:
+              required: "Debe seleccionar un cliente."

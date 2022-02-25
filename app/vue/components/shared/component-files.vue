@@ -367,20 +367,20 @@ export default {
                     <template v-slot:cell(actions)="row">
                         <template v-if="hasPicture">
                             <b-button v-if="defaultFileId == row.item.id" variant="success" class="mr-1">
-                                <b-icon icon="image"></b-icon>
+                                <font-awesome-icon icon="image" />
                             </b-button>
 
-                            <b-button v-else-if="extensionIsValid(row.item.file_extension)" variant="outline-info" @click.stop="putObjectDefaultFile(row.item.id)" class="mr-1">
-                                <b-icon icon="image"></b-icon>
+                            <b-button v-else-if="extensionIsValid(row.item.file_extension)" variant="info" @click.stop="putObjectDefaultFile(row.item.id)" class="mr-1">
+                                <font-awesome-icon icon="image"/>
                             </b-button>
                         </template>
 
-                        <b-button variant="outline-dark" @click.stop="downloadFile(row.item.id)" class="mr-1">
-                            <b-icon icon="download"></b-icon>
+                        <b-button variant="dark" @click.stop="downloadFile(row.item.id)" class="mr-1">
+                            <font-awesome-icon icon="download"/>
                         </b-button>
 
-                        <b-button v-if="defaultFileId !== row.item.id" variant="outline-danger" @click.stop="deleteFile(row.item.id)" class="mr-1">
-                            <b-icon icon="trash-fill"></b-icon>
+                        <b-button v-if="defaultFileId !== row.item.id" variant="danger" @click.stop="deleteFile(row.item.id)" class="mr-1">
+                            <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>
                 </b-table>

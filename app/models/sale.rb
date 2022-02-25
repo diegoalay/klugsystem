@@ -1,4 +1,6 @@
 class Sale < ApplicationRecord
+  include LoggerConcern
+
   belongs_to :client,         class_name: "Client",        foreign_key: "client_id"
   belongs_to :user_creator,   class_name: "User",          foreign_key: "user_creator_id"
   belongs_to :user_modifier,  class_name: "User",          foreign_key: "user_modifier_id"
@@ -6,11 +8,10 @@ class Sale < ApplicationRecord
   belongs_to :cash_register,  class_name: "CashRegister",  foreign_key: "cash_register_id", optional: true
   belongs_to :payment_method, class_name: "PaymentMethod", foreign_key: "payment_method_id"
 
-  has_many   :details,    foreign_key: "sale_id"
+  has_many   :product_transactions,  foreign_key: "model_id", as:  :model, class_name: "Product::Transaction"
+  has_many   :details,               foreign_key: "sale_id"
 
   validate :sale_data
-
-  include LoggerConcern
 
   enum sale_type: {
     sale: 'sale',
@@ -37,6 +38,9 @@ class Sale < ApplicationRecord
       sales.sale_date,
       concat(employees.first_name, ' ', employees.first_surname) as employee_name,
       concat(users.first_name, ' ', users.first_surname) as user_creator_name,
+      concat(clients.first_name, ' ', clients.first_surname) as client_name,
+      clients.billing_name as client_blling_name,
+      clients.billing_identifier as client_billing_identifier,
       users.email as user_creator_email
     ")
     .joins(:client, :user_creator)
@@ -52,6 +56,8 @@ class Sale < ApplicationRecord
       cast(sales.subtotal as varchar) like '%#{search}%' or
       cast(sales.total as varchar) like '%#{search}%' or
       cast(sales.sale_date as varchar) like '%#{search}%' or
+      lower(clients.billing_name) like '%#{search}%' or
+      lower(clients.billing_identifier) like '%#{search}%' or
       lower(concat(users.first_name, ' ', users.first_surname)) like '%#{search}%' or
       lower(concat(employees.first_name, ' ', employees.first_surname)) like '%#{search}%'
     ") unless search.blank?
@@ -111,10 +117,7 @@ class Sale < ApplicationRecord
   private
 
   def sale_data
-
-    errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta") and throw(:abort) if (received_amount < total)
-    errors.add(:base, "Debe seleccionar un cliente") and throw(:abort) if client.blank?
-    errors.add(:base, "Debe seleccionar un método de pago") and throw(:abort) if payment_method.blank?
-    errors.add(:base, "Debe seleccionar un tipo de venta") and throw(:abort) if sale_type.blank?
+    errors.add(:base, "La cantidad recibida debe ser mayor o igual al total de la venta.") if (received_amount < total)
+    errors.add(:base, "Debe seleccionar un tipo de venta.") if sale_type.blank?
   end
 end

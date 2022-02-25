@@ -72,67 +72,62 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-form-group>
-                        <label> Descripción <sup class="text-danger">*</sup> </label>
+                <b-form-group>
+                    <label> Descripción <sup class="text-danger">*</sup> </label>
 
-                        <b-form-input
-                            v-model="expediture.description"
-                            type="text"
-                            placeholder=""
-                            required
-                        >
-                        </b-form-input>
-                    </b-form-group>
+                    <b-form-input
+                        v-model="expediture.description"
+                        type="text"
+                        placeholder=""
+                        required
+                    >
+                    </b-form-input>
+                </b-form-group>
 
-                    <b-form-group>
-                        <label> Monto <sup class="text-danger">*</sup> </label>
-                        <b-form-input
-                            v-model="expediture.amount"
-                            type="number"
-                            placeholder=""
-                            required
-                        >
-                        </b-form-input>
-                    </b-form-group>
+                <b-form-group>
+                    <label> Monto <sup class="text-danger">*</sup> </label>
+                    <b-form-input
+                        v-model="expediture.amount"
+                        type="number"
+                        placeholder=""
+                        required
+                    >
+                    </b-form-input>
+                </b-form-group>
 
-                    <b-form-group>
-                        <label> Fecha de emisión </label>
-                        <br>
-                        <component-datepicker
-                            v-model="expediture.expediture_date"
-                            lang="es"
-                            format="DD-MM-YYYY hh:mm"
-                            type="datetime"
-                            placeholder=""
-                        >
-                        </component-datepicker>
-                    </b-form-group>
+                <b-form-group>
+                    <label> Fecha de emisión </label>
+                    <br>
+                    <component-datepicker
+                        v-model="expediture.expediture_date"
+                        lang="es"
+                        format="DD-MM-YYYY hh:mm"
+                        type="datetime"
+                        placeholder=""
+                    >
+                    </component-datepicker>
+                </b-form-group>
 
-                    <b-form-group label="Tipo de gasto">
-                        <b-form-select
-                            v-model="expediture.catalog_expediture_type_id"
-                            :options="options.expediture_types"
-                        >
-                            <template #first>
-                                <option :value="null"> Seleccione un tipo de gasto </option>
-                            </template>
-                        </b-form-select>
-                    </b-form-group>
+                <b-form-group label="Tipo de gasto">
+                    <b-form-select
+                        v-model="expediture.catalog_expediture_type_id"
+                        :options="options.expediture_types"
+                    >
+                        <template #first>
+                            <option :value="null"> Seleccione un tipo de gasto </option>
+                        </template>
+                    </b-form-select>
+                </b-form-group>
 
-                    <b-form-group label="Nota">
-                        <b-form-textarea
-                            v-model="expediture.note"
-                            rows="3"
-                        >
-                        </b-form-textarea>
-                    </b-form-group>
-                </b-container>
+                <b-form-group label="Nota">
+                    <b-form-textarea
+                        v-model="expediture.note"
+                        rows="3"
+                    >
+                    </b-form-textarea>
+                </b-form-group>
 
-                <b-container>
-                    <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button v-if="!expediture.id" type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>
