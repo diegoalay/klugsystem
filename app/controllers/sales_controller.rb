@@ -65,20 +65,20 @@ class SalesController < ApplicationSystemController
           )
 
           if (sale_detail.save!)
-            ActiveRecord::Base.transaction do
-              sale_detail.transactions.create!(
-                transaction_type: @account.catalog_product_transaction_sale_type,
-                quantity: sale_product["quantity"],
-                model_id: @sale.id,
-                model_type: "Sale",
-              )
+            product = @account.products.find_by(id: sale_product["id"])
 
-              product = @account.products.find_by(id: sale_product["id"])
-
-              if (product)
-                product.update!(
-                  quantity: product.quantity - sale_product["quantity"].to_f
+            if (product)
+              ActiveRecord::Base.transaction do
+                transaction = product.transactions.new(
+                  category: "decrease",
+                  user_creator: current_user,
+                  transaction_type: @account.catalog_product_transaction_sale_type,
+                  quantity: sale_product["quantity"],
+                  model_id: @sale.id,
+                  model_type: "Sale",
                 )
+
+                transaction.save!
               end
             end
           end
