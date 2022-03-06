@@ -44,3 +44,4 @@ deploy.sh
 Gemfile.lock
 
 /public/uploads/
+/config/credentials/production.key

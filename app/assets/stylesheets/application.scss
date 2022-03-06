@@ -90,6 +90,10 @@ label {
     height: 32px;
 }
 
+.sidebar {
+    visibility: hidden;
+}
+
 @media (max-width: 768px) {
     /* Applied to a wrapper div when using a custom component as content */
     .Vue-Toastification__container.top-right

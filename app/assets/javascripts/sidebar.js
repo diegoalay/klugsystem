@@ -114,7 +114,12 @@ if (document) {
     }
 
     document.onreadystatechange = () => {
+
         if (document.readyState === 'complete') {
+            // show side bar
+            const topbar = document.getElementsByClassName("sidebar")[0]
+            topbar.style.visibility = "visible"
+
             document.getElementById("sidebarCollapse").addEventListener('click', () => {
                 tooggleSideBar()
             })
