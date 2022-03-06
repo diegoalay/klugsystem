@@ -3,7 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 
 import {
     ButtonPlugin,
@@ -29,7 +28,6 @@ Vue.use(FormGroupPlugin)
 Vue.use(LayoutPlugin)
 
 // Global registration
-Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 // Libraries
@@ -39,7 +37,10 @@ Vue.use(url, system.url)
 Vue.use(Toast, {
     timeout: 2000,
     hideProgressBar: true,
-    position: 'bottom-right'
+    position: 'bottom-right',
+    icon: {
+        iconClass: 'xmark'
+    }
 });
 
 library.add(fas)

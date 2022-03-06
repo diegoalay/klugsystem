@@ -4,7 +4,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
-import VueBootstrapTypeahead from 'vue-bootstrap-typeahead'
 import VueApexCharts from 'vue-apexcharts'
 import VModal from 'vue-js-modal'
 
@@ -49,7 +48,6 @@ import tools from './tools'
 
 // Global registration
 Vue.component('apexchart', VueApexCharts)
-Vue.component('vue-bootstrap-typeahead', VueBootstrapTypeahead)
 
 Vue.component('component-files', componentFiles)
 Vue.component('component-header-list', componentHeaderList)
@@ -94,7 +92,10 @@ Vue.use(tools)
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,
-    position: 'bottom-right'
+    position: 'bottom-right',
+    icon: {
+        iconClass: 'xmark'
+    }
 });
 
 export default (base_path, routes=[]) => {
