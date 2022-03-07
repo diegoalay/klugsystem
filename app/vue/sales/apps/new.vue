@@ -567,7 +567,7 @@
                 </b-button>
 
                 <b-button variant="outline-primary" class="mb-2" href="#finish-sale">
-                    <font-awesome-icon icon="shopping-cart" />
+                    <font-awesome-icon icon="cart-shopping" />
                 </b-button>
             </slot>
         </component-header-form>
@@ -629,7 +629,7 @@
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
-                                                    <b-button @click="removeProduct()"><font-awesome-icon icon="times" /></b-button>
+                                                    <b-button @click="removeProduct()"><font-awesome-icon icon="xmark" /></b-button>
                                                     &nbsp;
                                                 </b-input-group-prepend>
                                             </slot>
@@ -649,7 +649,7 @@
                                                 >
                                                 </b-form-input>
                                                 <b-input-group-append>
-                                                    <b-button :disabled="!product_quantity" @click="product_quantity = ''"><font-awesome-icon icon="times" /></b-button>
+                                                    <b-button :disabled="!product_quantity" @click="product_quantity = ''"><font-awesome-icon icon="xmark" /></b-button>
                                                 </b-input-group-append>
                                             </b-input-group>
                                         </b-form-group>

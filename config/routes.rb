@@ -33,6 +33,9 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :books do
+      end
+
       resources :cash_registers do
       end
 

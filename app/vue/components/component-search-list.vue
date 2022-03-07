@@ -56,7 +56,7 @@
                     >
                     </b-form-input>
                     <b-input-group-append>
-                        <b-button :disabled="!text" @click="text = ''"><font-awesome-icon icon="times" /></b-button>
+                        <b-button :disabled="!text" @click="text = ''"><font-awesome-icon icon="xmark" /></b-button>
                     </b-input-group-append>
                 </b-input-group>
             </b-col>

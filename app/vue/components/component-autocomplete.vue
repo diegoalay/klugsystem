@@ -366,7 +366,7 @@ export default {
             <template name="buttons">
                 <slot>
                   <b-input-group-prepend>
-                      <b-button :disabled="!search" @click="search = ''"><font-awesome-icon icon="times" /></b-button>
+                      <b-button :disabled="!search" @click="search = ''"><font-awesome-icon icon="xmark" /></b-button>
                   </b-input-group-prepend>
                 </slot>
             </template>

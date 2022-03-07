@@ -119,7 +119,7 @@ export default {
             title="Ventas">
             <slot name="buttons">
                 <b-button variant="outline-primary" to="/new" class="mb-2">
-                    Vender <font-awesome-icon icon="shopping-cart" />
+                    Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
                 <b-button variant="outline-dark" class="mb-2" to="/sales">

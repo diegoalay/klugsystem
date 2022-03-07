@@ -23,6 +23,8 @@ import catalogProductTransactionTypesRoutes from './catalog_product_transaction_
 import paymentMethodsRoutes from './payment_methods/routes.js';
 import branchOfficesRoutes from './branch_offices/routes.js';
 
+import booksRoutes from './books/routes.js'
+
 import profileRoutes from './profile/routes.js'
 
 app("",
@@ -41,5 +43,6 @@ app("",
     .concat(catalogEventTypesRoutes)
     .concat(paymentMethodsRoutes)
     .concat(branchOfficesRoutes)
+    .concat(booksRoutes)
     .concat(profileRoutes)
 )

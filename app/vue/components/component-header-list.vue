@@ -49,7 +49,7 @@ export default {
                     <b-button :disabled="loading" variant="primary" class="mb-2" @click="reloadList">
                         {{ loading ? "Cargando" : 'Recargar' }}
                         <font-awesome-icon v-if="loading" icon="spinner" spin />
-                        <font-awesome-icon v-else icon="sync" />
+                        <font-awesome-icon v-else icon="rotate" />
                     </b-button>
                     <b-button v-if="!hideCreationButton" variant="outline-dark" class="mb-2" :to="`${$route.path}/new`">
                         {{ titleButtonCreate }} <font-awesome-icon icon="plus" />

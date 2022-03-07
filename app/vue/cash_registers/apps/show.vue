@@ -56,7 +56,7 @@
                 </b-button>
 
                 <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/sales/new">
-                    Vender <font-awesome-icon icon="shopping-cart" />
+                    Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
                 <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/expeditures/new">

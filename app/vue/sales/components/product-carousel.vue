@@ -57,7 +57,7 @@ export default {
 </script>
 <template>
     <b-container class="p-2">
-        <div class="text-center"> {{ product.name }} </div>
+        <div class="text-center"> <h4> {{ product.name }} </h4> </div>
 
         <b-carousel
             id="carousel"
@@ -80,7 +80,7 @@ export default {
 
         <div class="mt-4">
             <b> Disponibles: </b> {{ product.quantity }} <br>
-            <b> Precio: </b> {{ 'Q.' + product.retail_price }} <br>
+            <b> Precio: </b> {{ 'Q. ' + product.retail_price }} <br>
             <b> Marca: </b> {{ product.brand_name }} <br>
             <b> Sucursal: </b> {{ product.branch_office_name }} <br>
             <b> Departamento: </b> {{ product.department_name }}
