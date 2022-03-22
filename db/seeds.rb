@@ -47,15 +47,15 @@ account = Account.find_or_create_by(name: 'Klugsystem')
     email: "renato.melendez"
   },
 ].each do |user|
-  user = account.users.find_or_create_by(
-    first_name: user[:first_name],
-    first_surname: user[:first_surname],
-    email: "#{user[:email]}@klugsystem.com",
-    account: account
+  new_user = account.users.find_or_initialize_by(
+    email: "#{user[:email]}@klugsystem.com"
   )
 
-  user.password = "123456"
-  user.save!
+  new_user.first_name = user[:first_name]
+  new_user.first_surname = user[:first_surname]
+  new_user.password = "123456"
+
+  new_user.save!
 end
 
 user = User.first
@@ -120,7 +120,6 @@ account.payment_methods.find_or_create_by!(
 )
 
 account = Account.find_or_create_by(name: 'Transnunfio')
-
 [
   {
     first_name: "Diego",
@@ -133,15 +132,14 @@ account = Account.find_or_create_by(name: 'Transnunfio')
     email: "transnunfio@hotmail.com"
   }
 ].each do |user|
-  user = account.users.find_or_create_by(
-    first_name: user[:first_name],
-    first_surname: user[:first_surname],
-    email: user[:email],
-    account: account
+  new_user = account.users.find_or_initialize_by(
+    email: user[:email]
   )
 
-  user.password = "123456"
-  user.save!
+  new_user.first_name = user[:first_name]
+  new_user.first_surname = user[:first_surname]
+  new_user.password = "123456"
+  new_user.save!
 end
 
 puts "SEED EXECUTED"
