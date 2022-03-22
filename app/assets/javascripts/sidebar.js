@@ -1,6 +1,34 @@
 if (document) {
     const current_page = location.pathname
 
+    const openCaret = (li) => {
+        const classes = Array.from(li.classList)
+
+        if (classes.includes('list')) {
+            el = li.childNodes[4] 
+            if (el) {
+                const ul = el.parentElement.nextElementSibling
+
+                const classes = Array.from(el.classList)
+                if (classes.includes('right')) {
+                    el.classList.remove('right')
+                    el.classList.add('down')
+
+                    ul.style.opacity = 1
+                    ul.style.visibility = "visible"
+                    ul.style.display = "block"
+                } else {
+                    el.classList.remove('down')
+                    el.classList.add('right')
+
+                    ul.style.opacity = 0
+                    ul.style.visibility = "hidden"
+                    ul.style.display = "none"
+                }
+            }
+        }
+    }
+
     const sideBarIsActive = () => {
         const sidebar = document.getElementsByClassName("sidebar")[0]
 
@@ -37,18 +65,22 @@ if (document) {
             const classes = Array.from(el.parentElement.classList)
 
             if (classes.includes('dropdown')) {
-                if (!activeEl || !(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
-                    el.parentElement.style = '';
-                }
+                // if (!activeEl || !(activeEl.parentElement.parentElement.isSameNode(el.parentElement))) {
+                //     el.parentElement.style = '';
+                // }
             }
         }
     }
 
-    const setActiveWithDropdown = (el) => {
+    const setActiveWithDropdown = (el, pageReloaded = false) => {
         el.parentElement.classList.add('active')
         el.parentElement.parentElement.style.opacity = 1
         el.parentElement.parentElement.style.visibility = "visible"
         el.parentElement.parentElement.style.display = "block"
+
+        if (pageReloaded) {
+            openCaret(el.parentElement.parentElement.previousElementSibling)
+        }
     }
 
     const setActive = (el) => {
@@ -63,7 +95,6 @@ if (document) {
     }
 
     const activeCurrentPage = (current_path = null) => {
-
         if (!current_path) {
             current_path = current_page
         }
@@ -89,25 +120,14 @@ if (document) {
             const classes = Array.from(el.parentElement.parentElement.classList)
 
             if (classes.includes('dropdown')) {
-                setActiveWithDropdown(el)
+                setActiveWithDropdown(el, true)
             } else {
                 setActive(el)
             }
         }
     }
 
-    // Watch on click for sidebar icon
-    let lastUrl = location.href;
-    new MutationObserver(() => {
-      const url = location.href;
-      if (url !== lastUrl) {
-        lastUrl = url;
-        onUrlChange();
-      }
-    }).observe(document, {subtree: true, childList: true});
-
-
-    onUrlChange = () => {
+    const onUrlChange = () => {
         disableActiveItems()
 
         activeCurrentPage(getRelativePath(location.href))
@@ -115,7 +135,7 @@ if (document) {
 
     document.onreadystatechange = () => {
 
-        if (document.readyState === 'complete') {
+        if (document.readyState === 'complete') {            
             // show side bar
             const topbar = document.getElementsByClassName("sidebar")[0]
             topbar.style.visibility = "visible"
@@ -123,32 +143,48 @@ if (document) {
             document.getElementById("sidebarCollapse").addEventListener('click', () => {
                 tooggleSideBar()
             })
+
+            if (current_page) {
+                activeCurrentPage()
+            }
+
+            // Watch on click for sidebar icon
+            let lastUrl = location.href;
+            new MutationObserver(() => {
+              const url = location.href;
+              if (url !== lastUrl) {
+                lastUrl = url;
+                onUrlChange();
+              }
+            }).observe(document, {subtree: true, childList: true});
         }
 
-        let el = null
-
-        if (current_page) {
-            activeCurrentPage()
-        }
-
-        const first_elements = document.querySelectorAll(".sidebar ul li a")
-        for (var i = 0, length = first_elements.length; i < length; i++) {
-            first_elements[i].onclick = function() {
+        const firstLevel = document.querySelectorAll(".sidebar ul li a")
+        for (var i = 0, length = firstLevel.length; i < length; i++) {
+            firstLevel[i].onclick = function() {
                 const tag = this.getAttribute('href')
 
+                openCaret(this)
+                
                 if (tag === "#") return
 
                 disableActiveItems(this)
                 toggleMobile()
                 setActive(this)
-            };
+            }
         }
 
-        const second_elements = document.querySelectorAll(".sidebar ul li ul li a")
-        for (var i = 0, length = second_elements.length; i < length; i++) {
-            second_elements[i].onclick = function() {
-                disableActiveItems(this)
+        const secondLevel = document.querySelectorAll(".sidebar ul li ul li a")
+        for (var i = 0, length = secondLevel.length; i < length; i++) {
+            secondLevel[i].onclick = function() {
+                const tag = this.getAttribute('href')
 
+                openCaret(this)
+
+                if (tag === "#") return
+
+                disableActiveItems(this)
+                
                 setTimeout(() => {
                     toggleMobile()
                     setActiveWithDropdown(this)

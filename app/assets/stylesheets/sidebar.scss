@@ -95,6 +95,11 @@ ul ul a {
     background: transparent;
 }
 
+ul ul ul a {
+    padding-left: 2.5em !important;
+    background: transparent;
+}
+
 ul li ul {
     visibility: hidden;
     opacity: 0;
@@ -105,12 +110,23 @@ ul li ul {
     display: none;
 }
 
-ul li:hover > ul,
-ul li:focus-within > ul,
-ul li ul:hover {
-    visibility: visible;
-    opacity: 1;
-    display: block;
+.caret {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    border: 7px solid transparent;
+}
+.caret.down{
+    border-top-color: $leftbar-font-color;
+}
+.caret.right{
+    border-left-color: $leftbar-font-color;
+}
+.caret.up{
+    border-bottom-color: $leftbar-font-color;
+}
+.caret.left{
+    border-right-color: $leftbar-font-color;
 }
 
 @media (max-width: 768px) {

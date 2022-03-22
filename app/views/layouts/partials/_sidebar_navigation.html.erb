@@ -11,10 +11,11 @@
       <% end %>
     </li>
     <li>
-      <a href="#">
+      <a href="#" class="list">
         <i class="fas fa-handshake">
         </i>
         <span>CRM </span>
+        <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>
@@ -23,34 +24,31 @@
             <span> Clientes </span>
           <% end %>
         </li>
-      </ul>
-    </li>
-    <li>
-      <a href="#">
-        <i class="fas fa-cash-register"></i>
-        <span> Punto de venta </span>
-      </a>
-      <ul class="list-unstyled dropdown">
-      <li>
         <li>
-          <%= navigation_vue_item("/profile/cash_register") do %>
-            <i class="fas fa-box"></i>
-            <span> Mi caja </span>
-          <% end %>
-        </li>
-        <li>
-          <%= navigation_vue_item("/sales/new") do %>
-            <i class="fas fa-shopping-cart"></i>
-            <span> Punto de venta </span>
-          <% end %>
+          <a href="#" class="list">
+            <i class="fas fa-cog"></i>
+            </i>
+            <span> Ajustes </span>
+            <span class="float-right caret right"></span>
+          </a>
+          <ul class="list-unstyled dropdown">
+            <li>
+              <%= navigation_vue_item("/catalog/client_types") do %>
+                <i class="fas fa-briefcase"></i>
+                <span> Tipos de clientes </span>
+              <% end %>
+            </li>
+          </ul>
         </li>
       </ul>
     </li>
+
     <li>
-      <a href="#">
+      <a href="#" class="list">
         <i class="fas fa-store">
         </i>
         <span>Ventas & Faturación </span>
+        <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>
@@ -73,11 +71,36 @@
         </li>
       </ul>
     </li>
+
     <li>
-      <a href="#">
+      <a href="#" class="list">
+        <i class="fas fa-cash-register"></i>
+        <span> Punto de venta </span>
+        <span class="float-right caret right"></span>
+      </a>
+      <ul class="list-unstyled dropdown">
+      <li>
+        <li>
+          <%= navigation_vue_item("/profile/cash_register") do %>
+            <i class="fas fa-box"></i>
+            <span> Mi caja </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/sales/new") do %>
+            <i class="fas fa-shopping-cart"></i>
+            <span> Punto de venta </span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#" class="list">
         <i class="fas fa-store-alt">
         </i>
         <span>Inventario </span>
+        <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>
@@ -101,7 +124,7 @@
       </ul>
     </li>
     <li>
-      <a href="#">
+      <a href="#" class="list">
         <i class="fas fa-tags">
         </i>
         <span>Catalogos </span>
@@ -134,10 +157,11 @@
       </ul>
     </li>
     <li>
-      <a href="#">
+      <a href="#" class="list">
         <i class="fas fa-address-card">
         </i>
         <span>Recursos Humanos </span>
+        <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>
@@ -152,13 +176,15 @@
       <%= navigation_vue_item("/books") do %>
         <i class="fas fa-book"></i>
         <span> Contabilidad </span>
+        <span class="float-right caret right"></span>
       <% end %>
     </li>
     <li>
-      <a href="#">
+      <a href="#" class="list">
         <i class="fas fa-cogs">
         </i>
-        <span>Ajustes </span>
+        <span> Configuración </span>
+        <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
         <li>

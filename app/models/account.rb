@@ -21,13 +21,9 @@ class Account < ApplicationRecord
 
   after_create :setup_account
 
-  # private
-
   def setup_account
     # create default sale catalog type
-    type = catalog_product_transaction_types.find_or_create_by!(
-      name: "Venta"
-    )
+    type = catalog_product_transaction_types.find_or_create_by!(name: "Venta")
 
     type.update(code: "product-sale") # special code
   end
