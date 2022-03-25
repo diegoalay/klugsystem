@@ -1,0 +1,2 @@
+module Crm::EventsHelper
+end

@@ -6,8 +6,7 @@ class ClientsController < ApplicationSystemController
     respond_to do |format|
       format.html {}
       format.json do
-
-        respond_with_successful(Client.index(@account))
+        respond_with_successful(ClientQuery.new(@account).index)
       end
     end
   end
@@ -68,7 +67,7 @@ class ClientsController < ApplicationSystemController
   end
 
   def search
-    respond_with_successful(Client.search(@account, @query))
+    respond_with_successful(ClientQuery.new(@account).search(@query))
   end
 
   def export_csv

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :contacts
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -26,6 +27,16 @@ Rails.application.routes.draw do
       put :profile, to: "profile#update"
 
       get :dashboard, to: "dashboard#default"
+
+      namespace :crm do
+        resources :events
+        resources :contacts
+        resources :clients do
+          collection do
+            get :search
+          end
+        end
+      end
 
       resources :users do
         collection do
@@ -78,11 +89,6 @@ Rails.application.routes.draw do
       end
 
       resources :branch_offices
-      resources :clients do
-        collection do
-          get :search
-        end
-      end
 
       resources :brands
       resources :sales do

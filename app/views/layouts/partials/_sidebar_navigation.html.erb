@@ -19,9 +19,21 @@
       </a>
       <ul class="list-unstyled dropdown">
         <li>
-          <%= navigation_vue_item("/clients") do %>
+          <%= navigation_vue_item("/crm/clients") do %>
             <i class="fas fa-user-friends"></i>
             <span> Clientes </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/crm/contacts") do %>
+            <i class="fas fa-address-book"></i>
+            <span> Contactos </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/crm/events") do %>
+            <i class="fas fa-calendar-alt"></i>
+            <span> Eventos </span>
           <% end %>
         </li>
         <li>
@@ -31,7 +43,7 @@
             <span> Ajustes </span>
             <span class="float-right caret right"></span>
           </a>
-          <ul class="list-unstyled dropdown">
+          <ul class="hidden-list list-unstyled dropdown">
             <li>
               <%= navigation_vue_item("/catalog/client_types") do %>
                 <i class="fas fa-briefcase"></i>
@@ -50,7 +62,7 @@
         <span>Ventas & Faturación </span>
         <span class="float-right caret right"></span>
       </a>
-      <ul class="list-unstyled dropdown">
+      <ul class="hidden-list list-unstyled dropdown">
         <li>
           <%= navigation_vue_item("/cash_registers") do %>
             <i class="fas fa-cash-register"></i>
