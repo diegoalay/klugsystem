@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_37_198669) do
+ActiveRecord::Schema.define(version: 2022_03_25_063245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -288,6 +288,47 @@ ActiveRecord::Schema.define(version: 2022_02_37_198669) do
     t.index ["account_id"], name: "index_clients_on_account_id"
     t.index ["catalog_client_type_id"], name: "index_clients_on_catalog_client_type_id"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
+  end
+
+  create_table "contact_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "contact_id"
+    t.index ["contact_id"], name: "index_contact_activities_on_contact_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "second_name"
+    t.string "third_name"
+    t.string "first_surname"
+    t.string "second_surname"
+    t.string "married_name"
+    t.string "telephone"
+    t.string "mobile_number"
+    t.string "fax"
+    t.string "email"
+    t.string "gender"
+    t.string "title"
+    t.date "birthdate"
+    t.text "note"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_contacts_on_account_id"
+    t.index ["deleted_at"], name: "index_contacts_on_deleted_at"
   end
 
   create_table "department_activities", force: :cascade do |t|
@@ -766,6 +807,12 @@ ActiveRecord::Schema.define(version: 2022_02_37_198669) do
   add_foreign_key "clients", "catalog_client_types"
   add_foreign_key "clients", "users", column: "user_creator_id"
   add_foreign_key "clients", "users", column: "user_modifier_id"
+  add_foreign_key "contact_activities", "contacts"
+  add_foreign_key "contact_activities", "users", column: "user_creator_id"
+  add_foreign_key "contact_activities", "users", column: "user_modifier_id"
+  add_foreign_key "contacts", "accounts"
+  add_foreign_key "contacts", "users", column: "user_creator_id"
+  add_foreign_key "contacts", "users", column: "user_modifier_id"
   add_foreign_key "department_activities", "departments"
   add_foreign_key "department_activities", "users", column: "user_creator_id"
   add_foreign_key "department_activities", "users", column: "user_modifier_id"
