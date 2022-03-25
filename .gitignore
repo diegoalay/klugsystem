@@ -45,3 +45,4 @@ Gemfile.lock
 .gitconfig.personal
 /public/uploads/
 /config/credentials/production.key
+.vscode/
