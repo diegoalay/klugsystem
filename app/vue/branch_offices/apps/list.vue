@@ -83,7 +83,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Sucursales"
             title-button-create="Agregar sucursal"

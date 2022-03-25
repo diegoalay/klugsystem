@@ -7,6 +7,10 @@ export default {
             return screen.width
         }
 
+        const screenHeight = () => {
+            return screen.height
+        }
+
         const isMobile = () => {
             if (screenWidth() <= 760 ) {
                 return true;
@@ -77,6 +81,7 @@ export default {
         Vue.prototype.tools = {
             isMobile,
             screenWidth,
+            screenHeight,
             userDetails,
             getLocale,
             getMonthsNameList,

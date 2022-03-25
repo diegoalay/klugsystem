@@ -4,7 +4,9 @@ import dashboardRoutes from './dashboard/routes.js';
 
 import cashRegisterRoutes from './cash_registers/routes.js';
 
-import clientsRoutes from './clients/routes.js';
+import clientsRoutes from './crm/clients/routes.js';
+import contactsRoutes from './crm/contacts/routes.js';
+import crmEventsRoutes from './crm/events/routes.js';
 
 import expedituresRoutes from './expeditures/routes.js';
 
@@ -31,6 +33,8 @@ app("",
     dashboardRoutes
     .concat(salesRoutes)
     .concat(clientsRoutes)
+    .concat(contactsRoutes)
+    .concat(crmEventsRoutes)
     .concat(cashRegisterRoutes)
     .concat(expedituresRoutes)
     .concat(productsRoutes)

@@ -4,9 +4,12 @@
         components:{
             'component-form': componentForm
         },
+        mounted(){
+        },
+        props: {},
         data() {
             return {
-                catalog_product_transaction_type: {}
+                contact: {}
             }
         },
     }
@@ -15,8 +18,8 @@
 <template>
     <section>
         <component-header-form
-            title="Crear tipo de transacción de producto">
+            title="Crear contacto">
         </component-header-form>
-        <component-form :catalog_product_transaction_type="catalog_product_transaction_type"></component-form>
+        <component-form :contact="contact"></component-form>
     </section>
 </template>

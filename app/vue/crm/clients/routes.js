@@ -4,15 +4,15 @@ import appClientsShow from './apps/show.vue'
 
 const routes =  [
     {
-        path: "/clients",
+        path: "/crm/clients",
         component: appClientsList
     },
     {
-        path: "/clients/new",
+        path: "/crm/clients/new",
         component: appClientsNew
     },
     {
-        path: "/clients/:id",
+        path: "/crm/clients/:id",
         component: appClientsShow
     }
 ]

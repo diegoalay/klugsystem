@@ -40,7 +40,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Gastos">
         </component-header-form>

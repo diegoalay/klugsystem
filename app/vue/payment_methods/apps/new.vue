@@ -15,7 +15,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Crear método de pago">
         </component-header-form>

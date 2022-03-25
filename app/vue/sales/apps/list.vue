@@ -142,7 +142,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Ventas"
             title-button-create="Vender"

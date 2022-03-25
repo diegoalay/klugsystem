@@ -26,7 +26,7 @@ export default {
             }
         },
         postForm(){
-            const url = this.url.build('clients')
+            const url = this.url.crm('clients')
             let form = {
                 client: this.client
             }
@@ -34,7 +34,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Cliente creado exitosamente.')
-                    this.$router.push(`/clients/${result.data.id}`)
+                    this.$router.push(this.url.crm('clients/:id', {id: result.data.id}).toString(false))
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -43,7 +43,7 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.build('clients/:id', {id: this.client.id})
+            const url = this.url.crm('clients/:id', {id: this.client.id})
 
             let form = {
                 client: this.client

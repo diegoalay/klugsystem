@@ -19,17 +19,14 @@
                     key: 'email',
                     sortable: true
                 },{
-                    label: 'Nit',
-                    key: 'billing_identifier',
-                    sortable: true
+                    label: 'Teléfono',
+                    key: 'telephone'
                 },{
-                    label: 'Nombre de facturación',
-                    key: 'billing_name',
-                    sortable: true
+                    label: 'Celular',
+                    key: 'mobile_number'
                 },{
-                    label: 'Dirección de facturación',
-                    key: 'billing_address',
-                    sortable: true
+                    label: 'Fax',
+                    key: 'fax'
                 },{
                     label: '',
                     key: 'actions'
@@ -41,7 +38,7 @@
                 },
                 sorting: {
                     desc: true,
-                    column: 'expediture_date'
+                    column: 'name'
                 },
                 search_text: '',
                 loading: false
@@ -53,7 +50,7 @@
         methods: {
             list(){
                 this.loading = true
-                const url = this.url.build('clients')
+                const url = this.url.crm('contacts')
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -65,16 +62,16 @@
                 })
             },
             show(client){
-                this.$router.push(this.url.build('clients/:id', {id: client.id}).toString(false))
+                this.$router.push(this.url.crm('contacts/:id', {id: client.id}).toString(false))
             },
             deleteRecord(id){
-                const url = this.url.build('clients/:id', {id: id})
+                const url = this.url.crm('contacts/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
 
-                        this.$toast.success('Cliente eliminado exitosamente.')
+                        this.$toast.success('Contacto eliminado exitosamente.')
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -94,10 +91,10 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
-            title="Clientes"
-            title-button-create="Agregar cliente"
+            title="Contactos"
+            title-button-create="Agregar contacto"
             :loading="loading"
             @reloadList="list"
         >

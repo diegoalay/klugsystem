@@ -102,7 +102,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Gastos"
             title-button-create="Agregar gasto"

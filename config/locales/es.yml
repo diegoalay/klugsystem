@@ -6,13 +6,19 @@ es:
       last_word_connector: " o al menos "
   errors:
     format: "%{message}"
-  models: 
+  models:
+    products:  
+      messages:
+        success:
+          updated: 'Cliente actualizado exitosamente.'
+          created: 'Cliente creado exitosamente.'
+          deleted: 'Cliente eliminado exitosamente.'
+      title: 
     sales: 
       column_enum_sale_type_receipt: "Recibo"
       column_enum_sale_type_sale: "Venta"
       column_enum_sale_type_bill: "Factura"
       column_enum_sale_type_electronic_bill: "Factura electrónica"
-      en:
   activerecord:
     errors:
       format: 

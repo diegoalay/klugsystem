@@ -4,9 +4,11 @@
         components:{
             'component-form': componentForm
         },
+        props: {
+        },
         data() {
             return {
-                payment_method: {},
+                client: {},
                 id: null
             }
         },
@@ -19,12 +21,12 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('payment_methods/:id', {id: this.id})
+                const url = this.url.build('clients/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        this.payment_method = result.data
+                        this.client = result.data
                     }else{
-                        this.$toast.error(result.error.message)
+
                     }
                 }).catch(error => {
                     console.log(error)
@@ -37,8 +39,8 @@
 <template>
     <section>
         <component-header-form
-            title="Marcas">
+            title="Clientes">
         </component-header-form>
-        <component-form :payment_method="payment_method"></component-form>
+        <component-form :client="client"></component-form>
     </section>
 </template>

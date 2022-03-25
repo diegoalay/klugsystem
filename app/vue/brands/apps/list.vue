@@ -69,7 +69,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Marcas"
             title-button-create="Agregar marca"

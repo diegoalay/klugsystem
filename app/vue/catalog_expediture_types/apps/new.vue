@@ -13,7 +13,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Crear tipo de gasto">
         </component-header-form>

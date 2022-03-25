@@ -18,7 +18,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Crear sucursal">
         </component-header-form>

@@ -86,7 +86,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Métodos de pago"
             title-button-create="Agregar método de pago"

@@ -22,7 +22,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <b-row>
             <b-col>
                 <b-row>

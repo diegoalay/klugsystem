@@ -73,7 +73,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Tipos de gastos"
             title-button-create="Agregar tipo de gastos"

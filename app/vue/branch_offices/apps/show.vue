@@ -39,7 +39,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Sucursales">
         </component-header-form>

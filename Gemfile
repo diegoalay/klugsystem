@@ -7,7 +7,7 @@ gem 'twilio-ruby', '~> 4.11.1'
 
 gem 'bootstrap', '~> 4.3.1'
 
-gem "font-awesome-sass", "~> 5.12.0"
+gem 'font-awesome-sass', '~> 6.1.1'
 
 gem 'bcrypt', '~> 3.1.7'
 

@@ -194,6 +194,12 @@ export default {
                 })
             }
 
+            // build a url for a specific module
+            buildModuleUrl(module, path, params) {
+                this.parsedPath = module.concat("/").concat(this._parsePath(path, params))
+                return this._build()
+            }
+
             buildUrl(path, params){
                 this.parsedPath = this._parsePath(path, params)
                 return this._build()
@@ -225,6 +231,11 @@ export default {
 
                 return this[engine]('search').search(text)
 
+            },
+
+            crm(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('crm', path, params)
             },
 
             build(path, params={}) {

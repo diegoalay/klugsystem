@@ -544,7 +544,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <modal name="carousel" :adaptive="true" height="auto">
             <component-carousel :product="product"/>
         </modal>

@@ -7,12 +7,28 @@
             return {
                 data: [],
                 fields: [{
-                    label: 'Fecha de creación',
-                    key: 'created_at',
-                    sortable: true
-                },{
                     label: 'Nombre',
                     key: 'name',
+                    sortable: false
+                },{
+                    label: 'Teléfono',
+                    key: 'telephone',
+                    sortable: true
+                },{
+                    label: 'E-Mail',
+                    key: 'email',
+                    sortable: true
+                },{
+                    label: 'Nit',
+                    key: 'billing_identifier',
+                    sortable: true
+                },{
+                    label: 'Nombre de facturación',
+                    key: 'billing_name',
+                    sortable: true
+                },{
+                    label: 'Dirección de facturación',
+                    key: 'billing_address',
                     sortable: true
                 },{
                     label: '',
@@ -22,6 +38,10 @@
                     total: 0,
                     per_page: 10,
                     current_page: 1
+                },
+                sorting: {
+                    desc: true,
+                    column: 'name'
                 },
                 search_text: '',
                 loading: false
@@ -33,7 +53,7 @@
         methods: {
             list(){
                 this.loading = true
-                const url = this.url.build('catalog/product_transaction_types')
+                const url = this.url.crm('clients')
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -44,16 +64,17 @@
                     console.log(error)
                 })
             },
-            show(catalog_product_transaction_type){
-                this.$router.push(this.url.build('catalog/product_transaction_types/:id', {id: catalog_product_transaction_type.id}).toString(false))
+            show(client){
+                this.$router.push(this.url.crm('clients/:id', {id: client.id}).toString(false))
             },
             deleteRecord(id){
-                const url = this.url.build('catalog/product_transaction_types/:id', {id: id})
+                const url = this.url.crm('clients/:id', {id: id})
                 this.http.delete(url).then(result => {
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
-                        this.$toast.success('Tipo de transacción de producto eliminada exitosamente.')
+
+                        this.$toast.success('Cliente eliminado exitosamente.')
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -67,13 +88,6 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
-            },
-            canBeDeleted(catalog_product_transaction_type){
-                if (catalog_product_transaction_type.code === 'product-sale') {
-                    return false
-                }
-
-                return true
             }
         }
     }
@@ -82,8 +96,8 @@
 <template>
     <section>
         <component-header-list
-            title="Tipos de transacción de productos"
-            title-button-create="Agregar tipo de transacción de productos"
+            title="Clientes"
+            title-button-create="Agregar cliente"
             :loading="loading"
             @reloadList="list"
         >
@@ -102,9 +116,22 @@
                     :filter="search_text"
                     @filtered="onFiltered"
                     @row-clicked="show"
+                    :sort-desc.sync="sorting.desc"
+                    :sort-by.sync="sorting.column"
+                    responsive
                 >
+                    <template #head()="{ label, field: { key, sortable }}">
+                        {{ label }}
+                        <template v-if="sortable">
+                            <template>
+                                <font-awesome-icon v-if="((sorting.desc) && (sorting.column === key))" icon="sort-down" />
+                                <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
+                            </template>
+                        </template>
+                    </template>
+
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" v-if="canBeDeleted(row.item)" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>

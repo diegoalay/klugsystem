@@ -13,7 +13,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Crear producto">
         </component-header-form>

@@ -131,7 +131,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Productos"
             title-button-create="Agregar producto"

@@ -100,7 +100,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             title="Empleados"
             title-button-create="Agregar empleado"

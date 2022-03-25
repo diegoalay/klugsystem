@@ -13,7 +13,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
             title="Apertura de caja">
         </component-header-form>

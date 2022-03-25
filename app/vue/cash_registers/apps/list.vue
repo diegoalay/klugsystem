@@ -140,7 +140,7 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-list
             :hide-creation-button="true"
             title="Listado de cajas"

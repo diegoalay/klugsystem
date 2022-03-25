@@ -8,7 +8,7 @@
         },
         data() {
             return {
-                client: {},
+                contact: {},
                 id: null
             }
         },
@@ -21,10 +21,10 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('clients/:id', {id: this.id})
+                const url = this.url.build('contacts/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
-                        this.client = result.data
+                        this.contact = result.data
                     }else{
 
                     }
@@ -37,10 +37,10 @@
 </script>
 
 <template>
-    <section class="application-component">
+    <section>
         <component-header-form
-            title="Clientes">
+            title="Contactos">
         </component-header-form>
-        <component-form :client="client"></component-form>
+        <component-form :contact="contact"></component-form>
     </section>
 </template>
