@@ -78,6 +78,13 @@ export default {
             return "https://klugsystem-public-storage.s3.amazonaws.com/assets/images/employee-default.png"
         }
 
+        const parseISOString = (date) => {
+            if (!date) return null 
+            
+            let d = date.split(/\D+/)
+            return new Date(Date.UTC(d[0], --d[1], d[2], d[3], d[4], d[5], d[6]));
+        }
+
         Vue.prototype.tools = {
             isMobile,
             screenWidth,
@@ -89,7 +96,8 @@ export default {
             getCurrentYear,
             getCurrentMonth,
             getProductImage,
-            getEmployeeImage
+            getEmployeeImage,
+            parseISOString
         }
     }
 }

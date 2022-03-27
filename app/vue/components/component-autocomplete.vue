@@ -104,6 +104,16 @@ export default {
         componentId: {
             type: String,
             default: null
+        },
+
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+
+        closeable: {
+            type: Boolean,
+            defafult: true
         }
     },
 
@@ -184,6 +194,8 @@ export default {
         },
 
         setDefaultOption(){
+            if (!this.defaultOptionId) return 
+
             let url = this.endpoint.replace('search', '')
             url = `${url}/${this.defaultOptionId}.json`
 
@@ -361,12 +373,13 @@ export default {
                 @change.native="verifySelectedOption"
                 :focus="focus"
                 autocomplete="off"
+                :disabled="disabled"
             >
             </b-form-input>
             <template name="buttons">
                 <slot>
                   <b-input-group-prepend>
-                      <b-button :disabled="!search" @click="search = ''"><font-awesome-icon icon="xmark" /></b-button>
+                      <b-button v-if="closeable" :disabled="!search" @click="search = ''"><font-awesome-icon icon="xmark" /></b-button>
                   </b-input-group-prepend>
                 </slot>
             </template>

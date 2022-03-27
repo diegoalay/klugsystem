@@ -1,2 +1,2 @@
-class Event::Activity < ApplicationRecord
+class Event::Activity < Shared::Activity
 end

@@ -6,7 +6,7 @@ class ContactsController < ApplicationSystemController
     respond_to do |format|
       format.html {}
       format.json do
-        respond_with_successful(ContactQuery.new(@account).index)
+        respond_with_successful(Crm::ContactQuery.new(@account).index)
       end
     end
   end
@@ -18,7 +18,7 @@ class ContactsController < ApplicationSystemController
       format.json do
         set_client
 
-        respond_with_successful(@contact)
+        respond_with_successful(@contact.show)
       end
     end
   end
@@ -49,7 +49,7 @@ class ContactsController < ApplicationSystemController
     @contact.user_modifier = current_user
 
     if @contact.update(client_params)
-      respond_with_successful(@contact)
+      respond_with_successful(@contact.show)
     else
       respond_client_with_error
     end
@@ -67,7 +67,7 @@ class ContactsController < ApplicationSystemController
   end
 
   def search
-    respond_with_successful(ContactQuery.new(@account).search(@query))
+    respond_with_successful(Crm::ContactQuery.new(@account).search(@query))
   end
 
   private

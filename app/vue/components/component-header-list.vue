@@ -43,7 +43,7 @@ export default {
                 {{ subtitle }}
             </h4>
         </div>
-        <div class="float-right">
+        <div class="float-right" v-if="buttons">
             <template name="buttons">
                 <slot>
                     <b-button :disabled="loading" variant="primary" class="mb-2" @click="reloadList">

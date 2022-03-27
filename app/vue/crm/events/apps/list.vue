@@ -10,85 +10,232 @@
     import esLocale from '@fullcalendar/core/locales/es';
 
     import componentForm from '../components/form.vue'
+    import componentRowList from '../components/row-list.vue'
 
     export default {
+        props: {
+            endPoint: {
+                type: String,
+                default: 'crm/events'
+            }
+        },
+
         data() {
             return {
                 calendar: null,
-                event: {
-                    id: null,
-                    modalTitle: ''
-                }
+                loading: false,
+                event: {},
+                calendarData: [],
+                events: []
             }
         },
         components: {
-            'component-form': componentForm
+            'component-form': componentForm,
+            'component-row-list': componentRowList,
         },
         mounted(){
             this.initCalendar()
+            this.getEvents()
         },
         methods: {
-            postForm(){
-                this.calendar.batchRendering(() => {
-                    this.calendar.addEvent({ title: this.event.title, start: this.getEventDate() });
-                });
-
-                this.clearForm()
+            getEvents() {
+                const url = this.url.build(this.endPoint).paginate(false)
+                
+                this.http.get(url).then(result => {
+                    this.calendarData = result.data
+                }).catch(error => {
+                    console.log(error)
+                })
             },
+
+            submitEvent(type, event){
+                if (type === 'post') {
+                    this.calendar.batchRendering(() => {
+                        let newEvent = this.parseEvent(
+                            {
+                                ...event,
+                                date: event.date ? event.date : null,
+                                time_start: event.time_start ? event.time_start : null,
+                                time_end: event.time_end ? event.time_start : null
+                            }
+                        )
+
+                        this.calendar.addEvent(newEvent)
+                    })
+                } else {
+
+                      const index_1 = this.calendarData.findIndex(e => e.id == event.id)
+                      const index_2 = this.events.findIndex(e => e.id == event.id)
+
+                    if (index_1 !== -1) {
+                        this.calendar.batchRendering(() => {
+                            if (type === 'put') {
+                                this.$set(this.calendarData, index_1, event)
+                            } else if (type == 'destroy') {
+                                this.calendarData = this.calendarData.filter(e => e.id !== event.id)
+                            }
+                        })
+                    }
+
+                    if (index_2 !== -1) {
+                            if (type === 'put') {
+                                this.$set(this.events, index_2, {
+                                    ...this.events[index],
+                                    ...event
+                                })
+                            } else if (type == 'destroy') {
+                                this.events = this.events.filter(e => e.id !== event.id)
+                            }
+                    }
+                }
+
+                this.clearEvent()
+            },
+
+            clearEvent(){
+                this.event = {
+                    id: null,
+                    modalTitle: '',
+                    model_type: this.event.model_type ? 
+                        this.event.model_type : 
+                        'Contact'
+                }
+                
+                this.$bvModal.hide('modal')
+            },
+
             initCalendar(){
                 let calendarEl = document.getElementById('calendar');
                 this.calendar = new Calendar(calendarEl, {
-                    height: this.tools.screenHeight() - 200,
+                    height: this.tools.screenHeight() - 300,
                     plugins: [ dayGridPlugin, timeGridWeek, timeGridDay, interactionPlugin ],
                     dateClick: this.onDateSelect,
                     eventClick: this.onEventClick,
                     locales: [ esLocale ],
                     headerToolbar: {
                         start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                        center: this.tools.isMobile() ? null : 'title',
-                        end: 'prevYear,prev,today,next,nextYear'
+                        center: this.tools.isMobile() ? 
+                            null : 
+                            'title',
+                        end: this.tools.isMobile() ? 
+                            'prev,today,next' :
+                            'prevYear,prev,today,next,nextYear' 
                     }
                 });
     
                 this.calendar.render();
             },
-        
-            onDateSelect(arg) {
-                this.event.event_date = arg.date
 
-                let date = `${arg.date.getDate()}/${arg.date.getMonth()}/${arg.date.getFullYear()}`
-                this.event.modalTitle = `Crear Evento - ${date}`
-                this.$bvModal.show('modal')
+
+            onDateSelect(arg) {
+                arg.jsEvent.preventDefault()
+
+                this.clearEvent()
+                this.$set(this.event, 'date', arg.date)
+                this.$set(this.event, 'modalTitle', `Crear Evento - ${this.parseTitleDate(arg.date)}`)
+                this.openModal()
             },
-        
+
+
             onEventClick(arg) {
                 arg.jsEvent.preventDefault()
-        
-                let class_names = arg.event.classNames
+
+                this.clearEvent()
+                const event = this.calendarData.find((e) => e.id == arg.event.id)
+                
+                if (event) {
+                    this.event = event
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.parseTitleDate(new Date(event.date))}`)      
+                    this.openModal()
+                }
             },
 
-            getEventDate(){
-                return this.event.event_date.toISOString().split('T')[0]
+            showEvent(event) {
+                if (event) {
+                    this.event = event
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.parseTitleDate(new Date(event.date))}`)      
+                    this.openModal()
+                }
             },
 
-            clearForm(){
-                this.event = {
-                    id: null,
-                    modalTitle: ''
+            getEventDate(event){
+                if (event.date) {
+                    return event.date.split('T')[0]
                 }
 
-                this.$bvModal.hide('modal')
+                return null
+            },
+
+            parseEvent(event){
+                let eventParsed = {
+                    ...event,
+                    start: this.getEventDate(event)
+                }
+
+                if (event.time_start) {
+                    eventParsed.start = event.time_start
+                }
+
+                if (event.time_end) {
+                    eventParsed.end = event.time_end
+                }
+
+                return eventParsed
+            },
+
+            parseTitleDate(date){
+                return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+            },
+
+            openModal(){
+                this.$bvModal.show('modal')
+            }
+        },
+
+        watch: {
+            calendarData() {
+                this.calendar.batchRendering(() => {
+                    // get rendered events in calendar
+                    let events = this.calendar.getEvents()
+
+                    // remove events from calendar
+                    events.forEach(event => event.remove() )
+
+                    // reload events
+                    this.calendarData.forEach(
+                        (event) => {
+                            this.calendar.addEvent(this.parseEvent(event))
+                        }
+                    )
+                })
             }
         }
     }
 </script>
 <template>
     <div>
-        <div id='calendar'></div>
+        <component-header-list
+            title="Eventos"
+            :buttons="false"
+        >
+        </component-header-list>
+
+        <b-row>
+            <b-col md="4" sm="12">
+                <component-row-list @show="showEvent">
+                </component-row-list>
+            </b-col>
+            <b-col md="8" sm="12">
+                <b-card>
+                    <div id='calendar'></div>
+                </b-card>
+            </b-col>
+        </b-row>
+        
         <b-modal id="modal" centered hide-footer hide-backdrop content-class="shadow" :title="event.modalTitle">
             <component-form 
-                :clear-form="clearForm"
                 :event="event"
+                @submit="submitEvent"
             >
             </component-form>
         </b-modal> 

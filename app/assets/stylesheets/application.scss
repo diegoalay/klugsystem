@@ -48,6 +48,7 @@ body {
 
 .card {
   margin-top: 20px;
+  padding: 5px 10px 15px;
 }
 
 .table > tbody > tr > td {
@@ -92,7 +93,21 @@ label {
     visibility: hidden;
 }
 
+
 @media (max-width: 768px) {
+    .card {
+        padding: 5px 10px 15px;
+    }
+
+    .fc-toolbar.fc-header-toolbar {
+        font-size: 90%;
+    } 
+    
+    .fc-toolbar-chunk { 
+        text-align: left; 
+        padding: 2px; 
+    }
+
     /* Applied to a wrapper div when using a custom component as content */
     .Vue-Toastification__container.top-right
     .Vue-Toastification__toast,

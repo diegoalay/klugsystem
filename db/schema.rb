@@ -447,7 +447,7 @@ ActiveRecord::Schema.define(version: 2022_03_25_063245) do
   create_table "events", force: :cascade do |t|
     t.datetime "deleted_at"
     t.text "description"
-    t.datetime "event_date"
+    t.datetime "date"
     t.datetime "time_start"
     t.datetime "time_end"
     t.string "title"

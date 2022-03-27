@@ -30,7 +30,11 @@ Rails.application.routes.draw do
 
       namespace :crm do
         resources :events
-        resources :contacts
+        resources :contacts do 
+          collection do
+            get :search
+          end
+        end
         resources :clients do
           collection do
             get :search

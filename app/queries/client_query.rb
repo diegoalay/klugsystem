@@ -37,7 +37,12 @@ class ClientQuery
           ' [',
           billing_name,
           ']'
-        ) as details
+        ) as billing_details,
+        concat(
+          first_name,
+          ' ',
+          first_surname
+        ) as full_name
       ")
   
       clients = clients.where("

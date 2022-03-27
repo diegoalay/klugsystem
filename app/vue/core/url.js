@@ -117,10 +117,15 @@ export default {
 
             // insert pagination params into query string
             paginate(page, perPage=0) {
-                this.query["current_page"] = page
-                if (perPage > 0) {
-                    this.query["per_page"] = perPage
+                if (!page) {
+                    this.query["disable_pagination"] = true
+                } else {
+                    this.query["current_page"] = page
+                    if (perPage > 0) {
+                        this.query["per_page"] = perPage
+                    }
                 }
+
                 return this._build()
             }
 

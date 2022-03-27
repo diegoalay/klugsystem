@@ -8,7 +8,13 @@ class Client < ApplicationRecord
   before_destroy :can_be_destroyed
   before_save :sanitize_billing_identifier
 
-  def name
+  has_many :events
+  
+  def identifier 
+    full_name
+  end
+
+  def full_name
     [first_name, first_surname].join(" ")
   end
 
