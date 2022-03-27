@@ -3,6 +3,11 @@
         props: {
             endPoint: {
                 default: 'crm/events'
+            },
+
+            reload: {
+                type: Boolean,
+                required: true
             }
         },
 
@@ -20,6 +25,14 @@
                 },{
                     label: 'Fecha',
                     key: 'date',
+                    sortable: true
+                },{
+                    label: 'Inicio',
+                    key: 'time_start',
+                    sortable: true
+                },{
+                    label: 'Termina',
+                    key: 'time_end',
                     sortable: true
                 }],
                 pagination: {
@@ -83,6 +96,10 @@
 
             'pagination.order'(){
                 this.list()
+            },
+
+            reload(){
+                this.list()
             }
         }
     }
@@ -103,6 +120,19 @@
                     @row-clicked="show"
                     responsive
                 >
+
+                    <template v-slot:cell(date)="row">
+                        {{ date.date(row.item.date) }}
+                    </template>
+
+                    <template v-slot:cell(time_start)="row">
+                        {{ date.time(row.item.time_start) }}
+                    </template>
+
+                    <template v-slot:cell(time_end)="row">
+                        {{ date.time(row.item.time_end) }}
+                    </template>
+                    
                     <template #head()="{ label, field: { key, sortable }}">
                         {{ label }}
                         <template v-if="sortable">

@@ -26,7 +26,8 @@
                 loading: false,
                 event: {},
                 calendarData: [],
-                events: []
+                events: [],
+                reload: false
             }
         },
         components: {
@@ -60,6 +61,7 @@
                             }
                         )
 
+                        this.reload = true
                         this.calendar.addEvent(newEvent)
                     })
                 } else {
@@ -132,7 +134,7 @@
 
                 this.clearEvent()
                 this.$set(this.event, 'date', arg.date)
-                this.$set(this.event, 'modalTitle', `Crear Evento - ${this.parseTitleDate(arg.date)}`)
+                this.$set(this.event, 'modalTitle', `Crear Evento - ${this.date.date(arg.date)}`)
                 this.openModal()
             },
 
@@ -145,7 +147,7 @@
                 
                 if (event) {
                     this.event = event
-                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.parseTitleDate(new Date(event.date))}`)      
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)      
                     this.openModal()
                 }
             },
@@ -153,23 +155,15 @@
             showEvent(event) {
                 if (event) {
                     this.event = event
-                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.parseTitleDate(new Date(event.date))}`)      
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)      
                     this.openModal()
                 }
-            },
-
-            getEventDate(event){
-                if (event.date) {
-                    return event.date.split('T')[0]
-                }
-
-                return null
             },
 
             parseEvent(event){
                 let eventParsed = {
                     ...event,
-                    start: this.getEventDate(event)
+                    start: this.date.parse(event.date)
                 }
 
                 if (event.time_start) {
@@ -222,7 +216,7 @@
 
         <b-row>
             <b-col md="4" sm="12">
-                <component-row-list @show="showEvent">
+                <component-row-list @show="showEvent" :reload="reload">
                 </component-row-list>
             </b-col>
             <b-col md="8" sm="12">

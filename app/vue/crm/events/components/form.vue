@@ -22,10 +22,9 @@
 
         mounted(){
             if (this.isEdition()) {
-                console.log(this.event.date)
-                this.event.date = this.tools.parseISOString(this.event.date)
-                this.time_start = this.tools.parseISOString(this.event.time_start)
-                this.time_end = this.tools.parseISOString(this.event.time_end)
+                this.event.date = this.date.parseISOString(this.event.date)
+                this.time_start = this.date.parseISOString(this.event.time_start)
+                this.time_end = this.date.parseISOString(this.event.time_end)
             }
         },
 

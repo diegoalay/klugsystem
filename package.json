@@ -20,6 +20,7 @@
         "bootstrap-vue": "^2.21.2",
         "css-loader": "^6.6.0",
         "jquery": "^3.4.1",
+        "moment": "^2.29.1",
         "popper.js": "^1.16.1",
         "style-loader": "^3.3.1",
         "terser-webpack-plugin": "^5.3.1",
