@@ -98,8 +98,10 @@
                 this.list()
             },
 
-            reload(){
-                this.list()
+            reload(value){
+                if (value) {
+                    this.list()
+                }
             }
         }
     }

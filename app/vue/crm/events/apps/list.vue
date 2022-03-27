@@ -26,7 +26,6 @@
                 loading: false,
                 event: {},
                 calendarData: [],
-                events: [],
                 reload: false
             }
         },
@@ -61,13 +60,12 @@
                             }
                         )
 
-                        this.reload = true
                         this.calendar.addEvent(newEvent)
+                        this.reloadSimpleList()
                     })
                 } else {
 
                       const index_1 = this.calendarData.findIndex(e => e.id == event.id)
-                      const index_2 = this.events.findIndex(e => e.id == event.id)
 
                     if (index_1 !== -1) {
                         this.calendar.batchRendering(() => {
@@ -75,19 +73,9 @@
                                 this.$set(this.calendarData, index_1, event)
                             } else if (type == 'destroy') {
                                 this.calendarData = this.calendarData.filter(e => e.id !== event.id)
+                                this.reloadSimpleList()
                             }
                         })
-                    }
-
-                    if (index_2 !== -1) {
-                            if (type === 'put') {
-                                this.$set(this.events, index_2, {
-                                    ...this.events[index],
-                                    ...event
-                                })
-                            } else if (type == 'destroy') {
-                                this.events = this.events.filter(e => e.id !== event.id)
-                            }
                     }
                 }
 
@@ -183,6 +171,14 @@
 
             openModal(){
                 this.$bvModal.show('modal')
+            },
+
+            reloadSimpleList(){
+                this.reload = true
+
+                setTimeout(() => {
+                    this.reload = false
+                }, 100)
             }
         },
 
