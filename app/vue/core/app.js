@@ -44,6 +44,7 @@ import VueRouter from 'vue-router'
 import http from './http'
 import url from './url'
 import tools from './tools'
+import date from './date'
 
 
 // Global registration
@@ -88,6 +89,7 @@ Vue.use(VModal, { componentName: 'modal' })
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
+Vue.use(date)
 Vue.use(tools)
 Vue.use(Toast, {
     timeout: 1500,
