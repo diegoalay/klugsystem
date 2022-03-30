@@ -7,7 +7,7 @@ class SalesController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(Sale.index(@account, current_user, @query))
+        respond_with_successful(Finance::SaleQuery.new(@account).index(current_user, @query))
       end
     end
   end
@@ -113,11 +113,11 @@ class SalesController < ApplicationSystemController
   end
 
   def index_options
-    respond_with_successful(Sale.index_options(@account))
+    respond_with_successful(Finance::SaleQuery.new(@account).index_options)
   end
 
   def options
-    respond_with_successful(Sale.options(@account))
+    respond_with_successful(Finance::SaleQuery.new(@account).options)
   end
 
   private

@@ -1,0 +1,2 @@
+module Finance::ExpedituresHelper
+end

@@ -1,6 +1,6 @@
-import appContactsList  from './apps/list.vue'
-import appContactsNew   from './apps/new.vue'
-import appContactsShow from './apps/show.vue'
+import appContactsList  from 'vueApp/crm/contacts/apps/list.vue'
+import appContactsNew   from 'vueApp/crm/contacts/apps/new.vue'
+import appContactsShow from 'vueApp/crm/contacts/apps/show.vue'
 
 const routes =  [
     {

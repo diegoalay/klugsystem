@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :quotations
   resources :contacts
   devise_for :users,
   :controllers => {
@@ -42,6 +43,22 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :finance do
+        resources :sales do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+
+        resources :expeditures do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+      end
+
       resources :users do
         collection do
           get :search
@@ -52,13 +69,6 @@ Rails.application.routes.draw do
       end
 
       resources :cash_registers do
-      end
-
-      resources :expeditures do
-        collection do
-          get :options
-          get :index_options
-        end
       end
 
       resources :payment_methods do
@@ -95,12 +105,6 @@ Rails.application.routes.draw do
       resources :branch_offices
 
       resources :brands
-      resources :sales do
-        collection do
-          get :options
-          get :index_options
-        end
-      end
       resources :roles
       resources :accounts
       resources :events

@@ -243,6 +243,11 @@ export default {
                 return url.buildModuleUrl('crm', path, params)
             },
 
+            finance(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('finance', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)

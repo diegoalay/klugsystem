@@ -8,7 +8,7 @@ class ExpedituresController < ApplicationSystemController
         format.html {}
         format.json do
 
-          respond_with_successful(Expediture.index(@account, @query))
+          respond_with_successful(Finance::ExpeditureQuery.mew(@account).index(@query))
         end
       end
     end
@@ -76,11 +76,11 @@ class ExpedituresController < ApplicationSystemController
     end
 
     def index_options
-      respond_with_successful(Expediture.index_options(@account))
+      respond_with_successful(Finance::ExpeditureQuery.new(@account).index_options)
     end
 
     def options
-      respond_with_successful(Expediture.options(@account))
+      respond_with_successful(Finance::ExpeditureQuery.new(@account).options)
     end
 
     private

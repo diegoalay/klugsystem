@@ -1,4 +1,4 @@
-import appCrmEventsList  from './apps/list.vue'
+import appCrmEventsList  from 'vueApp/crm/events/apps/list.vue'
 
 const routes =  [
     {

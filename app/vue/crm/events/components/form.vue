@@ -1,5 +1,5 @@
 <script>
-    import componenentAutocomplete from 'app/components/component-autocomplete.vue'
+    import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 
     export default {
         props: {

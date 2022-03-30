@@ -42,7 +42,7 @@ module.exports = env => {
 
                 // resolve vuejs
                 vue: production ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
-                app: path.resolve(__dirname, "./app/vue"),
+                vueApp: path.resolve(__dirname, "./app/vue"),
 
             },
             extensions: ['.js', '.mjs']

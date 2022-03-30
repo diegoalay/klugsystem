@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_25_063245) do
+ActiveRecord::Schema.define(version: 2022_03_30_062500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -613,6 +613,73 @@ ActiveRecord::Schema.define(version: 2022_03_25_063245) do
     t.index ["product_file_id"], name: "index_products_on_product_file_id"
   end
 
+  create_table "quotation_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "quotation_id"
+    t.index ["quotation_id"], name: "index_quotation_activities_on_quotation_id"
+  end
+
+  create_table "quotation_details", force: :cascade do |t|
+    t.text "name"
+    t.decimal "total"
+    t.decimal "price"
+    t.decimal "subtotal"
+    t.decimal "quantity"
+    t.decimal "discount_value"
+    t.decimal "discount_percentage"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.bigint "product_id"
+    t.bigint "quotation_id"
+    t.index ["account_id"], name: "index_quotation_details_on_account_id"
+    t.index ["deleted_at"], name: "index_quotation_details_on_deleted_at"
+    t.index ["product_id"], name: "index_quotation_details_on_product_id"
+    t.index ["quotation_id"], name: "index_quotation_details_on_quotation_id"
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.string "uuid"
+    t.string "quotation_type"
+    t.decimal "shipping_costs"
+    t.decimal "subtotal"
+    t.decimal "total"
+    t.decimal "discount"
+    t.decimal "interest"
+    t.decimal "received_amount"
+    t.decimal "change"
+    t.date "quotation_date"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "client_id"
+    t.bigint "account_id"
+    t.bigint "employee_id"
+    t.bigint "cash_register_id"
+    t.bigint "payment_method_id"
+    t.index ["account_id"], name: "index_quotations_on_account_id"
+    t.index ["cash_register_id"], name: "index_quotations_on_cash_register_id"
+    t.index ["client_id"], name: "index_quotations_on_client_id"
+    t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
+    t.index ["employee_id"], name: "index_quotations_on_employee_id"
+    t.index ["payment_method_id"], name: "index_quotations_on_payment_method_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -868,6 +935,21 @@ ActiveRecord::Schema.define(version: 2022_03_25_063245) do
   add_foreign_key "products", "product_files"
   add_foreign_key "products", "users", column: "user_creator_id"
   add_foreign_key "products", "users", column: "user_modifier_id"
+  add_foreign_key "quotation_activities", "quotations"
+  add_foreign_key "quotation_activities", "users", column: "user_creator_id"
+  add_foreign_key "quotation_activities", "users", column: "user_modifier_id"
+  add_foreign_key "quotation_details", "accounts"
+  add_foreign_key "quotation_details", "products"
+  add_foreign_key "quotation_details", "quotations"
+  add_foreign_key "quotation_details", "users", column: "user_creator_id"
+  add_foreign_key "quotation_details", "users", column: "user_modifier_id"
+  add_foreign_key "quotations", "accounts"
+  add_foreign_key "quotations", "cash_registers"
+  add_foreign_key "quotations", "clients"
+  add_foreign_key "quotations", "employees"
+  add_foreign_key "quotations", "payment_methods"
+  add_foreign_key "quotations", "users", column: "user_creator_id"
+  add_foreign_key "quotations", "users", column: "user_modifier_id"
   add_foreign_key "roles", "accounts"
   add_foreign_key "sale_activities", "sales"
   add_foreign_key "sale_activities", "users", column: "user_creator_id"
