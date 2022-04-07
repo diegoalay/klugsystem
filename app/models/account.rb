@@ -28,6 +28,13 @@ class Account < ApplicationRecord
     type = catalog_product_transaction_types.find_or_create_by!(name: "Venta")
 
     type.update(code: "product-sale") # special code
+
+    # create default client
+    clients.find_or_initialize_by(billing_identifier: 'cf') do |record|
+      record.billing_address = '-'
+      record.billing_name = '-'
+      record.save!
+    end
   end
 
   def catalog_product_transaction_sale_type

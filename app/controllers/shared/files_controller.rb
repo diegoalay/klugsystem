@@ -8,10 +8,10 @@ class Shared::FilesController < ApplicationController
         @files = @object_model.files
         .order(id: :desc).map do |file|
           file_attributes = file.attributes
-          file_attributes["user_creator_name"] = file.user_creator&.name
-          file_attributes["public_url"] = file.attachment_public.url if file.attachment_public
-          file_attributes["created_at_raw"] = file_attributes["created_at"]
-          file_attributes["updated_at_raw"] = file_attributes["updated_at"]
+          file_attributes['user_creator_name'] = file.user_creator&.name
+          file_attributes['public_url'] = file.attachment_public.url if file.attachment_public
+          file_attributes['created_at_raw'] = file_attributes['created_at']
+          file_attributes['updated_at_raw'] = file_attributes['updated_at']
           file_attributes
         end
 
@@ -38,8 +38,8 @@ class Shared::FilesController < ApplicationController
 
     return respond_with_not_found unless @file
 
-    disposition = "inline"
-    disposition = "attachment" if params["download"]
+    disposition = 'inline'
+    disposition = 'attachment' if params['download']
 
     # Sending file using CarrierWave
     if @file.attachment_s3.file
@@ -48,10 +48,10 @@ class Shared::FilesController < ApplicationController
       if @file.size_mb && @file.size_mb > file_model.size_threshold
         redirect_to @file.refresh_external_url
       else
-        send_data(@file.attachment_s3.read, filename: @file.name_with_extension, disposition: disposition, stream: "true")
+        send_data(@file.attachment_s3.read, filename: @file.name_with_extension, disposition: disposition, stream: 'true')
       end
     else
-      send_data(@file.attachment.file.read, filename: @file.name_with_extension, disposition: disposition, stream: "true")
+      send_data(@file.attachment.file.read, filename: @file.name_with_extension, disposition: disposition, stream: 'true')
     end
   end
 
@@ -87,7 +87,7 @@ class Shared::FilesController < ApplicationController
           # Registering an activity in the object
           file.object_model.activities.create(
             user_creator: current_user,
-            category: "create_file",
+            category: 'create_file',
             description: "#{file.name} - #{file.attachment_identifier}"
           )
 
@@ -102,7 +102,7 @@ class Shared::FilesController < ApplicationController
   def set_object_model
     @object_model = object_model().find_by(
       account: current_user.account,
-      id: params["#{object_model.name.demodulize.underscore}_id".to_sym],
+      id: params[model_foreig_key]
     )
   end
 
@@ -137,11 +137,14 @@ class Shared::FilesController < ApplicationController
   end
 
   def object_model
-    self.class.name.gsub("FilesController","").singularize.constantize
+    model = remove_module(self.class.name, 'FilesController')
+    model.singularize.constantize
   end
 
   def file_model
-    self.class.name.gsub("Controller","").singularize.constantize
+    model = remove_module(self.class.name, 'Controller')
+
+    model.singularize.constantize
   end
 
   def file_params
@@ -153,6 +156,17 @@ class Shared::FilesController < ApplicationController
   end
 
   protected
+
+  def remove_module(model, key)
+    model = model.gsub('Crm::', '')
+    model = model.gsub('Finance::', '')
+    model = model.gsub('Inventory::', '')
+    model = model.gsub(key, '')
+  end
+
+  def model_foreig_key
+    [object_model.name.demodulize.underscore, '_id'].join.to_sym
+  end
 
   def handle_zip_download(files)
     s3 = LC::Config::Providers::Aws::S3.new()
@@ -183,10 +197,10 @@ class Shared::FilesController < ApplicationController
 
   def decode_and_verify_file(file_params)
     # Verifying the extension of the file
-    extension = ""
+    extension = ''
 
     if file_params[:attachment]
-      file_extension = file_params[:attachment].original_filename&.split(".")[-1]
+      file_extension = file_params[:attachment].original_filename&.split('.')[-1]
       file_name = file_params[:name]
 
       if file_params[:attachment].is_a? String
@@ -207,17 +221,17 @@ class Shared::FilesController < ApplicationController
         end
 
         # Due a encode issue, jpeg images are sent as jfif
-        extension = "jpeg" if extension == "jfif"
-        extension = "png"  if extension == "exif"
+        extension = 'jpeg' if extension == 'jfif'
+        extension = 'png'  if extension == 'exif'
 
         return invalid_extensions() unless file_model.verify_file_extension(extension)
 
-        file_path = Rails.root.join("public", "uploads", "tmp", file_name << '.' << extension)
+        file_path = Rails.root.join('public', 'uploads', 'tmp', file_name << '.' << extension)
         File.open(file_path, 'wb') do|f|
             f.write(img_from_base64)
         end
 
-        file_params[:attachment] = File.open(Rails.root.join(file_path), "rb")
+        file_params[:attachment] = File.open(Rails.root.join(file_path), 'rb')
         FileUtils.rm_rf(Rails.root.join(file_path))
       else
         extension = file_params[:attachment].original_filename

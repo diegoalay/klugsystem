@@ -1,7 +1,7 @@
-class Finance::SaleQuery 
+class Finance::SaleQuery
   def initialize(account)
     @account = account
-    @sales = account.sales 
+    @sales = account.sales
   end
 
   def index current_user, query
@@ -86,7 +86,7 @@ class Finance::SaleQuery
     }
   end
 
-  def sale_types 
+  def sale_types
     Sale.sale_types.map {|k, v| {text: I18n.t("models.sales.column_enum_sale_type_#{k}"), value: v}}
   end
 end

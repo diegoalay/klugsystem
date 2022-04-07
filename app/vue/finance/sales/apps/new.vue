@@ -175,7 +175,7 @@
             },
 
             getProductsTopSelled(){
-                const url = this.url.finance('products')
+                const url = this.url.inventory('products')
                 .filters({
                     top_products: true,
                     start_date: this.filters.date_range[0] ?
@@ -189,7 +189,6 @@
                 this.loadingTopProducts = true
                 this.http.get(url).then(result => {
                     if (result.successful) {
-
                         this.topProducts = result.data
                     } else {
                         this.$toast.error(result.error.message)
@@ -607,7 +606,7 @@
                                             :default-option-id="selectedProductId"
                                             :search-on-focus="true"
                                             text-field="details"
-                                            :endpoint="'/products/search'"
+                                            :endpoint="url.inventory('products/search').toString(false)"
                                             @select="(option) => setProduct(option)"
                                             :required="true"
                                             :thumbnail="getProductImage"
@@ -781,9 +780,9 @@
 
                         <component-autocomplete
                             @select="(option) => client = option !== null ? option : {}"
-                            text-field="details"
+                            text-field="billing_details"
                             placeholder="Buscar por número de nit"
-                            :endpoint="'/clients/search'"
+                            :endpoint="url.crm('/clients/search').toString(false)"
                         />
 
                         <b-row>

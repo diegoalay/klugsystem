@@ -292,53 +292,49 @@ export default {
         <b-tabs v-model="tabIndex" pills fill>
             <br>
             <b-tab title="Cargar archivo">
-                <b-container>
-                    <form @submit="submitForm">
-                        <b-form-group>
-                            <template #label>
-                                Archivo <sup class="text-danger">*</sup>
-                            </template>
+                <form @submit="submitForm">
+                    <b-form-group>
+                        <template #label>
+                            Archivo <sup class="text-danger">*</sup>
+                        </template>
 
-                            <vue-dropzone
-                                id="vue-dropzone"
-                                ref="dropzone"
-                                v-if="dropzone_options.url"
-                                :options="dropzone_options"
-                                v-on:vdropzone-file-added="verifyFileAdded"
-                                v-on:vdropzone-sending="addCustomParams"
-                                v-on:vdropzone-error="displayUploadError"
-                                v-on:vdropzone-queue-complete="cleanDropzone"
-                                v-on:vdropzone-success="analizeResponse"
-                                v-on:vdropzone-max-files-exceeded="maxFilesExceeded"
-                                v-on:vdropzone-removed-file="removeFile"
+                        <vue-dropzone
+                            id="vue-dropzone"
+                            ref="dropzone"
+                            v-if="dropzone_options.url"
+                            :options="dropzone_options"
+                            v-on:vdropzone-file-added="verifyFileAdded"
+                            v-on:vdropzone-sending="addCustomParams"
+                            v-on:vdropzone-error="displayUploadError"
+                            v-on:vdropzone-queue-complete="cleanDropzone"
+                            v-on:vdropzone-success="analizeResponse"
+                            v-on:vdropzone-max-files-exceeded="maxFilesExceeded"
+                            v-on:vdropzone-removed-file="removeFile"
+                        >
+                        </vue-dropzone>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <template #label>
+                            Nombre <sup class="text-danger">*</sup>
+                        </template>
+
+                        <b-input-group>
+                            <b-form-input
+                                v-model="file.name"
+                                type="text"
+                                placeholder=""
+                                required
                             >
-                            </vue-dropzone>
-                        </b-form-group>
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-input-group-text > {{ '.' + file.extension }} </b-input-group-text>
+                            </b-input-group-append>
+                        </b-input-group>
+                    </b-form-group>
 
-                        <b-form-group>
-                            <template #label>
-                                Nombre <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-input-group>
-                                <b-form-input
-                                    v-model="file.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                                <b-input-group-append>
-                                    <b-input-group-text > {{ '.' + file.extension }} </b-input-group-text>
-                                </b-input-group-append>
-                            </b-input-group>
-                        </b-form-group>
-
-                        <b-container>
-                            <b-button type="submit" variant="primary">Guardar</b-button>
-                        </b-container>
-                    </form>
-                </b-container>
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                </form>
             </b-tab>
             <b-tab title="Listado">
                 <b-table

@@ -1,0 +1,2 @@
+module Inventory::BrandsHelper
+end

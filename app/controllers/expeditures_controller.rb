@@ -8,7 +8,7 @@ class ExpedituresController < ApplicationSystemController
         format.html {}
         format.json do
 
-          respond_with_successful(Finance::ExpeditureQuery.mew(@account).index(@query))
+          respond_with_successful(Finance::ExpeditureQuery.new(@account).index(@query))
         end
       end
     end

@@ -24,7 +24,7 @@ export default {
             }
         },
         postForm(){
-            const url = this.url.build('expeditures')
+            const url = this.url.finance('expeditures')
             let form = {
                 expediture: this.expediture
             }
@@ -32,7 +32,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Gasto creado exitosamente.')
-                    this.$router.push(this.url.finance('expeditures/id', {id: result.data.id}))
+                    this.$router.push(this.url.finance('expeditures/:id', {id: result.data.id}))
                 } else {
                     this.$toast.error(result.error.message)
                 }

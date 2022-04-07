@@ -91,7 +91,7 @@ class DepartmentsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def department_params
     params.fetch(:department, {}).permit(
-      %i[name departments_id]
+      %i[name department_id]
     )
   end
 end

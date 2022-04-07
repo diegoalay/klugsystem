@@ -31,7 +31,7 @@ class Sale < ApplicationRecord
       payment_method: payment_method
     }
   end
-  
+
   private
 
   def sale_data

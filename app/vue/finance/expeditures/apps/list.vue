@@ -151,6 +151,10 @@
                         </template>
                     </template>
 
+                    <template v-slot:cell(expediture_date)="row">
+                        {{ date.datetime(row.item.expediture_date) }}
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />

@@ -8,6 +8,6 @@ class Brand < ApplicationRecord
   private
 
   def can_be_destroyed
-    errors.add(:base, "Existen productos asignadas a esta marca'") and throw(:abort) unless account.products.where(brand: self).blank?
+    errors.add(:base, "Existen productos asignados a esta marca.") and throw(:abort) unless account.products.where(brand: self).blank?
   end
 end

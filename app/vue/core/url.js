@@ -248,6 +248,11 @@ export default {
                 return url.buildModuleUrl('finance', path, params)
             },
 
+            inventory(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('inventory', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)

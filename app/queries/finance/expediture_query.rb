@@ -1,13 +1,13 @@
 
 
-class Finance::SaleQuery 
+class Finance::ExpeditureQuery
   def initialize(account)
     @account = account
     @expeditures = account.expeditures
   end
 
-  def self.index(account, query)
-    expeditures = account.expeditures.select(
+  def index(query)
+    expeditures = @expeditures.select(
       "id",
       "amount",
       "description",
@@ -21,14 +21,14 @@ class Finance::SaleQuery
 
     expeditures
   end
-  
+
   def options
     {
       expediture_types: expediture_types
     }
   end
 
-  def self.index_options
+  def index_options
     {
       expediture_types: expediture_types
     }

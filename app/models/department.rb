@@ -14,6 +14,6 @@ class Department < ApplicationRecord
   private
 
   def can_be_destroyed
-    errors.add(:base, "Existen productos asignadas a este departamento'") and throw(:abort) unless account.products.where(department: self).blank?
+    errors.add(:base, "Existen productos asignados a este departamento.") and throw(:abort) unless account.products.where(department: self).blank?
   end
 end

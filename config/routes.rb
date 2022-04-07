@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
       namespace :crm do
         resources :events
-        resources :contacts do 
+        resources :contacts do
           collection do
             get :search
           end
@@ -51,6 +51,13 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :quotations do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+
         resources :expeditures do
           collection do
             get :options
@@ -59,10 +66,37 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :users do
-        collection do
-          get :search
+      namespace :inventory do
+        resources :branch_offices
+        resources :brands
+
+        resources :departments do
+          collection do
+            get :options
+          end
         end
+
+        resources :products do
+          scope module: :product do
+            resources :files
+            resources :transactions
+          end
+          collection do
+            get "transactions/options", to: "product/transactions#options"
+            get "files/extensions", to: "product/files#extensions"
+            get :options
+            get :search
+          end
+        end
+      end
+
+      namespace :administration do
+        resources :users do
+          collection do
+            get :search
+          end
+        end
+        resources :roles
       end
 
       resources :books do
@@ -86,31 +120,6 @@ Rails.application.routes.draw do
           get "files/extensions", to: "employee/files#extensions"
           get :options
           get :search
-        end
-      end
-
-      resources :products do
-        scope module: :product do
-          resources :files
-          resources :transactions
-        end
-        collection do
-          get "transactions/options", to: "product/transactions#options"
-          get "files/extensions", to: "product/files#extensions"
-          get :options
-          get :search
-        end
-      end
-
-      resources :branch_offices
-
-      resources :brands
-      resources :roles
-      resources :accounts
-      resources :events
-      resources :departments do
-        collection do
-          get :options
         end
       end
 
