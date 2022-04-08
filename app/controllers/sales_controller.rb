@@ -21,6 +21,11 @@ class SalesController < ApplicationSystemController
 
         respond_with_successful(@sale.show)
       end
+      format.pdf do
+        set_sale
+
+        render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@sale.id}"
+      end
     end
   end
 

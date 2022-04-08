@@ -1,0 +1,4 @@
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+$sizes: map-merge((20: 20%, 33: 33.33%, 40: 40%, 60: 60%, 67: 66.67%, 80: 80%), $sizes);
+@import "bootstrap";

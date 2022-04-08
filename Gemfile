@@ -13,8 +13,12 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+# PDF generation
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 # Pagination
-gem "kaminari"
+gem 'kaminari'
 
 # Paranoid
 gem 'acts_as_paranoid'
@@ -26,14 +30,14 @@ gem 'carrierwave', '~> 2.0'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
 # Use postgresql as the database for Active Record
-gem "pg", ">= 0.18", "< 2.0"
+gem 'pg', '>= 0.18', '< 2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "= 6.1.3.1"
+gem 'rails', '= 6.1.3.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
-gem "sass-rails", "= 6"
+gem 'sass-rails', '= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 # gem 'webpacker', '~> 4.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

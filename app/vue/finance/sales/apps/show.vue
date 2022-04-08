@@ -28,9 +28,6 @@ export default {
                 label: 'Precio',
                 key: 'price'
             },{
-                label: 'Descuento (%)',
-                key: 'discount_percentage'
-            },{
                 label: 'Descuento (Q.)',
                 key: 'discount_value'
             },{
@@ -39,6 +36,7 @@ export default {
             },{
                 label: 'Total',
                 key: 'subtotal',
+                thClass: 'text-right',
                 tdClass: 'text-right',
             }],
             details: [],
@@ -104,7 +102,7 @@ export default {
                         ]
                     }
                 }else{
-                    alert(response.erros.message)
+                    this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
@@ -127,59 +125,62 @@ export default {
                 </b-button>
             </slot>
         </component-header-form>
-        <b-container>
-            <b-row class="justify-content-md-center">
-                <b-col md="10" sm="12">
-                    <b-card>
-                        <div class="bg-primary total-header text-center">
-                            {{ sale.total ? 'Q ' + sale.total : '' }}
-                        </div>
-                        <br>
+        <b-row class="justify-content-md-center">
+            <b-col md="10" sm="12">
+                <b-card>
+                    <div class="bg-primary total-header text-center">
+                        {{ sale.total ? 'Q ' + sale.total : '' }}
+                    </div>
+                    <br>
 
-                        <b-row>
-                            <b-col md="4" sm="12">
-                                <h5> <b>  Datos generales </b> </h5>
-                                <b> Fecha: </b> {{ sale.sale_date }} <br>
-                                <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
-                                <b> Método de pago: </b> {{ payment_method.name }} <br>
-                            </b-col>
+                    <b-row>
+                        <b-col md="4" sm="12">
+                            <h5> <b>  Datos generales </b> </h5>
+                            <b> Fecha: </b> {{ sale.sale_date }} <br>
+                            <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
+                            <b> Método de pago: </b> {{ payment_method.name }} <br>
+                        </b-col>
 
-                            <b-col md="4">
-                                <h5> <b>  Detalles de factura </b> </h5>
-                                <b> Cantidad recibida: </b> {{ sale.received_amount }} <br>
-                                <b> Vuelto: </b> {{ sale.change }} <br>
-                            </b-col>
+                        <b-col md="4">
+                            <h5> <b>  Detalles de factura </b> </h5>
+                            <b> Cantidad recibida: </b> {{ sale.received_amount }} <br>
+                            <b> Vuelto: </b> {{ sale.change }} <br>
+                        </b-col>
 
-                            <b-col md="4" sm="12">
-                                <h5> <b>  Datos de cliente </b> </h5>
-                                <b> Nit: </b> {{ client.billing_identifier }} <br>
-                                <b> Nombre: </b> {{ client.billing_name }} <br>
-                                <b> Dirección: </b> {{ client.billing_address }} <br>
-                                <b> E-Mail: </b> {{ client.billing_email }} <br>
-                            </b-col>
-                        </b-row>
+                        <b-col md="4" sm="12">
+                            <h5> <b>  Datos de cliente </b> </h5>
+                            <b> Nit: </b> {{ client.billing_identifier }} <br>
+                            <b> Nombre: </b> {{ client.billing_name }} <br>
+                            <b> Dirección: </b> {{ client.billing_address }} <br>
+                            <b> E-Mail: </b> {{ client.billing_email }} <br>
+                        </b-col>
+                    </b-row>
 
-                        <br>
-                        <b-table
-                            responsive
-                            :fields="fields"
-                            :items="details"
-                        >
-                        </b-table>
+                    <br>
+                    <b-table
+                        responsive
+                        :fields="fields"
+                        :items="details"
+                    >
+                    </b-table>
 
-                        <br>
-                        <b-row class="justify-content-end">
-                            <b-col md="6" sm="12">
-                                <b-table
-                                    :fields="totalField"
-                                    :items="totals"
-                                    thead-class="d-none">
-                                </b-table>
-                            </b-col>
-                        </b-row>
-                    </b-card>
-                </b-col>
-            </b-row>
-        </b-container>
+                    <br>
+                    <b-row class="justify-content-end">
+                        <b-col md="6" sm="12">
+                            <b-table
+                                :fields="totalField"
+                                :items="totals"
+                                thead-class="d-none">
+                            </b-table>
+                        </b-col>
+                    </b-row>
+
+                    <hr>
+                    <div class="text-right">
+                        <b-button variant="primary" @click="tools.printSale(sale.id)">Imprimir</b-button>
+                    </div>
+                </b-card>
+            </b-col>
+        </b-row>
     </section>
 </template>
