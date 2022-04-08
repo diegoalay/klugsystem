@@ -165,7 +165,7 @@
                 this.http.post(url, form).then(result => {
                     if (result.successful) {
                         this.$toast.success('Venta realizada.')
-                        this.$router.push(this.url.finance('sales/:id', {id: result.data.id}))
+                        this.$router.push(this.url.finance('sales/:id', {id: result.data.id}).toString(false))
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -311,7 +311,7 @@
                 }
 
                 if (quantity > this.product.quantity) {
-                    this.$toast.error('Artículos agotados!.')
+                    this.$toast.error('Artículos agotado.')
 
                     quantity = this.product.quantity
                 }

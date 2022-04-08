@@ -118,11 +118,11 @@ export default {
         <component-header-form
             title="Ventas">
             <slot name="buttons">
-                <b-button variant="outline-primary" to="/new" class="mb-2">
+                <b-button variant="outline-dark" to="/finance/sales/new" class="mb-2">
                     Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" to="/sales">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>
@@ -132,7 +132,7 @@ export default {
                 <b-col md="10" sm="12">
                     <b-card>
                         <div class="bg-primary total-header text-center">
-                            {{ 'Q ' + sale.total ? sale.total : '' }}
+                            {{ sale.total ? 'Q ' + sale.total : '' }}
                         </div>
                         <br>
 
