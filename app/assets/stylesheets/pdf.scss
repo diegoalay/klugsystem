@@ -1,4 +1,79 @@
 @import "bootstrap/functions";
 @import "bootstrap/variables";
-$sizes: map-merge((20: 20%, 33: 33.33%, 40: 40%, 60: 60%, 67: 66.67%, 80: 80%), $sizes);
 @import "bootstrap";
+
+
+.pdf-container {
+  margin: 15px;
+}
+
+.pdf-details-section {
+  margin-bottom: 40px;
+}
+
+.pdf-row {
+  display: -webkit-box;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.pdf-col {
+  flex: 1;
+  display: -webkit-box;
+  flex-direction: column;
+}
+
+.pdf-col-end {
+  flex: 1;
+  margin-left: 150px;
+  display: -webkit-box;
+  flex-direction: column;
+  -webkit-align-self: flex-end;
+}
+
+// .pdf-row {
+//   display: -webkit-box;
+//   display: -webkit-flex;
+//   display: flex;
+//   flex-direction: column;
+// }
+
+// .pdf-col {
+//   -webkit-box-flex: 1;
+//   -webkit-flex: 1;
+//   flex: 1;
+//   margin-right: 10%;
+//   background-color: yellow;
+//   border: 1px dashed black;
+//   flex-direction: column;
+// }
+
+// .pdf-col-end {
+//   -webkit-box-flex: 1;
+//   -webkit-flex: 1;
+//   flex: 1;
+//   margin-right: 10%;
+//   background-color: yellow;
+//   border: 1px dashed black;
+//   margin-right: 0;
+//   flex-direction: column;
+// }
+
+
+.pdf-row {
+  display: -webkit-box; /* wkhtmltopdf uses this one */
+  display: flex;
+  -webkit-box-pack: center; /* wkhtmltopdf uses this one */
+  justify-content: center;
+}
+
+.pdf-row > div {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.pdf-row > div:last-child {
+  margin-right: 0;
+}

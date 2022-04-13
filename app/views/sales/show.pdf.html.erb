@@ -1,23 +1,19 @@
-<div class="container">
-  <div>
-    <h5> <b> Datos generales </b> </h5>
-    <b> Fecha: </b> <%= @sale.sale_date %> <br>
-    <b> Tipo de venta: </b> <%= @sale.sale_type %> <br>
-    <b> Método de pago: </b> <%= @sale.payment_method.name %> <br>
-  </div>
+<div class="pdf-container">
+  <div class="pdf-row pdf-details-section">
+    <div class="pdf-col">
+      <b> Datos generales </b> <br>
+      <b> Fecha: </b> <%= @sale.sale_date %> <br>
+      <b> Tipo de venta: </b> <%= @sale.sale_type %> <br>
+      <b> Método de pago: </b> <%= @sale.payment_method.name %> <br>
+    </div>
 
-  <div>
-    <h5> <b> Detalles de factura </b> </h5>
-    <b> Cantidad recibida: </b> <%= @sale.received_amount %> <br>
-    <b> Vuelto: </b> <%= @sale.change %> <br>
-  </div>
-
-  <div>
-    <h5> <b>  Datos de cliente </b> </h5>
-    <b> Nit: </b> <%= @sale.client.billing_identifier %> <br>
-    <b> Nombre: </b> <%= @sale.client.billing_name %> <br>
-    <b> Dirección: </b> <%= @sale.client.billing_address %> <br>
-    <b> E-Mail: </b> <%= @sale.client.billing_email %> <br>
+    <div class="pdf-col-end">
+      <b> Datos de clientes </b> <br>
+      <b> Nit: </b> <%= @sale.client.billing_identifier %> <br>
+      <b> Nombre: </b> <%= @sale.client.billing_name %> <br>
+      <b> Dirección: </b> <%= @sale.client.billing_address %> <br>
+      <b> E-Mail: </b> <%= @sale.client.billing_email %> <br>
+    </div>
   </div>
 
   <table class="table">
