@@ -59,14 +59,6 @@ export default {
             this.id = this.$route.params.id
         },
 
-        getSubtotal1(){
-            return parseFloat(this.sale.subtotal) - parseFloat(this.sale.discount)
-        },
-
-        getSubtotal2(){
-            return this.getSubtotal1() + parseFloat(this.sale.interest)
-        },
-
         getData(){
             const url = this.url.finance('sales/:id', {id: this.id})
             this.http.get(url).then(result => {
@@ -85,13 +77,13 @@ export default {
                                 value: this.sale.discount
                             },{
                                 description: 'Total (- Descuento)',
-                                value: this.getSubtotal1()
+                                value: this.sale.subtotal1
                             },{
                                 description: 'Interés',
                                 value: this.sale.interest
                             },{
                                 description: 'Total (+ Intéres)',
-                                value: this.getSubtotal2()
+                                value: this.sale.subtotal2
                             },{
                                 description: 'Envío',
                                 value: this.sale.shipping_costs

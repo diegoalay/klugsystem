@@ -207,8 +207,8 @@
                         </template>
                     </template>
 
-                    <template v-slot:cell(expediture_date)="row">
-                        {{ date.datetime(row.item.expediture_date) }}
+                    <template v-slot:cell(sale_date)="row">
+                        {{ date.datetime(row.item.created_at) }}
                     </template>
 
                     <template v-slot:cell(actions)="row">

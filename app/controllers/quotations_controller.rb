@@ -37,7 +37,6 @@ class QuotationsController < ApplicationSystemController
     @quotation = @account.quotations.new(quotation_params)
     @quotation.user_creator = current_user
     @quotation.user_modifier = current_user
-    @quotation.cash_register = current_user.cash_register
 
     if (params[:quotation][:client][:id].blank?)
       create_client
@@ -113,11 +112,11 @@ class QuotationsController < ApplicationSystemController
   end
 
   def index_options
-    respond_with_successful(Quotation.index_options(@account))
+    respond_with_successful(Finance::QuotationQuery.new(@account).index_options)
   end
 
   def options
-    respond_with_successful(Quotation.options(@account))
+    respond_with_successful(Finance::QuotationQuery.new(@account).options)
   end
 
   private
@@ -156,7 +155,7 @@ class QuotationsController < ApplicationSystemController
   def quotation_params
     params.fetch(:quotation, {}).permit(
       %i[
-        client_id subtotal total discount interest shipping_costs
+        subtotal total discount interest shipping_costs
         received_amount change quotation_type employees_id quotation_date payment_method_id
       ]
     )

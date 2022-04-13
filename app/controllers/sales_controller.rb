@@ -24,7 +24,8 @@ class SalesController < ApplicationSystemController
       format.pdf do
         set_sale
 
-        render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@sale.id}"
+        @details = @sale.show
+        render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"
       end
     end
   end

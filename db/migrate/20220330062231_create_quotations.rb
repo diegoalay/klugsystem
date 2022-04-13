@@ -22,10 +22,8 @@ class CreateQuotations < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :quotations, :client,            foreign_key: true
     add_reference   :quotations, :account,           foreign_key: true
     add_reference   :quotations, :employee,          foreign_key: true
-    add_reference   :quotations, :cash_register,     foreign_key: true
     add_reference   :quotations, :payment_method,     foreign_key: true
 
     add_foreign_key :quotations, :users, column: :user_creator_id

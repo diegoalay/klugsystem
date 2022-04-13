@@ -616,8 +616,13 @@
                                         >
                                             <slot name="buttons">
                                                 <b-input-group-prepend>
-                                                    <b-button @click="removeProduct()"><font-awesome-icon icon="xmark" /></b-button>
+                                                    <b-button @click="removeProduct()">
+                                                        <font-awesome-icon icon="xmark" />
+                                                    </b-button>
                                                     &nbsp;
+                                                    <b-button v-if="product.id" variant="outline-primary" @click.stop="showProduct()">
+                                                        <font-awesome-icon icon="info" />
+                                                    </b-button>
                                                 </b-input-group-prepend>
                                             </slot>
                                         </component-autocomplete>
@@ -645,9 +650,6 @@
                                         <b-form-group>
                                             <b-button variant="primary" @click.stop="addProduct()">
                                                 Agregar
-                                            </b-button>
-                                            <b-button variant="outline-primary" @click.stop="showProduct()">
-                                                <font-awesome-icon icon="info" />
                                             </b-button>
                                         </b-form-group>
                                     </b-col>

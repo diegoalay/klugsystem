@@ -32,48 +32,14 @@
   -webkit-align-self: flex-end;
 }
 
-// .pdf-row {
-//   display: -webkit-box;
-//   display: -webkit-flex;
-//   display: flex;
-//   flex-direction: column;
-// }
-
-// .pdf-col {
-//   -webkit-box-flex: 1;
-//   -webkit-flex: 1;
-//   flex: 1;
-//   margin-right: 10%;
-//   background-color: yellow;
-//   border: 1px dashed black;
-//   flex-direction: column;
-// }
-
-// .pdf-col-end {
-//   -webkit-box-flex: 1;
-//   -webkit-flex: 1;
-//   flex: 1;
-//   margin-right: 10%;
-//   background-color: yellow;
-//   border: 1px dashed black;
-//   margin-right: 0;
-//   flex-direction: column;
-// }
-
-
-.pdf-row {
-  display: -webkit-box; /* wkhtmltopdf uses this one */
-  display: flex;
-  -webkit-box-pack: center; /* wkhtmltopdf uses this one */
-  justify-content: center;
-}
-
-.pdf-row > div {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
+.pdf-col-logo {
   flex: 1;
+  margin-left: 225px;
+  display: -webkit-box;
+  flex-direction: column;
+  -webkit-align-self: flex-end;
 }
 
-.pdf-row > div:last-child {
-  margin-right: 0;
+.pdf-td-borderless {
+  border-bottom-style: hidden
 }

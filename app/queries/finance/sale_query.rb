@@ -25,7 +25,8 @@ class Finance::SaleQuery
       concat(clients.first_name, ' ', clients.first_surname) as client_name,
       clients.billing_name as client_blling_name,
       clients.billing_identifier as client_billing_identifier,
-      users.email as user_creator_email
+      users.email as user_creator_email,
+      sales.created_at
     ")
     .joins(:client, :user_creator)
     .left_joins(:employee, :cash_register)
@@ -59,13 +60,7 @@ class Finance::SaleQuery
     .per(query[:pagination][:per_page])
     .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
 
-    {
-      current_page: sales.current_page,
-      total_pages: sales.total_pages,
-      total_count: sales.total_count,
-      total_lenght: sales.length,
-      sales: sales
-    }
+    Responder.pagination(sales)
   end
 
   def index_options

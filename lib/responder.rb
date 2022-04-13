@@ -1,4 +1,4 @@
-class Responder 
+class Responder
   def self.pagination(data, records = nil)
     records = data if records.nil?
 
