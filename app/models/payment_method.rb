@@ -7,6 +7,17 @@ class PaymentMethod < ApplicationRecord
   before_save :sanitize_name
   before_destroy :can_be_destroyed
 
+  enum category: {
+    discount: 'discount',
+    interest: 'interest'
+  }
+
+  def self.options(account)
+    {
+      categories: PaymentMethod.categories.map {|k, v| { text: I18n.t("models.payment_methods.column_enum_category_#{k}"), value: v}}
+    }
+  end
+
   private
 
   def can_be_destroyed

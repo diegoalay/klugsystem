@@ -97,20 +97,6 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
-            },
-            getProductImage(product){
-                if (product.product_file_id) {
-                    const url = this.url.inventory('products/:product_id/files/:id',
-                        {
-                            product_id: product.id,
-                            id: product.product_file_id,
-                        }
-                    ).toString(false)
-
-                    return url
-                }
-
-                return this.tools.getProductImage()
             }
         },
 

@@ -1,4 +1,4 @@
-es: 
+es:
   support:
     array:
       words_connector: " o "
@@ -7,21 +7,29 @@ es:
   errors:
     format: "%{message}"
   models:
-    products:  
+    products:
       messages:
         success:
           updated: 'Cliente actualizado exitosamente.'
           created: 'Cliente creado exitosamente.'
           deleted: 'Cliente eliminado exitosamente.'
-      title: 
-    sales: 
+      title:
+    sales:
       column_enum_sale_type_receipt: "Recibo"
       column_enum_sale_type_sale: "Venta"
       column_enum_sale_type_bill: "Factura"
       column_enum_sale_type_electronic_bill: "Factura electrónica"
+    payment_methods:
+      column_enum_category_discount: "Descuento"
+      column_enum_category_interest: "Intéres"
   activerecord:
     errors:
-      format: 
+      messages:
+        record_invalid: 'La validación falló: %{errors}'
+        restrict_dependent_destroy:
+          has_one: No se puede eliminar el registro porque existe un %{record} dependiente
+          has_many: No se puede eliminar el registro porque existen %{record} dependientes
+      format:
       models:
         sale:
           attributes:

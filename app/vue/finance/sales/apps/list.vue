@@ -85,7 +85,7 @@
 
                 this.http.get(url).then(response => {
                     if (response.successful) {
-                        this.data = response.data.sales
+                        this.data = response.data.records
                         this.pagination.total = response.data.total_count
                     }
 

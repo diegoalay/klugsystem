@@ -7,7 +7,8 @@
         data() {
             return {
                 payment_method: {
-                    status: true
+                    status: true,
+                    category: 'discount'
                 }
             }
         },

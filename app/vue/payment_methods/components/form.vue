@@ -11,11 +11,13 @@ export default {
 
     data() {
         return {
-
+            options: {}
         }
     },
 
-    mounted() {},
+    mounted() {
+        this.getOptions()
+    },
 
     methods: {
         onSubmit(){
@@ -58,7 +60,18 @@ export default {
                 console.log(error)
             })
         },
-
+        getOptions(){
+            const url = this.url.build('payment_methods/options')
+            this.http.get(url).then(result => {
+                if (result.successful) {
+                    this.options = result.data
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
+        },
         validatePercentage(key){
             const value = this.payment_method[key]
 
@@ -76,20 +89,38 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-form-group>
-                    <label> Método de pago <sup class="text-danger">*</sup> </label>
-
-                    <b-form-input
-                        v-model="payment_method.name"
-                        type="text"
-                        placeholder=""
-                        required
-                    >
-                    </b-form-input>
-                </b-form-group>
-
                 <b-row>
-                    <b-col sm="12">
+                    <b-col md="9" sm="9">
+                        <b-form-group>
+                            <label> Método de pago <sup class="text-danger">*</sup> </label>
+
+                            <b-form-input
+                                v-model="payment_method.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                  <b-col md="3" sm="3">
+                        <b-form-group>
+                            <template #label>
+                                <label> Categoría <sup class="text-danger">*</sup> </label>
+                            </template>
+
+                        <b-form-radio-group
+                            id="radio-group-1"
+                            v-model="payment_method.category"
+                            :options="options.categories"
+                            name="radio-options"
+                        ></b-form-radio-group>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-row v-if="payment_method.category === 'interest'">
+                    <b-col md="6" sm="12">
                         <b-form-group>
                             <label> Interés (%) </label>
 
@@ -105,7 +136,7 @@ export default {
                         </b-form-group>
                     </b-col>
 
-                    <b-col sm="12">
+                    <b-col md="6" sm="12">
                         <b-form-group>
                             <label> Interés (Q.) </label>
 
@@ -119,8 +150,8 @@ export default {
                     </b-col>
                 </b-row>
 
-                <b-row>
-                    <b-col sm="12">
+                <b-row v-if="payment_method.category === 'discount'">
+                    <b-col md="6" sm="12">
                         <b-form-group>
                             <label> Descuento (%) </label>
 
@@ -136,7 +167,7 @@ export default {
                         </b-form-group>
                     </b-col>
 
-                    <b-col sm="12">
+                    <b-col md="6" sm="12">
                         <b-form-group>
                             <label> Descuento (Q.) </label>
 

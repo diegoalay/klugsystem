@@ -98,6 +98,7 @@ class PaymentMethodsController < ApplicationSystemController
         discount_value
         discount_percentage
         status
+        category
       ]
     )
   end

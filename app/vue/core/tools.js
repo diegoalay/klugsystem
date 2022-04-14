@@ -70,7 +70,12 @@ export default {
             return new Date().getMonth()
         }
 
-        const getProductImage = () => {
+        const getProductImage = (product) => {
+            if (product && product.product_file_id) {
+                const url = `/products/${product.id}/files/${product.product_file_id}`
+                return url
+            }
+
             return "https://klugsystem-public-storage.s3.amazonaws.com/assets/images/product-default.png"
         }
 

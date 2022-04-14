@@ -194,7 +194,7 @@ export default {
         },
 
         setDefaultOption(){
-            if (!this.defaultOptionId) return 
+            if (!this.defaultOptionId) return
 
             let url = this.endpoint.replace('search', '')
             url = `${url}/${this.defaultOptionId}.json`

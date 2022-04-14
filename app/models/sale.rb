@@ -49,5 +49,6 @@ class Sale < ApplicationRecord
   def sale_data
     errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total)
     errors.add(:base, 'Debe seleccionar un tipo de venta.') if sale_type.blank?
+    errors.add(:base, 'Debe seleccionar un cliente.') if client.blank?
   end
 end

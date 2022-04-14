@@ -8,6 +8,7 @@ import VueApexCharts from 'vue-apexcharts'
 import VModal from 'vue-js-modal'
 
 import {
+    FormRadioPlugin,
     NavbarPlugin,
     ButtonPlugin,
     FormPlugin,
@@ -58,6 +59,7 @@ Vue.component('component-header-form', componentHeaderForm)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('component-datepicker', DatePicker)
 
+Vue.use(FormRadioPlugin)
 Vue.use(BootstrapVueIcons)
 Vue.use(ButtonPlugin)
 Vue.use(FormPlugin)
