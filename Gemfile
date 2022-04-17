@@ -13,6 +13,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+# XML generation
+gem 'ox'
+
 # PDF generation
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

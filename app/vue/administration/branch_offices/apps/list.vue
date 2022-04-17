@@ -32,7 +32,6 @@
                     current_page: 1
                 },
                 search_text: '',
-                main_path: '/branch_offices',
                 loading: false
             }
         },
@@ -42,7 +41,7 @@
         methods: {
             list(){
                 this.loading = true
-                const url = this.url.build('branch_offices')
+                const url = this.url.admin('branch_offices')
 
                 this.http.get(url).then(response => {
                     this.data = response.data
@@ -54,7 +53,7 @@
                 })
             },
             show(branch_office){
-                this.$router.push(this.url.build('branch_offices/:id', {id: branch_office.id}).toString(false))
+                this.$router.push(this.url.admin('branch_offices/:id', {id: branch_office.id}).toString(false))
             },
             deleteRecord(id){
                 let url = `${this.main_path}/${id}.json`

@@ -23,7 +23,7 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('branch_offices/:id', {id: this.id})
+                const url = this.url.admin('branch_offices/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.branch_office = result.data

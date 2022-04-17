@@ -22,7 +22,7 @@ export default {
             }
         },
         postForm(){
-            const url = this.url.build('branch_offices')
+            const url = this.url.admin('branch_offices')
             let form = {
                 branch_office: this.branch_office
             }
@@ -30,7 +30,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Sucursal creada exitosamente.')
-                    this.$router.push(`/branch_offices/${result.data.id}`)
+                    this.$router.push(this.url.admin('branch_offices/:id', {id: result.data.id}).toString(false))
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -39,7 +39,7 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.build('branch_offices/:id', {id: this.branch_office.id})
+            const url = this.url.admin('branch_offices/:id', {id: this.branch_office.id})
             let form = {
                 branch_office: this.branch_office
             }

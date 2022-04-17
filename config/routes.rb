@@ -67,7 +67,6 @@ Rails.application.routes.draw do
       end
 
       namespace :inventory do
-        resources :branch_offices
         resources :brands
 
         resources :departments do
@@ -96,6 +95,7 @@ Rails.application.routes.draw do
             get :search
           end
         end
+        resources :branch_offices
         resources :roles
       end
 

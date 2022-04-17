@@ -4,15 +4,15 @@ import appBranchOfficesShow from 'vueApp/administration/branch_offices/apps/show
 
 const routes =  [
     {
-        path: "/branch_offices",
+        path: "/administration/branch_offices",
         component: appBranchOfficesList
     },
     {
-        path: "/branch_offices/new",
+        path: "/administration/branch_offices/new",
         component: appBranchOfficesNew
     },
     {
-        path: "/branch_offices/:id",
+        path: "/administration/branch_offices/:id",
         component: appBranchOfficesShow
     }
 ]

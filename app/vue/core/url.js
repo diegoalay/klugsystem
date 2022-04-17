@@ -253,6 +253,11 @@ export default {
                 return url.buildModuleUrl('inventory', path, params)
             },
 
+            admin(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('administration', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)
