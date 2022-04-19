@@ -1,4 +1,8 @@
 class Account < ApplicationRecord
+  include EncryptableConcern
+
+  encryptable_json_fields(:digifact, 'digifact_user', 'digifact_password')
+
   has_many :payment_methods,   class_name: 'PaymentMethod'
   has_many :branch_offices,    class_name: 'BranchOffice'
   has_many :cash_registers,    class_name: 'CashRegister'
@@ -24,6 +28,9 @@ class Account < ApplicationRecord
 
   after_create :setup_account
 
+  store_accessor :digifact, :digifact_token_expires_at, :digifact_token, :digifact_valid, :digifact_errors,
+                            :digifact_billing_identifier, :digifact_user, :digifact_password, :digifact_status
+
   def setup_account
     # create default sale catalog type
     type = catalog_product_transaction_types.find_or_create_by!(name: 'Venta')
@@ -40,5 +47,26 @@ class Account < ApplicationRecord
 
   def catalog_product_transaction_sale_type
     return catalog_product_transaction_types.find_by(code: 'product-sale')
+  end
+
+  def digifact_details
+    {
+      digifact_token_expires_at: digifact_token_expires_at,
+      digifact_billing_identifier: digifact_billing_identifier,
+      digifact_user: digifact_user,
+      digifact_password: digifact_password,
+      digifact_status: digifact_status,
+      digifact_errors: digifact_errors
+    }
+  end
+
+  def digifact_username
+    ['GT', '.', digifact_billing_identifier, '.', digifact_user].join
+  end
+
+  def digifact_authentication_token
+    DigifactServices::Authentication.new(self).call
+
+    digifact_token
   end
 end

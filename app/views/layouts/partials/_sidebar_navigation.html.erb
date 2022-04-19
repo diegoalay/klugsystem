@@ -204,14 +204,20 @@
         <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
+              <li>
+          <%= navigation_vue_item("/administration/digifact") do %>
+            <i class="fa-solid fa-receipt"></i>
+            <span> Digifact </span>
+          <% end %>
+        </li>
         <li>
-          <%= navigation_vue_item("/branch_offices") do %>
+          <%= navigation_vue_item("/administration/branch_offices") do %>
             <i class="fas fa-store-alt"></i>
             <span> Sucursales </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/payment_methods") do %>
+          <%= navigation_vue_item("/administration/payment_methods") do %>
             <i class="fas fa-money-bill-wave"></i>
             <span> Métodos de pago </span>
           <% end %>

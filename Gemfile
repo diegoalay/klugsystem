@@ -13,6 +13,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+# HTTP
+gem 'httparty'
+
 # XML generation
 gem 'ox'
 

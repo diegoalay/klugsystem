@@ -26,10 +26,10 @@ import catalogClientTypesRoutes from './catalog_client_types/routes.js';
 import catalogExpeditureTypesRoutes from './catalog_expediture_types/routes.js';
 import catalogProductTransactionTypesRoutes from './catalog_product_transaction_types/routes.js';
 
-import paymentMethodsRoutes from './payment_methods/routes.js';
-
 // ADMINISTRATION
 import branchOfficesRoutes from 'vueApp/administration/branch_offices/routes.js';
+import paymentMethodsRoutes from 'vueApp/administration/payment_methods/routes.js';
+import digifactRoutes from 'vueApp/administration/digifact/routes.js';
 
 import booksRoutes from './books/routes.js'
 
@@ -52,13 +52,14 @@ app("",
     .concat(departmentsRoutes)
     // ADMINISTRATION
     .concat(branchOfficesRoutes)
+    .concat(paymentMethodsRoutes)
+    .concat(digifactRoutes)
     // TODO
     .concat(employeeRoutes)
     .concat(catalogClientTypesRoutes)
     .concat(catalogExpeditureTypesRoutes)
     .concat(catalogProductTransactionTypesRoutes)
     .concat(catalogEventTypesRoutes)
-    .concat(paymentMethodsRoutes)
     .concat(booksRoutes)
     .concat(profileRoutes)
 )

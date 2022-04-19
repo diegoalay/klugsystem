@@ -9,9 +9,12 @@ class Sale < ApplicationRecord
   belongs_to :payment_method, class_name: 'PaymentMethod', foreign_key: 'payment_method_id'
 
   has_many   :product_transactions,  foreign_key: 'model_id', as:  :model, class_name: 'Product::Transaction'
-  has_many   :details,               foreign_key: 'sale_id'
+  has_many   :details
+  has_one    :electronic_bill
 
   validate :sale_data
+
+  after_create :initialize_sale
 
   enum sale_type: {
     sale: 'sale',
@@ -45,6 +48,10 @@ class Sale < ApplicationRecord
   end
 
   private
+
+  def initialize_sale
+    create_electronic_bill if sale_type == 'electronic_bill'
+  end
 
   def sale_data
     errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total)

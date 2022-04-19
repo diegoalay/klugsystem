@@ -56,6 +56,10 @@ class SalesController < ApplicationSystemController
     if @sale.save
       AppServices::SaleService.new(@sale, params[:sale][:products], current_user).call
 
+      if @sale.sale_type === "electronic_billing"
+        DigifactServices::Api.new(current_user).generate_bill(@sale)
+      end
+
       respond_with_successful(@sale)
     else
       respond_sale_with_error

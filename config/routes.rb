@@ -90,6 +90,11 @@ Rails.application.routes.draw do
       end
 
       namespace :administration do
+        resource :digifact do
+          collection do
+            post :validate
+          end
+        end
         resources :users do
           collection do
             get :search
@@ -97,19 +102,18 @@ Rails.application.routes.draw do
         end
         resources :branch_offices
         resources :roles
+        resources :payment_methods do
+          collection do
+            get :options
+            get :search
+          end
+        end
       end
 
       resources :books do
       end
 
       resources :cash_registers do
-      end
-
-      resources :payment_methods do
-        collection do
-          get :options
-          get :search
-        end
       end
 
       resources :employees do

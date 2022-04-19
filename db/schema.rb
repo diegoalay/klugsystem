@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_30_062500) do
+ActiveRecord::Schema.define(version: 2022_04_19_004233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2022_03_30_062500) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "digifact", default: {}
   end
 
   create_table "branch_office_activities", force: :cascade do |t|
@@ -532,6 +533,7 @@ ActiveRecord::Schema.define(version: 2022_03_30_062500) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
+    t.string "category"
     t.index ["account_id"], name: "index_payment_methods_on_account_id"
     t.index ["deleted_at"], name: "index_payment_methods_on_deleted_at"
   end
@@ -729,6 +731,19 @@ ActiveRecord::Schema.define(version: 2022_03_30_062500) do
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
     t.index ["product_id"], name: "index_sale_details_on_product_id"
     t.index ["sale_id"], name: "index_sale_details_on_sale_id"
+  end
+
+  create_table "sale_electronic_bills", force: :cascade do |t|
+    t.string "identifier"
+    t.datetime "certification_datetime"
+    t.datetime "annulment_datetime"
+    t.text "billing_base_64_xml"
+    t.text "billing_base_64_html"
+    t.text "billing_base_64_pdf"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "sale_id"
+    t.index ["sale_id"], name: "index_sale_electronic_bills_on_sale_id"
   end
 
   create_table "sales", force: :cascade do |t|
@@ -959,6 +974,7 @@ ActiveRecord::Schema.define(version: 2022_03_30_062500) do
   add_foreign_key "sale_details", "sales"
   add_foreign_key "sale_details", "users", column: "user_creator_id"
   add_foreign_key "sale_details", "users", column: "user_modifier_id"
+  add_foreign_key "sale_electronic_bills", "sales"
   add_foreign_key "sales", "accounts"
   add_foreign_key "sales", "cash_registers"
   add_foreign_key "sales", "clients"
