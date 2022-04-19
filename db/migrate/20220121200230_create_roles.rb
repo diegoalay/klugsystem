@@ -6,6 +6,10 @@ class CreateRoles < ActiveRecord::Migration[6.1]
       t.boolean   :active
       t.string    :default_path
 
+      # Users Relations
+      t.bigint :user_creator_id
+      t.bigint :user_modifier_id
+
       t.datetime :deleted_at, index: true
 
       t.timestamps

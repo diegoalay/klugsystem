@@ -1,14 +1,20 @@
 class CreateBranchOffices < ActiveRecord::Migration[6.1]
   def change
     create_table :branch_offices do |t|
+      # General Information
       t.string :name
       t.string :telephone
-      t.string :legal_identifier
-
       t.string :street_address
       t.string :street_name
       t.string :street_number
       t.string :postcode
+
+      # Billing Information
+      t.string :billing_identifier
+      t.string :billing_direction
+      t.string :billing_municipality
+      t.string :billing_postcode
+      t.string :billing_department
 
       t.boolean :electronic_billing
 

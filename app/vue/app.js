@@ -28,6 +28,7 @@ import catalogProductTransactionTypesRoutes from './catalog_product_transaction_
 
 // ADMINISTRATION
 import usersRoutes from 'vueApp/administration/users/routes.js';
+import rolesRoutes from 'vueApp/administration/roles/routes.js';
 import branchOfficesRoutes from 'vueApp/administration/branch_offices/routes.js';
 import paymentMethodsRoutes from 'vueApp/administration/payment_methods/routes.js';
 import digifactRoutes from 'vueApp/administration/digifact/routes.js';
@@ -53,6 +54,7 @@ app("",
     .concat(departmentsRoutes)
     // ADMINISTRATION
     .concat(usersRoutes)
+    .concat(rolesRoutes)
     .concat(branchOfficesRoutes)
     .concat(paymentMethodsRoutes)
     .concat(digifactRoutes)

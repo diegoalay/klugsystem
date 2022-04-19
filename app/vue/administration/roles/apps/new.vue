@@ -18,7 +18,7 @@
 <template>
     <section>
         <component-header-form
-            title="Crear usuario">
+            title="Crear rol">
         </component-header-form>
         <component-form :role="role"></component-form>
     </section>

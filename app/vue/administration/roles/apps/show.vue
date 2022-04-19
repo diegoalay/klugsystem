@@ -39,7 +39,7 @@
 <template>
     <section>
         <component-header-form
-            title="rolees">
+            title="Roles">
         </component-header-form>
         <component-form :role="role"></component-form>
     </section>

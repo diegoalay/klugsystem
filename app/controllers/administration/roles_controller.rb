@@ -35,8 +35,8 @@ class Administration::RolesController < ::RolesController
   # POST /administration/roles or /administration/roles.json
   def create
     @role = @account.roles.new(role_params)
-    @role.role_creator = current_role
-    @role.role_modifier = current_role
+    @role.user_creator = current_user
+    @role.user_modifier = current_user
 
     if @role.save
       respond_with_successful(@role)
@@ -47,7 +47,7 @@ class Administration::RolesController < ::RolesController
 
   # PATCH/PUT /administration/roles/1 or /administration/roles/1.json
   def update
-    @role.role_modifier = current_role
+    @role.user_modifier = current_user
 
     if @role.update(role_params)
       respond_with_successful(@role)
@@ -58,7 +58,7 @@ class Administration::RolesController < ::RolesController
 
   # DELETE /administration/roles/1 or /administration/roles/1.json
   def destroy
-    @role.role_modifier = current_role
+    @role.user_modifier = current_user
 
     if @role.destroy
       respond_with_successful(@role)
@@ -83,9 +83,7 @@ class Administration::RolesController < ::RolesController
   # Only allow a list of trusted parameters through.
   def role_params
     params.fetch(:role, {}).permit(
-      %i[first_name last_name  gender birthdate title
-        mobile_number telephone fax email note
-      ]
+      %i[name]
     )
   end
 end

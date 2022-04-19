@@ -2,7 +2,7 @@
 
 export default {
     props: {
-        user: {
+        role: {
             required: true,
             type: Object
         }
@@ -19,22 +19,22 @@ export default {
     },
     methods: {
         onSubmit(){
-            if (this.user.id) {
+            if (this.role.id) {
                 this.putForm()
             } else {
                 this.postForm()
             }
         },
         postForm(){
-            const url = this.url.admin('users')
+            const url = this.url.admin('roles')
             let form = {
-                user: this.user
+                role: this.role
             }
 
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('Usuario creado exitosamente.')
-                    this.$router.push(this.url.admin('users/:id', {id: result.data.id}).toString(false))
+                    this.$toast.success('Rol creado exitosamente.')
+                    this.$router.push(this.url.admin('roles/:id', {id: result.data.id}).toString(false))
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -43,14 +43,14 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.admin('users/:id', {id: this.user.id})
+            const url = this.url.admin('roles/:id', {id: this.role.id})
 
             let form = {
-                user: this.user
+                role: this.role
             }
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    this.$toast.success('Usuario actualizado exitosamente.')
+                    this.$toast.success('Rol actualizado exitosamente.')
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -70,38 +70,11 @@ export default {
                     <label> Nombre </label>
 
                     <b-form-input
-                        v-model="user.first_name"
+                        v-model="role.first_name"
                         type="text"
                         placeholder=""
                     >
                     </b-form-input>
-                </b-form-group>
-
-                <b-form-group>
-                    <label> Apellido </label>
-                    <b-form-input
-                        v-model="user.first_surname"
-                        type="text"
-                        placeholder=""
-                    >
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group label="E-Mail">
-                    <b-form-input
-                        v-model="user.email"
-                        type="email"
-                        placeholder="">
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Nota">
-                    <b-form-textarea
-                        v-model="user.note"
-                        placeholder="Ingrese observaciones"
-                        rows="3"
-                    >
-                    </b-form-textarea>
                 </b-form-group>
 
                 <b-button type="submit" variant="primary">Guardar</b-button>

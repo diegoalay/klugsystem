@@ -15,11 +15,11 @@
                     key: 'name',
                     sortable: true
                 },{
-                    label: 'Cant. Usuarios',
+                    label: 'Cant. Roles',
                     key: 'users_count',
                     sortable: true
                 },{
-                    label: 'Usuarios',
+                    label: 'Roles',
                     key: 'users',
                     sortable: false
                 },{
@@ -88,8 +88,8 @@
 <template>
     <section>
         <component-header-list
-            title="Usuarios"
-            title-button-create="Agregar usuario"
+            title="Roles"
+            title-button-create="Agregar roles"
             :loading="loading"
             @reloadList="list"
         >

@@ -46,8 +46,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :address
 
       # Users Relations
-      t.bigint   :user_creator_id
-      t.bigint   :user_modifier_id
+      t.bigint :user_creator_id
+      t.bigint :user_modifier_id
 
       t.timestamps null: false
     end
@@ -57,5 +57,9 @@ class CreateUsers < ActiveRecord::Migration[6.0]
     add_reference   :users, :account, foreign_key: true
 
     add_foreign_key :users, :users, column: :user_creator_id
+    add_foreign_key :users, :users, column: :user_modifier_id
+
+    add_foreign_key :roles, :users, column: :user_creator_id
+    add_foreign_key :roles, :users, column: :user_modifier_id
   end
 end

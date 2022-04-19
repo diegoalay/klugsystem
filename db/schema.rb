@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_19_004233) do
+ActiveRecord::Schema.define(version: 2022_04_19_061458) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,11 +48,15 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
   create_table "branch_offices", force: :cascade do |t|
     t.string "name"
     t.string "telephone"
-    t.string "legal_identifier"
     t.string "street_address"
     t.string "street_name"
     t.string "street_number"
     t.string "postcode"
+    t.string "billing_identifier"
+    t.string "billing_direction"
+    t.string "billing_municipality"
+    t.string "billing_postcode"
+    t.string "billing_department"
     t.boolean "electronic_billing"
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
@@ -529,11 +533,11 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
     t.boolean "status"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
+    t.string "category"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
-    t.string "category"
     t.index ["account_id"], name: "index_payment_methods_on_account_id"
     t.index ["deleted_at"], name: "index_payment_methods_on_deleted_at"
   end
@@ -669,17 +673,29 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "client_id"
     t.bigint "account_id"
     t.bigint "employee_id"
-    t.bigint "cash_register_id"
     t.bigint "payment_method_id"
     t.index ["account_id"], name: "index_quotations_on_account_id"
-    t.index ["cash_register_id"], name: "index_quotations_on_cash_register_id"
-    t.index ["client_id"], name: "index_quotations_on_client_id"
     t.index ["deleted_at"], name: "index_quotations_on_deleted_at"
     t.index ["employee_id"], name: "index_quotations_on_employee_id"
     t.index ["payment_method_id"], name: "index_quotations_on_payment_method_id"
+  end
+
+  create_table "role_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "role_id"
+    t.index ["role_id"], name: "index_role_activities_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -687,6 +703,8 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
     t.string "code"
     t.boolean "active"
     t.string "default_path"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -959,13 +977,16 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
   add_foreign_key "quotation_details", "users", column: "user_creator_id"
   add_foreign_key "quotation_details", "users", column: "user_modifier_id"
   add_foreign_key "quotations", "accounts"
-  add_foreign_key "quotations", "cash_registers"
-  add_foreign_key "quotations", "clients"
   add_foreign_key "quotations", "employees"
   add_foreign_key "quotations", "payment_methods"
   add_foreign_key "quotations", "users", column: "user_creator_id"
   add_foreign_key "quotations", "users", column: "user_modifier_id"
+  add_foreign_key "role_activities", "roles"
+  add_foreign_key "role_activities", "users", column: "user_creator_id"
+  add_foreign_key "role_activities", "users", column: "user_modifier_id"
   add_foreign_key "roles", "accounts"
+  add_foreign_key "roles", "users", column: "user_creator_id"
+  add_foreign_key "roles", "users", column: "user_modifier_id"
   add_foreign_key "sale_activities", "sales"
   add_foreign_key "sale_activities", "users", column: "user_creator_id"
   add_foreign_key "sale_activities", "users", column: "user_modifier_id"
@@ -991,4 +1012,5 @@ ActiveRecord::Schema.define(version: 2022_04_19_004233) do
   add_foreign_key "user_roles", "users", column: "user_modifier_id"
   add_foreign_key "users", "accounts"
   add_foreign_key "users", "users", column: "user_creator_id"
+  add_foreign_key "users", "users", column: "user_modifier_id"
 end
