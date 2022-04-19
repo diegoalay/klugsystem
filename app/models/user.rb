@@ -3,25 +3,26 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
-  belongs_to :account,          foreign_key: "account_id"
-
   include LoggerConcern
+
+  has_many :user_roles, foreign_key: 'user_id',class_name: 'User::Role'
+  has_many :roles, through: :user_roles, source: :roles
 
   def self.search account, query
     search = query[:filters][:search]&.downcase
 
-    clients = account.users.select("
-      id,
-      email
-    ")
+    users = account.users.select(
+      'id',
+      'email'
+    )
 
-    clients = clients.where("
+    users = users.where("
       lower(email) like '%#{search}%'
     ") if search
   end
 
   def name
-    [first_name, first_surname].join(" ")
+    [first_name, first_surname].join(' ')
   end
 
   def cash_register

@@ -1,16 +1,12 @@
 module XmlServices
-  include XmlServices::Helper
-  require 'ox'
+  module BillService
+    require 'ox'
 
-  class BillService
-    def initialize(sale)
-      @sale = sale
-      @client = sale.client
-      @account = sale.account
-      @branch_office = sale.branch_office
+    def generate_bill
+      resp = certificate(generate_xml)
     end
 
-    def call
+    def generate_xml
       io = (%{
         <dte:GTDocumento xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
@@ -18,22 +14,22 @@ module XmlServices
               <dte:DTE ID="DatosCertificados">
                   <dte:DatosEmision ID="DatosEmision">
                       <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.created_at)}" CodigoMoneda="GTQ" />
-                      <dte:Emisor NITEmisor="#{NITEMISOR}" NombreEmisor="#{NOMBREEMISOR}" CodigoEstablecimiento="#{@branch_office.legal_identifier}"
-                          NombreComercial="#{@branch_office.legal_comercial_name}" AfiliacionIVA="#{@account.legal_membership}">
+                      <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_direction}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
+                          NombreComercial="#{@sale.account.billing_name}" AfiliacionIVA="#{@sale.account.billing_membership}">
                           <dte:DireccionEmisor>
-                              <dte:Direccion>#{branch_office.legal_direction}</dte:Direccion>
-                              <dte:CodigoPostal>#{branch_office.legal_postcode}</dte:CodigoPostal>
-                              <dte:Municipio>#{branch_office.legal_municipality}</dte:Municipio>
-                              <dte:Departamento>#{branch_office.legal_department}</dte:Departamento>
+                              <dte:Direccion>#{@sale.branch_office.billing_direction}</dte:Direccion>
+                              <dte:CodigoPostal>#{@sale.branch_office.billing_postcode}</dte:CodigoPostal>
+                              <dte:Municipio>#{@sale.branch_office.billing_municipality}</dte:Municipio>
+                              <dte:Departamento>#{@sale.branch_office.billing_department}</dte:Departamento>
                               <dte:Pais>GT</dte:Pais>
                           </dte:DireccionEmisor>
                       </dte:Emisor>
-                      <dte:Receptor NombreReceptor="#{@client.billing_name}" IDReceptor="#{@client.billing_identifier}">
+                      <dte:Receptor NombreReceptor="#{@sale.client.billing_name}" IDReceptor="#{@sale.client.billing_identifier}">
                           <dte:DireccionReceptor>
-                            <dte:Direccion>#{@client.billing_address}</dte:Direccion>
-                            <dte:CodigoPostal>#{@client.billing_postcode}</dte:CodigoPostal>
-                            <dte:Municipio>#{@client.billing_municipality}</dte:Municipio>
-                            <dte:Departamento>#{@client.billing_department}</dte:Departamento>
+                            <dte:Direccion>#{@sale.client.billing_address}</dte:Direccion>
+                            <dte:CodigoPostal>#{client_billing_postcode}</dte:CodigoPostal>
+                            <dte:Municipio>#{client_billing_municipality}</dte:Municipio>
+                            <dte:Departamento>#{client_billing_department}</dte:Departamento>
                             <dte:Pais>GT</dte:Pais>
                           </dte:DireccionReceptor>
                       </dte:Receptor>
@@ -79,14 +75,6 @@ module XmlServices
         })
       end
       .join(' ')
-    end
-
-    def item_tax_amount(item)fir
-      item_taxable_amount(item) * 0.12
-    end
-
-    def item_taxable_amount(item)
-      item.price / 1.12
     end
   end
 end

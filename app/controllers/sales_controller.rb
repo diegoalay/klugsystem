@@ -44,6 +44,7 @@ class SalesController < ApplicationSystemController
     @sale.user_creator = current_user
     @sale.user_modifier = current_user
     @sale.cash_register = current_user.cash_register
+    @sale.branch_office = current_user.branch_office
 
     if (params[:sale][:client][:id].blank?)
       create_client
@@ -56,8 +57,8 @@ class SalesController < ApplicationSystemController
     if @sale.save
       AppServices::SaleService.new(@sale, params[:sale][:products], current_user).call
 
-      if @sale.sale_type === "electronic_billing"
-        DigifactServices::Api.new(current_user).generate_bill(@sale)
+      if @sale.is_electronic_billing?
+        DigifactServices::Api.new(current_user, @sale).generate_bill
       end
 
       respond_with_successful(@sale)

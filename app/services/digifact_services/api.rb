@@ -1,16 +1,20 @@
 module DigifactServices
   class Api
+    include XmlServices::Helper
+    include XmlServices::BillService
 
     DEFAULT_API_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
     # DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3'
 
-    def initialize(current_user)
+    def initialize(current_user, sale)
       @current_user = current_user
+      @token = current_user.account.digifact_token
+      @sale = sale
     end
 
     def headers
       {
-        "Authorization"=>"#{token}",
+        "Authorization"=>"#{@token}",
         'Content-Type' => 'application/json'
       }
     end
@@ -19,7 +23,7 @@ module DigifactServices
       HTTParty.post(
         DEFAULT_API_URL + url,
         headers: headers,
-        body: options.merge(live_mode: %i[production? heroku?].any? { |m| Rails.env.send(m) } ? true : false),
+        query: options,
         debug_output: $stdout
       )
     end
@@ -32,16 +36,21 @@ module DigifactServices
       )
     end
 
-    def annulment()
-      post('', generate_params('ANULAR_FEL_TOSIGN'))
+    def certificate(body)
+      post('', generate_params('CERTIFICATE_DTE_XML_TOSIGN', body))
+    end
+
+    def annulment(body)
+      post('', generate_params('ANULAR_FEL_TOSIGN', body))
     end
 
     def generate_params(type)
       {
-        NIT: @account.electronic_billing.billing_identifier
-        TIPO: type
-        FORMAT: 'XML'
-        USERNAME: @account.electronic_billing.billing_username.
+        USERNAME: @@current_user.account.digifact_billing_user,
+        NIT: @current_user.account.digifact_billing_identifier,
+        FORMAT: 'XML',
+        TIPO: type,
+        BODY: body
       }
     end
 

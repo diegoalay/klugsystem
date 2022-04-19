@@ -17,6 +17,7 @@ class Account < ApplicationRecord
   has_many :events,            class_name: 'Event'
   has_many :brands,            class_name: 'Brand'
   has_many :users,             class_name: 'User'
+  has_many :roles,             class_name: 'Role'
   has_many :sales,             class_name: 'Sale'
 
 
@@ -47,6 +48,12 @@ class Account < ApplicationRecord
 
   def catalog_product_transaction_sale_type
     return catalog_product_transaction_types.find_by(code: 'product-sale')
+  end
+
+  def digifact_valid?
+    return true if digifact_token
+
+    return false
   end
 
   def digifact_details

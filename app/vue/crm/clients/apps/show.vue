@@ -21,12 +21,12 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('clients/:id', {id: this.id})
+                const url = this.url.crm('clients/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.client = result.data
-                    }else{
-
+                    } else {
+                        this.$toast.error(result.error.message)
                     }
                 }).catch(error => {
                     console.log(error)

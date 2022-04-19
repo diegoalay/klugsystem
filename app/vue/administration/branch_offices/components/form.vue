@@ -61,106 +61,166 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-row>
-                        <b-col>
-                            <p class="col-header">
-                                Información general
-                            </p>
+                <b-row>
+                    <b-col>
+                        <p class="col-header">
+                            Información general
+                        </p>
 
-                            <b-form-group>
-                                <label> Nombre <sup class="text-danger">*</sup> </label>
+                        <b-form-group>
+                            <template #label>
+                                Nombre <sup class="text-danger">*</sup>
+                            </template>
 
+                            <b-form-input
+                                v-model="branch_office.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Teléfono <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.telephone"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group label="Código Postal">
                                 <b-form-input
-                                    v-model="branch_office.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
+                                v-model="branch_office.postcode"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group>
-                                <label> Teléfono <sup class="text-danger">*</sup> </label>
+                        <b-form-group label="Direción">
                                 <b-form-input
-                                    v-model="branch_office.telephone"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
+                                v-model="branch_office.street_address"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group label="Postcode">
-                                 <b-form-input
-                                    v-model="branch_office.postcode"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="Direción">
-                                 <b-form-input
-                                    v-model="branch_office.street_address"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="Nombre de la calle">
-                                 <b-form-input
-                                    v-model="branch_office.street_name"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-
-                            <b-form-group label="Número de calle">
-                                 <b-form-input
-                                    v-model="branch_office.street_number"
-                                    type="text"
-                                    placeholder=""
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
-                <b-container>
-                    <b-row>
-                        <b-col>
-                            <p class="col-header">
-                                Información de facturación Electrónica
-                            </p>
-
-                            <b-form-group label="Facturación electrónica">
-                                <b-form-checkbox
-                                    v-model="branch_office.electronic_billing"
-                                >
-                                    {{ branch_office.electronic_billing ? 'Deshabilitar' : 'Habilitar'}}
-                                </b-form-checkbox>
-                            </b-form-group>
-
-                            <b-form-group label="Código de establecimiento">
+                        <b-form-group label="Nombre de la calle">
                                 <b-form-input
-                                    v-model="branch_office.billing_identifier"
-                                    type="text"
-                                    placeholder=""
-                                    :required="branch_office.electronic_billing"
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
-                <br>
-                <b-container>
+                                v-model="branch_office.street_name"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group label="Número de calle">
+                                <b-form-input
+                                v-model="branch_office.street_number"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group label="Facturación electrónica">
+                            <b-form-checkbox
+                                v-model="branch_office.electronic_billing"
+                            >
+                                {{ branch_office.electronic_billing ? 'Deshabilitar' : 'Habilitar'}}
+                            </b-form-checkbox>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+                <b-row v-if="branch_office.electronic_billing">
+                    <b-col>
+                        <p class="col-header">
+                            Información de facturación Electrónica
+                        </p>
+
+                        <b-form-group>
+                            <template #label>
+                                Dirección <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_direction"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Código Postal <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_postcode"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Municipio <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_municipality"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Departamento <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_department"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Código de establecimiento <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_identifier"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <div class="text-right">
                     <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

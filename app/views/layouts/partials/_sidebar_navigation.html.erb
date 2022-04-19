@@ -204,10 +204,16 @@
         <span class="float-right caret right"></span>
       </a>
       <ul class="list-unstyled dropdown">
-              <li>
-          <%= navigation_vue_item("/administration/digifact") do %>
-            <i class="fa-solid fa-receipt"></i>
-            <span> Digifact </span>
+        <li>
+          <%= navigation_vue_item("/administration/users") do %>
+            <i class="fa-solid fa-users"></i>
+            <span> Usuarios </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/administration/roles") do %>
+            <i class="fa-solid fa-user-shield"></i>
+            <span> Roles </span>
           <% end %>
         </li>
         <li>
@@ -220,6 +226,12 @@
           <%= navigation_vue_item("/administration/payment_methods") do %>
             <i class="fas fa-money-bill-wave"></i>
             <span> Métodos de pago </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/administration/digifact") do %>
+            <i class="fa-solid fa-receipt"></i>
+            <span> Digifact </span>
           <% end %>
         </li>
       </ul>

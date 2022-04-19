@@ -7,6 +7,7 @@ class Sale < ApplicationRecord
   belongs_to :employee,       class_name: 'Employee',      foreign_key: 'employee_id', optional: true
   belongs_to :cash_register,  class_name: 'CashRegister',  foreign_key: 'cash_register_id', optional: true
   belongs_to :payment_method, class_name: 'PaymentMethod', foreign_key: 'payment_method_id'
+  belongs_to :branch_office,  class_name: 'BranchOffice',  foreign_key: 'branch_office_id'
 
   has_many   :product_transactions,  foreign_key: 'model_id', as:  :model, class_name: 'Product::Transaction'
   has_many   :details
@@ -45,6 +46,10 @@ class Sale < ApplicationRecord
       subtotal1: subtotal1,
       subtotal2: subtotal2
     }
+  end
+
+  def is_electronic_billing?
+    billing_type == 'electronic_billing'
   end
 
   private

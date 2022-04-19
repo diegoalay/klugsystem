@@ -21,7 +21,7 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('contacts/:id', {id: this.id})
+                const url = this.url.crm('contacts/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.contact = result.data

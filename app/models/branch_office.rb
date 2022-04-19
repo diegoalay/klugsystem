@@ -6,6 +6,11 @@ class BranchOffice < ApplicationRecord
 
   before_destroy :can_be_destroyed
 
+  has_many :users
+  has_many :sales
+  has_many :expeditures
+  has_many :products
+
   private
 
   def can_be_destroyed
