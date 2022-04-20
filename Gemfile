@@ -11,7 +11,9 @@ gem 'font-awesome-sass', '~> 6.1.1'
 
 gem 'bcrypt', '~> 3.1.7'
 
+# user authentication
 gem 'devise'
+gem 'pundit'
 
 # HTTP
 gem 'httparty'

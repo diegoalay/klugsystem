@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_19_061458) do
+ActiveRecord::Schema.define(version: 2022_04_20_050814) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -508,6 +508,17 @@ ActiveRecord::Schema.define(version: 2022_04_19_061458) do
     t.index ["deleted_at"], name: "index_expeditures_on_deleted_at"
   end
 
+  create_table "menu_items", force: :cascade do |t|
+    t.string "key"
+    t.string "icon"
+    t.integer "order"
+    t.jsonb "permissions", default: []
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "menu_item_id"
+    t.index ["menu_item_id"], name: "index_menu_items_on_menu_item_id"
+  end
+
   create_table "payment_method_activities", force: :cascade do |t|
     t.string "description"
     t.string "field_name"
@@ -696,6 +707,18 @@ ActiveRecord::Schema.define(version: 2022_04_19_061458) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "role_id"
     t.index ["role_id"], name: "index_role_activities_on_role_id"
+  end
+
+  create_table "role_menu_items", force: :cascade do |t|
+    t.boolean "status", default: true
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "role_id"
+    t.bigint "menu_item_id"
+    t.index ["menu_item_id"], name: "index_role_menu_items_on_menu_item_id"
+    t.index ["role_id"], name: "index_role_menu_items_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -946,6 +969,7 @@ ActiveRecord::Schema.define(version: 2022_04_19_061458) do
   add_foreign_key "expeditures", "catalog_expediture_types"
   add_foreign_key "expeditures", "users", column: "user_creator_id"
   add_foreign_key "expeditures", "users", column: "user_modifier_id"
+  add_foreign_key "menu_items", "menu_items"
   add_foreign_key "payment_method_activities", "payment_methods"
   add_foreign_key "payment_method_activities", "users", column: "user_creator_id"
   add_foreign_key "payment_method_activities", "users", column: "user_modifier_id"
@@ -984,6 +1008,10 @@ ActiveRecord::Schema.define(version: 2022_04_19_061458) do
   add_foreign_key "role_activities", "roles"
   add_foreign_key "role_activities", "users", column: "user_creator_id"
   add_foreign_key "role_activities", "users", column: "user_modifier_id"
+  add_foreign_key "role_menu_items", "menu_items"
+  add_foreign_key "role_menu_items", "roles"
+  add_foreign_key "role_menu_items", "users", column: "user_creator_id"
+  add_foreign_key "role_menu_items", "users", column: "user_modifier_id"
   add_foreign_key "roles", "accounts"
   add_foreign_key "roles", "users", column: "user_creator_id"
   add_foreign_key "roles", "users", column: "user_modifier_id"

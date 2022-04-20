@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       end
 
       namespace :administration do
+        resources :menu_items, only: %i[index]
         resource :digifact do
           collection do
             post :validate
@@ -103,6 +104,9 @@ Rails.application.routes.draw do
         end
         resources :branch_offices
         resources :roles do
+          scope module: :role do
+            resources :menu_items
+          end
           member do
             get :users
           end

@@ -85,11 +85,16 @@ export default {
             this.totalRows = filteredItems.length
             this.currentPage = 1
         },
-        showPrivileges(){
+        showPrivileges(role){
+            this.$set(this.role, 'id', role.id)
+            this.$set(this.role, 'name', role.name)
+
             this.$bvModal.show('privileges')
         },
         showUsers(role){
-            this.role = role
+            this.$set(this.role, 'id', role.id)
+            this.$set(this.role, 'name', role.name)
+
             this.$bvModal.show('users')
         }
     }
@@ -106,7 +111,7 @@ export default {
             hide-backdrop
             centered
             content-class="shadow"
-            :title="role.name"
+            :title="`Permisos asignados a ${role.name}`"
         >
             <component-privileges-list :roleId="role.id"/>
         </b-modal>
@@ -118,7 +123,7 @@ export default {
             hide-backdrop
             centered
             content-class="shadow"
-            :title="role.name"
+            :title="`Usuarios asignados a ${role.name}`"
         >
             <component-users-list :roleId="role.id"/>
         </b-modal>
@@ -163,7 +168,7 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item.id)" class="mr-1">
+                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item)" class="mr-1">
                             <font-awesome-icon icon="pencil" />
                         </b-button>
 

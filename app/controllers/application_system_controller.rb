@@ -4,6 +4,8 @@ class ApplicationSystemController < ApplicationController
   before_action :set_query
   before_action :set_account_data
 
+  include Pundit::Authorization
+
   def set_account
     @account = current_user.account
   end

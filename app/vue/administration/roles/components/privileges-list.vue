@@ -2,116 +2,183 @@
 export default {
     props: {
         roleId: {
-            required: true,
-            type: Number
+            required: true
         }
     },
     data() {
         return {
-            data: [],
-            fields: [{
-                label: 'Fecha de creación',
-                key: 'created_at',
-                sortable: true
-            },{
-                label: 'E-Mail',
-                key: 'email',
-                sortable: true
-            },{
-                label: 'Nombre',
-                key: 'user_name',
-                sortable: true
-            }],
-            pagination: {
-                total: 0,
-                per_page: 10,
-                current_page: 1
-            },
-            sorting: {
-                desc: false,
-                column: 'user_name'
-            },
-            search_text: '',
-            loading: false
+            role_menu_items: [],
+            menu_items: null,
+            data: []
         }
     },
-    mounted() {
-        this.list()
+    mounted(){
+        this.parseData()
     },
     methods: {
-        list(){
-            this.loading = true
-            const url = this.url.admin('roles/:id/privileges', {id: this.roleId})
+        async parseData(){
+            this.menu_items = await this.getMenuItems()
+            this.role_menu_items = await this.getRoleMenuItems()
 
-            this.http.get(url).then(response => {
-                this.data = response.data
-                this.pagination.total = this.data.length
+            for (let index in this.menu_items) {
+                const menu_item = this.menu_items[index]
 
-                this.loading = false
+                const find = this.role_menu_items.find(e =>
+                    e.role_id === this.roleId &&
+                    e.menu_item_id ===menu_item.id
+                )
+
+                let details = {
+                    key: menu_item.key,
+                    icon: menu_item.icon,
+                    order: menu_item.order,
+                    status: false
+                }
+
+                if (find) {
+                    details = {
+                        ...details,
+                        status: true,
+                        role_menu_item_id: find.id
+                    }
+                }
+
+                this.data.push(details)
+            }
+
+            console.log(this.data)
+        },
+        async getMenuItems(){
+            return new Promise(async (resolve, reject) => {
+                const url = this.url.admin('menu_items')
+                await this.http.get(url).then(result => {
+                    resolve(result.successful ? result.data : [])
+                }).catch(error => {
+                    reject()
+                    console.log(error)
+                })
+            })
+        },
+        async getRoleMenuItems(){
+            return new Promise(async (resolve, reject) => {
+                const url = this.url.admin('role/:id/menu_items', {id: this.roleId})
+                await this.http.get(url).then(result => {
+                    resolve(result.successful ? result.data : [])
+                }).catch(error => {
+                    reject()
+                    console.log(error)
+                })
+            })
+        },
+        submitRoleMenuItem(menu_item, role_menu_item_id, status){
+            if (role_menu_item_id) {
+                this.putForm(menu_item, role_menu_item_id, status)
+            } else {
+                this.postForm(menu_item)
+            }
+        },
+
+        postForm(menu_item){
+            const url = this.url.admin('role/:id/menu_items', {id: this.roleId})
+            const form = {
+                role_menu_item: {
+                    menu_item_id: menu_item.id,
+                }
+            }
+            this.http.post(url, form).then(result => {
+                if (result.successful) {
+                    const index = this.data.findIndex(e => e.key === menu_item.key)
+
+                    details = this.data[index]
+                    details = {
+                        ...details,
+                        status: true,
+                        role_menu_item_id: result.data.id
+                    }
+
+                    this.$set(this.data, index, details)
+
+                    this.$toast.success('Permiso actualizado exitosamente.')
+                } else {
+                    this.$toast.error(result.error.message)
+                }
             }).catch(error => {
                 console.log(error)
             })
         },
-        onSearch(text){
-            this.search_text = text
+        putForm(menu_item, role_menu_item_id, status){
+            const url = this.url.admin('role/:id/menu_items/:role_menu_item_id',
+                {
+                    id: this.roleId,
+                    role_menu_item_id: role_menu_item_id
+                }
+            )
+
+            const form = {
+                role_menu_item: {
+                    status
+                }
+            }
+
+            this.http.put(url, form).then(result => {
+                if (result.successful) {
+                    const index = this.data.findIndex(e => e.key === menu_item.key)
+
+                    details = this.data[index]
+                    details = {
+                        ...details,
+                        status: status
+                    }
+
+                    this.$set(this.data, index, details)
+
+                    this.$toast.success('Permiso actualizado exitosamente.')
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
         },
-        onFiltered(filteredItems) {
-            this.totalRows = filteredItems.length
-            this.currentPage = 1
-        }
-    },
-    watch: {
-        roleId(){
-            this.list()
-        }
     }
 }
 </script>
 
 <template>
     <section>
-        <b-card>
-            <component-search-list :loading="loading" @search="onSearch"/>
-            <b-card-body>
-                <b-table
-                    striped
-                    hover
-                    :items="data"
-                    :fields="fields"
-                    :current-page="pagination.current_page"
-                    :per-page="pagination.per_page"
-                    :filter="search_text"
-                    @filtered="onFiltered"
-                    :sort-desc.sync="sorting.desc"
-                    :sort-by.sync="sorting.column"
-                    responsive
+        <b-row>
+            <b-col>
+                <b-table-simple
+                    :bordered="true"
+                    :small="true"
+                    :fixed="true"
                 >
-                    <template #head()="{ label, field: { key, sortable }}">
-                        {{ label }}
-                        <template v-if="sortable">
-                            <template>
-                                <font-awesome-icon v-if="((sorting.desc) && (sorting.column === key))" icon="sort-down" />
-                                <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
-                            </template>
-                        </template>
-                    </template>
-
-                    <template v-slot:cell(created_at)="row">
-                        {{ date.datetime(row.item.created_at) }}
-                    </template>
-                </b-table>
-                <b-col sm="4" md="4" class="my-1">
-                    <b-pagination
-                        v-model="pagination.current_page"
-                        :simple="false"
-                        :total-rows="pagination.total"
-                        :per-page="pagination.per_page"
-                        align="fill"
-                        size="sm"
-                        class="my-0"
-                    ></b-pagination>
-                </b-col>
-            </b-card-body>
-        </b-card>
+                    <b-thead>
+                        <b-tr>
+                            <b-th> Permiso </b-th>
+                            <b-th class="text-center"> Estado </b-th>
+                        </b-tr>
+                    </b-thead>
+                    <b-tbody>
+                        <b-tr
+                            v-for="menu_item in data"
+                            :key="menu_item.id"
+                        >
+                            <b-td>
+                                {{ menu_item.key }}
+                            </b-td>
+                            <b-td class="text-center">
+                                <b-form-checkbox
+                                    readonly
+                                    @change="submitRoleMenuItem(menu_item, menu_item.role_menu_item_id, $event)"
+                                    v-model="menu_item.status"
+                                >
+                                </b-form-checkbox>
+                            </b-td>
+                        </b-tr>
+                    </b-tbody>
+                </b-table-simple>
+            </b-col>
+        </b-row>
     </section>
 </template>
