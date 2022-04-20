@@ -150,7 +150,7 @@
                     </template>
 
                     <template v-slot:cell(thumbnail)="row">
-                        <b-img :src="getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
+                        <b-img :src="tools.getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
                     </template>
 
                     <template v-slot:cell(status)="row">

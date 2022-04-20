@@ -874,7 +874,9 @@ ActiveRecord::Schema.define(version: 2022_04_20_050814) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
+    t.bigint "branch_office_id"
     t.index ["account_id"], name: "index_users_on_account_id"
+    t.index ["branch_office_id"], name: "index_users_on_branch_office_id"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -1039,6 +1041,7 @@ ActiveRecord::Schema.define(version: 2022_04_20_050814) do
   add_foreign_key "user_roles", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "users", column: "user_modifier_id"
   add_foreign_key "users", "accounts"
+  add_foreign_key "users", "branch_offices"
   add_foreign_key "users", "users", column: "user_creator_id"
   add_foreign_key "users", "users", column: "user_modifier_id"
 end

@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   include LoggerConcern
 
+  belongs_to :branch_office
   has_many :user_roles, foreign_key: 'user_id',class_name: 'User::Role'
   has_many :roles, through: :user_roles, source: :roles
   delegate :permissions, :menu_items, to: :roles, allow_nil: true
@@ -40,7 +41,7 @@ class User < ApplicationRecord
       first_name: first_name,
       first_surname: first_surname,
       email: email,
-      role_id: user_roles.first.role_id,
+      role_id: user_roles.first&.role_id,
 
     }
   end

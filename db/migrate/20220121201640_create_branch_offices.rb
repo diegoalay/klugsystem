@@ -30,5 +30,7 @@ class CreateBranchOffices < ActiveRecord::Migration[6.1]
 
     add_foreign_key :branch_offices, :users, column: :user_creator_id
     add_foreign_key :branch_offices, :users, column: :user_modifier_id
+
+    add_reference   :users, :branch_office,     foreign_key: true
   end
 end

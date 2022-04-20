@@ -41,6 +41,7 @@ class ExpedituresController < ApplicationSystemController
       @expediture.user_creator = current_user
       @expediture.user_modifier = current_user
       @expediture.cash_register = current_user.cash_register
+      @expediture.branch_office = current_user.branch_office
 
       if @expediture.save
         respond_with_successful(@expediture)
