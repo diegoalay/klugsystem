@@ -189,7 +189,9 @@ export default {
                         </b-form-checkbox>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary">Guardar</b-button>
+                <div class="text-right">
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

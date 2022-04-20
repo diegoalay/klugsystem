@@ -39,7 +39,7 @@
 <template>
     <section>
         <component-header-form
-            title="useres">
+            title="Usuario">
         </component-header-form>
         <component-form :user="user"></component-form>
     </section>

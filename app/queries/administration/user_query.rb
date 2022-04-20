@@ -3,11 +3,10 @@
 class Administration::UserQuery
   def initialize(account)
     @account = account
-    @users = account.users
   end
 
   def index
-    @users.select(
+    @account.users.select(
       'users.created_at',
       "concat(
         trim(users.first_name),
@@ -19,5 +18,11 @@ class Administration::UserQuery
       'users.id'
     )
     .left_joins(:roles)
+  end
+
+  def options
+    {
+      roles: @account.roles.map {|role| {value: role.id, text: role.name}}
+    }
   end
 end

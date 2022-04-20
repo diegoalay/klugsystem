@@ -1,5 +1,5 @@
 class Administration::RolesController < ::RolesController
-  before_action :set_role, only: %i[update destroy]
+  before_action :set_role, only: %i[update destroy users]
 
   # GET /administration/roles or /administration/roles.json
   def index
@@ -7,7 +7,7 @@ class Administration::RolesController < ::RolesController
       format.html {}
       format.json do
 
-        respond_with_successful(@account.roles)
+        respond_with_successful(Administration::RoleQuery.new(@account).index)
       end
     end
   end
@@ -65,6 +65,10 @@ class Administration::RolesController < ::RolesController
     else
       respond_role_with_error
     end
+  end
+
+  def users
+    respond_with_successful(Administration::RoleQuery.new(@account).users(@role))
   end
 
   private

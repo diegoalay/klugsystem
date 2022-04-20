@@ -70,14 +70,16 @@ export default {
                     <label> Nombre </label>
 
                     <b-form-input
-                        v-model="role.first_name"
+                        v-model="role.name"
                         type="text"
                         placeholder=""
                     >
                     </b-form-input>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary">Guardar</b-button>
+                <div class="text-right">
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

@@ -140,8 +140,10 @@ export default {
                     </b-input-group>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary">Guardar</b-button>
-                <b-button @click="validateCredentials" variant="success">Validar</b-button>
+                <div class="text-right">
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                    <b-button @click="validateCredentials" variant="success">Validar</b-button>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

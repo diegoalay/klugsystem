@@ -19,7 +19,7 @@ class Administration::UsersController < ::UsersController
       format.json do
         set_user
 
-        respond_with_successful(@user)
+        respond_with_successful(@user.show)
       end
     end
   end
@@ -37,7 +37,7 @@ class Administration::UsersController < ::UsersController
     @user = @account.users.new(user_params)
     @user.user_creator = current_user
     @user.user_modifier = current_user
-
+    set_user_role
     if @user.save
       respond_with_successful(@user)
     else
@@ -48,9 +48,9 @@ class Administration::UsersController < ::UsersController
   # PATCH/PUT /administration/users/1 or /administration/users/1.json
   def update
     @user.user_modifier = current_user
-
+    set_user_role
     if @user.update(user_params)
-      respond_with_successful(@user)
+      respond_with_successful(@user.show)
     else
       respond_user_with_error
     end
@@ -61,13 +61,23 @@ class Administration::UsersController < ::UsersController
     @user.user_modifier = current_user
 
     if @user.destroy
-      respond_with_successful(@user)
+      respond_with_successful(@user.show)
     else
       respond_user_with_error
     end
   end
 
+  def options
+    respond_with_successful(Administration::UserQuery.new(@account).options)
+  end
+
   private
+
+  def set_user_role
+    user_role = User::Role.find_or_initialize_by(user: @user)
+    user_role.role_id = params[:user][:role_id]
+    user_role.save!
+  end
 
   def respond_user_with_error
     return respond_with_error(@user.errors.full_messages.to_sentence)
@@ -84,7 +94,7 @@ class Administration::UsersController < ::UsersController
   def user_params
     params.fetch(:user, {}).permit(
       %i[first_name last_name  gender birthdate title
-        mobile_number telephone fax email note
+        mobile_number telephone fax email
       ]
     )
   end

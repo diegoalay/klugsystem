@@ -97,11 +97,16 @@ Rails.application.routes.draw do
         end
         resources :users do
           collection do
+            get :options
             get :search
           end
         end
         resources :branch_offices
-        resources :roles
+        resources :roles do
+          member do
+            get :users
+          end
+        end
         resources :payment_methods do
           collection do
             get :options

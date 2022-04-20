@@ -1,2 +1,2 @@
-class Role::Activity < ApplicationRecord
+class Role::Activity < Shared::Activity
 end

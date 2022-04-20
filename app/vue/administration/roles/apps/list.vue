@@ -1,92 +1,128 @@
 <script type="text/javascript">
-    export default {
-        components: {
+import componentUsersList from 'vueApp/administration/roles/components/users-list.vue'
+import componentPrivilegesList from 'vueApp/administration/roles/components/privileges-list.vue'
 
-        },
-        data() {
-            return {
-                data: [],
-                fields: [{
-                    label: 'Fecha de creación',
-                    key: 'created_at',
-                    sortable: true
-                },{
-                    label: 'Nombre',
-                    key: 'name',
-                    sortable: true
-                },{
-                    label: 'Cant. Roles',
-                    key: 'users_count',
-                    sortable: true
-                },{
-                    label: 'Roles',
-                    key: 'users',
-                    sortable: false
-                },{
-                    label: '',
-                    key: 'actions'
-                }],
-                pagination: {
-                    total: 0,
-                    per_page: 10,
-                    current_page: 1
-                },
-                sorting: {
-                    desc: false,
-                    column: 'role_name'
-                },
-                search_text: '',
-                loading: false
-            }
-        },
-        mounted() {
-            this.list()
-        },
-        methods: {
-            list(){
-                this.loading = true
-                const url = this.url.admin('roles')
-
-                this.http.get(url).then(response => {
-                    this.data = response.data
-                    this.pagination.total = this.data.length
-
-                    this.loading = false
-                }).catch(error => {
-                    console.log(error)
-                })
+export default {
+    components: {
+        'component-privileges-list': componentPrivilegesList,
+        'component-users-list': componentUsersList
+    },
+    data() {
+        return {
+            data: [],
+            fields: [{
+                label: 'Fecha de creación',
+                key: 'created_at',
+                sortable: true
+            },{
+                label: 'Nombre',
+                key: 'name',
+                sortable: true
+            },{
+                label: 'Cant. usuarios',
+                key: 'users_count',
+                sortable: true
+            },{
+                label: '',
+                key: 'actions'
+            }],
+            pagination: {
+                total: 0,
+                per_page: 10,
+                current_page: 1
             },
-            show(role){
-                this.$router.push(this.url.admin('roles/:id', {id: role.id}).toString(false))
+            sorting: {
+                desc: false,
+                column: 'role_name'
             },
-            deleteRecord(id){
-                const url = this.url.admin('roles/:id', {id: id})
-                this.http.delete(url).then(result => {
-                    if (result.successful) {
-                        this.data = this.data.filter(e => e.id !== id)
-                        this.pagination.total -= 1
-
-                        this.$toast.success('rolee eliminado exitosamente.')
-                    } else {
-                        this.$toast.error(result.error.message)
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
-            },
-            onSearch(text){
-                this.search_text = text
-            },
-            onFiltered(filteredItems) {
-                this.totalRows = filteredItems.length
-                this.currentPage = 1
+            search_text: '',
+            loading: false,
+            role: {
+                id: null,
+                name: null
             }
         }
+    },
+    mounted() {
+        this.list()
+    },
+    methods: {
+        list(){
+            this.loading = true
+            const url = this.url.admin('roles')
+
+            this.http.get(url).then(response => {
+                this.data = response.data
+                this.pagination.total = this.data.length
+
+                this.loading = false
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        show(role){
+            this.$router.push(this.url.admin('roles/:id', {id: role.id}).toString(false))
+        },
+        deleteRecord(id){
+            const url = this.url.admin('roles/:id', {id: id})
+            this.http.delete(url).then(result => {
+                if (result.successful) {
+                    this.data = this.data.filter(e => e.id !== id)
+                    this.pagination.total -= 1
+
+                    this.$toast.success('rolee eliminado exitosamente.')
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        onSearch(text){
+            this.search_text = text
+        },
+        onFiltered(filteredItems) {
+            this.totalRows = filteredItems.length
+            this.currentPage = 1
+        },
+        showPrivileges(){
+            this.$bvModal.show('privileges')
+        },
+        showUsers(role){
+            this.role = role
+            this.$bvModal.show('users')
+        }
     }
+}
 </script>
 
 <template>
     <section>
+
+        <b-modal
+            id="privileges"
+            size="lg"
+            hide-footer
+            hide-backdrop
+            centered
+            content-class="shadow"
+            :title="role.name"
+        >
+            <component-privileges-list :roleId="role.id"/>
+        </b-modal>
+
+        <b-modal
+            id="users"
+            size="lg"
+            hide-footer
+            hide-backdrop
+            centered
+            content-class="shadow"
+            :title="role.name"
+        >
+            <component-users-list :roleId="role.id"/>
+        </b-modal>
+
         <component-header-list
             title="Roles"
             title-button-create="Agregar roles"
@@ -127,6 +163,14 @@
                     </template>
 
                     <template v-slot:cell(actions)="row">
+                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item.id)" class="mr-1">
+                            <font-awesome-icon icon="pencil" />
+                        </b-button>
+
+                        <b-button variant="outline-dark" @click.stop="showUsers(row.item)" class="mr-1">
+                            <font-awesome-icon icon="users" />
+                        </b-button>
+
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
