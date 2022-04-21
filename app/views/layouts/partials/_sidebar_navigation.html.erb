@@ -36,22 +36,6 @@
             <span> Eventos </span>
           <% end %>
         </li>
-        <li>
-          <a href="#" class="list">
-            <i class="fas fa-cog"></i>
-            </i>
-            <span> Ajustes </span>
-            <span class="float-right caret right"></span>
-          </a>
-          <ul class="hidden-list list-unstyled dropdown">
-            <li>
-              <%= navigation_vue_item("/catalog/client_types") do %>
-                <i class="fas fa-briefcase"></i>
-                <span> Tipos de clientes </span>
-              <% end %>
-            </li>
-          </ul>
-        </li>
       </ul>
     </li>
 
@@ -140,32 +124,32 @@
     </li>
 
     <li>
-      <a href="#" class="list">
-        <i class="fas fa-tags">
-        </i>
-        <span>Catalogos </span>
-      </a>
+      <%= navigation_vue_item("/configurations", ['list']) do %>
+        <i class="fa-solid fa-shop"></i>
+        <span>Configuraciones </span>
+        <span class="float-right caret right"></span>
+      <% end %>
       <ul class="list-unstyled dropdown">
         <li>
-          <%= navigation_vue_item("/catalog/client_types") do %>
+          <%= navigation_vue_item("/configurations/client_types") do %>
             <i class="fas fa-briefcase"></i>
             <span> Tipos de clientes </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/catalog/expediture_types") do %>
+          <%= navigation_vue_item("/configurations/expediture_types") do %>
             <i class="fas fa-boxes"></i>
             <span> Tipos de gastos </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/catalog/event_types") do %>
+          <%= navigation_vue_item("/configurations/event_types") do %>
             <i class="fas fa-calendar-check"></i>
             <span> Tipos de evento </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/catalog/product_transaction_types") do %>
+          <%= navigation_vue_item("/configurations/product_transaction_types") do %>
             <i class="fas fa-sitemap"></i>
             <span> Tipos de transacciones </span>
           <% end %>

@@ -1,4 +1,4 @@
-class Configuration::ClientTypesController < ApplicationSystemController
+class Configurations::ClientTypesController < ApplicationSystemController
   before_action :set_client_type, only: %i[update destroy]
 
   # GET /client_types or /client_types.json

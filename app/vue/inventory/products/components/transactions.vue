@@ -174,7 +174,7 @@
                                     <font-awesome-icon icon="arrow-down" fixed-width />
                                 </b-button>
                             </template>
-                            <b-form-select required v-model="product_transaction.catalog_product_transaction_type_id" :options="options.transaction_types">
+                            <b-form-select required v-model="product_transaction.product_transaction_type_id" :options="options.transaction_types">
                                 <template #first>
                                     <b-form-select-option :value="null"> Seleccione un tipo de transacción  </b-form-select-option>
                                 </template>

@@ -1,7 +1,7 @@
 class Product::Transaction < ApplicationRecord
   belongs_to :product, class_name: "Product", foreign_key: "product_id"
 
-  belongs_to :transaction_type, class_name: "Catalog::ProductTransactionType", foreign_key: "catalog_product_transaction_type_id", optional: true
+  belongs_to :transaction_type, class_name: "Catalog::ProductTransactionType", foreign_key: "product_transaction_type_id", optional: true
   belongs_to :user_creator,     class_name: "User",    foreign_key: "user_creator_id"
   belongs_to :model,            polymorphic: true, optional: true
 
@@ -15,14 +15,14 @@ class Product::Transaction < ApplicationRecord
 
   def self.options(account)
     {
-      transaction_types: account.catalog_product_transaction_types
+      transaction_types: account.product_transaction_types
       .where.not("code = ?", "product-sale")
       .order(:name)
       .map {
-        |catalog_product_transaction_type|
+        |product_transaction_type|
           {
-            text: catalog_product_transaction_type.name,
-            value: catalog_product_transaction_type.id
+            text: product_transaction_type.name,
+            value: product_transaction_type.id
           }
       }
     }
@@ -34,7 +34,7 @@ class Product::Transaction < ApplicationRecord
     .joins(:transaction_type)
     .select(
       "concat(users.first_name, ' ', users.first_surname) as user_creator_name",
-      "catalog_product_transaction_types.name as transaction_type",
+      "product_transaction_types.name as transaction_type",
       "product_transactions.quantity",
       "product_transactions.category",
       "product_transactions.created_at",

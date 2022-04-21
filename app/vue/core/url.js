@@ -263,6 +263,11 @@ export default {
                 return url.buildModuleUrl('hr', path, params)
             },
 
+            config(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('configurations', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)

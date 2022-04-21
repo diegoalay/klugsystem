@@ -1,4 +1,4 @@
-class Configuration::ExpeditureTypesController < ApplicationSystemController
+class Configurations::ExpeditureTypesController < ApplicationSystemController
   before_action :set_expediture_type, only: %i[update destroy]
 
   # GET /expediture_types or /expediture_types.json

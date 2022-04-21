@@ -3,29 +3,29 @@ class Account < ApplicationRecord
 
   encryptable_json_fields(:digifact, 'digifact_user', 'digifact_password')
 
-  has_many :payment_methods,   class_name: 'PaymentMethod'
-  has_many :branch_offices,    class_name: 'BranchOffice'
-  has_many :cash_registers,    class_name: 'CashRegister'
-  has_many :sales_details,     class_name: 'Sale::Detail'
-  has_many :expeditures,       class_name: 'Expediture'
-  has_many :departments,       class_name: 'Department'
-  has_many :quotations,        class_name: 'Quotation'
-  has_many :employees,         class_name: 'Employee'
-  has_many :products,          class_name: 'Product'
-  has_many :contacts,          class_name: 'Contact'
-  has_many :clients,           class_name: 'Client'
-  has_many :events,            class_name: 'Event'
-  has_many :brands,            class_name: 'Brand'
-  has_many :users,             class_name: 'User'
-  has_many :roles,             class_name: 'Role'
-  has_many :sales,             class_name: 'Sale'
+  has_many :payment_methods
+  has_many :branch_offices
+  has_many :cash_registers
+  has_many :sales_details
+  has_many :expeditures
+  has_many :departments
+  has_many :quotations
+  has_many :employees
+  has_many :products
+  has_many :contacts
+  has_many :clients
+  has_many :events
+  has_many :brands
+  has_many :users
+  has_many :roles
+  has_many :sales
 
 
-  # Catalogs
-  has_many :catalog_client_types,               class_name: 'Catalog::ClientType'
-  has_many :catalog_event_types,                class_name: 'Catalog::EventType'
-  has_many :catalog_expediture_types,           class_name: 'Catalog::ExpeditureType'
-  has_many :catalog_product_transaction_types,  class_name: 'Catalog::ProductTransactionType'
+  #Configurations
+  has_many :client_types
+  has_many :event_types
+  has_many :expediture_types
+  has_many :product_transaction_types
 
   after_create :setup_account
 
@@ -34,7 +34,7 @@ class Account < ApplicationRecord
 
   def setup_account
     # create default sale catalog type
-    type = catalog_product_transaction_types.find_or_create_by!(code: 'product-sale', name: 'Venta')
+    type = product_transaction_types.find_or_create_by!(code: 'product-sale', name: 'Venta')
 
     # create default admin role
     roles.find_or_create_by!(name: 'Admin', code: 'admin')
@@ -47,8 +47,8 @@ class Account < ApplicationRecord
     end
   end
 
-  def catalog_product_transaction_sale_type
-    return catalog_product_transaction_types.find_by(code: 'product-sale')
+  def product_transaction_sale_type
+    return product_transaction_types.find_by(code: 'product-sale')
   end
 
   def digifact_valid?

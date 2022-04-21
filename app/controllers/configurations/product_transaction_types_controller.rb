@@ -1,4 +1,4 @@
-class Configuration::ProductTransactionTypesController < ApplicationSystemController
+class Configurations::ProductTransactionTypesController < ApplicationSystemController
   before_action :set_product_transaction_type, only: %i[update destroy]
 
   # GET /product_transaction_types or /product_transaction_types.json

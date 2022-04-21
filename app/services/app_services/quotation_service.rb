@@ -29,7 +29,7 @@ module AppServices
                 transaction = product.transactions.new(
                   category: "decrease",
                   user_creator: @current_user,
-                  transaction_type: @current_user.account.catalog_product_transaction_quotation_type,
+                  transaction_type: @current_user.account.product_transaction_quotation_type,
                   quantity: quotation_product["quantity"],
                   model_id: @quotation.id,
                   model_type: "Quotation",

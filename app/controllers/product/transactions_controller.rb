@@ -42,7 +42,7 @@ class Product::TransactionsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def product_transaction_params
     params.fetch(:product_transaction, {}).permit(
-      %i[quantity catalog_product_transaction_type_id description category]
+      %i[quantity product_transaction_type_id description category]
     )
   end
 end

@@ -12,11 +12,11 @@ class Finance::ExpeditureQuery
       "amount",
       "description",
       "expediture_date",
-      "catalog_expediture_types.name as expediture_type_name"
+      "expediture_types.name as expediture_type_name"
     )
     .left_joins(:expediture_type)
 
-    expeditures = expeditures.where("catalog_expediture_types.id = ?", query[:filters][:expediture_type]) unless query[:filters][:expediture_type].blank?
+    expeditures = expeditures.where("expediture_types.id = ?", query[:filters][:expediture_type]) unless query[:filters][:expediture_type].blank?
     expeditures = expeditures.where("expeditures.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
 
     expeditures
@@ -35,7 +35,7 @@ class Finance::ExpeditureQuery
   end
 
   def expediture_types
-    return @account.catalog_expediture_types.map { |expediture_type|
+    return @account.expediture_types.map { |expediture_type|
       {
         text: expediture_type.name,
         value: expediture_type.id

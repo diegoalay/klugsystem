@@ -110,7 +110,7 @@ export default {
 
                 <b-form-group label="Tipo de gasto">
                     <b-form-select
-                        v-model="expediture.catalog_expediture_type_id"
+                        v-model="expediture.expediture_type_id"
                         :options="options.expediture_types"
                     >
                         <template #first>

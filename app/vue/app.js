@@ -19,12 +19,14 @@ import productsRoutes from 'vueApp/inventory/products/routes.js';
 import brandsRoutes from 'vueApp/inventory/brands/routes.js';
 import departmentsRoutes from 'vueApp/inventory/departments/routes.js';
 
+// HR
 import employeeRoutes from 'vueApp/hr/employees/routes.js';
 
-import catalogEventTypesRoutes from './catalog_event_types/routes.js';
-import catalogClientTypesRoutes from './catalog_client_types/routes.js';
-import catalogExpeditureTypesRoutes from './catalog_expediture_types/routes.js';
-import catalogProductTransactionTypesRoutes from './catalog_product_transaction_types/routes.js';
+// CONFIGURATIONS
+import eventTypesRoutes from 'vueApp/configurations/event_types/routes.js';
+import clientTypesRoutes from 'vueApp/configurations/client_types/routes.js';
+import expeditureTypesRoutes from 'vueApp/configurations/expediture_types/routes.js';
+import productTransactionTypesRoutes from 'vueApp/configurations/product_transaction_types/routes.js';
 
 // ADMINISTRATION
 import usersRoutes from 'vueApp/administration/users/routes.js';
@@ -60,10 +62,10 @@ app("",
     .concat(digifactRoutes)
     // TODO
     .concat(employeeRoutes)
-    .concat(catalogClientTypesRoutes)
-    .concat(catalogExpeditureTypesRoutes)
-    .concat(catalogProductTransactionTypesRoutes)
-    .concat(catalogEventTypesRoutes)
+    .concat(clientTypesRoutes)
+    .concat(expeditureTypesRoutes)
+    .concat(productTransactionTypesRoutes)
+    .concat(eventTypesRoutes)
     .concat(booksRoutes)
     .concat(profileRoutes)
 )

@@ -1,4 +1,4 @@
-class Configuration::EventTypesController < ApplicationSystemController
+class Configurations::EventTypesController < ApplicationSystemController
   before_action :set_event_type, only: %i[update destroy]
 
   # GET /event_types or /event_types.json

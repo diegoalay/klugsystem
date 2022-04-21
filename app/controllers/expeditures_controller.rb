@@ -98,7 +98,7 @@ class ExpedituresController < ApplicationSystemController
     # Only allow a list of trusted parameters through.
     def expediture_params
       params.fetch(:expediture, {}).permit(
-        %i[description note amount expediture_date catalog_expediture_type_id]
+        %i[description note amount expediture_date expediture_type_id]
       )
     end
   end
