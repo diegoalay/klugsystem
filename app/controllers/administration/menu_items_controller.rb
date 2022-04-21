@@ -4,7 +4,15 @@ class Administration::MenuItemsController < ApplicationSystemController
     respond_to do |format|
       format.json do
 
-        respond_with_successful(MenuItem.all.order(:order))
+        items = MenuItem.all.order(:order).map do |item|
+          text = item.menu_item.present? ? I18n.t("sidebar.#{item.key}") : I18n.t("sidebar.#{item.key}.title")
+
+          item.attributes.merge({
+            text: text
+          })
+        end
+
+        respond_with_successful(items)
       end
     end
   end

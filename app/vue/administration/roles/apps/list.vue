@@ -1,6 +1,7 @@
 <script type="text/javascript">
 import componentUsersList from 'vueApp/administration/roles/components/users-list.vue'
 import componentPrivilegesList from 'vueApp/administration/roles/components/privileges-list.vue'
+import { setRef } from '@fullcalendar/common'
 
 export default {
     components: {
@@ -39,7 +40,8 @@ export default {
             loading: false,
             role: {
                 id: null,
-                name: null
+                name: null,
+                code: null
             }
         }
     },
@@ -86,16 +88,17 @@ export default {
             this.currentPage = 1
         },
         showPrivileges(role){
-            this.$set(this.role, 'id', role.id)
-            this.$set(this.role, 'name', role.name)
-
+            this.setRole(role)
             this.$bvModal.show('privileges')
         },
         showUsers(role){
+            this.setRole(role)
+            this.$bvModal.show('users')
+        },
+        setRole(role){
             this.$set(this.role, 'id', role.id)
             this.$set(this.role, 'name', role.name)
-
-            this.$bvModal.show('users')
+            this.$set(this.role, 'code', role.code)
         }
     }
 }
@@ -106,14 +109,14 @@ export default {
 
         <b-modal
             id="privileges"
-            size="lg"
+            size="xl"
             hide-footer
             hide-backdrop
             centered
             content-class="shadow"
             :title="`Permisos asignados a ${role.name}`"
         >
-            <component-privileges-list :roleId="role.id"/>
+            <component-privileges-list :role="role"/>
         </b-modal>
 
         <b-modal
@@ -176,7 +179,7 @@ export default {
                             <font-awesome-icon icon="users" />
                         </b-button>
 
-                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                        <b-button v-if="tools.roleCanBeEdited(row.item)" variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>

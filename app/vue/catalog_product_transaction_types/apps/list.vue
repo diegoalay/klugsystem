@@ -67,13 +67,6 @@
             onFiltered(filteredItems) {
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
-            },
-            canBeDeleted(catalog_product_transaction_type){
-                if (catalog_product_transaction_type.code === 'product-sale') {
-                    return false
-                }
-
-                return true
             }
         }
     }
@@ -104,7 +97,7 @@
                     @row-clicked="show"
                 >
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" v-if="canBeDeleted(row.item)" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                        <b-button variant="outline-danger" v-if="tools.productTransactionCanBeDeleted(row.item)" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>

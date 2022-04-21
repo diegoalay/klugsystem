@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_20_050814) do
+ActiveRecord::Schema.define(version: 2022_04_20_233909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -709,6 +709,22 @@ ActiveRecord::Schema.define(version: 2022_04_20_050814) do
     t.index ["role_id"], name: "index_role_activities_on_role_id"
   end
 
+  create_table "role_menu_item_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "role_menu_item_id"
+    t.index ["role_menu_item_id"], name: "index_role_menu_item_activities_on_role_menu_item_id"
+  end
+
   create_table "role_menu_items", force: :cascade do |t|
     t.boolean "status", default: true
     t.bigint "user_creator_id"
@@ -1010,6 +1026,9 @@ ActiveRecord::Schema.define(version: 2022_04_20_050814) do
   add_foreign_key "role_activities", "roles"
   add_foreign_key "role_activities", "users", column: "user_creator_id"
   add_foreign_key "role_activities", "users", column: "user_modifier_id"
+  add_foreign_key "role_menu_item_activities", "role_menu_items"
+  add_foreign_key "role_menu_item_activities", "users", column: "user_creator_id"
+  add_foreign_key "role_menu_item_activities", "users", column: "user_modifier_id"
   add_foreign_key "role_menu_items", "menu_items"
   add_foreign_key "role_menu_items", "roles"
   add_foreign_key "role_menu_items", "users", column: "user_creator_id"

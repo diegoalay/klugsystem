@@ -24,4 +24,14 @@ class ApplicationController < ActionController::Base
       }
     }.to_json
   end
+
+  def respond_with_unathorized
+    render status: 401, json: {
+      successful: false,
+      error: {
+        message: 'No tienes acceso a este módulo.',
+        details: []
+      }
+    }.to_json
+  end
 end

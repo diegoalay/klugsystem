@@ -1,5 +1,7 @@
 class ApplicationSystemController < ApplicationController
+  include Pundit::Authorization
   before_action :authenticate_user!
+  before_action :verify_authorized_module, only: [:index, :update, :new, :destroy, :show, :create]
   before_action :set_account
   before_action :set_query
   before_action :set_account_data
@@ -36,5 +38,12 @@ class ApplicationSystemController < ApplicationController
         root: request.base_url.to_s,  path: request.path
       }
     }
+  end
+
+  def verify_authorized_module
+    key = params[:controller]
+    key = key.gsub('/', '.')
+
+    respond_with_unathorized if !current_user.can?(key) and key.include? 'crm'
   end
 end

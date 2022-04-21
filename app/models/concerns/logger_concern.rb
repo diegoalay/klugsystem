@@ -3,10 +3,8 @@
     extend ActiveSupport::Concern
 
     included do
-      acts_as_paranoid
-
-      belongs_to :account,       class_name: "Account", foreign_key: "account_id"
-      belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id", optional: :true
+      belongs_to :account, class_name: "Account", foreign_key: "account_id", optional: :true
+      belongs_to :user_creator, class_name: "User",    foreign_key: "user_creator_id", optional: :true
       belongs_to :user_modifier, class_name: "User",    foreign_key: "user_modifier_id", optional: :true
 
       has_many   :activities, foreign_key: "#{name.titleize.downcase.gsub("/", "_").gsub(" ", "_")}_id"

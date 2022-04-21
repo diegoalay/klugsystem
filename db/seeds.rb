@@ -61,6 +61,8 @@ branch_office = account.branch_offices.find_or_create_by!(
   new_user.password = "123456"
   new_user.branch_office = branch_office
   new_user.save!
+
+  new_user.user_roles.create!(role_id: account.roles.first.id)
 end
 
 user = User.first
@@ -116,6 +118,8 @@ account.payment_methods.find_or_create_by!(
   user_modifier: user,
   status: true
 )
+
+MenuItem.call
 
 # account = Account.find_or_create_by(name: 'Transnunfio')
 # [

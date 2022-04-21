@@ -1,4 +1,4 @@
-class Administration::Role::MenuItemsController < ApplicationController
+class Administration::Role::MenuItemsController < ApplicationSystemController
   before_action :set_role, only: %i[index create]
   before_action :set_role_menu_item, only: %i[update destroy]
 
@@ -35,7 +35,7 @@ class Administration::Role::MenuItemsController < ApplicationController
 
   # POST /administration/1/role_menu_items or /administration/1/role_menu_items.json
   def create
-    @role_menu_item = @role.role_menu_items.new(role_menu_item_params)
+    @role_menu_item = @role.menu_items.new(role_menu_item_params)
     @role_menu_item.user_creator = current_user
     @role_menu_item.user_modifier = current_user
 
@@ -82,7 +82,8 @@ class Administration::Role::MenuItemsController < ApplicationController
   end
 
   def set_role_menu_item
-    @role_menu_item = @role.role_menu_items.find_by(id: params[:id])
+    set_role
+    @role_menu_item = @role.menu_items.find_by(id: params[:id])
 
     return respond_with_not_found unless @role_menu_item
   end
@@ -90,7 +91,7 @@ class Administration::Role::MenuItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def role_menu_item_params
     params.fetch(:role_menu_item, {}).permit(
-      %i[menu_item_id]
+      %i[menu_item_id status]
     )
   end
 end

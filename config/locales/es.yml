@@ -1,11 +1,11 @@
 es:
   support:
     array:
-      words_connector: " o "
-      two_words_connector: " "
-      last_word_connector: " o al menos "
+      words_connector: ' o '
+      two_words_connector: ' '
+      last_word_connector: ' o al menos '
   errors:
-    format: "%{message}"
+    format: '%{message}'
   models:
     products:
       messages:
@@ -15,13 +15,13 @@ es:
           deleted: 'Cliente eliminado exitosamente.'
       title:
     sales:
-      column_enum_sale_type_receipt: "Recibo"
-      column_enum_sale_type_sale: "Venta"
-      column_enum_sale_type_bill: "Factura"
-      column_enum_sale_type_electronic_bill: "Factura electrónica"
+      column_enum_sale_type_receipt: 'Recibo'
+      column_enum_sale_type_sale: 'Venta'
+      column_enum_sale_type_bill: 'Factura'
+      column_enum_sale_type_electronic_bill: 'Factura electrónica'
     payment_methods:
-      column_enum_category_discount: "Descuento"
-      column_enum_category_interest: "Intéres"
+      column_enum_category_discount: 'Descuento'
+      column_enum_category_interest: 'Intéres'
   activerecord:
     errors:
       messages:
@@ -34,6 +34,34 @@ es:
         sale:
           attributes:
             payment_method:
-              required: "Debe seleccionar un método de pago."
+              required: 'Debe seleccionar un método de pago.'
             client:
-              required: "Debe seleccionar un cliente."
+              required: 'Debe seleccionar un cliente.'
+  sidebar:
+    crm:
+      title: 'CRM'
+      clients: 'Clientes'
+      contacts: 'Contactos'
+      events: 'Eventos'
+    finance:
+      title: 'Finanzas'
+      sales: 'Ventas'
+      quotations: 'Cotizaciones'
+      expeditures: 'Gastos'
+    inventory:
+      title: 'Inventario'
+      products: 'Productos'
+      brands: 'Marcas'
+      departments: 'Departamentos'
+    hr:
+      title: 'Recursos humanos'
+      employees: 'Empleados'
+    books:
+      title: 'Contabilidad'
+    administration:
+      title: 'Administración'
+      users: 'Usuarios'
+      roles: 'Roles'
+      branch_offices: 'Sucursales'
+      payment_methods: 'Métodos de pago'
+      digifact: 'Digifact'
