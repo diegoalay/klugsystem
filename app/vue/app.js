@@ -19,7 +19,7 @@ import productsRoutes from 'vueApp/inventory/products/routes.js';
 import brandsRoutes from 'vueApp/inventory/brands/routes.js';
 import departmentsRoutes from 'vueApp/inventory/departments/routes.js';
 
-import employeeRoutes from './employees/routes.js';
+import employeeRoutes from 'vueApp/hr/employees/routes.js';
 
 import catalogEventTypesRoutes from './catalog_event_types/routes.js';
 import catalogClientTypesRoutes from './catalog_client_types/routes.js';

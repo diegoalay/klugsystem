@@ -47,42 +47,7 @@ class QuotationsController < ApplicationSystemController
     end
 
     if @quotation.save
-      quotation_products = params[:quotation][:products]
-
-      ActiveRecord::Base.transaction do
-        quotation_products.each do |quotation_product|
-          quotation_detail = @quotation.details.new(
-            account: @account,
-            product_id: quotation_product["id"],
-            name: quotation_product["name"],
-            price: quotation_product["price"],
-            total: quotation_product["total"],
-            quantity: quotation_product["quantity"],
-            subtotal: quotation_product["subtotal"],
-            discount_value: quotation_product["discount_value"],
-            discount_percentage: quotation_product["discount_percentage"]
-          )
-
-          if (quotation_detail.save!)
-            product = @account.products.find_by(id: quotation_product["id"])
-
-            if (product)
-              ActiveRecord::Base.transaction do
-                transaction = product.transactions.new(
-                  category: "decrease",
-                  user_creator: current_user,
-                  transaction_type: @account.catalog_product_transaction_quotation_type,
-                  quantity: quotation_product["quantity"],
-                  model_id: @quotation.id,
-                  model_type: "Quotation",
-                )
-
-                transaction.save!
-              end
-            end
-          end
-        end
-      end
+      AppServices::QuotationService.new(@sale, params[:quotation][:products], current_user).call
       respond_with_successful(@quotation)
     else
       respond_quotation_with_error

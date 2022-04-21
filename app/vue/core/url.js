@@ -258,6 +258,11 @@ export default {
                 return url.buildModuleUrl('administration', path, params)
             },
 
+            hr(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('hr', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)

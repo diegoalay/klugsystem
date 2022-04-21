@@ -119,21 +119,23 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :hr do
+        resources :employees do
+          scope module: :employee do
+            resources :files
+          end
+          collection do
+            get "files/extensions", to: "employee/files#extensions"
+            get :options
+            get :search
+          end
+        end
+      end
+
       resources :books do
       end
 
       resources :cash_registers do
-      end
-
-      resources :employees do
-        scope module: :employee do
-          resources :files
-        end
-        collection do
-          get "files/extensions", to: "employee/files#extensions"
-          get :options
-          get :search
-        end
       end
 
       namespace :catalog do
