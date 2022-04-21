@@ -129,125 +129,6 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.index ["user_id"], name: "index_cash_registers_on_user_id"
   end
 
-  create_table "catalog_client_type_activities", force: :cascade do |t|
-    t.string "description"
-    t.string "field_name"
-    t.string "value_from"
-    t.string "value_to"
-    t.string "category"
-    t.string "field_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at, index: true"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_client_type_id"
-    t.index ["catalog_client_type_id"], name: "index_catalog_client_type_activities_on_catalog_client_type_id"
-  end
-
-  create_table "catalog_client_types", force: :cascade do |t|
-    t.datetime "deleted_at"
-    t.string "name"
-    t.text "note"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "account_id"
-    t.index ["account_id"], name: "index_catalog_client_types_on_account_id"
-    t.index ["deleted_at"], name: "index_catalog_client_types_on_deleted_at"
-  end
-
-  create_table "catalog_event_type_activities", force: :cascade do |t|
-    t.string "description"
-    t.string "field_name"
-    t.string "value_from"
-    t.string "value_to"
-    t.string "category"
-    t.string "field_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at, index: true"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_event_type_id"
-    t.index ["catalog_event_type_id"], name: "index_catalog_event_type_activities_on_catalog_event_type_id"
-  end
-
-  create_table "catalog_event_types", force: :cascade do |t|
-    t.datetime "deleted_at"
-    t.string "name"
-    t.text "note"
-    t.string "model_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "account_id"
-    t.index ["account_id"], name: "index_catalog_event_types_on_account_id"
-    t.index ["deleted_at"], name: "index_catalog_event_types_on_deleted_at"
-    t.index ["model_type"], name: "index_catalog_event_types_on_model_type"
-  end
-
-  create_table "catalog_expediture_type_activities", force: :cascade do |t|
-    t.string "description"
-    t.string "field_name"
-    t.string "value_from"
-    t.string "value_to"
-    t.string "category"
-    t.string "field_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at, index: true"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_expediture_type_id"
-    t.index ["catalog_expediture_type_id"], name: "catalog_expediture_type_activities_catalog_expediture_types"
-  end
-
-  create_table "catalog_expediture_types", force: :cascade do |t|
-    t.string "name"
-    t.text "note"
-    t.datetime "deleted_at"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "account_id"
-    t.index ["account_id"], name: "index_catalog_expediture_types_on_account_id"
-    t.index ["deleted_at"], name: "index_catalog_expediture_types_on_deleted_at"
-  end
-
-  create_table "catalog_product_transaction_type_activities", force: :cascade do |t|
-    t.string "description"
-    t.string "field_name"
-    t.string "value_from"
-    t.string "value_to"
-    t.string "category"
-    t.string "field_type"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at, index: true"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_product_transaction_type_id"
-    t.index ["catalog_product_transaction_type_id"], name: "product_transaction_type_activities_product_transaction_type"
-  end
-
-  create_table "catalog_product_transaction_types", force: :cascade do |t|
-    t.string "name"
-    t.string "code"
-    t.text "note"
-    t.bigint "user_creator_id"
-    t.bigint "user_modifier_id"
-    t.datetime "deleted_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "account_id"
-    t.index ["account_id"], name: "catalog_product_transaction_types_accounts"
-    t.index ["deleted_at"], name: "index_catalog_product_transaction_types_on_deleted_at"
-  end
-
   create_table "client_activities", force: :cascade do |t|
     t.string "description"
     t.string "field_name"
@@ -262,6 +143,35 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "client_id"
     t.index ["client_id"], name: "index_client_activities_on_client_id"
+  end
+
+  create_table "client_type_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "client_type_id"
+    t.index ["client_type_id"], name: "index_client_type_activities_on_client_type_id"
+  end
+
+  create_table "client_types", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.string "name"
+    t.text "note"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_client_types_on_account_id"
+    t.index ["deleted_at"], name: "index_client_types_on_deleted_at"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -288,10 +198,10 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_client_type_id"
+    t.bigint "client_type_id"
     t.bigint "account_id"
     t.index ["account_id"], name: "index_clients_on_account_id"
-    t.index ["catalog_client_type_id"], name: "index_clients_on_catalog_client_type_id"
+    t.index ["client_type_id"], name: "index_clients_on_client_type_id"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
   end
 
@@ -449,6 +359,37 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.index ["event_id"], name: "index_event_activities_on_event_id"
   end
 
+  create_table "event_type_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "event_type_id"
+    t.index ["event_type_id"], name: "index_event_type_activities_on_event_type_id"
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.datetime "deleted_at"
+    t.string "name"
+    t.text "note"
+    t.string "model_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_event_types_on_account_id"
+    t.index ["deleted_at"], name: "index_event_types_on_deleted_at"
+    t.index ["model_type"], name: "index_event_types_on_model_type"
+  end
+
   create_table "events", force: :cascade do |t|
     t.datetime "deleted_at"
     t.text "description"
@@ -466,10 +407,10 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.bigint "account_id"
     t.string "model_type"
     t.bigint "model_id"
-    t.bigint "catalog_event_type_id"
+    t.bigint "event_type_id"
     t.index ["account_id"], name: "index_events_on_account_id"
-    t.index ["catalog_event_type_id"], name: "index_events_on_catalog_event_type_id"
     t.index ["deleted_at"], name: "index_events_on_deleted_at"
+    t.index ["event_type_id"], name: "index_events_on_event_type_id"
     t.index ["model_type", "model_id"], name: "index_events_on_model"
   end
 
@@ -489,6 +430,35 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.index ["expediture_id"], name: "index_expediture_activities_on_expediture_id"
   end
 
+  create_table "expediture_type_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "expediture_type_id"
+    t.index ["expediture_type_id"], name: "expediture_type_activities_expediture_types"
+  end
+
+  create_table "expediture_types", force: :cascade do |t|
+    t.string "name"
+    t.text "note"
+    t.datetime "deleted_at"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_expediture_types_on_account_id"
+    t.index ["deleted_at"], name: "index_expediture_types_on_deleted_at"
+  end
+
   create_table "expeditures", force: :cascade do |t|
     t.string "description"
     t.text "note"
@@ -499,13 +469,13 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_expediture_type_id"
+    t.bigint "expediture_type_id"
     t.bigint "account_id"
     t.bigint "cash_register_id"
     t.index ["account_id"], name: "index_expeditures_on_account_id"
     t.index ["cash_register_id"], name: "index_expeditures_on_cash_register_id"
-    t.index ["catalog_expediture_type_id"], name: "index_expeditures_on_catalog_expediture_type_id"
     t.index ["deleted_at"], name: "index_expeditures_on_deleted_at"
+    t.index ["expediture_type_id"], name: "index_expeditures_on_expediture_type_id"
   end
 
   create_table "menu_items", force: :cascade do |t|
@@ -586,6 +556,36 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.index ["product_id"], name: "index_product_files_on_product_id"
   end
 
+  create_table "product_transaction_type_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_transaction_type_id"
+    t.index ["product_transaction_type_id"], name: "product_transaction_type_activities_product_transaction_type"
+  end
+
+  create_table "product_transaction_types", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.text "note"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "product_transaction_types_accounts"
+    t.index ["deleted_at"], name: "index_product_transaction_types_on_deleted_at"
+  end
+
   create_table "product_transactions", force: :cascade do |t|
     t.text "description"
     t.string "category"
@@ -593,13 +593,13 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.bigint "user_creator_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "catalog_product_transaction_type_id"
+    t.bigint "product_transaction_type_id"
     t.string "model_type"
     t.bigint "model_id"
     t.bigint "product_id"
-    t.index ["catalog_product_transaction_type_id"], name: "catalog_product_transaction_types_product_transactions"
     t.index ["model_type", "model_id"], name: "index_product_transactions_on_model"
     t.index ["product_id"], name: "index_product_transactions_on_product_id"
+    t.index ["product_transaction_type_id"], name: "product_transaction_types_product_transactions"
   end
 
   create_table "products", force: :cascade do |t|
@@ -917,35 +917,17 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
   add_foreign_key "cash_registers", "users"
   add_foreign_key "cash_registers", "users", column: "user_creator_id"
   add_foreign_key "cash_registers", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_client_type_activities", "catalog_client_types"
-  add_foreign_key "catalog_client_type_activities", "users", column: "user_creator_id"
-  add_foreign_key "catalog_client_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_client_types", "accounts"
-  add_foreign_key "catalog_client_types", "users", column: "user_creator_id"
-  add_foreign_key "catalog_client_types", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_event_type_activities", "catalog_event_types"
-  add_foreign_key "catalog_event_type_activities", "users", column: "user_creator_id"
-  add_foreign_key "catalog_event_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_event_types", "accounts"
-  add_foreign_key "catalog_event_types", "users", column: "user_creator_id"
-  add_foreign_key "catalog_event_types", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_expediture_type_activities", "catalog_expediture_types"
-  add_foreign_key "catalog_expediture_type_activities", "users", column: "user_creator_id"
-  add_foreign_key "catalog_expediture_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_expediture_types", "accounts"
-  add_foreign_key "catalog_expediture_types", "users", column: "user_creator_id"
-  add_foreign_key "catalog_expediture_types", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_product_transaction_type_activities", "catalog_product_transaction_types"
-  add_foreign_key "catalog_product_transaction_type_activities", "users", column: "user_creator_id"
-  add_foreign_key "catalog_product_transaction_type_activities", "users", column: "user_modifier_id"
-  add_foreign_key "catalog_product_transaction_types", "accounts"
-  add_foreign_key "catalog_product_transaction_types", "users", column: "user_creator_id"
-  add_foreign_key "catalog_product_transaction_types", "users", column: "user_modifier_id"
   add_foreign_key "client_activities", "clients"
   add_foreign_key "client_activities", "users", column: "user_creator_id"
   add_foreign_key "client_activities", "users", column: "user_modifier_id"
+  add_foreign_key "client_type_activities", "client_types"
+  add_foreign_key "client_type_activities", "users", column: "user_creator_id"
+  add_foreign_key "client_type_activities", "users", column: "user_modifier_id"
+  add_foreign_key "client_types", "accounts"
+  add_foreign_key "client_types", "users", column: "user_creator_id"
+  add_foreign_key "client_types", "users", column: "user_modifier_id"
   add_foreign_key "clients", "accounts"
-  add_foreign_key "clients", "catalog_client_types"
+  add_foreign_key "clients", "client_types"
   add_foreign_key "clients", "users", column: "user_creator_id"
   add_foreign_key "clients", "users", column: "user_modifier_id"
   add_foreign_key "contact_activities", "contacts"
@@ -975,16 +957,28 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
   add_foreign_key "event_activities", "events"
   add_foreign_key "event_activities", "users", column: "user_creator_id"
   add_foreign_key "event_activities", "users", column: "user_modifier_id"
+  add_foreign_key "event_type_activities", "event_types"
+  add_foreign_key "event_type_activities", "users", column: "user_creator_id"
+  add_foreign_key "event_type_activities", "users", column: "user_modifier_id"
+  add_foreign_key "event_types", "accounts"
+  add_foreign_key "event_types", "users", column: "user_creator_id"
+  add_foreign_key "event_types", "users", column: "user_modifier_id"
   add_foreign_key "events", "accounts"
-  add_foreign_key "events", "catalog_event_types"
+  add_foreign_key "events", "event_types"
   add_foreign_key "events", "users", column: "user_creator_id"
   add_foreign_key "events", "users", column: "user_modifier_id"
   add_foreign_key "expediture_activities", "expeditures"
   add_foreign_key "expediture_activities", "users", column: "user_creator_id"
   add_foreign_key "expediture_activities", "users", column: "user_modifier_id"
+  add_foreign_key "expediture_type_activities", "expediture_types"
+  add_foreign_key "expediture_type_activities", "users", column: "user_creator_id"
+  add_foreign_key "expediture_type_activities", "users", column: "user_modifier_id"
+  add_foreign_key "expediture_types", "accounts"
+  add_foreign_key "expediture_types", "users", column: "user_creator_id"
+  add_foreign_key "expediture_types", "users", column: "user_modifier_id"
   add_foreign_key "expeditures", "accounts"
   add_foreign_key "expeditures", "cash_registers"
-  add_foreign_key "expeditures", "catalog_expediture_types"
+  add_foreign_key "expeditures", "expediture_types"
   add_foreign_key "expeditures", "users", column: "user_creator_id"
   add_foreign_key "expeditures", "users", column: "user_modifier_id"
   add_foreign_key "menu_items", "menu_items"
@@ -1000,7 +994,13 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
   add_foreign_key "product_files", "products"
   add_foreign_key "product_files", "users", column: "user_creator_id"
   add_foreign_key "product_files", "users", column: "user_modifier_id"
-  add_foreign_key "product_transactions", "catalog_product_transaction_types"
+  add_foreign_key "product_transaction_type_activities", "product_transaction_types"
+  add_foreign_key "product_transaction_type_activities", "users", column: "user_creator_id"
+  add_foreign_key "product_transaction_type_activities", "users", column: "user_modifier_id"
+  add_foreign_key "product_transaction_types", "accounts"
+  add_foreign_key "product_transaction_types", "users", column: "user_creator_id"
+  add_foreign_key "product_transaction_types", "users", column: "user_modifier_id"
+  add_foreign_key "product_transactions", "product_transaction_types"
   add_foreign_key "product_transactions", "products"
   add_foreign_key "product_transactions", "users", column: "user_creator_id"
   add_foreign_key "products", "accounts"

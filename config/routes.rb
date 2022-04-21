@@ -138,7 +138,7 @@ Rails.application.routes.draw do
       resources :cash_registers do
       end
 
-      namespace :catalog do
+      namespace :configurations do
         resources :product_transaction_types
         resources :expediture_types
         resources :client_types

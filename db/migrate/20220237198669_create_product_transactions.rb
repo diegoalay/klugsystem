@@ -11,7 +11,7 @@ class CreateProductTransactions < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :product_transactions, :catalog_product_transaction_type, foreign_key: true, index: { name: "catalog_product_transaction_types_product_transactions" }
+    add_reference   :product_transactions, :product_transaction_type, foreign_key: true, index: { name: "product_transaction_types_product_transactions" }
     add_reference   :product_transactions, :model,   polymorphic: true
     add_reference   :product_transactions, :product, foreign_key: true
 

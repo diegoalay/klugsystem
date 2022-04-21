@@ -23,7 +23,7 @@ class CreateEvents < ActiveRecord::Migration[6.1]
 
     add_reference   :events, :account,    foreign_key: true
     add_reference   :events, :model,       polymorphic: true
-    add_reference   :events, :catalog_event_type, foreign_key: true
+    add_reference   :events, :event_type, foreign_key: true
 
     add_foreign_key :events, :users, column: :user_creator_id
     add_foreign_key :events, :users, column: :user_modifier_id
