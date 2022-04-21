@@ -161,6 +161,7 @@ class Shared::FilesController < ApplicationController
     model = model.gsub('Crm::', '')
     model = model.gsub('Finance::', '')
     model = model.gsub('Inventory::', '')
+    model = model.gsub('Hr::', '')
     model = model.gsub(key, '')
   end
 

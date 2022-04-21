@@ -280,7 +280,7 @@ export default {
         },
 
         extensionIsValid(extension){
-            return ['png', 'jpg', 'jpeg', 'webp'].includes(extension)
+            this.fileExtensions.includes(extension)
         }
     }
 }
@@ -296,6 +296,7 @@ export default {
                     <b-form-group>
                         <template #label>
                             Archivo <sup class="text-danger">*</sup>
+                            <span><small> {{ fileExtensions }} </small></span>
                         </template>
 
                         <vue-dropzone

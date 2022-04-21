@@ -13,7 +13,7 @@
             'component-autocomplete': componenentAutocomplete
         },
 
-        data(){ 
+        data(){
             return {
                 time_start: null,
                 time_end: null
@@ -105,7 +105,7 @@
                 return this.event.id ? true : false
             }
         },
-        
+
         watch: {
             time_start(date){
                 let start = new Date(this.event.date.setHours(date.getHours(), date.getMinutes(), 0))
@@ -156,9 +156,9 @@
                         <slot name="buttons" v-if="isCreation()">
                             <b-input-group-prepend>
                                 <b-button @click="event.model_type = 'Contact'"><font-awesome-icon icon="repeat" />
-                                    Contactos 
+                                    Contactos
                                 </b-button>
-                                &nbsp; 
+                                &nbsp;
                             </b-input-group-prepend>
                         </slot>
                     </component-autocomplete>
@@ -178,7 +178,7 @@
                                 <b-button @click="event.model_type = 'Client'"><font-awesome-icon icon="repeat" />
                                     Clientes
                                 </b-button>
-                                &nbsp; 
+                                &nbsp;
                             </b-input-group-prepend>
                         </slot>
                     </component-autocomplete>
@@ -233,6 +233,3 @@
         </div>
     </b-form>
 </template>
-
-
-

@@ -1,7 +1,7 @@
 class Product::Transaction < ApplicationRecord
   belongs_to :product, class_name: "Product", foreign_key: "product_id"
 
-  belongs_to :transaction_type, class_name: "Catalog::ProductTransactionType", foreign_key: "product_transaction_type_id", optional: true
+  belongs_to :transaction_type, class_name: "ProductTransactionType", foreign_key: "product_transaction_type_id", optional: true
   belongs_to :user_creator,     class_name: "User",    foreign_key: "user_creator_id"
   belongs_to :model,            polymorphic: true, optional: true
 
