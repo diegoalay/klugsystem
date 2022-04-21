@@ -206,7 +206,7 @@ export default {
                             <b-thead>
                                 <b-tr>
                                     <b-th><h5><b> Permiso </b></h5></b-th>
-                                    <b-th class="text-center"><h5><b> Estado </b></h5></b-th>
+                                    <b-th class="text-center"><h5><b> Habilitado </b></h5></b-th>
                                 </b-tr>
                             </b-thead>
                             <b-tbody>

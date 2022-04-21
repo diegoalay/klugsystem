@@ -116,6 +116,44 @@ class MenuItem < ApplicationRecord
     )
 
     MenuItem.find_or_create_by!(
+      order: 6,
+      key: 'configurations',
+      icon: 'screwdriver-wrench',
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'configurations'),
+      order: 0,
+      key: 'configurations.client_types',
+      icon: 'briefcase',
+      permissions: %w[client_types.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'configurations'),
+      order: 1,
+      key: 'configurations.expediture_types',
+      icon: 'money-bill',
+      permissions: %w[client_types.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'configurations'),
+      order: 2,
+      key: 'configurations.event_types',
+      icon: 'calendar-check',
+      permissions: %w[event_types.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'configurations'),
+      order: 3,
+      key: 'configurations.product_transaction_types',
+      icon: 'truck-ramp-box',
+      permissions: %w[product_transaction_types.index]
+    )
+
+    MenuItem.find_or_create_by!(
       order: 10,
       key: 'administration',
       icon: 'gears',

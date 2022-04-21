@@ -58,6 +58,12 @@ es:
       employees: 'Empleados'
     books:
       title: 'Contabilidad'
+    configurations:
+      title: 'Configuraciones'
+      client_types: 'Tipos de cliente'
+      expediture_types: 'Tipos de gasto'
+      event_types: 'Tipos de evento'
+      product_transaction_types: 'Tipos de transacción de productos'
     administration:
       title: 'Administración'
       users: 'Usuarios'
