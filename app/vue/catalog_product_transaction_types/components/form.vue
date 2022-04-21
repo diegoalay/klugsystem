@@ -53,13 +53,6 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
-        },
-        canBeSave(){
-            if (this.catalog_product_transaction_type.code === 'product-sale') {
-                return false
-            }
-
-            return true
         }
     }
 }
@@ -92,7 +85,7 @@ export default {
                     </b-form-textarea>
                 </b-form-group>
 
-                <b-button v-if="canBeSave()" type="submit" variant="primary">Guardar</b-button>
+                <b-button v-if="productTransactionCanBeEdited(catalog_product_transaction_type)" type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>
     </b-form>

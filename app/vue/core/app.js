@@ -1,3 +1,4 @@
+// import Vuex from 'vuex'
 import Vue from 'vue'
 import DatePicker from 'vue2-datepicker'; import 'vue2-datepicker/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -6,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
 import VueApexCharts from 'vue-apexcharts'
 import VModal from 'vue-js-modal'
+import VueI18n from 'vue-i18n'
+
+
+// Vue.use(Vuex)
+// import store from 'vueApp/core/store/index.js';
 
 import {
     FormRadioPlugin,
@@ -46,7 +52,7 @@ import http from './http'
 import url from './url'
 import tools from './tools'
 import date from './date'
-
+import store from './store'
 
 // Global registration
 Vue.component('apexchart', VueApexCharts)
@@ -83,6 +89,7 @@ Vue.use(ImagePlugin)
 Vue.use(VModal)
 Vue.use(CarouselPlugin)
 Vue.use(VueApexCharts)
+Vue.use(VueI18n)
 
 library.add(fas)
 
@@ -93,6 +100,7 @@ Vue.use(http)
 Vue.use(url, system.url)
 Vue.use(date)
 Vue.use(tools)
+Vue.use(store)
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,
@@ -101,6 +109,10 @@ Vue.use(Toast, {
         iconClass: 'xmark'
     }
 });
+
+const i18n = new VueI18n({
+    locale: 'es'
+})
 
 export default (base_path, routes=[]) => {
     //app builder
@@ -116,7 +128,10 @@ export default (base_path, routes=[]) => {
     })
 
     // · Building Vue cloud app
-    let app = new Vue(app_builder)
+    let app = new Vue({
+        ...app_builder,
+        i18n
+    })
 
     // · Mount app once DOM is ready
     app.$mount("#app")

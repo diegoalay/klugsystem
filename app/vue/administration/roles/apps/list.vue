@@ -1,6 +1,7 @@
 <script type="text/javascript">
 import componentUsersList from 'vueApp/administration/roles/components/users-list.vue'
 import componentPrivilegesList from 'vueApp/administration/roles/components/privileges-list.vue'
+import { setRef } from '@fullcalendar/common'
 
 export default {
     components: {
@@ -39,7 +40,8 @@ export default {
             loading: false,
             role: {
                 id: null,
-                name: null
+                name: null,
+                code: null
             }
         }
     },
@@ -85,12 +87,18 @@ export default {
             this.totalRows = filteredItems.length
             this.currentPage = 1
         },
-        showPrivileges(){
+        showPrivileges(role){
+            this.setRole(role)
             this.$bvModal.show('privileges')
         },
         showUsers(role){
-            this.role = role
+            this.setRole(role)
             this.$bvModal.show('users')
+        },
+        setRole(role){
+            this.$set(this.role, 'id', role.id)
+            this.$set(this.role, 'name', role.name)
+            this.$set(this.role, 'code', role.code)
         }
     }
 }
@@ -101,14 +109,14 @@ export default {
 
         <b-modal
             id="privileges"
-            size="lg"
+            size="xl"
             hide-footer
             hide-backdrop
             centered
             content-class="shadow"
-            :title="role.name"
+            :title="`Permisos asignados a ${role.name}`"
         >
-            <component-privileges-list :roleId="role.id"/>
+            <component-privileges-list :role="role"/>
         </b-modal>
 
         <b-modal
@@ -118,7 +126,7 @@ export default {
             hide-backdrop
             centered
             content-class="shadow"
-            :title="role.name"
+            :title="`Usuarios asignados a ${role.name}`"
         >
             <component-users-list :roleId="role.id"/>
         </b-modal>
@@ -163,7 +171,7 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item.id)" class="mr-1">
+                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item)" class="mr-1">
                             <font-awesome-icon icon="pencil" />
                         </b-button>
 
@@ -171,7 +179,7 @@ export default {
                             <font-awesome-icon icon="users" />
                         </b-button>
 
-                        <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                        <b-button v-if="tools.roleCanBeEdited(row.item)" variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>

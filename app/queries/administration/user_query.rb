@@ -7,6 +7,7 @@ class Administration::UserQuery
 
   def index
     @account.users.select(
+      'branch_offices.name as branch_office_name',
       'users.created_at',
       "concat(
         trim(users.first_name),
@@ -18,6 +19,7 @@ class Administration::UserQuery
       'users.id'
     )
     .left_joins(:roles)
+    .joins(:branch_office)
   end
 
   def options

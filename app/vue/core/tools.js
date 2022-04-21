@@ -32,30 +32,6 @@ export default {
             })
         }
 
-        const getMonthName = (idx, locale = null) => {
-
-            let objDate = new Date();
-            objDate.setDate(1);
-            objDate.setMonth(idx-1);
-
-            let languaje = locale ? locale : getLocale()
-
-            const month  = objDate.toLocaleString(languaje, { month: "long" })
-
-            return (month.charAt(0).toUpperCase() + month.slice(1))
-        }
-
-
-        const getMonthsNameList = (start = 1, end = 12) => {
-            let months = []
-
-            for (let i = start; i <= end; i ++) {
-                months.push(getMonthName(i))
-            }
-
-            return months
-        }
-
         const getLocale = () => {
             if (navigator.languages != undefined)
               return navigator.languages[0];
@@ -89,19 +65,35 @@ export default {
             window.open(url, '_blank')
         }
 
+        const roleCanBeEdited = (role) => {
+            if (role.code === 'admin') {
+                return false
+            }
+
+            return true
+        }
+
+        const productTransactionCanBeEdited = (catalog_product_transaction_type) => {
+            if (catalog_product_transaction_type.code === 'product-sale') {
+                return false
+            }
+
+            return true
+        }
+
         Vue.prototype.tools = {
             isMobile,
             screenWidth,
             screenHeight,
             userDetails,
             getLocale,
-            getMonthsNameList,
-            getMonthName,
             getCurrentYear,
             getCurrentMonth,
             getProductImage,
             getEmployeeImage,
-            printSale
+            printSale,
+            roleCanBeEdited,
+            productTransactionCanBeEdited
         }
     }
 }

@@ -26,7 +26,7 @@ export default {
             }
         },
         postForm(){
-            const url = this.url.build('contacts')
+            const url = this.url.crm('contacts')
             let form = {
                 contact: this.contact
             }
@@ -43,7 +43,7 @@ export default {
             })
         },
         putForm(){
-            const url = this.url.build('contacts/:id', {id: this.contact.id})
+            const url = this.url.crm('contacts/:id', {id: this.contact.id})
 
             let form = {
                 contact: this.contact

@@ -78,7 +78,7 @@ export default {
                 </b-form-group>
 
                 <div class="text-right">
-                    <b-button type="submit" variant="primary">Guardar</b-button>
+                    <b-button v-if="roleCanBeEdited(role)" type="submit" variant="primary">Guardar</b-button>
                 </div>
             </b-card-body>
         </b-card>

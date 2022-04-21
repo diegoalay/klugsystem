@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   include LoggerConcern
 
+  belongs_to :branch_office
   has_many :user_roles, foreign_key: 'user_id',class_name: 'User::Role'
   has_many :roles, through: :user_roles, source: :roles
-  delegate :permissions, :menu_items, to: :roles, allow_nil: true
+  has_many :menu_items, through: :user_roles, source: :roles
 
   def self.search account, query
     search = query[:filters][:search]&.downcase
@@ -40,7 +41,7 @@ class User < ApplicationRecord
       first_name: first_name,
       first_surname: first_surname,
       email: email,
-      role_id: user_roles.first.role_id,
+      role_id: user_roles.first&.role_id,
 
     }
   end
@@ -57,8 +58,14 @@ class User < ApplicationRecord
   end
 
   def can?(permission)
-    return false if permissions.blank?
+    return true if roles.map(&:code).include?('admin')
 
-    permissions.dig(*permission.split('.')) == true
+    granted = roles.joins(menu_items: [:menu_item])
+    .where('menu_items.key = ?', permission)
+    .where('role_menu_items.status = ?', true)
+    .first
+
+    return false if granted.nil?
+    return true
   end
 end

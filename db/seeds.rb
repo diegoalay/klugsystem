@@ -1,5 +1,10 @@
 account = Account.find_or_create_by(name: 'Klugsystem')
 
+branch_office = account.branch_offices.find_or_create_by!(
+  name: "Central",
+  telephone: "43703704"
+)
+
 [
   {
     first_name: "Allan",
@@ -54,18 +59,13 @@ account = Account.find_or_create_by(name: 'Klugsystem')
   new_user.first_name = user[:first_name]
   new_user.first_surname = user[:first_surname]
   new_user.password = "123456"
-
+  new_user.branch_office = branch_office
   new_user.save!
+
+  new_user.user_roles.create!(role_id: account.roles.first.id)
 end
 
 user = User.first
-
-branch_office = account.branch_offices.find_or_create_by!(
-  name: "Central",
-  telephone: "43703704",
-  user_creator: user,
-  user_modifier: user
-)
 
 (0..500).each do |n|
   account.products.create!(
@@ -119,27 +119,29 @@ account.payment_methods.find_or_create_by!(
   status: true
 )
 
-account = Account.find_or_create_by(name: 'Transnunfio')
-[
-  {
-    first_name: "Diego",
-    first_surname: "Alay",
-    email: "diego.alay@transnunfio.com"
-  },
-  {
-    first_name: "Henry",
-    first_surname: "Alay",
-    email: "transnunfio@hotmail.com"
-  }
-].each do |user|
-  new_user = account.users.find_or_initialize_by(
-    email: user[:email]
-  )
+MenuItem.call
 
-  new_user.first_name = user[:first_name]
-  new_user.first_surname = user[:first_surname]
-  new_user.password = "123456"
-  new_user.save!
-end
+# account = Account.find_or_create_by(name: 'Transnunfio')
+# [
+#   {
+#     first_name: "Diego",
+#     first_surname: "Alay",
+#     email: "diego.alay@transnunfio.com"
+#   },
+#   {
+#     first_name: "Henry",
+#     first_surname: "Alay",
+#     email: "transnunfio@hotmail.com"
+#   }
+# ].each do |user|
+#   new_user = account.users.find_or_initialize_by(
+#     email: user[:email]
+#   )
+
+#   new_user.first_name = user[:first_name]
+#   new_user.first_surname = user[:first_surname]
+#   new_user.password = "123456"
+#   new_user.save!
+# end
 
 puts "SEED EXECUTED"

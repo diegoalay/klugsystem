@@ -23,6 +23,10 @@
                     key: 'user_name',
                     sortable: true
                 },{
+                    label: 'Sucursal',
+                    key: 'branch_office_name',
+                    sortable: true
+                },{
                     label: '',
                     key: 'actions'
                 }],

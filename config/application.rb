@@ -12,7 +12,7 @@ module Klugsystem
     config.load_defaults 6.0
 
     config.i18n.load_path += Dir[Rails.root.join('locales', '*.{rb,yml}')]
-    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths += Dir[Rails.root.join("lib")]
     config.i18n.default_locale = :es
 
     # Settings in config/environments/* take precedence over those specified here.

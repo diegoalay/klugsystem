@@ -5,7 +5,7 @@ if (document) {
         const classes = Array.from(li.classList)
 
         if (classes.includes('list')) {
-            el = li.childNodes[4] 
+            el = li.childNodes[4]
             if (el) {
                 const ul = el.parentElement.nextElementSibling
 
@@ -135,7 +135,7 @@ if (document) {
 
     document.onreadystatechange = () => {
 
-        if (document.readyState === 'complete') {            
+        if (document.readyState === 'complete') {
             // show side bar
             const topbar = document.getElementsByClassName("sidebar")[0]
             topbar.style.visibility = "visible"
@@ -165,7 +165,7 @@ if (document) {
                 const tag = this.getAttribute('href')
 
                 openCaret(this)
-                
+
                 if (tag === "#") return
 
                 disableActiveItems(this)
@@ -184,7 +184,7 @@ if (document) {
                 if (tag === "#") return
 
                 disableActiveItems(this)
-                
+
                 setTimeout(() => {
                     toggleMobile()
                     setActiveWithDropdown(this)

@@ -34,12 +34,13 @@ class Account < ApplicationRecord
 
   def setup_account
     # create default sale catalog type
-    type = catalog_product_transaction_types.find_or_create_by!(name: 'Venta')
+    type = catalog_product_transaction_types.find_or_create_by!(code: 'product-sale', name: 'Venta')
 
-    type.update(code: 'product-sale') # special code
+    # create default admin role
+    roles.find_or_create_by!(name: 'Admin', code: 'admin')
 
     # create default client
-    clients.find_or_initialize_by(billing_identifier: 'cf') do |record|
+    clients.find_or_initialize_by(billing_identifier: 'C.F') do |record|
       record.billing_address = '-'
       record.billing_name = '-'
       record.save!

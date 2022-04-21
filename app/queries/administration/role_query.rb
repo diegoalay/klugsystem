@@ -20,6 +20,7 @@ class Administration::RoleQuery
     .select(
       'roles.id',
       'roles.name',
+      'roles.code',
       'roles.created_at',
       'case
         when role_users.total is null then 0

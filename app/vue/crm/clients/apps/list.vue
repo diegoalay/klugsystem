@@ -55,9 +55,13 @@
                 this.loading = true
                 const url = this.url.crm('clients')
 
-                this.http.get(url).then(response => {
-                    this.data = response.data
-                    this.pagination.total = this.data.length
+                this.http.get(url).then(result => {
+                    if (result.successful) {
+                        this.data = result.data
+                        this.pagination.total = this.data.length
+                    } else {
+                        this.$toast.error(result.error.message)
+                    }
 
                     this.loading = false
                 }).catch(error => {
