@@ -61,7 +61,8 @@ class Product < ApplicationRecord
         "products.wholesale_price",
         "products.quantity",
         "products.product_file_id",
-        "brands.name"
+        "brands.name",
+        "measurement_units.name"
       )
       .select("count(*) as sales")
       .joins("

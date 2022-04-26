@@ -49,7 +49,7 @@ class Sale < ApplicationRecord
   end
 
   def is_electronic_billing?
-    sale_type == 'electronic_billing'
+    sale_type == 'electronic_bill'
   end
 
   private

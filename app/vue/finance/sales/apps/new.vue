@@ -348,10 +348,6 @@ export default {
                                 @updateProducts="updateProducts"
                             >
                             </component-products-list>
-                            <component-products-icon
-                                @updateProducts="updateProducts"
-                            >
-                            </component-products-icon>
                         </b-tab>
                         <b-tab title="Buscar">
                             <br>
