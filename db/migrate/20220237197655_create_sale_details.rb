@@ -9,6 +9,7 @@ class CreateSaleDetails < ActiveRecord::Migration[6.1]
       t.decimal :quantity
       t.decimal :discount_value
       t.decimal :discount_percentage
+      t.string :measurement_unit
 
       t.bigint :user_creator_id
       t.bigint :user_modifier_id
