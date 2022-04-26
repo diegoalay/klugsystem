@@ -7,8 +7,6 @@ module DigifactServices
 
       resp = certificate(file)
 
-      debugger
-
       if resp.code.eql? 200
         @sale.electronic_bill.update(
           certification_datetime: timefy(resp.parsed_response['Fecha_de_certificacion']),
