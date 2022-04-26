@@ -8,7 +8,7 @@ class ExpedituresController < ApplicationSystemController
         format.html {}
         format.json do
 
-          respond_with_successful(Finance::ExpeditureQuery.new(@account).index(@query))
+          respond_with_successful(ExpeditureQuery.new(@account).index(current_user, @query))
         end
       end
     end
@@ -40,7 +40,7 @@ class ExpedituresController < ApplicationSystemController
       @expediture = @account.expeditures.new(expediture_params)
       @expediture.user_creator = current_user
       @expediture.user_modifier = current_user
-      @expediture.cash_register = current_user.cash_register
+      @expediture.cash_register = current_user.current_cash_register if params[:expediture][:cash_register]
       @expediture.branch_office = current_user.branch_office
 
       if @expediture.save
@@ -77,11 +77,11 @@ class ExpedituresController < ApplicationSystemController
     end
 
     def index_options
-      respond_with_successful(Finance::ExpeditureQuery.new(@account).index_options)
+      respond_with_successful(ExpeditureQuery.new(@account).index_options)
     end
 
     def options
-      respond_with_successful(Finance::ExpeditureQuery.new(@account).options)
+      respond_with_successful(ExpeditureQuery.new(@account).options)
     end
 
     private

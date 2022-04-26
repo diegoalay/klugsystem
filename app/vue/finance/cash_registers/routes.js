@@ -9,10 +9,6 @@ const routes =  [
         component: appCashRegisterList
     },
     {
-        path: "/cash_registers/new",
-        component: appCashRegisterNew
-    },
-    {
         path: "/cash_registers/:id",
         component: appCashRegisterShow
     },

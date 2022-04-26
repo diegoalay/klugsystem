@@ -1,3 +1,2 @@
-class BranchOffice::Activity < ApplicationRecord
-  belongs_to :user_creator,  class_name: "User",    foreign_key: "user_creator_id"
+class BranchOffice::Activity < Shared::Activity
 end

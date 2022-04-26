@@ -64,34 +64,13 @@
             <span> Gastos </span>
           <% end %>
         </li>
-      </ul>
-    </li>
-
-    <li>
-      <%= navigation_vue_item("/pos", ['list']) do %>
-        <i class="fas fa-cash-register"></i>
-        <span> Punto de venta </span>
-        <span class="float-right caret right"></span>
-      <% end %>
-      <li>
-        <ul>
-          <%= navigation_vue_item("/cash_registers") do %>
+        <li>
+          <%= navigation_vue_item("/pos/cash_registers") do %>
             <i class="fas fa-cash-register"></i>
             <span> Listado de cajas </span>
           <% end %>
         </li>
         <li>
-          <%= navigation_vue_item("/profile/cash_register") do %>
-            <i class="fas fa-box"></i>
-            <span> Mi caja </span>
-          <% end %>
-        </li>
-        <li>
-          <%= navigation_vue_item("/sales/new") do %>
-            <i class="fas fa-shopping-cart"></i>
-            <span> Punto de venta </span>
-          <% end %>
-        </li>
       </ul>
     </li>
 
@@ -118,6 +97,33 @@
           <%= navigation_vue_item("/inventory/departments") do %>
             <i class="fa-solid fa-boxes-stacked"></i>
             <span> Departamentos </span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <%= navigation_vue_item("/pos", ['list']) do %>
+        <i class="fa-solid fa-store"></i>
+        <span> Punto de venta </span>
+        <span class="float-right caret right"></span>
+      <% end %>
+      <ul class="list-unstyled dropdown">
+          <%= navigation_vue_item("/pos/cash_register") do %>
+            <i class="fa-solid fa-cash-register"></i>
+            <span> Mi caja </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/pos/sales") do %>
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span> Mis ventas </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/pos/expeditures") do %>
+            <i class="fas fa-money-bill-wave"></i>
+            <span> Mis gastos </span>
           <% end %>
         </li>
       </ul>
@@ -216,6 +222,12 @@
           <%= navigation_vue_item("/administration/digifact") do %>
             <i class="fa-solid fa-receipt"></i>
             <span> Digifact </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/administration/account") do %>
+            <i class="fa-solid fa-receipt"></i>
+            <span> Cuenta </span>
           <% end %>
         </li>
       </ul>

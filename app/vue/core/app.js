@@ -98,9 +98,9 @@ Vue.use(VModal, { componentName: 'modal' })
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
-Vue.use(date)
 Vue.use(tools)
-Vue.use(store)
+Vue.use(date, tools)
+Vue.use(store, system)
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,

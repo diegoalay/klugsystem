@@ -1,13 +1,14 @@
 
 export default {
-    install (Vue, store) {
+    install (Vue, options) {
         let default_data = {
             global: {
-                privileges: []
+                cash_register: options.current_user.cash_register ? options.current_user.cash_register :
+                                { id: null }
             }
         }
 
-        store = { ...store, ...default_data }
+        const store = { ...default_data }
 
         Vue.prototype.store = Vue.observable(store)
     }

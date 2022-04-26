@@ -7,7 +7,7 @@ class SalesController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(Finance::SaleQuery.new(@account).index(current_user, @query))
+        respond_with_successful(SaleQuery.new(@account).index(current_user, @query))
       end
     end
   end
@@ -43,13 +43,17 @@ class SalesController < ApplicationSystemController
     @sale = @account.sales.new(sale_params)
     @sale.user_creator = current_user
     @sale.user_modifier = current_user
-    @sale.cash_register = current_user.cash_register
+    @sale.cash_register = current_user.current_cash_register if params[:sale][:cash_register]
     @sale.branch_office = current_user.branch_office
 
     if (params[:sale][:client][:id].blank?)
       create_client
 
       @sale.client = @new_client
+
+      unless @new_client.save
+        return respond_with_error('Debe completar el número de nit, dirección y nombre del cliente.')
+      end
     else
       set_client
     end
@@ -90,17 +94,17 @@ class SalesController < ApplicationSystemController
   end
 
   def index_options
-    respond_with_successful(Finance::SaleQuery.new(@account).index_options)
+    respond_with_successful(SaleQuery.new(@account).index_options)
   end
 
   def options
-    respond_with_successful(Finance::SaleQuery.new(@account).options)
+    respond_with_successful(SaleQuery.new(@account).options(current_user))
   end
 
   private
 
   def create_client
-    @new_client = @account.clients.create(
+    @new_client = @account.clients.new(
       billing_name: params[:sale][:client][:billing_name],
       billing_address: params[:sale][:client][:billing_address],
       billing_email: params[:sale][:client][:billing_email],

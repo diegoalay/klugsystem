@@ -263,6 +263,11 @@ export default {
                 return url.buildModuleUrl('hr', path, params)
             },
 
+            pos(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('pos', path, params)
+            },
+
             config(path, params={}) {
                 let url = new BuildUrl(options.root)
                 return url.buildModuleUrl('configurations', path, params)

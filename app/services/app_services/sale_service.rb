@@ -15,7 +15,7 @@ module AppServices
             name: sale_product["name"],
             price: sale_product["price"],
             total: sale_product["total"],
-            quantity: sale_product["quantity"],
+            quantity: sale_product["saleQuantity"],
             subtotal: sale_product["subtotal"],
             discount_value: sale_product["discount_value"],
             discount_percentage: sale_product["discount_percentage"]

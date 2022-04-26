@@ -1,12 +1,13 @@
 class Account < ApplicationRecord
   include EncryptableConcern
+  include LoggerConcern
 
   encryptable_json_fields(:digifact, 'digifact_user', 'digifact_password')
 
   has_many :payment_methods
   has_many :branch_offices
   has_many :cash_registers
-  has_many :sales_details
+  has_many :sales_details, class_name: 'Sale::Detail'
   has_many :expeditures
   has_many :departments
   has_many :quotations

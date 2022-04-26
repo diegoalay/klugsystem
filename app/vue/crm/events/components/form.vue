@@ -227,8 +227,9 @@
             </b-col>
         </b-row>
 
-        <div class="float-right">
+        <div class="text-right">
             <b-button v-if="isEdition()" @click.prevent="destroyEvent" variant="danger">Eliminar</b-button>
+            <b-button v-if="isEdition()" @click.prevent="destroyEvent" variant="success">Enviar Correo</b-button>
             <b-button type="submit" variant="primary">Guardar</b-button>
         </div>
     </b-form>

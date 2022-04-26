@@ -150,7 +150,9 @@ export default {
                         </b-form-group>
                     </b-col>
                 </b-row>
-                <b-button type="submit" variant="primary">Guardar</b-button>
+                <div class="text-right">
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

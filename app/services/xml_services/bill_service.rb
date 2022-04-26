@@ -1,9 +1,15 @@
 module XmlServices
-  module BillService
+  class BillService
+    include XmlServices::Helper
+
     require 'ox'
 
-    def generate_bill
-      resp = certificate(generate_xml)
+    def initialize sale
+      @sale = sale
+    end
+
+    def call
+      generate_xml
     end
 
     def generate_xml
@@ -15,7 +21,7 @@ module XmlServices
                   <dte:DatosEmision ID="DatosEmision">
                       <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.created_at)}" CodigoMoneda="GTQ" />
                       <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_direction}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
-                          NombreComercial="#{@sale.account.billing_name}" AfiliacionIVA="#{@sale.account.billing_membership}">
+                          NombreComercial="#{@sale.billing_name}" AfiliacionIVA="#{@sale.account.billing_membership}">
                           <dte:DireccionEmisor>
                               <dte:Direccion>#{@sale.branch_office.billing_direction}</dte:Direccion>
                               <dte:CodigoPostal>#{@sale.branch_office.billing_postcode}</dte:CodigoPostal>

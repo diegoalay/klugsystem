@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default {
-    install(Vue) {
+    install(Vue, tools) {
         const datetime = (date) => {
             if (!date) return '-'
 
@@ -40,33 +40,7 @@ export default {
 
         }
 
-        const getMonthName = (idx, locale = null) => {
-
-            let objDate = new Date();
-            objDate.setDate(1);
-            objDate.setMonth(idx-1);
-
-            let languaje = locale ? locale : getLocale()
-
-            const month  = objDate.toLocaleString(languaje, { month: "long" })
-
-            return (month.charAt(0).toUpperCase() + month.slice(1))
-        }
-
-
-        const getMonthsNameList = (start = 1, end = 12) => {
-            let months = []
-
-            for (let i = start; i <= end; i ++) {
-                months.push(getMonthName(i))
-            }
-
-            return months
-        }
-
         Vue.prototype.date = {
-            getMonthsNameList,
-            getMonthName,
             parseISOString,
             parse,
             datetime,

@@ -1,6 +1,6 @@
-import appClientsList  from 'vueApp/crm/contacts/apps/list.vue'
-import appClientsNew   from 'vueApp/crm/contacts/apps/new.vue'
-import appClientsShow from 'vueApp/crm/contacts/apps/show.vue'
+import appClientsList  from 'vueApp/crm/clients/apps/list.vue'
+import appClientsNew   from 'vueApp/crm/clients/apps/new.vue'
+import appClientsShow from 'vueApp/crm/clients/apps/show.vue'
 
 const routes =  [
     {

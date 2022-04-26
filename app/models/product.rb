@@ -28,6 +28,7 @@ class Product < ApplicationRecord
       products.wholesale_price,
       products.quantity,
       products.product_file_id,
+      brands.name as brand_name,
       case
         when products.quantity <= 0 then 'Agotado'
         else 'Disponible'
@@ -57,7 +58,8 @@ class Product < ApplicationRecord
         "products.retail_price",
         "products.wholesale_price",
         "products.quantity",
-        "products.product_file_id"
+        "products.product_file_id",
+        "brands.name"
       )
       .select("count(*) as sales")
       .joins("

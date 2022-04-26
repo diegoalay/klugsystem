@@ -32,7 +32,7 @@ class ApplicationSystemController < ApplicationController
         id: current_user.id,
         email: current_user.email,
         name: current_user.name,
-        cash_register_id: current_user.cash_register&.id
+        cash_register: current_user.current_cash_register&.show
       },
       url: {
         root: request.base_url.to_s,  path: request.path

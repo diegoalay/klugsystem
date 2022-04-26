@@ -61,5 +61,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
 
     add_foreign_key :roles, :users, column: :user_creator_id
     add_foreign_key :roles, :users, column: :user_modifier_id
+
+    add_foreign_key :accounts, :users, column: :user_creator_id
+    add_foreign_key :accounts, :users, column: :user_modifier_id
   end
 end

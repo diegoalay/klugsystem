@@ -22,13 +22,14 @@ class CreateSales < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :sales, :client,            foreign_key: true
-    add_reference   :sales, :account,           foreign_key: true
-    add_reference   :sales, :employee,          foreign_key: true
-    add_reference   :sales, :cash_register,     foreign_key: true
-    add_reference   :sales, :payment_method,     foreign_key: true
+    add_reference   :sales, :client, foreign_key: true
+    add_reference   :sales, :account, foreign_key: true
+    add_reference   :sales, :employee, foreign_key: true
+    add_reference   :sales, :cash_register, foreign_key: true
+    add_reference   :sales, :payment_method, foreign_key: true
 
     add_foreign_key :sales, :users, column: :user_creator_id
     add_foreign_key :sales, :users, column: :user_modifier_id
+    add_reference   :sales, :branch_office, foreign_key: true
   end
 end

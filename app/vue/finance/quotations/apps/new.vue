@@ -1,11 +1,13 @@
 <script type="text/javascript">
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
-import componentProductsDetailsForm from 'vueApp/finance/components/products-details-form.vue'
+import componentProductsList from 'vueApp/components/component-products-list.vue'
+import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
 
 export default {
     components:{
         'component-autocomplete': componenentAutocomplete,
-        'component-products-details-form': componentProductsDetailsForm
+        'component-products-list': componentProductsList,
+        'component-products-icon': componentProductsIcon
     },
     data() {
         return {
@@ -313,14 +315,14 @@ export default {
                 <b-card no-body>
                     <b-tabs nav-class="font-weight-bold" card pills fill v-model="tabIndex">
                         <b-tab title="Artículos">
-                            <component-products-details-form
+                            <component-products-list
                                 :show-filters="showFilters"
                                 :select-product-id="selectProductId"
                                 :payment_method_discount="payment_method_discount"
                                 @updateProducts="updateProducts"
                             >
 
-                            </component-products-details-form>
+                            </component-products-list>
                         </b-tab>
                         <b-tab title="Buscar">
                             <br>

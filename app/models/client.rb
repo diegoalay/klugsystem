@@ -9,8 +9,8 @@ class Client < ApplicationRecord
   before_save :sanitize_billing_identifier
 
   has_many :events
-  
-  def identifier 
+
+  def identifier
     full_name
   end
 

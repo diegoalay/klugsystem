@@ -165,40 +165,44 @@ export default {
             this.product = option ? option : {}
         },
 
+        validateQuantity(){
+            if (!(parseFloat(this.product_quantity) > 0)) {
+                this.product_quantity = 1
+            }
+        },
+
+        showProduct(){
+            this.$modal.show('carousel')
+        },
+
         addProduct(){
             if (!this.product.id) {
                 this.$toast.warning('Debes seleccionar un producto.')
                 return
             }
-
             if (!this.product_quantity > 0) {
                 this.$toast.warning('La cantidad debe ser mayor a 0.')
                 return
             }
 
             const index = this.products.findIndex(e => e.id === this.product.id)
-
             let quantity = 0
             const max_quantity = parseFloat(this.product_quantity)
 
             if (index !== -1) {
                 quantity = this.products[index].quantity + max_quantity
-            } else {
+            } else {
                 quantity = max_quantity
             }
-
             if (quantity > this.product.quantity) {
                 this.$toast.error('Artículos agotado.')
-
                 quantity = this.product.quantity
             }
 
             const subtotal = this.product.retail_price * quantity
             const discount_value = 0
             const discount_percentage = (discount_value * 100) / subtotal
-
             const total = subtotal - discount_value
-
             const new_product = {
                 id: this.product.id,
                 name: this.product.name,
@@ -210,23 +214,12 @@ export default {
                 discount_percentage: discount_percentage,
                 total: total
             }
-
             if (index !== -1) {
                 this.$set(this.products, index, new_product)
             } else {
                 this.products.push(new_product)
             }
         },
-
-        validateQuantity(){
-            if (!(parseFloat(this.product_quantity) > 0)) {
-                this.product_quantity = 1
-            }
-        },
-
-        showProduct(){
-            this.$modal.show('carousel')
-        }
     },
 
     watch: {

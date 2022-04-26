@@ -1,2 +1,2 @@
-class Finance::ExpedituresController < ExpedituresController
+class Finance::ExpedituresController < ::ExpedituresController
 end

@@ -40,7 +40,7 @@
         methods: {
             getEvents() {
                 const url = this.url.build(this.endPoint).paginate(false)
-                
+
                 this.http.get(url).then(result => {
                     this.calendarData = result.data
                 }).catch(error => {
@@ -78,19 +78,17 @@
                         })
                     }
                 }
-
-                this.clearEvent()
             },
 
             clearEvent(){
                 this.event = {
                     id: null,
                     modalTitle: '',
-                    model_type: this.event.model_type ? 
-                        this.event.model_type : 
+                    model_type: this.event.model_type ?
+                        this.event.model_type :
                         'Contact'
                 }
-                
+
                 this.$bvModal.hide('modal')
             },
 
@@ -104,15 +102,15 @@
                     locales: [ esLocale ],
                     headerToolbar: {
                         start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                        center: this.tools.isMobile() ? 
-                            null : 
+                        center: this.tools.isMobile() ?
+                            null :
                             'title',
-                        end: this.tools.isMobile() ? 
+                        end: this.tools.isMobile() ?
                             'prev,today,next' :
-                            'prevYear,prev,today,next,nextYear' 
+                            'prevYear,prev,today,next,nextYear'
                     }
                 });
-    
+
                 this.calendar.render();
             },
 
@@ -132,10 +130,10 @@
 
                 this.clearEvent()
                 const event = this.calendarData.find((e) => e.id == arg.event.id)
-                
+
                 if (event) {
                     this.event = event
-                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)      
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)
                     this.openModal()
                 }
             },
@@ -143,7 +141,7 @@
             showEvent(event) {
                 if (event) {
                     this.event = event
-                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)      
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)
                     this.openModal()
                 }
             },
@@ -221,14 +219,13 @@
                 </b-card>
             </b-col>
         </b-row>
-        
+
         <b-modal id="modal" centered hide-footer hide-backdrop content-class="shadow" :title="event.modalTitle">
-            <component-form 
+            <component-form
                 :event="event"
                 @submit="submitEvent"
             >
             </component-form>
-        </b-modal> 
+        </b-modal>
     </div>
 </template>
-

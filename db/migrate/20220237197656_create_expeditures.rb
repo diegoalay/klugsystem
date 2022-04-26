@@ -16,9 +16,10 @@ class CreateExpeditures < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_reference   :expeditures, :expediture_type,           foreign_key: true
-    add_reference   :expeditures, :account,                           foreign_key: true
-    add_reference   :expeditures, :cash_register,                     foreign_key: true
+    add_reference   :expeditures, :expediture_type, foreign_key: true
+    add_reference   :expeditures, :account, foreign_key: true
+    add_reference   :expeditures, :cash_register, foreign_key: true
+    add_reference   :expeditures, :branch_office, foreign_key: true
 
     add_foreign_key :expeditures, :users, column: :user_creator_id
     add_foreign_key :expeditures, :users, column: :user_modifier_id

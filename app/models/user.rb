@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :roles, through: :user_roles, source: :roles
   has_many :menu_items, through: :user_roles, source: :roles
 
+  has_many :cash_registers, foreign_key: 'user_creator_id'
+
   def self.search account, query
     search = query[:filters][:search]&.downcase
 
@@ -27,12 +29,8 @@ class User < ApplicationRecord
     [first_name, first_surname].join(' ')
   end
 
-  def cash_register
-    CashRegister
-    .where(account: self.account)
-    .where(user_creator_id: self.id)
-    .where(close_date: nil)
-    .last
+  def current_cash_register
+    cash_register = cash_registers.where(close_date: nil).last
   end
 
   def show

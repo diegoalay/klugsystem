@@ -10,20 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_20_233909) do
+ActiveRecord::Schema.define(version: 2022_04_26_055125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_account_activities_on_account_id"
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "direction"
     t.string "telephone"
+    t.string "email"
+    t.string "website"
     t.string "billing_identifier"
     t.string "billing_name"
     t.string "billing_direction"
+    t.boolean "electronic_billing"
     t.text "description"
     t.integer "status"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "digifact", default: {}
@@ -472,7 +493,9 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.bigint "expediture_type_id"
     t.bigint "account_id"
     t.bigint "cash_register_id"
+    t.bigint "branch_office_id"
     t.index ["account_id"], name: "index_expeditures_on_account_id"
+    t.index ["branch_office_id"], name: "index_expeditures_on_branch_office_id"
     t.index ["cash_register_id"], name: "index_expeditures_on_cash_register_id"
     t.index ["deleted_at"], name: "index_expeditures_on_deleted_at"
     t.index ["expediture_type_id"], name: "index_expeditures_on_expediture_type_id"
@@ -824,7 +847,9 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.bigint "employee_id"
     t.bigint "cash_register_id"
     t.bigint "payment_method_id"
+    t.bigint "branch_office_id"
     t.index ["account_id"], name: "index_sales_on_account_id"
+    t.index ["branch_office_id"], name: "index_sales_on_branch_office_id"
     t.index ["cash_register_id"], name: "index_sales_on_cash_register_id"
     t.index ["client_id"], name: "index_sales_on_client_id"
     t.index ["deleted_at"], name: "index_sales_on_deleted_at"
@@ -898,6 +923,11 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "account_activities", "accounts"
+  add_foreign_key "account_activities", "users", column: "user_creator_id"
+  add_foreign_key "account_activities", "users", column: "user_modifier_id"
+  add_foreign_key "accounts", "users", column: "user_creator_id"
+  add_foreign_key "accounts", "users", column: "user_modifier_id"
   add_foreign_key "branch_office_activities", "branch_offices"
   add_foreign_key "branch_office_activities", "users", column: "user_creator_id"
   add_foreign_key "branch_office_activities", "users", column: "user_modifier_id"
@@ -977,6 +1007,7 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
   add_foreign_key "expediture_types", "users", column: "user_creator_id"
   add_foreign_key "expediture_types", "users", column: "user_modifier_id"
   add_foreign_key "expeditures", "accounts"
+  add_foreign_key "expeditures", "branch_offices"
   add_foreign_key "expeditures", "cash_registers"
   add_foreign_key "expeditures", "expediture_types"
   add_foreign_key "expeditures", "users", column: "user_creator_id"
@@ -1046,6 +1077,7 @@ ActiveRecord::Schema.define(version: 2022_04_20_233909) do
   add_foreign_key "sale_details", "users", column: "user_modifier_id"
   add_foreign_key "sale_electronic_bills", "sales"
   add_foreign_key "sales", "accounts"
+  add_foreign_key "sales", "branch_offices"
   add_foreign_key "sales", "cash_registers"
   add_foreign_key "sales", "clients"
   add_foreign_key "sales", "employees"

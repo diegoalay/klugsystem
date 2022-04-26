@@ -1,0 +1,118 @@
+<div class="pdf-container">
+  <div class="pdf-row pdf-details-section">
+    <div class="pdf-col">
+      <b> Datos generales </b> <br>
+      <b> Fecha: </b> <%= @details[:sale].dig('sale_date') %> <br>
+      <b> Tipo de venta: </b> <%= @details[:sale].dig('sale_type') %> <br>
+      <b> Método de pago: </b> <%= @details[:payment_method].name %> <br>
+    </div>
+
+    <div class="pdf-col-end">
+      <b> Datos del cliente </b> <br>
+      <b> Nit: </b> <%= @details.dig(:client).billing_identifier %> <br>
+      <b> Nombre: </b> <%= @details.dig(:client).billing_name %> <br>
+      <b> Dirección: </b> <%= @details.dig(:client).billing_address %> <br>
+      <b> E-Mail: </b> <%= @details.dig(:client).billing_email %> <br>
+    </div>
+
+    <div class="pdf-col-logo">
+      <%# = image_tag('https://static.vecteezy.com/system/resources/previews/005/277/151/original/letter-k-knife-logo-concept-illustration-vector.jpg', :style=>"margin:0px;padding:0px")%>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Artículo</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento (Q.)</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @details[:details].each_with_index do |sale_detail, index| %>
+        <tr>
+          <th scope="row"> <%= (index + 1 ) %> </th>
+          <td> <%= sale_detail.name %> </td>
+          <td> <%= sale_detail.price %> </td>
+          <td> <%= sale_detail.discount_value %> </td>
+          <td> <%= sale_detail.quantity %> </td>
+          <td> <%= sale_detail.subtotal %> </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Subtotal </b> </td>
+        <td> <%= @details[:sale].dig('subtotal') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Descuento </b> </td>
+        <td> <%= @details[:sale].dig('discount') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (- Descuento) </b> </td>
+        <td> <%= @details[:sale].dig('subtotal1') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Interés </b> </td>
+        <td> <%= @details[:sale].dig('interest') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (+ Intéres) </b> </td>
+        <td> <%= @details[:sale].dig('subtotal2') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Envío </b> </td>
+        <td> <%= @details[:sale].dig('shipping_costs') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (+ Intéres) </b> </td>
+        <td> <%= @details[:sale].dig('total') %> </td>
+      </tr>
+    </tbody>
+  </table>

@@ -280,7 +280,7 @@ export default {
         },
 
         extensionIsValid(extension){
-            this.fileExtensions.includes(extension)
+            return this.fileExtensions.includes(extension)
         }
     }
 }
@@ -359,6 +359,10 @@ export default {
                                 <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(sale_date)="row">
+                        {{ date.datetime(row.item.created_at) }}
                     </template>
 
                     <template v-slot:cell(actions)="row">

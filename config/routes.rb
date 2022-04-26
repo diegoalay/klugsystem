@@ -23,7 +23,6 @@ Rails.application.routes.draw do
     authenticated :user do
       root 'dashboard#default', as: :authenticated_root
 
-      get "profile/cash_register", to: "profile#cash_register"
       get :profile, to: "profile#show"
       put :profile, to: "profile#update"
 
@@ -41,6 +40,23 @@ Rails.application.routes.draw do
             get :search
           end
         end
+      end
+
+      namespace :pos do
+        resources :sales do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+        resources :expeditures do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+        resource :cash_register
+        post 'cash_register/create', to: "cash_registers#create"
       end
 
       namespace :finance do
@@ -91,6 +107,7 @@ Rails.application.routes.draw do
 
       namespace :administration do
         resources :menu_items, only: %i[index]
+        resource :account
         resource :digifact do
           collection do
             post :validate

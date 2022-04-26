@@ -24,6 +24,10 @@
                     key: 'amount',
                     sortable: true
                 },{
+                    label: 'Usuario creador',
+                    key: 'user_creator_name',
+                    sortable: true
+                },{
                     label: '',
                     key: 'actions'
                 }],
@@ -38,7 +42,8 @@
                 },
                 search_text: '',
                 filters: {
-                    expediture_type: ''
+                    expediture_type: '',
+                    user_creator_type: 'current_cash_register'
                 },
                 loading: false,
                 options: []

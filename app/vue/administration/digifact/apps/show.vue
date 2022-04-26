@@ -10,8 +10,7 @@
         },
         data() {
             return {
-                digifact: {},
-                id: null
+                digifact: {}
             }
         },
         mounted(){
