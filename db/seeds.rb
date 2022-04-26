@@ -69,7 +69,7 @@ user = User.first
 
 measurement_unit = account.measurement_units.find_or_create_by(name: 'UND')
 
-(0..500).each do |n|
+(0..10).each do |n|
   account.products.create!(
     sku: Faker::Number.number(digits: 10).to_s,
     name: Faker::Food.dish,
@@ -81,7 +81,6 @@ measurement_unit = account.measurement_units.find_or_create_by(name: 'UND')
     measurement_unit: measurement_unit
   )
 end
-
 
 (0..20).each do |n|
   first_name = Faker::Name.first_name
