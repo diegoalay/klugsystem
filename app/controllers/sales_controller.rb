@@ -52,6 +52,7 @@ class SalesController < ApplicationSystemController
     @sale.user_modifier = current_user
     @sale.cash_register = current_user.current_cash_register if params[:sale][:cash_register]
     @sale.branch_office = current_user.branch_office
+    @sale.status = true
 
     if (params[:sale][:client][:id].blank?)
       create_client
