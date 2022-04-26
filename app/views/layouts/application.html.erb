@@ -8,39 +8,41 @@
     <%= favicon_link_tag asset_path('icons/favicon.ico') %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body>
     <% if current_user %>
-      <%= render 'layouts/partials/cors' %>
-      <%= render 'layouts/partials/data' %>
+      <body>
+        <%= render 'layouts/partials/cors' %>
+        <%= render 'layouts/partials/data' %>
 
-     <div id="app" class="wrapper">
+        <div id="app" class="wrapper">
 
-        <!-- Side Bar Navigation -->
-        <%= render 'layouts/partials/sidebar_navigation' %>
+          <!-- Side Bar Navigation -->
+          <%= render 'layouts/partials/sidebar_navigation' %>
 
-        <!-- Page Content -->
-        <div id="content">
-          <%= render 'layouts/partials/top_navigation' %>
-          <%= render 'layouts/partials/content' %>
-        </div>
-
-        <!-- Page Footer -->
-      </div>
-
-      <%= render 'layouts/partials/js_loader' %>
-    <% else %>
-      <%= render 'layouts/partials/public_data' %>
-      <div id="app" class="wrapper">
-        <!-- Page Content -->
-        <div id="content">
+          <!-- Page Content -->
+          <div id="content">
+            <%= render 'layouts/partials/top_navigation' %>
             <%= render 'layouts/partials/content' %>
-        </div>
-      </div>
+          </div>
 
-      <%= render 'layouts/partials/js_public_loader' %>
+          <!-- Page Footer -->
+        </div>
+
+        <%= render 'layouts/partials/js_loader' %>
+        </body>
+    <% else %>
+      <body class="public-body">
+        <%= render 'layouts/partials/public_data' %>
+        <div id="app" class="wrapper">
+          <!-- Page Content -->
+          <div id="content">
+              <%= render 'layouts/partials/content' %>
+          </div>
+        </div>
+
+        <%= render 'layouts/partials/js_public_loader' %>
+        <%= yield %>
+    </body>
     <% end %>
-    <%= yield %>
-  </body>
 </html>
 
 <%= javascript_include_tag 'sidebar' if current_user.present? %>
