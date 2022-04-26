@@ -29,9 +29,9 @@ class CashRegister < ApplicationRecord
 
     if (query[:filters][:start_date].present? && query[:filters][:end_date].present?)
         cash_registers = cash_registers.where(
-            "cash_registers.open_date >= ? and cash_register.close_date <= ?",
-            query[:filters][:start_date],
-            query[:filters][:end_date],
+            "cash_registers.open_date >= ? and cash_registers.open_date <= ?",
+            "#{query[:filters][:start_date]}",
+            "#{query[:filters][:end_date]}",
         )
     end
 

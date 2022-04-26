@@ -29,7 +29,7 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('cash_registers/:id', {id: this.id})
+                const url = this.url.finance('cash_registers/:id', {id: this.id})
 
                 this.http.get(url).then(result => {
                     if (result.successful) {
@@ -51,16 +51,8 @@
             title="Caja"
         >
             <slot name="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/cash_registers">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/cash_registers">
                     Listado <font-awesome-icon icon="list" />
-                </b-button>
-
-                <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/sales/new">
-                    Vender <font-awesome-icon icon="cart-shopping" />
-                </b-button>
-
-                <b-button v-if="!cash_register.closed" variant="outline-dark" class="mb-2" to="/expeditures/new">
-                    Gasto <font-awesome-icon icon="money-bill-wave" />
                 </b-button>
             </slot>
         </component-header-form>

@@ -58,6 +58,8 @@ Rails.application.routes.draw do
       end
 
       namespace :finance do
+        resources :cash_registers do
+        end
         resources :sales do
           collection do
             get :options
@@ -148,9 +150,6 @@ Rails.application.routes.draw do
       end
 
       resources :books do
-      end
-
-      resources :cash_registers do
       end
 
       namespace :configurations do

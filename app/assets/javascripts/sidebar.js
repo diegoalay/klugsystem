@@ -170,7 +170,7 @@ if (document) {
 
                 disableActiveItems(this)
                 toggleMobile()
-                setActive(this)
+                setActiveWithDropdown(this)
             }
         }
 

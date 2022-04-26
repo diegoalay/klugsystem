@@ -21,6 +21,10 @@ module XmlServices
       postcode
     end
 
+    def timefy datetime
+      (DateTime.iso8601 datetime) + 6.hours
+    end
+
     def date_format(date)
       date.strftime("%Y-%m-%dT%H:%M:%S")
     end
@@ -30,7 +34,11 @@ module XmlServices
     end
 
     def item_taxable_amount(item)
-      item.price / 1.12
+      (item.subtotal - item.discount_value) / 1.12
+    end
+
+    def round(val, decimals = 2)
+      val.round(decimals)
     end
   end
 end

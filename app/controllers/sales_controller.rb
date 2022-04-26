@@ -24,8 +24,15 @@ class SalesController < ApplicationSystemController
       format.pdf do
         set_sale
 
-        @details = @sale.show
-        render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"
+        if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
+          attachment = @sale.electronic_bill['data']['ResponseDATA3']
+          decode_base64_content = Base64.decode64(attachment)
+
+          send_data decode_base64_content, filename: 'Factura.pdf'
+        else
+          @details = @sale.show
+          render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"
+        end
       end
     end
   end

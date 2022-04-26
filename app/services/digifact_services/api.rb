@@ -13,16 +13,17 @@ module DigifactServices
 
     def headers
       {
-        "Authorization"=>"#{@token}",
+        "authorization"=>"#{@token}",
         'Content-Type' => 'application/json'
       }
     end
 
-    def post(url, options = {})
+    def post(url, query = {}, body = {})
       HTTParty.post(
         DEFAULT_API_URL + url,
         headers: headers,
-        query: options,
+        query: query,
+        body: body,
         debug_output: $stdout
       )
     end
@@ -36,20 +37,19 @@ module DigifactServices
     end
 
     def certificate(body)
-      post('', generate_params('CERTIFICATE_DTE_XML_TOSIGN', body))
+      post('', generate_params('CERTIFICATE_DTE_XML_TOSIGN'), body)
     end
 
     def annulment(body)
-      post('', generate_params('ANULAR_FEL_TOSIGN', body))
+      post('', generate_params('ANULAR_FEL_TOSIGN'), body)
     end
 
     def generate_params(type)
       {
-        USERNAME: @@current_user.account.digifact_billing_user,
+        USERNAME: @current_user.account.digifact_user,
         NIT: @current_user.account.digifact_billing_identifier,
-        FORMAT: 'XML',
-        TIPO: type,
-        BODY: body
+        FORMAT: 'XML,HTML,PDF',
+        TIPO: type
       }
     end
 

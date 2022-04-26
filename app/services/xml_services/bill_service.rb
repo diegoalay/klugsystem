@@ -6,6 +6,8 @@ module XmlServices
 
     def initialize sale
       @sale = sale
+      @total_taxes_amount = 0
+      @total = 0
     end
 
     def call
@@ -47,9 +49,9 @@ module XmlServices
                       </dte:Items>
                       <dte:Totales>
                           <dte:TotalImpuestos>
-                              <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="0.1071"/>
+                              <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="#{@total_taxes_amount}"/>
                           </dte:TotalImpuestos>
-                          <dte:GranTotal>1.00</dte:GranTotal>
+                          <dte:GranTotal>#{@total}</dte:GranTotal>
                       </dte:Totales>
                   </dte:DatosEmision>
               </dte:DTE>
@@ -59,26 +61,34 @@ module XmlServices
     end
 
     def generate_items
-      @sale.details.each_with_object([]) do |(sale_detail, index), items|
+      index = 1
+      @sale.details.each_with_object([]) do |(sale_detail), items|
+        taxable_amount = round(item_taxable_amount(sale_detail))
+        taxes_amount = round(item_tax_amount(sale_detail))
+        total = round(sale_detail.total)
+
         items.push(%{
             <dte:Item NumeroLinea="#{index}" BienOServicio="B">
               <dte:Cantidad>#{sale_detail.quantity}</dte:Cantidad>
               <dte:UnidadMedida>#{sale_detail.measurement_unit}</dte:UnidadMedida>
               <dte:Descripcion>#{sale_detail.name}</dte:Descripcion>
-              <dte:PrecioUnitario>#{sale_detail.price}</dte:PrecioUnitario>
-              <dte:Precio>#{sale_detail.price}</dte:Precio>
-              <dte:Descuento>#{sale_detail.discount_value}</dte:Descuento>
+              <dte:PrecioUnitario>#{round(sale_detail.price)}</dte:PrecioUnitario>
+              <dte:Precio>#{round(sale_detail.subtotal)}</dte:Precio>
+              <dte:Descuento>#{round(sale_detail.discount_value)}</dte:Descuento>
               <dte:Impuestos>
                   <dte:Impuesto>
                       <dte:NombreCorto>IVA</dte:NombreCorto>
                       <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-                      <dte:MontoGravable>#{item_taxable_amount(sale_detail)}</dte:MontoGravable>
-                      <dte:MontoImpuesto>#{item_tax_amount(sale_detail)}</dte:MontoImpuesto>
+                      <dte:MontoGravable>#{taxable_amount}</dte:MontoGravable>
+                      <dte:MontoImpuesto>#{taxes_amount}</dte:MontoImpuesto>
                   </dte:Impuesto>
               </dte:Impuestos>
-              <dte:Total>#{sale_detail.total}</dte:Total>
+              <dte:Total>#{total}</dte:Total>
           </dte:Item>
         })
+
+        @total_taxes_amount += taxes_amount
+        @total += total
       end
       .join(' ')
     end

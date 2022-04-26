@@ -1,22 +1,27 @@
 module DigifactServices
   module GenerateBill
+    include XmlServices::Helper
+
     def generate_bill
-      file = XmlServices::GenerateBill.call(@sale)
+      file = XmlServices::BillService.new(@sale).call
 
-      resp = certificate(generate_xml)
+      resp = certificate(file)
 
-      if resp.code 200
+      if resp.code.eql? 200
         @sale.electronic_bill.update(
-          certification_datetime: resp.parsed_response['Fecha_de_certificacion'],
-          billing_serie: resp.parsed_response['SERIE'],
-          billing_number: resp.parsed_response['NUMERO'],
-          identifier: respon.parsed_response['Autorizacion']
+          certification_datetime: timefy(resp.parsed_response['Fecha_de_certificacion']),
+          serie: resp.parsed_response['SERIE'],
+          number: resp.parsed_response['NUMERO'],
+          identifier: resp.parsed_response['Autorizacion'],
+          data: resp.parsed_response
         )
       else
         # save error
-        # @sale.activities.create(
-
-        # )
+        @sale.activities.create(
+          description: resp.parsed_response['ResponseDATA1'],
+          category: 'electronic_bill_failed',
+          user_creator: @sale.user_creator
+        )
       end
     end
   end

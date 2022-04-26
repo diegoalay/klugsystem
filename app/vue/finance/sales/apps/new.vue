@@ -39,6 +39,7 @@ export default {
                 payment_methods: []
             },
             filters: {
+                search: '',
                 date_range: [
                     new Date((new Date().setDate((new Date().getDate()) - 30))),
                     new Date()

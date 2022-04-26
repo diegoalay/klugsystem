@@ -78,6 +78,7 @@ export default {
                     </template>
 
                     <b-form-input
+                        name="digifact_billing_identifier"
                         v-model="digifact.digifact_billing_identifier"
                         type="text"
                         placeholder=""
@@ -92,6 +93,7 @@ export default {
                     </template>
 
                     <b-form-input
+                        name="digifact_user"
                         v-model="digifact.digifact_user"
                         type="text"
                         placeholder=""

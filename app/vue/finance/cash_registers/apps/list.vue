@@ -50,8 +50,11 @@
                 },
                 filters: {
                     search: '',
-                    date_range: ['', ''],
-                    cash_register_status: 'open'
+                    date_range: [
+                        new Date((new Date().setDate((new Date().getDate()) - 30))),
+                        new Date()
+                    ],
+                    cash_register_status: ''
                 },
                 loading: false
             }
@@ -63,14 +66,14 @@
             list(){
                 this.loading = true
 
-                const url = this.url.build('cash_registers')
+                const url = this.url.finance('cash_registers')
                 .filters({
                     search: this.filters.search,
                     start_date: this.filters.date_range[0] ?
-                        this.filters.date_range[0].toString() :
+                        this.filters.date_range[0].toISOString() :
                         '',
                     end_date: this.filters.date_range[1] ?
-                        this.filters.date_range[1].toString() :
+                        this.filters.date_range[1].toISOString() :
                         '',
                     cash_register_status: this.filters.cash_register_status
                 })
@@ -90,7 +93,7 @@
             },
 
             getOptions(){
-                const url = this.url.build('cash_registers/index_options')
+                const url = this.url.finance('cash_registers/index_options')
 
                 this.http.get(url).then(result => {
                     if (result.successful) {
@@ -104,7 +107,7 @@
             },
 
             show(cash_register){
-                this.$router.push(this.url.build('cash_registers/:id', {id: cash_register.id}).toString(false))
+                this.$router.push(this.url.finance('cash_registers/:id', {id: cash_register.id}).toString(false))
             },
 
             onSearch(text){

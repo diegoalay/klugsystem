@@ -11,6 +11,7 @@ import crmEventsRoutes from 'vueApp/crm/events/routes.js';
 import quotationsRoutes from 'vueApp/finance/quotations/routes.js';
 import salesRoutes from 'vueApp/finance/sales/routes.js';
 import expedituresRoutes from 'vueApp/finance/expeditures/routes.js';
+import cashRegistersRoutes from 'vueApp/finance/cash_registers/routes.js';
 
 // INVENTORY
 import productsRoutes from 'vueApp/inventory/products/routes.js';
@@ -55,6 +56,7 @@ app("",
     .concat(salesRoutes)
     .concat(expedituresRoutes)
     .concat(quotationsRoutes)
+    .concat(cashRegistersRoutes)
     // INVENTORY
     .concat(productsRoutes)
     .concat(brandsRoutes)

@@ -30,7 +30,7 @@ class Product < ApplicationRecord
       products.quantity,
       products.product_file_id,
       brands.name as brand_name,
-      masurement_units.name as measurement_unit_name,
+      measurement_units.name as measurement_unit_name,
       case
         when products.quantity <= 0 then 'Agotado'
         else 'Disponible'
@@ -104,7 +104,7 @@ class Product < ApplicationRecord
       brands.name as brand_name,
       departments.name as department_name,
       branch_offices.name as branch_office_name,
-      masurement_units.name as measurement_unit_name,
+      measurement_units.name as measurement_unit_name,
       concat(
         products.name,
         ' [',

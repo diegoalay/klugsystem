@@ -11,6 +11,14 @@
                     key: 'sale_date',
                     sortable: true
                 },{
+                    label: 'Estado',
+                    key: 'status',
+                    sortable: true
+                },{
+                    label: 'Tipo de venta',
+                    key: 'sale_type',
+                    sortable: true
+                },{
                     label: 'Cliente',
                     key: 'client_blling_name',
                     sortable: true
@@ -62,6 +70,7 @@
                     sale_types: []
                 },
                 filters: {
+                    status:'',
                     search: '',
                     sale_type: '',
                     payment_method: '',
@@ -183,6 +192,16 @@
                             <option value=""> Todos los métodos de pago </option>
                         </template>
                     </b-form-select>
+                    &nbsp;
+                    <b-form-select
+                        v-model="filters.status"
+                        :options="options.statuses"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Todos los estados </option>
+                        </template>
+                    </b-form-select>
                 </slot>
             </component-search-list>
             <b-card-body>
@@ -205,6 +224,15 @@
                                 <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(status)="row">
+                      <div v-if="row.item.status" class="p-1 text-success">
+                            {{ 'Activa' }}
+                        </div>
+                        <div v-else class="p-1 text-danger">
+                            {{ 'Anulada' }}
+                        </div>
                     </template>
 
                     <template v-slot:cell(sale_date)="row">

@@ -42,7 +42,7 @@ class Account < ApplicationRecord
     roles.find_or_create_by!(name: 'Admin', code: 'admin')
 
     # create default client
-    clients.find_or_initialize_by(billing_identifier: 'C.F') do |record|
+    clients.find_or_initialize_by(billing_identifier: 'CF') do |record|
       record.billing_address = '-'
       record.billing_name = '-'
       record.save!

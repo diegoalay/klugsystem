@@ -95,31 +95,34 @@ ul ul ul a {
     background: transparent;
 }
 
-ul li ul {
+.sidebar ul li ul {
     visibility: hidden;
     opacity: 0;
-    position: absolute;
     transition: all 0.5s ease;
     margin-top: 0rem;
     left: 0;
     display: none;
 }
 
-.caret {
+.sidebar .caret {
     width: 0;
     height: 0;
     display: inline-block;
     border: 7px solid transparent;
 }
-.caret.down{
+
+.sidebar .caret.down{
     border-top-color: $leftbar-font-color;
 }
-.caret.right{
+
+.sidebar .caret.right{
     border-left-color: $leftbar-font-color;
 }
-.caret.up{
+
+.sidebar .caret.up{
     border-bottom-color: $leftbar-font-color;
 }
+
 .caret.left{
     border-right-color: $leftbar-font-color;
 }

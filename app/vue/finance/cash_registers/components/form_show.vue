@@ -59,80 +59,57 @@ export default {
                     for (let key in result.data) {
                         this.$set(this.cash_register, key, result.data[key])
                     }
-
-                    if (close) {
-                        this.$toast.success('Caja cerrada exitosamente.')
-                    } else {
-                        this.$toast.success('Caja actualizada exitosamente.')
-                    }
                 } else {
                     this.$toast.error(result.error.message)
                 }
             }).catch(error => {
                 console.log(error)
             })
-        },
-        closeCashRegister(){
-            this.putForm(true)
         }
     }
 }
 </script>
 
 <template>
-    <b-card no-body>
-        <b-tabs card pills fill>
-            <b-tab title="Formulario" fill active>
-                <b-container>
+    <b-row>
+        <b-col md="8" sm="12">
+            <b-card>
+                <b-card-body>
                     <b-form @submit.prevent="onSubmit">
-                        <b-container>
-                            <b-form-group>
-                                <label> Valor inicial <sup class="text-danger">*</sup> </label>
+                        <b-form-group>
+                            <label> Valor inicial <sup class="text-danger">*</sup> </label>
 
-                                <b-form-input
-                                    v-model="cash_register.initial_value"
-                                    type="number"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
+                            <b-form-input
+                                v-model="cash_register.initial_value"
+                                type="number"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
 
-                            <b-form-group label="Valor final">
-                                <b-form-input
-                                    disabled
-                                    readonly
-                                    :value="cash_register.final_value"
-                                    type="number"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-container>
-
-                        <b-container v-if="!cash_register.close_date">
-                            <b-button type="submit" variant="primary">Guardar</b-button>
-                            <b-button @click.prevent="closeCashRegister()" variant="dark">Cerrar caja</b-button>
-                        </b-container>
+                        <b-form-group label="Valor final">
+                            <b-form-input
+                                disabled
+                                readonly
+                                :value="cash_register.final_value"
+                                type="number"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
                     </b-form>
-                </b-container>
-            </b-tab>
-            <b-tab title="Resumen">
-                <b-container class="text-center">
-                    <apexchart type="pie" width="380" :options="chartOptions" :series="cash_register.chart.series"></apexchart>
-                </b-container>
-            </b-tab>
-            <b-tab title="Listados">
-                <b-tabs v-if="tools.isMobile" card pills fill content-class="justified">
-                    <b-tab title="Ventas" active>
-                        <component-sales-list :cash_register="cash_register" />
-                    </b-tab>
-                    <b-tab title="Gastos">
-                        <component-expeditures-list :cash_register="cash_register" />
-                    </b-tab>
-                </b-tabs>
-            </b-tab>
-        </b-tabs>
-    </b-card>
+                </b-card-body>
+            </b-card>
+        </b-col>
+
+        <b-col class="text-center" md="4" sm="12">
+            <b-card>
+                <b-card-body>
+                    <apexchart v-if="cash_register.id" type="pie" :options="chartOptions" :series="cash_register.chart.series"></apexchart>
+                </b-card-body>
+            </b-card>
+        </b-col>
+    </b-row>
 </template>

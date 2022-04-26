@@ -11,6 +11,10 @@
                     key: 'sale_date',
                     sortable: true
                 },{
+                    label: 'Estado',
+                    key: 'status',
+                    sortable: true
+                },{
                     label: 'Tipo de venta',
                     key: 'sale_type',
                     sortable: true
@@ -62,6 +66,7 @@
                     sale_types: []
                 },
                 filters: {
+                    status: '',
                     search: '',
                     sale_type: '',
                     payment_method: '',
@@ -179,6 +184,16 @@
                             <option value=""> Todos los métodos de pago </option>
                         </template>
                     </b-form-select>
+                    &nbsp;
+                    <b-form-select
+                        v-model="filters.status"
+                        :options="options.statuses"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Todos los estados </option>
+                        </template>
+                    </b-form-select>
                 </slot>
             </component-search-list>
             <b-card-body>
@@ -207,9 +222,22 @@
                         {{ date.datetime(row.item.created_at) }}
                     </template>
 
+                    <template v-slot:cell(status)="row">
+                      <div v-if="row.item.status" class="p-1 text-success">
+                            {{ 'Activa' }}
+                        </div>
+                        <div v-else class="p-1 text-danger">
+                            {{ 'Anulada' }}
+                        </div>
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button @click="tools.printSale(row.item.id)" variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
+                        </b-button>
+
+                        <b-button @click="disableSale(row.item.id)" variant="outline-danger" class="mr-1">
+                            <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>
                 </b-table>

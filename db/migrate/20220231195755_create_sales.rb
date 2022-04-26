@@ -12,6 +12,7 @@ class CreateSales < ActiveRecord::Migration[6.1]
       t.decimal :received_amount
       t.decimal :change
 
+      t.boolean :status, defaullt: :true
       t.date :sale_date
 
       t.bigint :user_creator_id
