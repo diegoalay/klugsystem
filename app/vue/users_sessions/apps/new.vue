@@ -8,9 +8,7 @@
                 }
             }
         },
-        mounted(){
-            console.log('here')
-        },
+        mounted(){},
         methods: {
             postLogin(event){
                 if(event){
@@ -64,7 +62,7 @@
                     </b-form-group>
 
                     <b-form-group>
-                        <label> Password <sup class="text-danger">*</sup> </label>
+                        <label> Contraseña <sup class="text-danger">*</sup> </label>
 
                         <b-form-input
                             v-model="user.password"
@@ -75,7 +73,9 @@
                         </b-form-input>
                     </b-form-group>
 
-                    <b-button type="submit" variant="primary">Iniciar sesión</b-button>
+                    <div class="text-right">
+                        <b-button type="submit" variant="primary">Iniciar sesión</b-button>
+                    </div>
                 </div>
             </b-form>
         </div>
