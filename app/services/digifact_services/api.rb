@@ -1,7 +1,6 @@
 module DigifactServices
   class Api
-    include XmlServices::Helper
-    include XmlServices::BillService
+    include DigifactServices::GenerateBill
 
     DEFAULT_API_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
     # DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3'
