@@ -48,11 +48,13 @@ es:
       sales: 'Ventas'
       quotations: 'Cotizaciones'
       expeditures: 'Gastos'
+      cash_registers: 'Listado de cajas'
     inventory:
       title: 'Inventario'
       products: 'Productos'
       brands: 'Marcas'
       departments: 'Departamentos'
+      measurement_units: 'Unidades de medida'
     hr:
       title: 'Recursos humanos'
       employees: 'Empleados'
@@ -71,3 +73,4 @@ es:
       branch_offices: 'Sucursales'
       payment_methods: 'Métodos de pago'
       digifact: 'Digifact'
+      account: 'Cuenta'

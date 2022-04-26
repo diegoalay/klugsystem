@@ -66,6 +66,14 @@ class MenuItem < ApplicationRecord
     )
 
     MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'finance'),
+      order: 4,
+      key: 'finance.cash_registers',
+      icon: 'cash-register',
+      permissions: %w[cash_register.index]
+    )
+
+    MenuItem.find_or_create_by!(
       order: 3,
       key: 'inventory',
       icon: 'shop'
@@ -93,6 +101,14 @@ class MenuItem < ApplicationRecord
       key: 'inventory.departments',
       icon: 'boxes-stacked',
       permissions: %w[products.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'inventory'),
+      order: 3,
+      key: 'inventory.measurement_units',
+      icon: 'ruler',
+      permissions: %w[measurement_unit.index]
     )
 
     MenuItem.find_or_create_by!(
@@ -197,6 +213,14 @@ class MenuItem < ApplicationRecord
       key: 'administration.digifact',
       icon: 'receipt',
       permissions: %w[digifact.show]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'administration'),
+      order: 5,
+      key: 'administration.account',
+      icon: 'gear',
+      permissions: %w[account.show]
     )
   end
 end
