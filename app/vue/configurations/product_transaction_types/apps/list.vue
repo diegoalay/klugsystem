@@ -102,7 +102,7 @@
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-danger" v-if="tools.productTransactionCanBeDeleted(row.item)" @click.stop="deleteRecord(row.item.id)" class="mr-1">
+                        <b-button variant="outline-danger" v-if="tools.productTransactionCanBeEdited(row.item)" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />
                         </b-button>
                     </template>
