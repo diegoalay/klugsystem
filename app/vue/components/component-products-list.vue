@@ -209,7 +209,7 @@ export default {
                 name: this.product.name,
                 price: this.product.retail_price,
                 maxQuantity: this.product.quantity,
-                quantity: quantity,
+                saleQuantity: quantity,
                 subtotal: subtotal,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
