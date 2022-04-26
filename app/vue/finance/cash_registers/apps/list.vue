@@ -189,6 +189,14 @@
                     sort-icon-left
                 >
 
+                    <template v-slot:cell(open_date)="row">
+                        {{ date.datetime(row.item.open_date) }}
+                    </template>
+
+                    <template v-slot:cell(close_date)="row">
+                        {{ date.datetime(row.item.close_date) }}
+                    </template>
+
                     <template v-slot:cell(status)="row">
                         <div v-if="row.item.close_date" class="p-1 text-danger">
                             {{ 'Cerrada' }}
