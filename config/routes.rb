@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :quotations
-  resources :contacts
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -84,7 +82,7 @@ Rails.application.routes.draw do
 
       namespace :inventory do
         resources :brands
-
+        resources :measurement_units
         resources :departments do
           collection do
             get :options

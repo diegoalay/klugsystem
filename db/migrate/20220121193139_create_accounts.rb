@@ -9,7 +9,7 @@ class CreateAccounts < ActiveRecord::Migration[6.1]
 
       t.string  :billing_identifier
       t.string  :billing_name
-      t.string  :billing_direction
+      t.string  :billing_address
       t.boolean :electronic_billing
 
       t.text    :description

@@ -19,6 +19,7 @@ module AppServices
             subtotal: sale_product["subtotal"],
             discount_value: sale_product["discount_value"],
             discount_percentage: sale_product["discount_percentage"]
+            measurement_unit: sale_product["measurement_unit_name"]
           )
 
           if (sale_detail.save!)

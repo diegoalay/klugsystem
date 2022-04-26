@@ -11,7 +11,7 @@ class CreateBranchOffices < ActiveRecord::Migration[6.1]
 
       # Billing Information
       t.string :billing_identifier
-      t.string :billing_direction
+      t.string :billing_address
       t.string :billing_municipality
       t.string :billing_postcode
       t.string :billing_department

@@ -27,7 +27,7 @@ class ApplicationSystemController < ApplicationController
 
   def set_account_data
     @data = {
-      account: @account.attributes,
+      account: @account,
       current_user: {
         id: current_user.id,
         email: current_user.email,

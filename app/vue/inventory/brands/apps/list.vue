@@ -7,6 +7,10 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Fecha de creación',
+                    key: 'created_at',
+                    sortable: true
+                },{
                     label: 'Nombre',
                     key: 'name',
                     sortable: true
@@ -92,6 +96,11 @@
                     @filtered="onFiltered"
                     @row-clicked="show"
                 >
+
+                    <template v-slot:cell(created_at)="row">
+                        {{ date.datetime(row.item.created_at) }}
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
                             <font-awesome-icon icon="trash" />

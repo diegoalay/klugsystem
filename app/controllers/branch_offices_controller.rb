@@ -85,7 +85,7 @@ class BranchOfficesController < ApplicationSystemController
     params.fetch(:branch_office, {}).permit(
       %i[
         name telephone postcode postcode street_address street_name
-        street_number electronic_billing billing_identifier billing_direction
+        street_number electronic_billing billing_identifier billing_address
         billing_postcode billing_municipality billing_department billing_identifier
       ]
     )

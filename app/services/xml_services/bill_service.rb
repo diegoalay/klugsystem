@@ -20,10 +20,10 @@ module XmlServices
               <dte:DTE ID="DatosCertificados">
                   <dte:DatosEmision ID="DatosEmision">
                       <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.created_at)}" CodigoMoneda="GTQ" />
-                      <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_direction}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
-                          NombreComercial="#{@sale.billing_name}" AfiliacionIVA="#{@sale.account.billing_membership}">
+                      <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_address}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
+                          NombreComercial="#{@sale.account.name}" AfiliacionIVA="GEN">
                           <dte:DireccionEmisor>
-                              <dte:Direccion>#{@sale.branch_office.billing_direction}</dte:Direccion>
+                              <dte:Direccion>#{@sale.branch_office.billing_address}</dte:Direccion>
                               <dte:CodigoPostal>#{@sale.branch_office.billing_postcode}</dte:CodigoPostal>
                               <dte:Municipio>#{@sale.branch_office.billing_municipality}</dte:Municipio>
                               <dte:Departamento>#{@sale.branch_office.billing_department}</dte:Departamento>
@@ -61,9 +61,9 @@ module XmlServices
     def generate_items
       @sale.details.each_with_object([]) do |(sale_detail, index), items|
         items.push(%{
-            <dte:Item NumeroLinea="#{each_with_object}" BienOServicio="B">
+            <dte:Item NumeroLinea="#{index}" BienOServicio="B">
               <dte:Cantidad>#{sale_detail.quantity}</dte:Cantidad>
-              <dte:UnidadMedida>#{sale_detail.measurement_unit.name}</dte:UnidadMedida>
+              <dte:UnidadMedida>#{sale_detail.measurement_unit}</dte:UnidadMedida>
               <dte:Descripcion>#{sale_detail.name}</dte:Descripcion>
               <dte:PrecioUnitario>#{sale_detail.price}</dte:PrecioUnitario>
               <dte:Precio>#{sale_detail.price}</dte:Precio>
@@ -72,8 +72,8 @@ module XmlServices
                   <dte:Impuesto>
                       <dte:NombreCorto>IVA</dte:NombreCorto>
                       <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-                      <dte:MontoGravable>#{item_taxable_amount(item)}</dte:MontoGravable>
-                      <dte:MontoImpuesto>#{item_tax_amount(item)}</dte:MontoImpuesto>
+                      <dte:MontoGravable>#{item_taxable_amount(sale_detail)}</dte:MontoGravable>
+                      <dte:MontoImpuesto>#{item_tax_amount(sale_detail)}</dte:MontoImpuesto>
                   </dte:Impuesto>
               </dte:Impuestos>
               <dte:Total>#{sale_detail.total}</dte:Total>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_26_055125) do
+ActiveRecord::Schema.define(version: 2022_04_26_151850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
     t.string "website"
     t.string "billing_identifier"
     t.string "billing_name"
-    t.string "billing_direction"
+    t.string "billing_address"
     t.boolean "electronic_billing"
     t.text "description"
     t.integer "status"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
     t.string "street_number"
     t.string "postcode"
     t.string "billing_identifier"
-    t.string "billing_direction"
+    t.string "billing_address"
     t.string "billing_municipality"
     t.string "billing_postcode"
     t.string "billing_department"
@@ -213,6 +213,9 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
     t.string "billing_address"
     t.string "billing_identifier"
     t.string "billing_email"
+    t.string "billing_postcode"
+    t.string "billing_department"
+    t.string "billing_municipality"
     t.text "note"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
@@ -501,6 +504,32 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
     t.index ["expediture_type_id"], name: "index_expeditures_on_expediture_type_id"
   end
 
+  create_table "measurement_unit_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "measurement_unit_id"
+    t.index ["measurement_unit_id"], name: "index_measurement_unit_activities_on_measurement_unit_id"
+  end
+
+  create_table "measurement_units", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_measurement_units_on_account_id"
+  end
+
   create_table "menu_items", force: :cascade do |t|
     t.string "key"
     t.string "icon"
@@ -645,11 +674,13 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
     t.bigint "branch_office_id"
     t.bigint "department_id"
     t.bigint "product_file_id"
+    t.bigint "measurement_unit_id"
     t.index ["account_id"], name: "index_products_on_account_id"
     t.index ["branch_office_id"], name: "index_products_on_branch_office_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
     t.index ["deleted_at"], name: "index_products_on_deleted_at"
     t.index ["department_id"], name: "index_products_on_department_id"
+    t.index ["measurement_unit_id"], name: "index_products_on_measurement_unit_id"
     t.index ["product_file_id"], name: "index_products_on_product_file_id"
   end
 
@@ -1012,6 +1043,12 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
   add_foreign_key "expeditures", "expediture_types"
   add_foreign_key "expeditures", "users", column: "user_creator_id"
   add_foreign_key "expeditures", "users", column: "user_modifier_id"
+  add_foreign_key "measurement_unit_activities", "measurement_units"
+  add_foreign_key "measurement_unit_activities", "users", column: "user_creator_id"
+  add_foreign_key "measurement_unit_activities", "users", column: "user_modifier_id"
+  add_foreign_key "measurement_units", "accounts"
+  add_foreign_key "measurement_units", "users", column: "user_creator_id"
+  add_foreign_key "measurement_units", "users", column: "user_modifier_id"
   add_foreign_key "menu_items", "menu_items"
   add_foreign_key "payment_method_activities", "payment_methods"
   add_foreign_key "payment_method_activities", "users", column: "user_creator_id"
@@ -1038,6 +1075,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_055125) do
   add_foreign_key "products", "branch_offices"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "departments"
+  add_foreign_key "products", "measurement_units"
   add_foreign_key "products", "product_files"
   add_foreign_key "products", "users", column: "user_creator_id"
   add_foreign_key "products", "users", column: "user_modifier_id"

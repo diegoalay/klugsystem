@@ -1,9 +1,10 @@
 class Product < ApplicationRecord
   include LoggerConcern
 
-  belongs_to :brand,          class_name: "Brand",        foreign_key: "brand_id",        optional: :true
-  belongs_to :department,     class_name: "Department",   foreign_key: "department_id",   optional: :true
-  belongs_to :branch_office,  class_name: "BranchOffice", foreign_key: "branch_office_id"
+  belongs_to :brand, optional: :true
+  belongs_to :department, optional: :true
+  belongs_to :branch_office
+  belongs_to :measurement_unit
 
   has_many :sale_details,  class_name: "Sale::Detail", foreign_key: "product_id"
   has_many :transactions
@@ -29,12 +30,13 @@ class Product < ApplicationRecord
       products.quantity,
       products.product_file_id,
       brands.name as brand_name,
+      masurement_units.name as measurement_unit_name,
       case
         when products.quantity <= 0 then 'Agotado'
         else 'Disponible'
       end as status
     ")
-    .joins(:branch_office)
+    .joins(:branch_office, :measurement_unit)
     .left_joins(:brand, :department)
 
     products = products.where("
@@ -102,6 +104,7 @@ class Product < ApplicationRecord
       brands.name as brand_name,
       departments.name as department_name,
       branch_offices.name as branch_office_name,
+      masurement_units.name as measurement_unit_name,
       concat(
         products.name,
         ' [',
@@ -110,7 +113,8 @@ class Product < ApplicationRecord
       ) as details,
       products.product_file_id
     ")
-    .left_joins(:brand, :department, :branch_office)
+    .joins(:branch_office, :measurement_unit)
+    .left_joins(:brand, :department)
 
     products = products.where("
       lower(products.sku) like '%#{search}%' or
@@ -168,6 +172,7 @@ class Product < ApplicationRecord
 
   def self.options account
     {
+      measurement_units: account.measurement_units.map {|measurement_unit| {text: measurement_unit.name, value: measurement_unit.id}},
       branch_offices: account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: account.departments.map {|department| {text: department.name, value: department.id}},
       brands: account.brands.map {|brand| {text: brand.name, value: brand.id}}

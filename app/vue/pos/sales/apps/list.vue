@@ -11,6 +11,10 @@
                     key: 'sale_date',
                     sortable: true
                 },{
+                    label: 'Tipo de venta',
+                    key: 'sale_type',
+                    sortable: true
+                },{
                     label: 'Cliente',
                     key: 'client_blling_name',
                     sortable: true

@@ -7,6 +7,10 @@
             return {
                 data: [],
                 fields: [{
+                    label: 'Fecha de creación',
+                    key: 'created_at',
+                    sortable: true
+                },{
                     label: 'Nombre',
                     key: 'name',
                     sortable: true
@@ -108,6 +112,10 @@
                                 <font-awesome-icon v-else-if="((!sorting.desc) && (sorting.column === key))" icon="sort-up" />
                             </template>
                         </template>
+                    </template>
+
+                    <template v-slot:cell(created_at)="row">
+                        {{ date.datetime(row.item.created_at) }}
                     </template>
 
                     <template v-slot:cell(actions)="row">

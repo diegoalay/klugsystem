@@ -17,7 +17,7 @@
         methods:{
             setId(){
                 this.id = this.$route.params.id
-                console.log(this.id)
+
             },
             getData(){
                 const url = this.url.config('product_transaction_types/:id', {id: this.id})

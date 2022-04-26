@@ -94,7 +94,7 @@ class SalesController < ApplicationSystemController
   end
 
   def index_options
-    respond_with_successful(SaleQuery.new(@account).index_options)
+    respond_with_successful(SaleQuery.new(@account).index_options(current_user))
   end
 
   def options

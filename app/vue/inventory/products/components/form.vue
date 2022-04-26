@@ -14,7 +14,8 @@ export default {
             options: {
                 branch_offices: [],
                 departments: [],
-                brands: []
+                brands: [],
+                measurement_units: []
             }
         }
     },
@@ -126,7 +127,25 @@ export default {
                 </b-row>
 
                 <b-row>
-                    <b-col sm="12">
+                    <b-col md="6" sm="12">
+                        <b-form-group>
+                            <label> Unidad de medida <sup class="text-danger">*</sup> </label>
+                            <b-form-select required v-model="product.measurement_unit_id" :options="options.measurement_units">
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md="6" sm="12">
+                        <b-form-group>
+                            <label> Sucursal <sup class="text-danger">*</sup> </label>
+                            <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
+                            </b-form-select>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-row>
+                    <b-col md="4" sm="12">
                         <b-form-group>
                             <label> Precio <sup class="text-danger">*</sup> </label>
 
@@ -140,7 +159,7 @@ export default {
                             </b-form-input>
                         </b-form-group>
                     </b-col>
-                    <b-col sm="12">
+                    <b-col md="4" sm="12">
                         <b-form-group>
                             <label> Precio mayoreo </label>
 
@@ -153,7 +172,7 @@ export default {
                             </b-form-input>
                         </b-form-group>
                     </b-col>
-                    <b-col sm="12">
+                    <b-col md="4" sm="12">
                         <b-form-group>
                             <label> Precio compra </label>
 
@@ -171,12 +190,6 @@ export default {
                 <b-form-group>
                     <label> Marca </label>
                     <b-form-select v-model="product.brand_id" :options="options.brands">
-                    </b-form-select>
-                </b-form-group>
-
-                <b-form-group>
-                    <label> Sucursal <sup class="text-danger">*</sup> </label>
-                    <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
                     </b-form-select>
                 </b-form-group>
 

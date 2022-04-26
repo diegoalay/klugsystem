@@ -22,6 +22,9 @@ class CreateClients < ActiveRecord::Migration[6.1]
       t.string :billing_address
       t.string :billing_identifier
       t.string :billing_email
+      t.string :billing_postcode
+      t.string :billing_department
+      t.string :billing_municipality
 
       t.text   :note
 

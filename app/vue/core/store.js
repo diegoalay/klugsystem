@@ -4,7 +4,8 @@ export default {
         let default_data = {
             global: {
                 cash_register: options.current_user.cash_register ? options.current_user.cash_register :
-                                { id: null }
+                                { id: null },
+                account: options.account
             }
         }
 

@@ -131,7 +131,7 @@ export default {
                             </b-form-input>
                         </b-form-group>
 
-                        <b-form-group label="Facturación electrónica">
+                        <b-form-group label="Facturación electrónica" v-if="store.global.account.electronic_billing">
                             <b-form-checkbox
                                 v-model="branch_office.electronic_billing"
                             >
@@ -152,7 +152,7 @@ export default {
                             </template>
 
                             <b-form-input
-                                v-model="branch_office.billing_direction"
+                                v-model="branch_office.billing_address"
                                 type="text"
                                 placeholder=""
                                 required

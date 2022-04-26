@@ -25,7 +25,7 @@ module XmlServices
       date.strftime("%Y-%m-%dT%H:%M:%S")
     end
 
-    def item_tax_amount(item)fir
+    def item_tax_amount(item)
       item_taxable_amount(item) * 0.12
     end
 

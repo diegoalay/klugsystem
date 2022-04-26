@@ -16,6 +16,7 @@ import expedituresRoutes from 'vueApp/finance/expeditures/routes.js';
 import productsRoutes from 'vueApp/inventory/products/routes.js';
 import brandsRoutes from 'vueApp/inventory/brands/routes.js';
 import departmentsRoutes from 'vueApp/inventory/departments/routes.js';
+import measurementUnitsRoutes from 'vueApp/inventory/measurement_units/routes.js';
 
 // POS
 import posSalesRoutes from 'vueApp/pos/sales/routes.js';
@@ -58,6 +59,7 @@ app("",
     .concat(productsRoutes)
     .concat(brandsRoutes)
     .concat(departmentsRoutes)
+    .concat(measurementUnitsRoutes)
     // ADMINISTRATION
     .concat(usersRoutes)
     .concat(rolesRoutes)

@@ -22,6 +22,8 @@ export default {
             this.http.put(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Configuración de cuenta actualizada exitosamente.')
+
+                    this.$set(this.store.global, 'account', result.data)
                 } else {
                     this.$toast.error(result.error.message)
                 }

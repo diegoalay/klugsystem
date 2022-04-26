@@ -67,6 +67,8 @@ end
 
 user = User.first
 
+measurement_unit = account.measurement_units.find_or_create_by(name: 'UND')
+
 (0..500).each do |n|
   account.products.create!(
     sku: Faker::Number.number(digits: 10).to_s,
@@ -75,9 +77,11 @@ user = User.first
     quantity: rand(30),
     user_creator: user,
     user_modifier: user,
-    branch_office: branch_office
+    branch_office: branch_office,
+    measurement_unit: measurement_unit
   )
 end
+
 
 (0..20).each do |n|
   first_name = Faker::Name.first_name

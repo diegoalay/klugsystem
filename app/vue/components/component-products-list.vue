@@ -204,6 +204,7 @@ export default {
             const discount_percentage = (discount_value * 100) / subtotal
             const total = subtotal - discount_value
             const new_product = {
+                measurement_unit: this.product.measurement_unit_name,
                 id: this.product.id,
                 name: this.product.name,
                 price: this.product.retail_price,

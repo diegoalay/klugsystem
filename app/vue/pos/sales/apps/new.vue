@@ -293,12 +293,11 @@ export default {
                 quantity: parseFloat(product.quantity),
                 saleQuantity: saleQuantity,
                 subtotal: subtotal,
+                measurement_unit: product.measurement_unit_name,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
                 total: total
             }
-
-            console.log(new_product)
 
             if (index !== -1) {
                 this.$set(this.products, index, new_product)

@@ -19,7 +19,7 @@
                 this.id = this.$route.params.id
             },
             getData(){
-                const url = this.url.build('payment_methods/:id', {id: this.id})
+                const url = this.url.admin('payment_methods/:id', {id: this.id})
                 this.http.get(url).then(result => {
                     if (result.successful) {
                         this.payment_method = result.data
