@@ -4,6 +4,8 @@ class ProductTransactionType < ApplicationRecord
   before_create :generate_code
   before_destroy   :can_be_destroyed
 
+  acts_as_paranoid
+
   private
 
   def can_be_destroyed

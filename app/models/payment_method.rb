@@ -7,6 +7,8 @@ class PaymentMethod < ApplicationRecord
   before_save :sanitize_name
   before_destroy :can_be_destroyed
 
+  acts_as_paranoid
+
   enum category: {
     discount: 'discount',
     interest: 'interest'
@@ -21,7 +23,7 @@ class PaymentMethod < ApplicationRecord
   private
 
   def can_be_destroyed
-    errors.add(:base, "Existen productos asignadas a este departamento") and throw(:abort) unless account.sales.where(payment_method: self).blank?
+    errors.add(:base, "Existen ventas asignadas a este método de pago") and throw(:abort) unless account.sales.where(payment_method: self).blank?
   end
 
   def uniqueness_name

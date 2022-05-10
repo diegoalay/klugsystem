@@ -6,7 +6,9 @@ class Contact < ApplicationRecord
 
     has_many :events
 
-    def identifier 
+    acts_as_paranoid
+
+    def identifier
         full_name
     end
 
@@ -14,7 +16,7 @@ class Contact < ApplicationRecord
         [first_name, first_surname].join(" ")
     end
 
-    def show 
+    def show
         attributes.merge(full_name: full_name)
     end
 end

@@ -7,7 +7,7 @@
       belongs_to :user_creator, class_name: "User",    foreign_key: "user_creator_id", optional: :true
       belongs_to :user_modifier, class_name: "User",    foreign_key: "user_modifier_id", optional: :true
 
-      has_many   :activities, foreign_key: "#{name.titleize.downcase.gsub("/", "_").gsub(" ", "_")}_id"
+      has_many   :activities, foreign_key: "#{name.titleize.downcase.gsub("/", "_").gsub(" ", "_")}_id", dependent: :destroy
 
       after_create  :log_create
       before_destroy :log_destroy

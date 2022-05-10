@@ -8,7 +8,11 @@ class Client < ApplicationRecord
   before_destroy :can_be_destroyed
   before_save :sanitize_billing_identifier
 
+  belongs_to :client_type, class_name: "ClientType", foreign_key: "client_type_id", optional: true
+
   has_many :events
+
+  acts_as_paranoid
 
   def identifier
     full_name

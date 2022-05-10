@@ -190,6 +190,6 @@ class Product < ApplicationRecord
   private
 
   def can_be_destroyed
-    errors.add(:base, "Existen ventas asignadas a este producto'") and throw(:abort) unless account.sales_details.where(product: self).blank?
+    errors.add(:base, "Existen ventas asignadas a este producto.") and throw(:abort) unless account.sales_details.where(product: self).blank?
   end
 end

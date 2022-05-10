@@ -5,6 +5,8 @@ class Department < ApplicationRecord
 
   before_destroy :can_be_destroyed
 
+  acts_as_paranoid
+
   def self.options account
     {
       departments: account.departments.map {|department| {text: department.name, value: department.id}}

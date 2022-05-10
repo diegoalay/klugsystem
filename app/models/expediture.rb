@@ -6,4 +6,6 @@ class Expediture < ApplicationRecord
   belongs_to :cash_register, optional: true
   belongs_to :branch_office
   validates :description, presence: true
+
+  acts_as_paranoid
 end
