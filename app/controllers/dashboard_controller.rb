@@ -22,8 +22,8 @@ class DashboardController < ApplicationSystemController
     cash_register = current_user.current_cash_register
 
     if cash_register.present?
-      expeditures = @account.expeditures.where(cash_register: self)
-      sales = @account.sales.where(cash_register: self, status: true)
+      expeditures = @account.expeditures.where(cash_register: cash_register)
+      sales = @account.sales.where(cash_register: cash_register, status: true)
 
       sales_sum = sales.sum(:total)&.to_f
       expeditures_sum =  expeditures.sum(:amount)&.to_f

@@ -16,6 +16,8 @@ class Sale < ApplicationRecord
   after_create :initialize_sale
   after_save :rollback_products
 
+  attribute :status, :boolean, default: true
+
   enum sale_type: {
     sale: 'sale',
     receipt: 'receipt',
