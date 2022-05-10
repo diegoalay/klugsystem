@@ -4,7 +4,7 @@ class Finance::QuotationQuery
     @quotations = account.quotations
   end
 
-  def index current_user, query
+  def index(current_user, query)
     search = query[:filters][:search]&.downcase
 
     quotations = @quotations.select("
@@ -18,18 +18,21 @@ class Finance::QuotationQuery
       quotations.received_amount,
       quotations.change,
       quotations.quotation_date,
+      quotations.client_name,
+      quotations.client_email,
       concat(users.first_name, ' ', users.first_surname) as user_creator_name,
       users.email as user_creator_email,
       quotations.created_at
     ")
-    .joins(:client, :user_creator)
-    .left_joins(:employee, :cash_register)
+    .joins(:user_creator)
+    .left_joins(:employee)
 
     quotations = quotations.where("
       lower(quotations.uuid) like '%#{search}%' or
-      lower(quotations.sale_type) like '%#{search}%' or
       lower(users.first_name) like '%#{search}%' or
       lower(users.first_surname) like '%#{search}%' or
+      lower(quotations.client_name) like '%#{search}%' or
+      lower(quotations.client_email) like '%#{search}%' or
       cast(quotations.subtotal as varchar) like '%#{search}%' or
       cast(quotations.total as varchar) like '%#{search}%' or
       cast(quotations.quotation_date as varchar) like '%#{search}%' or
@@ -38,7 +41,6 @@ class Finance::QuotationQuery
 
     unless query[:filters][:user_creator_type].blank?
       quotations = quotations.where("quotations.user_creator_id = ?", current_user.id) if query[:filters][:user_creator_type].eql? "mine"
-      quotations = quotations.where("quotations.cash_register_id = ?", current_user.cash_register&.id) if query[:filters][:user_creator_type].eql? "current_cash_register"
     end
 
     quotations = quotations.where("quotations.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
@@ -50,16 +52,34 @@ class Finance::QuotationQuery
     Responder.pagination(quotations)
   end
 
-  def index_options
+  def index_options(current_user)
     {
+      quotation_types: quotation_types(current_user),
       user_creator_types: [{ text: 'Mis cotizaciones', value: 'mine'}],
       payment_methods: @account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}}
     }
   end
 
-  def options
+  def options(current_user)
     {
+      quotation_types: quotation_types(current_user),
       payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}}
     }
+  end
+
+  def quotation_types(current_user)
+    Sale.sale_types.each_with_object([]) do |(k, v), quotation_types|
+
+      if k == 'electronic_bill'
+        unless current_user.branch_office.electronic_billing?
+          next
+        end
+      end
+
+      quotation_types.push({
+        text: I18n.t("models.sales.column_enum_sale_type_#{k}"),
+        value: v
+      })
+    end
   end
 end

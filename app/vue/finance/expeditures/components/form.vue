@@ -32,7 +32,7 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Gasto creado exitosamente.')
-                    this.$router.push(this.url.finance('expeditures/:id', {id: result.data.id}))
+                    this.$router.push(this.url.finance('expeditures/:id', {id: result.data.id}).toString(false))
                 } else {
                     this.$toast.error(result.error.message)
                 }

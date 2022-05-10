@@ -7,7 +7,7 @@ class QuotationsController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(Quotation.index(@account, current_user, @query))
+        respond_with_successful(Finance::QuotationQuery.new(@account).index(current_user, @query))
       end
     end
   end
@@ -20,6 +20,12 @@ class QuotationsController < ApplicationSystemController
         set_quotation
 
         respond_with_successful(@quotation.show)
+      end
+      format.pdf do
+        set_quotation
+
+        @details = @quotation.show
+        render template: 'quotations/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "COTIZACION: #{@details[:quotation].dig('id')}"
       end
     end
   end
@@ -37,17 +43,10 @@ class QuotationsController < ApplicationSystemController
     @quotation = @account.quotations.new(quotation_params)
     @quotation.user_creator = current_user
     @quotation.user_modifier = current_user
-
-    if (params[:quotation][:client][:id].blank?)
-      create_client
-
-      @quotation.client = @new_client
-    else
-      set_client
-    end
+    @quotation.branch_office = current_user.branch_office
 
     if @quotation.save
-      AppServices::QuotationService.new(@sale, params[:quotation][:products], current_user).call
+      AppServices::QuotationService.new(@quotation, params[:quotation][:products], current_user).call
       respond_with_successful(@quotation)
     else
       respond_quotation_with_error
@@ -77,24 +76,14 @@ class QuotationsController < ApplicationSystemController
   end
 
   def index_options
-    respond_with_successful(Finance::QuotationQuery.new(@account).index_options)
+    respond_with_successful(Finance::QuotationQuery.new(@account).index_options(current_user))
   end
 
   def options
-    respond_with_successful(Finance::QuotationQuery.new(@account).options)
+    respond_with_successful(Finance::QuotationQuery.new(@account).options(current_user))
   end
 
   private
-
-  def create_client
-    @new_client = @account.clients.create(
-      billing_name: params[:quotation][:client][:billing_name],
-      billing_address: params[:quotation][:client][:billing_address],
-      billing_email: params[:quotation][:client][:billing_email],
-      billing_identifier: params[:quotation][:client][:billing_identifier],
-      user_creator: current_user
-    )
-  end
 
   def set_client
     @account.clients.find_by(id: params[:quotation][:client][:id]).update(
@@ -122,6 +111,7 @@ class QuotationsController < ApplicationSystemController
       %i[
         subtotal total discount interest shipping_costs
         received_amount change quotation_type employees_id quotation_date payment_method_id
+        client_name client_email
       ]
     )
   end

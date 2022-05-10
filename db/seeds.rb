@@ -111,7 +111,8 @@ end
 account.payment_methods.find_or_create_by!(
   name: "efectivo",
   user_creator: user,
-  user_modifier: user
+  user_modifier: user,
+  status: true
 )
 
 account.payment_methods.find_or_create_by!(

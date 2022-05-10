@@ -65,6 +65,12 @@ export default {
             window.open(url, '_blank')
         }
 
+        const printQuotation = (quotation_id) => {
+            const url = `/finance/quotations/${quotation_id}.pdf`
+
+            window.open(url, '_blank')
+        }
+
         const roleCanBeEdited = (role) => {
             if (role.code === 'admin') {
                 return false
@@ -116,6 +122,7 @@ export default {
             getProductImage,
             getEmployeeImage,
             printSale,
+            printQuotation,
             roleCanBeEdited,
             productTransactionCanBeEdited,
             getMonthName,

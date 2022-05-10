@@ -1,0 +1,119 @@
+<div class="pdf-container">
+  <div class="pdf-row pdf-details-section">
+    <div class="pdf-col">
+      <b> Datos generales de la cotización: </b> <br>
+      <b> Fecha: </b> <%= @details[:quotation].dig('quotation_date') %> <br>
+      <b> Método de pago: </b> <%= @details[:payment_method].name %> <br>
+    </div>
+
+    <div class="pdf-col-end">
+      <b> Datos del cliente: </b> <br>
+      <b> Nombre: </b> <%= @details[:quotation].dig('client_name') %> <br>
+      <% if @details[:quotation].dig('client_email') %>
+        <b> E-Mail: </b> <%= @details[:quotation].dig('client_email') %>  <br>
+      <% end %>
+    </div>
+
+    <div class="pdf-col-logo">
+      <%# = image_tag('https://static.vecteezy.com/system/resources/previews/005/277/151/original/letter-k-knife-logo-concept-illustration-vector.jpg', :style=>"margin:0px;padding:0px")%>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Artículo</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Descuento</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @details[:details].each_with_index do |quotation_detail, index| %>
+        <tr>
+          <th scope="row"> <%= (index + 1 ) %> </th>
+          <td> <%= quotation_detail.name %> </td>
+          <td> <%= quotation_detail.price %> </td>
+          <td> <%= quotation_detail.discount_value %> </td>
+          <td> <%= quotation_detail.quantity %> </td>
+          <td> <%= quotation_detail.subtotal %> </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Subtotal </b> </td>
+        <td> <%= @details[:quotation].dig('subtotal') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Descuento </b> </td>
+        <td> <%= @details[:quotation].dig('discount') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (- Descuento) </b> </td>
+        <td> <%= @details[:quotation].dig('subtotal1') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Interés </b> </td>
+        <td> <%= @details[:quotation].dig('interest') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (+ Intéres) </b> </td>
+        <td> <%= @details[:quotation].dig('subtotal2') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Envío </b> </td>
+        <td> <%= @details[:quotation].dig('shipping_costs') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total </b> </td>
+        <td> <%= @details[:quotation].dig('total') %> </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+</div>

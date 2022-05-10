@@ -3,7 +3,7 @@ es:
     array:
       words_connector: ' '
       two_words_connector: ' '
-      last_word_connector: ' o al menos '
+      last_word_connector: ' '
   errors:
     format: '%{message}'
   models:
@@ -39,6 +39,10 @@ es:
               required: 'Debe seleccionar un método de pago.'
             client:
               required: 'Debe seleccionar un cliente.'
+        quotation:
+          attributes:
+            payment_method:
+              required: 'Debe seleccionar un método de pago.'
   sidebar:
     crm:
       title: 'CRM'

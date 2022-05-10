@@ -12,7 +12,7 @@
                     sortable: true
                 },{
                     label: 'Cliente',
-                    key: 'client_blling_name',
+                    key: 'client_name',
                     sortable: true
                 },{
                     label: 'Subtotal',
@@ -73,7 +73,7 @@
 
                 this.http.get(url).then(response => {
                     if (response.successful) {
-                        this.data = response.data.quotations
+                        this.data = response.data.records
                         this.pagination.total = response.data.total_count
                     }
 
@@ -81,6 +81,42 @@
                 }).catch(error => {
                     console.log(error)
                 })
+            },
+
+            async deleteQuotation(quotation_id){
+                const resp = await this.$dialog.confirm(
+                    {
+                        title: '¿Esta seguro que desea eliminar la cotización?',
+                        text: 'Esta acción eliminará la cotización del sistema.',
+                        actions: [
+                            {
+                                text: 'Confirmar',
+                                color: 'success',
+                                key: true,
+                            },
+                            {
+                                text: 'Cancelar',
+                                color: 'danger',
+                                key: false,
+                            },
+                        ]
+                    }
+                )
+
+                if (resp) {
+                    const url = this.url.finance('quotations/:id', {id: quotation_id})
+                    this.http.delete(url).then(result => {
+                        if (result.successful) {
+                            this.$toast.success('Cotización eliminada exitosamente.')
+
+                            this.data = this.data.filter(e => e.id !== quotation_id)
+                        } else {
+                            this.$toast.error(result.error.message)
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
             },
 
             getOptions(){
@@ -190,8 +226,12 @@
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button @click="tools.printSale(row.item.id)" variant="outline-dark" class="mr-1">
+                        <b-button @click="tools.printQuotation(row.item.id)" variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
+                        </b-button>
+
+                        <b-button @click="deleteQuotation(row.item.id)" variant="outline-danger" class="mr-1">
+                            <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>
                 </b-table>

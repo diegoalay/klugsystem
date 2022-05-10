@@ -9,7 +9,7 @@ export default {
 
     data(){
         return {
-            sale: {
+            quotation: {
                 id: null
             },
             client: {
@@ -60,36 +60,36 @@ export default {
         },
 
         getData(){
-            const url = this.url.finance('sales/:id', {id: this.id})
+            const url = this.url.finance('quotations/:id', {id: this.id})
             this.http.get(url).then(result => {
                 if (result.successful) {
                     for (let key in result.data) {
                         this[key] = result.data[key]
                     }
 
-                    if (this.sale) {
+                    if (this.quotation) {
                         this.totals = [
                             {
                                 description: 'Subtotal',
-                                value: this.sale.subtotal
+                                value: this.quotation.subtotal
                             },{
                                 description: 'Descuento',
-                                value: this.sale.discount
+                                value: this.quotation.discount
                             },{
                                 description: 'Total (- Descuento)',
-                                value: this.sale.subtotal1
+                                value: this.quotation.subtotal1
                             },{
                                 description: 'Interés',
-                                value: this.sale.interest
+                                value: this.quotation.interest
                             },{
                                 description: 'Total (+ Intéres)',
-                                value: this.sale.subtotal2
+                                value: this.quotation.subtotal2
                             },{
                                 description: 'Envío',
-                                value: this.sale.shipping_costs
+                                value: this.quotation.shipping_costs
                             },{
                                 description: 'Total',
-                                value: this.sale.total
+                                value: this.quotation.total
                             }
                         ]
                     }
@@ -106,13 +106,13 @@ export default {
 <template lang="">
     <section class="application-componeent">
         <component-header-form
-            title="Ventas">
+            title="Cotización">
             <slot name="buttons">
-                <b-button variant="outline-dark" to="/finance/sales/new" class="mb-2">
-                    Vender <font-awesome-icon icon="cart-shopping" />
+                <b-button variant="outline-dark" to="/finance/quotations/new" class="mb-2">
+                    Cotizar <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/quotations">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>
@@ -121,22 +121,21 @@ export default {
             <b-col md="10" sm="12">
                 <b-card>
                     <div class="bg-primary total-header text-center">
-                        {{ sale.total ? 'Q ' + sale.total : '' }}
+                        Cotización - {{ quotation.total ? 'Q ' + quotation.total : '' }}
                     </div>
                     <br>
 
                     <b-row>
                         <b-col md="4" sm="12">
                             <h5> <b>  Datos generales </b> </h5>
-                            <b> Fecha: </b> {{ sale.sale_date }} <br>
-                            <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
+                            <b> Fecha: </b> {{ quotation.quotation_date }} <br>
                             <b> Método de pago: </b> {{ payment_method.name }} <br>
                         </b-col>
 
                         <b-col md="4">
                             <h5> <b>  Detalles de factura </b> </h5>
-                            <b> Cantidad recibida: </b> {{ sale.received_amount }} <br>
-                            <b> Vuelto: </b> {{ sale.change }} <br>
+                            <b> Cantidad recibida: </b> {{ quotation.received_amount }} <br>
+                            <b> Vuelto: </b> {{ quotation.change }} <br>
                         </b-col>
 
                         <b-col md="4" sm="12">
@@ -169,7 +168,9 @@ export default {
 
                     <hr>
                     <div class="text-right">
-                        <b-button variant="primary" @click="tools.printSale(sale.id)">Imprimir</b-button>
+                        <b-button variant="primary" @click="tools.printQuotation(quotation.id)">
+                            <font-awesome-icon icon="print"/> Imprimir
+                        </b-button>
                     </div>
                 </b-card>
             </b-col>
