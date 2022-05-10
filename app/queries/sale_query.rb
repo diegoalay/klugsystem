@@ -92,7 +92,7 @@ class SaleQuery
     Sale.sale_types.each_with_object([]) do |(k, v), sale_types|
 
       if k == 'electronic_bill'
-        unless current_user.branch_office.electronic_billing?
+        unless current_user.branch_office.electronic_billing? && current_user.account.electronic_billing?
           next
         end
       end
