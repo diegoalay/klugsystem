@@ -43,7 +43,7 @@ if (document) {
         const w = window.innerWidth;
 
         if (w <= 768) {
-            tooggleSideBar()
+            // tooggleSideBar()
         }
     }
 
