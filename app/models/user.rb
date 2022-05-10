@@ -61,6 +61,7 @@ class User < ApplicationRecord
   end
 
   def can?(permission)
+    return true if permission == 'profile'
     return true if permission == 'dashboard'
     return true if admin?
 
