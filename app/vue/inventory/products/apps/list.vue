@@ -10,10 +10,6 @@
                     label: 'Imágen',
                     key: 'thumbnail',
                 },{
-                    label: 'SKU',
-                    key: 'sku',
-                    sortable: true
-                },{
                     label: 'Nombre',
                     key: 'name',
                     sortable: true

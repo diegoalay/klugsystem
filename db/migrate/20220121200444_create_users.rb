@@ -44,6 +44,7 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :second_surname
       t.string :telephone
       t.string :address
+      t.string :username
 
       # Users Relations
       t.bigint :user_creator_id

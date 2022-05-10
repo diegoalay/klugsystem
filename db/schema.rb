@@ -954,6 +954,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_151850) do
     t.string "second_surname"
     t.string "telephone"
     t.string "address"
+    t.string "username"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
     t.datetime "created_at", precision: 6, null: false

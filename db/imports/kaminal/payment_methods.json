@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Efectivo"
+  },
+  {
+    "name": "Tarjeta",
+    "category": "interest",
+    "interest_percentage % ": "5%"
+  },
+  {
+    "name": "Transferencia"
+  }
+]

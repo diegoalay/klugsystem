@@ -96,7 +96,7 @@ class Administration::UsersController < ::UsersController
   # Only allow a list of trusted parameters through.
   def user_params
     params.fetch(:user, {}).permit(
-      %i[first_name last_name  first_surname gender birthdate title
+      %i[first_name last_name  first_surname username gender birthdate title
         mobile_number telephone fax email branch_office_id
       ]
     )

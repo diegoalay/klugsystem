@@ -1,0 +1,147 @@
+[
+  {
+      "first_name": "Diego",
+      "first_surname": "Alay",
+      "mobile_number": "43703704",
+      "note": "SISTEMA"
+  },
+  {
+      "first_name": "Julio ",
+      "second_name": "César ",
+      "first_surname": "Chajón",
+      "second_surname": "Manzo",
+      "mobile_number": "57040632",
+      "email": "veterinariakaminal@yahoo.com",
+      "birthdate": "30-Nov-65",
+      "note": "Doctor"
+  },
+  {
+      "first_name": "Astrid ",
+      "second_name": "Pamela",
+      "first_surname": "Chajón",
+      "second_surname": "Zúñiga",
+      "mobile_number": "53818000",
+      "email": "pame_achz@hotmail.com",
+      "birthdate": "10-Mar-93",
+      "note": "Doctora"
+  },
+  {
+      "first_name": "Denis ",
+      "second_name": "Roberto ",
+      "first_surname": "Aldana",
+      "second_surname": "Azurdia",
+      "mobile_number": "46860020",
+      "email": "denisrobertoaldanaazurdia@gmail.com",
+      "birthdate": "17-Jul-92",
+      "note": "Doctor"
+  },
+  {
+      "first_name": "Norma ",
+      "second_name": "Elizabeth",
+      "first_surname": "Zúñiga",
+      "second_surname": "Castillo",
+      "mobile_number": "57040684",
+      "email": "norma772@gmail.com",
+      "birthdate": "23-May-65",
+      "note": "Esposa doctor"
+  },
+  {
+      "first_name": "Juan",
+      "second_name": "Pablo",
+      "first_surname": "Chajón",
+      "second_surname": "Zúñiga",
+      "mobile_number": "32149442",
+      "birthdate": "8-Sep-96",
+      "note": "Hijo doctor"
+  },
+  {
+      "first_name": "Brian ",
+      "first_surname": "Pérez",
+      "mobile_number": "42204973",
+      "note": "Citología"
+  },
+  {
+      "first_name": "Bridny ",
+      "first_surname": "de la cruz",
+      "mobile_number": "58505970",
+      "note": "Asistente"
+  },
+  {
+      "first_name": "Bryan ",
+      "first_surname": "Alvarez",
+      "mobile_number": "30644080",
+      "note": "Asistente"
+  },
+  {
+      "first_name": "Bryan ",
+      "first_surname": "Martinez",
+      "mobile_number": "32411311",
+      "note": "Asistente"
+  },
+  {
+      "first_name": "Adriana",
+      "first_surname": "de Caceres",
+      "mobile_number": "56322809",
+      "note": "Nutrifert"
+  },
+  {
+      "first_name": "Ana",
+      "first_surname": "Lucía",
+      "mobile_number": "55991136",
+      "note": "Purina"
+  },
+  {
+      "first_name": "Alejandra",
+      "first_surname": "Morales",
+      "mobile_number": "50182200",
+      "note": "Hills / suplimet"
+  },
+  {
+      "first_name": "Cristina",
+      "first_surname": "Asturias",
+      "mobile_number": "47693225",
+      "note": "Doctora super pet"
+  },
+  {
+      "first_name": "Mishelle ",
+      "first_surname": "Muralles",
+      "mobile_number": "58300983",
+      "note": "Super pet"
+  },
+  {
+      "first_name": "Pablo",
+      "first_surname": "Letona",
+      "mobile_number": "41514686",
+      "note": "Suministros porcinos"
+  },
+  {
+      "first_name": "Stefannie",
+      "first_surname": "Domiguez",
+      "mobile_number": "55991186",
+      "note": "Publicidad Purina"
+  },
+  {
+      "first_name": "Sergio ",
+      "first_surname": "Reyes",
+      "mobile_number": "50481231",
+      "note": "Vet suplies"
+  },
+  {
+      "first_name": "Super",
+      "first_surname": "pet",
+      "mobile_number": "22180000",
+      "note": "Super pet hospital"
+  },
+  {
+      "first_name": "Mariela ",
+      "first_surname": "Guerrero",
+      "mobile_number": "34837121",
+      "note": "Laboratorio clínico valenzuela"
+  },
+  {
+      "first_name": "Alice ",
+      "first_surname": "Quiroa",
+      "mobile_number": "57760721",
+      "note": "Grooming Multipet"
+  }
+]

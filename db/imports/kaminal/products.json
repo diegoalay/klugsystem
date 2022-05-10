@@ -1,0 +1,3063 @@
+[
+    {
+        "name": "Dermatryl shampoo 350ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Dermaflam shampoo 350ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Benzoderm shampoo 350ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Clorexivet plus shampoo 350ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Groomstar sensitive skin verde 380ml",
+        "quantity": "8",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Groomstar black coat negro 480ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Groomstar white coat blanco 480ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Groomstar medicated rojo 480ml",
+        "quantity": "13",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Groomstar shed&hairball control gato 480ml",
+        "quantity": "7",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Groomstar skin & coat odor control fragancia 200ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Shmpoo de clorhexidina 350ml",
+        "quantity": "9",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "115"
+    },
+    {
+        "name": "Dermodene shampoo 220ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Vetriderm shampoo 350ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "130"
+    },
+    {
+        "name": "Groomstar removedor de manchas y olores 400ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Groomstar baño en seco spray 400ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "PSH ozone soft shampoo 250ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "PSH ozone sweet acondicionador 250ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Tropiclean papaya y coco 355ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "115"
+    },
+    {
+        "name": "Groomers Blend oatmeal shampoo 544ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Dermatryl jabón 100gr",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Vetriderm jabón 100gr",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Kirodermal jabón 100gr ",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Asuntol jabón 100gr",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Ecthol collar antipulgas gato 40cm",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Ecthol collar antipulgas perro pequeño 40cm",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Ecthol collar antipulgas perro grande 63cm",
+        "quantity": "6",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "175"
+    },
+    {
+        "name": "Seresto collar antipulgas perro pequeño 38cm",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "450"
+    },
+    {
+        "name": "Seresto collar antipulgas perro grande 70cm",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "490"
+    },
+    {
+        "name": "Adaptil collar perro grande 70cm",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "235"
+    },
+    {
+        "name": "Frontline pipeta perro hasta 10kg 0.67ml ",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Frontline pipeta perro 10 a 20kg 1.34ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Frontline pipeta perro 20 a 40kg 2.68ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "175"
+    },
+    {
+        "name": "Frontline pipeta perro 40 a 60kg 4.02ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "205"
+    },
+    {
+        "name": "Frontline pipeta gato 0.5ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Pulgakill pipeta perro hasta 10kg 0.67ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pulgakill pipeta perro 10.5 a 20kg 1.34ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Pulgakill pipeta gato 0.50ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Fipronex G5 pipeta perro 10 a 20kg 3ml",
+        "quantity": "3",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Fipronex G5 spray perro 110ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Fipronex G5 spray perro 275ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "285"
+    },
+    {
+        "name": "Revolution plus gatitos hasta 2.5kg",
+        "quantity": "4",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "210"
+    },
+    {
+        "name": "Revolution plus gato 2.5 a 5kg",
+        "quantity": "1",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "225"
+    },
+    {
+        "name": "Broadline pipeta gatito 0.6 a 2.5kg 0.3ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "260"
+    },
+    {
+        "name": "Broadline pipeta gato 2.5 a 7.5kg 0.9ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Advantix pipeta perro más de 25kg 4ml",
+        "quantity": "3",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Advantage multi pipeta gato más de 4kg 0.8ml",
+        "quantity": "4",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Advantage multi pipeta gato menos de 4kg 0.4ml",
+        "quantity": "3",
+        "measurement_unit": "Pipeta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "130"
+    },
+    {
+        "name": "Simparica tableta perro 2.5 a 5kg 10mg",
+        "quantity": "3",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Simparica tableta perro 5 a 10kg 20mg",
+        "quantity": "3",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Simparica tableta perro 10 a 20kg 40mg",
+        "quantity": "1",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "175"
+    },
+    {
+        "name": "Simparica tabelta perro 20 a 40kg 80mg",
+        "quantity": "1",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Credelio tableta perro 1.3 a 2.5kg 56.25mg",
+        "quantity": "10",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "135"
+    },
+    {
+        "name": "Credelio tableta perro 2.5 a 5.5kg 112.5mg",
+        "quantity": "6",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Credelio tableta perro 5.5 a 11kg 225mg",
+        "quantity": "5",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Credelio tableta perro 11 a 22kg 450mg",
+        "quantity": "5",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Credelio tableta perro 22 a 45kg 900mg",
+        "quantity": "3",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "215"
+    },
+    {
+        "name": "Meltra spot on gato 4 a 8kg 1ml",
+        "quantity": "8",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Singap amitraz 20.8% 20ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Amitraz 33ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Tino cipermetrina 20ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Paredón cipermetrina 20ml",
+        "quantity": "15",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Toalllitas limpiadoras de orejas Perfect dog clean 30 toallitas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Toallitas limpiadoras de dientes Perfect dog clean 30 toallitas",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Toallitas limpiadoras de dientes Fancy pets 80 toallitas",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Dental Fresh enjuague bucal 503ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Toallitas húmedas para mascota pet wipes 20 toallitas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Nogastrol omeprazol 10mg",
+        "quantity": "30",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Giacoccide amarillo tableta 1kg",
+        "quantity": "75",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Giacoccide verde tableta 10kg",
+        "quantity": "90",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Giacoccide rojo tableta 20kg",
+        "quantity": "172",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Moxidex Plus tableta para 10kg",
+        "quantity": "15",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Drontal plus tableta 10kg",
+        "quantity": "48",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Drontal plus tableta 35kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Relampago jeringa 5ml",
+        "quantity": "6",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Total full tableta gato 4kg",
+        "quantity": "3",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Total full tableta perro 20kg",
+        "quantity": "1",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "kiranthel 10 tableta perro 10kg",
+        "quantity": "18",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Kitanthel 35 tableta perro 35kg",
+        "quantity": "10",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Hit jeringa 5ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Metrazol suspensión 30ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Metrazol tabletas de 250mg",
+        "quantity": "74",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Metrazol tabletas de 500mg",
+        "quantity": "56",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Unimectine 2mg x 10 tabletas",
+        "quantity": "6",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Panacur 10.23gr",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Stomorgyl 2",
+        "quantity": "83",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Stomorgyl 10",
+        "quantity": "55",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Stomorgyl 20",
+        "quantity": "70",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Sulfadim 10kg",
+        "quantity": "1",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Alfer nicol gotas oftálmicas 15ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Alfer eri gotas oftálmicas 5ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Alfer xacin gotas oftálmicas 7.5ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Alfer micina D gotas oftálmicas 5ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Alfer DS gotas oftálmicas 7.5ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "140"
+    },
+    {
+        "name": "Alfer Nicol S gotas oftálmicas 15ml ",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Alfer Sulf gotas oftálmicas 15ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "140"
+    },
+    {
+        "name": "Alfer Lolo gotas oftálmicas 15ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "135"
+    },
+    {
+        "name": "Hylub gotas oftálmicas 15ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Polylub gotas oftálmicas 10ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Alfer lubri gotas oftálmicas 15ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "140"
+    },
+    {
+        "name": "Hialurina gotas oftálmicas 10ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Gentacyn oftálmico 10ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Oftalgen gotas oftálmicas 10ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Kiroftal ciproxyn gotas oftálmicas 5ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Kiroftal diclo gotas oftálmicas 12ml",
+        "quantity": "9",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Kirostop D suspensión 30ml",
+        "quantity": "8",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Kirosulf T suspensión 30ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Azitrokir M suspensión 30ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "140"
+    },
+    {
+        "name": "Kirotic 4L gotas óticas 18ml",
+        "quantity": "11",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Bioest 3V gotas 30ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Kiropred 5 tableta",
+        "quantity": "29",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Kiropred 20 tableta ",
+        "quantity": "67",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "kiropred 50 tableta ",
+        "quantity": "37",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Azitrokir M tableta 100mg",
+        "quantity": "12",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Azitrokir M tableta 200mg",
+        "quantity": "12",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Azitrokir M tableta 400mg",
+        "quantity": "12",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Kirodroxil tableta 200mg",
+        "quantity": "21",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Gastrozol tableta 5mg",
+        "quantity": "5",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Gastrozol tableta 20mg",
+        "quantity": "28",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Dermomax crema dermica 15gr",
+        "quantity": "26",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Enroxina tableta 50mg",
+        "quantity": "118",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Enroxina tableta 150mg",
+        "quantity": "133",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Clavimox bid 600 suspension 100ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Clavimox Bid suspension 70ml",
+        "quantity": "6",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Dextrium tableta 25mg",
+        "quantity": "50",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Dextrium bebible 25mg sobre 10ml",
+        "quantity": "26",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Suero en polvo alcames sobre 50gr",
+        "quantity": "11",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Cutamycon VF crema 35gr",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Dermolan fuerte crema 50gr",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Baytril tableta 50mg",
+        "quantity": "56",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Baytril tableta 150mg",
+        "quantity": "29",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Apetikan tableta ",
+        "quantity": "56",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Amoxitabs C tableta 250mg",
+        "quantity": "23",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Artrin plus tableta ",
+        "quantity": "24",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Atrin tableta",
+        "quantity": "85",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10",
+        "wholesale_price": "250"
+    },
+    {
+        "name": "Cephatabs 150 tableta ",
+        "quantity": "39",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Cephatabs 300 tableta",
+        "quantity": "43",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Amoxipet plus suspension 15ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Amoxipet jr suspension 15ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Amoxioet plus tableta 250mg",
+        "quantity": "241",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Amoxipet plus tableta 500mg",
+        "quantity": "114",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Mayor 10 tableta",
+        "quantity": "134",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10",
+        "wholesale_price": "80"
+    },
+    {
+        "name": "Avicomplex 60ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Clindafur S suspension 30ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Ulcetrat tableta 10mg",
+        "quantity": "28",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Cis A prid 20ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Bronkoxt jarabe 100ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Cardial tableta 5mg",
+        "quantity": "84",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Alergil crema tópica 20gr",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Clemastine tableta 1mg",
+        "quantity": "20",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Cardial B tableta 2.5mg ",
+        "quantity": "20",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Dexium forte tableta 0.5mg",
+        "quantity": "30",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Clorhexipal flush spray 120ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Bismuxil P sobre 15gr",
+        "quantity": "9",
+        "measurement_unit": "Sobre unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Clozepaxel 100 tableta 100mg",
+        "quantity": "32",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Dirulan tableta 50mg",
+        "quantity": "46",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Dolofebre tableta 150mg",
+        "quantity": "9",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Dolfeno tableta 40mg",
+        "quantity": "20",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Doxipets 100 tableta 120mg",
+        "quantity": "6",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Dexoryl gotas oticas 10gr",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Ciprotabs 250 tableta 250mg ",
+        "quantity": "14",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Oltrans polvo 80gr",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Brillo otic 120ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Canitabs senior 60 tabletas",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Endogard 2.5kgs",
+        "quantity": "15",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Endorgard 30kgs",
+        "quantity": "3",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Ketoconazol tableta 200mg",
+        "quantity": "10",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Apoquel tableta 3.6mg",
+        "quantity": "24",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Apoquel tableta 5.4mg",
+        "quantity": "9",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Apoquel tableta 16mg",
+        "quantity": "35",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Kalmax tableta 10mg",
+        "quantity": "16",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Gli Silogel 240ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "55"
+    },
+    {
+        "name": "Ferkel TF 150ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Stop on suspension 60ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Meprazolic tableta 20mg",
+        "quantity": "99",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Innopramid gotas orales 25ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Opter gotas oticas 25ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Siliprotec natural 60 tabletas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Uroflogin tableta",
+        "quantity": "17",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Procinex tableta 5mg",
+        "quantity": "60",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Konavet tableta 100mg",
+        "quantity": "30",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Otiko gotas oticas 18ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Pharmotil gotas orales 15ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Ranipets gotas orales 15ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Floxaday tableta 100mg ",
+        "quantity": "35",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Floxaday tableta 200mg ",
+        "quantity": "27",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Floxaday tableta 400mg",
+        "quantity": "19",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Hemolitan pet 60ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Neocan suspension 120ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Hemolitan pet 30ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Epilexis 10 tableta 300mg",
+        "quantity": "16",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "T4 Triton levotiroxina tableta 0.4mg",
+        "quantity": "15",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Kiroseptic spray 100ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Meloxic tableta 2mg",
+        "quantity": "10",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Meloxic gotas orales 10ml",
+        "quantity": "8",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Rimadyl tableta 100mg",
+        "quantity": "89",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Rimadyl tableta 25mg",
+        "quantity": "54",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Epiotic 100ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Lindopel 120ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Lindopel control bolas de pelo 120ml",
+        "quantity": "6",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Otopal X gotas oticas 15ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "120"
+    },
+    {
+        "name": "Otopal S gotas oticas 30ml",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "130"
+    },
+    {
+        "name": "Suero en polvo electrolitico pet sobre 10gr",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Pre y pro bios sobre 3gr",
+        "quantity": "20",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Dr Vet multivet 100 tabletas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Dr Vet mobilityvet 100 tabletas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "395"
+    },
+    {
+        "name": "Dr Vet dermavet 100 tabletas",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "285"
+    },
+    {
+        "name": "Dr Vet mobilityvet tableta",
+        "quantity": "14",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Dr Vet dermavet tableta",
+        "quantity": "36",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Uvita gel oral perro 50gr",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Uvita gel oral gato 50gr",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Sinvirax jarabe 50ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Neosept spray 30gr",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Neosept crema 30gr",
+        "quantity": "9",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Neosept crema 5gr",
+        "quantity": "13",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Sucralvet gel oral 15ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Viyo recuperacion perro 150ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Viyo recuperacion gato 150ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "145"
+    },
+    {
+        "name": "Quietuspet blister 4 tabletas",
+        "quantity": "10",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Viyo reinforces perro sobre 30ml ",
+        "quantity": "7",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Viyo reinforces gato sobre 30ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Uderm omega",
+        "quantity": "24",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "55"
+    },
+    {
+        "name": "Ulcetrat tableta 50mg",
+        "quantity": "10",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Dermicare crema 20gr",
+        "quantity": "1",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Itraconazol blister 10 tabletas 100mg",
+        "quantity": "4",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "105"
+    },
+    {
+        "name": "Proteliv gotas orales 15ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Trihepat jarabe 100ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Nutracell spray 200ml",
+        "quantity": "10",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "150"
+    },
+    {
+        "name": "Oltrans flex blister 7 tabletas",
+        "quantity": "7",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Tramadol tableta 75mg",
+        "quantity": "48",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Pimocard 2.5 tableta",
+        "quantity": "30",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Pimocard 5 tableta",
+        "quantity": "2",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "230"
+    },
+    {
+        "name": "Hemavet jarabe 100ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Ulcofilm sobre 1gr",
+        "quantity": "20",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Loratadina tableta 10mg",
+        "quantity": "36",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Antibiótico bucal tritón perro 10kg",
+        "quantity": "32",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Hedrdalix jarabe 120ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Ulcofilm suspension 200ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "Prednisolona tableta 20mg",
+        "quantity": "52",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "10"
+    },
+    {
+        "name": "Ranitidina jarabe 120ml",
+        "quantity": "4",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Metocarban tableta 500mg",
+        "quantity": "18",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "5"
+    },
+    {
+        "name": "Procinex plus suspension oral 30ml",
+        "quantity": "7",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "RH2 gotas orales 30ml",
+        "quantity": "5",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Nutrapro k9 canine sobre 30gr",
+        "quantity": "11",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Nutrapro k9 feline sobre 30gr",
+        "quantity": "12",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Kaofin suspension oral 60ml",
+        "quantity": "13",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Opticine gotas 10ml",
+        "quantity": "15",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Tramapets plus M tableta 20mg",
+        "quantity": "30",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Tramapets plus L tableta 50mg",
+        "quantity": "24",
+        "measurement_unit": "Tableta unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "20"
+    },
+    {
+        "name": "Clorhexidina en solucion jabonosa ",
+        "quantity": "16",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Anavimin coat blister de 7 tabletas",
+        "quantity": "0",
+        "measurement_unit": "Blister ",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Gel antiplaca 20ml",
+        "quantity": "3",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Pet milk leche en polvo para cachorro 100gr",
+        "quantity": "2",
+        "measurement_unit": "Unidad",
+        "branch_office": "Kaminal",
+        "retail_price": "110"
+    },
+    {
+        "name": "Pro plan cachorro raza pequeña 1kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "100"
+    },
+    {
+        "name": "Pro plan cachorro raza pequeña 3.5kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "320"
+    },
+    {
+        "name": "Pro plan cachorro raza pequeña 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "595"
+    },
+    {
+        "name": "Pro plan cachorro completo 1kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pro plan cachorro completo 3kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "275"
+    },
+    {
+        "name": "Pro plan cachorro completo 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "595"
+    },
+    {
+        "name": "Pro plan cachorro completo 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "950"
+    },
+    {
+        "name": "Pro plan cachorro completo 22.7kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1610"
+    },
+    {
+        "name": "Pro plan cachorro raza grande  3.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "325"
+    },
+    {
+        "name": "Pro plan cachorro raza grande 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "970"
+    },
+    {
+        "name": "Pro plan cachorro piel sensible 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "270"
+    },
+    {
+        "name": "Pro plan cachorro piel sensible 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1050"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña 1kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña 3.5kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "280"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "540"
+    },
+    {
+        "name": "Pro plan adulto completo 1kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "85"
+    },
+    {
+        "name": "Pro plan adulto completo 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "240"
+    },
+    {
+        "name": "Pro plan adulto completo 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "540"
+    },
+    {
+        "name": "Pro plan adulto completo 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "855"
+    },
+    {
+        "name": "Pro plan adulto completo 22.7kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1420"
+    },
+    {
+        "name": "Pro plan adulto raza grande 3kgs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "240"
+    },
+    {
+        "name": "Pro plan adulto raza grande 13kgs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "855"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña piel sensible 1kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña piel sensible 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Pro plan adulto completo piel sensible 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Pro plan adulto completo piel sensible 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1020"
+    },
+    {
+        "name": "Pro plan adulto completo adulto mayor 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "255"
+    },
+    {
+        "name": "Pro plan adulto completo adulto mayor 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "585"
+    },
+    {
+        "name": "Pro plan adulto completo adulto mayor 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "945"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña adulto mayor 1kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña adulto mayor 3kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "255"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña adulto mayor 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "585"
+    },
+    {
+        "name": "Pro plan adulto completo bajo en calorias 3kg",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Pro plan adulto completo bajo en calorias 13kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "915"
+    },
+    {
+        "name": "Pro plan adulto completo delicate 3kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña exigent 1kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Pro plan adulto raza pequeña exigent 3kg",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "255"
+    },
+    {
+        "name": "Excellent cachorro raza pequeña 3.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "155"
+    },
+    {
+        "name": "Excellent cachorro raza mediana - grande 4kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Excellent cachorro 20kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "545"
+    },
+    {
+        "name": "Excellent adulto raza pequeña 3.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "155"
+    },
+    {
+        "name": "Excellent adulto raza pequeña 7.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "305"
+    },
+    {
+        "name": "Excellent adulto raza mediana - grande 4kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Excellent adulto 20kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "520"
+    },
+    {
+        "name": "Pro plan cat kitten 1.6kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "195"
+    },
+    {
+        "name": "Pro plan cat pollo 1.6kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Pro plan cat indor 1.6kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Pro plan cat indor 3.18kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Pro plan cat salmon 1.6kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Cat chow delimix 15kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "450"
+    },
+    {
+        "name": "Cat chow adulto pescado 500gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Cat chow adulto pescado1.5kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Cat chow adulto pescado 9kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "380"
+    },
+    {
+        "name": "Cat chow gatitos 500gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Cat chow gatitos 1.5kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "95"
+    },
+    {
+        "name": "Cat chow adulto aves 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "90"
+    },
+    {
+        "name": "Galletas alpo snap variety",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Galletas beneful baked delights",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "55"
+    },
+    {
+        "name": "Galletas beneful baked hugs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "55"
+    },
+    {
+        "name": "Alpo dental chews",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Dentalife raza pequeña",
+        "quantity": "6",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Dentalife raza grande",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Dentalife raza mini",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "T-Bonz sabor bistec",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Beggins de queso",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Beggins originales",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "35"
+    },
+    {
+        "name": "Jom jom de pollo",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Jom jom de corazón de res",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Jom jom de hígado de res",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "50"
+    },
+    {
+        "name": "Jom jom oreja de cerdo 2pack",
+        "quantity": "3",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "70"
+    },
+    {
+        "name": "Galletas metabolic",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Galletas z/d",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "105"
+    },
+    {
+        "name": "Galletas fruity snacks apples and oatmeal",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Galletas fruity snacks cranberries and oatmeal",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "75"
+    },
+    {
+        "name": "Soft savories beef and cheddar",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Soft savories peanut butter and banana",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Training treats soft and chewy",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Jerky mini strips with real chicken",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "80"
+    },
+    {
+        "name": "Salsa tocino 375ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Comida para hamster 1.13kg",
+        "quantity": "2",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Salsa carne 375ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Salsa pollo 375ml",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "65"
+    },
+    {
+        "name": "Science diet puppy small paws 4.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "185"
+    },
+    {
+        "name": "Science diet puppy small paws 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "590"
+    },
+    {
+        "name": "Science diet puppy small bites 4.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Science diet puppy small bites 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "560"
+    },
+    {
+        "name": "Science diet puppy 4.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "180"
+    },
+    {
+        "name": "Science diet puppy 15.lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "545"
+    },
+    {
+        "name": "Science diet puppy 30lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1015"
+    },
+    {
+        "name": "Science diet puppy large breed 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "575"
+    },
+    {
+        "name": "Science diet puppy large breed 30lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "985"
+    },
+    {
+        "name": "Science diet adult small paws light 4.5kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "185"
+    },
+    {
+        "name": "Science diet adult small paws 4.5lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Science diet adult small paws 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "530"
+    },
+    {
+        "name": "Science diet adult small bites 5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "Science diet adult small bites 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "465"
+    },
+    {
+        "name": "Science diet adult 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "465"
+    },
+    {
+        "name": "Science diet adult 35lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "890"
+    },
+    {
+        "name": "Science diet adult cordero y arroz 4.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "Science diet adult cordero y arroz 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "530"
+    },
+    {
+        "name": "Science diet adult light 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "470"
+    },
+    {
+        "name": "Science diet adult light 30lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "855"
+    },
+    {
+        "name": "Science diet adult sensitive stomach and skin 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "Science diet adult sensitive stomach and skin 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "395"
+    },
+    {
+        "name": "Science diet perfect digestion 3.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "140"
+    },
+    {
+        "name": "Science diet perfect digestion 12lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "380"
+    },
+    {
+        "name": "Science diet adult 7+ small paws 4.5lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Science diet adult 7+ small bites 5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "170"
+    },
+    {
+        "name": "Science diet adult 7+ small bites 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "475"
+    },
+    {
+        "name": "Science diet adult 7+ 15.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "475"
+    },
+    {
+        "name": "Science diet adult 7+ 33lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "930"
+    },
+    {
+        "name": "Prescription diet c/d multicare canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "305"
+    },
+    {
+        "name": "Prescription diet c/d multicare canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "580"
+    },
+    {
+        "name": "Prescription diet derm defense canine 6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "250"
+    },
+    {
+        "name": "Prescription diet Gastrointestinal biome canine 8lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "370"
+    },
+    {
+        "name": "Prescription diet i/d canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "200"
+    },
+    {
+        "name": "Prescription diet i/d canine 17lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "585"
+    },
+    {
+        "name": "Prescription diet j/d canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "440"
+    },
+    {
+        "name": "Prescription diet j/d canine 27.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "870"
+    },
+    {
+        "name": "Prescription diet k/d canine 3.3lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Prescription diet k/d canine 8.5lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Prescription diet k/d canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "580"
+    },
+    {
+        "name": "Prescription diet l/d canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "510"
+    },
+    {
+        "name": "Prescription diet metabolic canine 7.7lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "315"
+    },
+    {
+        "name": "Prescription diet metabolic canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "690"
+    },
+    {
+        "name": "Prescription diet metabolic canine 27.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "830"
+    },
+    {
+        "name": "Prescription diet r/d canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Prescription diet r/d canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "585"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit canine 3.3lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "125"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "295"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "505"
+    },
+    {
+        "name": "Prescription diet u/d canine 8.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "280"
+    },
+    {
+        "name": "Prescription diet z/d canine 8lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "630"
+    },
+    {
+        "name": "Prscription diet z/d canine 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "1125"
+    },
+    {
+        "name": "Science diet kitten 3.5lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "185"
+    },
+    {
+        "name": "Science diet kitten 7lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Scinece diet adulto control de bolas de pelo 3.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "175"
+    },
+    {
+        "name": "Science diet perfect digestion felino 3.5lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "165"
+    },
+    {
+        "name": "Science diet adulto feline light 4lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Science dieta dulto feline light 7lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "305"
+    },
+    {
+        "name": "Science diet adulto feline 4lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Science diet adulto feline 7lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "285"
+    },
+    {
+        "name": "Science diet adulto feline 16lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "585"
+    },
+    {
+        "name": "Science diet adulto feline 7+ 4lbs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "190"
+    },
+    {
+        "name": "Prescription diet c/d multicare feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "220"
+    },
+    {
+        "name": "Prescription diet Gastrointestinal Biome feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "240"
+    },
+    {
+        "name": "Prescription diet i/d feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "210"
+    },
+    {
+        "name": "Prescription diet k/d feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "225"
+    },
+    {
+        "name": "Prescription diet metabolic feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "245"
+    },
+    {
+        "name": "Prescription diet metabolic feline 8lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "475"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit feline 4lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "215"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit feline 8lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "350"
+    },
+    {
+        "name": "Prescription diet w/d multibenefit feline 17.6lbs",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "650"
+    },
+    {
+        "name": "Latas Dog chow varios sabores 374gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Sobres Dog chow varios sabores 100gr",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Prescription diet i/d canine lata 13onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet k/d canine lata 13onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet a/d canine/feline 5.5onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet c/d feline 5.5onz",
+        "quantity": "9",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet i/d feline 5.5onz",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet w/d miltubenefit canine lata 13onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Prescription diet z/d canine lata 13onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "40"
+    },
+    {
+        "name": "Sobres chihuahua royal canin 85gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Sobres kitten royal canin gato 85gr",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Sobres obesity royal canin gato 85gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Sobres ultra light gato 85gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Sobres 7+ gato 85gr",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Latas fancy feast varios sabores 3onz",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "15"
+    },
+    {
+        "name": "Royal canin mini puppy 800gr",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "105"
+    },
+    {
+        "name": "Royal canin mini adult 2kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "205"
+    },
+    {
+        "name": "Royal canin mini adult +8 2kgs",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "220"
+    },
+    {
+        "name": "Royal canin dermaconfotr perro adulto 3kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "330"
+    },
+    {
+        "name": "Royal canin chihuahua adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "215"
+    },
+    {
+        "name": "Royal canin shih tzu adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "0"
+    },
+    {
+        "name": "Royal canin poodle adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "205"
+    },
+    {
+        "name": "Royal canin yorkie adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "0"
+    },
+    {
+        "name": "Royal canin gastrointestinal perro adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "310"
+    },
+    {
+        "name": "Royal canin hepatic perro adulto 1.5kg",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "0"
+    },
+    {
+        "name": "Hueso de cartilago 8in1 M",
+        "quantity": "5",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "30"
+    },
+    {
+        "name": "Hueso de cartilago 8in1 S",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "25"
+    },
+    {
+        "name": "Royal canin gato adulto hairball control 3kg",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "295"
+    },
+    {
+        "name": "Nutrisource treats pollo purevita 6onz",
+        "quantity": "1",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Nutrisource treats salmon purevita 6onz",
+        "quantity": "0",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "60"
+    },
+    {
+        "name": "Nutrisource treats salmon 6onz",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    },
+    {
+        "name": "Nutrisource treats cordero 6onz",
+        "quantity": "4",
+        "measurement_unit": "Unidad ",
+        "branch_office": "Kaminal",
+        "retail_price": "45"
+    }
+  ]

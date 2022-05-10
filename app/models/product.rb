@@ -11,13 +11,13 @@ class Product < ApplicationRecord
 
   has_many :files
 
-  validates :sku, presence: true
   validates :name, presence: true
   validates :quantity, presence: true
   validates :retail_price, presence: true
   validates :product_type, presence: true
 
   before_destroy :can_be_destroyed
+  attribute :product_type, :string, default: 'good'
 
   enum product_type: {
     good: 'good',
@@ -25,7 +25,7 @@ class Product < ApplicationRecord
   }
 
   def self.index account, query
-    search = query[:filters][:search]&.downcase
+    search = query[:filters][:search]&.downcase if query[:filters]
 
     products = account.products.select("
       products.id,
@@ -54,7 +54,7 @@ class Product < ApplicationRecord
       cast(products.quantity as varchar) like '%#{search}%'
     ") unless search.blank?
 
-    if (!!query[:filters][:top_products])
+    if (query[:filters] && !!query[:filters][:top_products])
       return [] if (query[:filters][:start_date].blank?||query[:filters][:end_date].blank?)
 
       # most seller products in the last 30 days

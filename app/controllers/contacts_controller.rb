@@ -86,7 +86,7 @@ class ContactsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def client_params
     params.fetch(:contact, {}).permit(
-      %i[first_name first_surname  gender birthdate title
+      %i[first_name first_surname  second_name second_surname gender birthdate title
         mobile_number telephone fax email note
       ]
     )

@@ -106,7 +106,6 @@ export default {
                                 v-model="product.sku"
                                 type="text"
                                 placeholder=""
-                                required
                             >
                             </b-form-input>
                         </b-form-group>
