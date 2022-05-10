@@ -119,6 +119,7 @@ Vue.use(ActionCableVue, {
 })
 
 export default (base_path, routes=[]) => {
+
     //app builder
     let app_builder = { }
 
