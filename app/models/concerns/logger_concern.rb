@@ -10,7 +10,7 @@
       has_many   :activities, foreign_key: "#{name.titleize.downcase.gsub("/", "_").gsub(" ", "_")}_id"
 
       after_create  :log_create
-      after_destroy :log_destroy
+      before_destroy :log_destroy
       after_update  :log_update
 
       enum category: {

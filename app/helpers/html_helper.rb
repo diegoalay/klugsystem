@@ -22,16 +22,19 @@ module HtmlHelper
       link_path = "#"
     end
 
-    if current_user.can?(id)
-      if link_path == "#"
-        content_tag(:a, id: id, class: classes) do
+    styles = ""
+    unless current_user.can?(id)
+      styles = "opacity: 0; visibility: hidden; display: none;"
+    end
+
+    if link_path == "#"
+      content_tag(:a, id: id, class: classes, style: styles) do
+        yield
+      end
+    else
+      content_tag(:li, id: id, style: styles) do
+        content_tag("router-link", to: link_path, class: classes) do
           yield
-        end
-      else
-        content_tag(:li, id: id) do
-          content_tag("router-link", to: link_path, class: classes) do
-            yield
-          end
         end
       end
     end

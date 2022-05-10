@@ -37,8 +37,11 @@ class Administration::UsersController < ::UsersController
     @user = @account.users.new(user_params)
     @user.user_creator = current_user
     @user.user_modifier = current_user
-    set_user_role
+    @user.password = SecureRandom.hex
+
     if @user.save
+      set_user_role
+
       respond_with_successful(@user)
     else
       respond_user_with_error
@@ -93,8 +96,8 @@ class Administration::UsersController < ::UsersController
   # Only allow a list of trusted parameters through.
   def user_params
     params.fetch(:user, {}).permit(
-      %i[first_name last_name  gender birthdate title
-        mobile_number telephone fax email
+      %i[first_name last_name  first_surname gender birthdate title
+        mobile_number telephone fax email branch_office_id
       ]
     )
   end

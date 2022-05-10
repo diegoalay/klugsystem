@@ -76,6 +76,8 @@
             }
         },
         mounted() {
+            console.log(this.store.global)
+
             if (this.store.global.cash_register.id) {
                 this.list()
                 this.getOptions()

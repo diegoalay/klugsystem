@@ -24,6 +24,7 @@ class Administration::UserQuery
 
   def options
     {
+      branch_offices: @account.branch_offices.map {|branch_office| {value: branch_office.id, text: branch_office.name}},
       roles: @account.roles.map {|role| {value: role.id, text: role.name}}
     }
   end

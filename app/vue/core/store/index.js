@@ -1,10 +1,10 @@
 import Vuex from "vuex";
 
-// import privilegesModule from './modules/privileges/index.js';
+// import abilitiesModule from './modules/abilities/index.js';
 
 const store = new Vuex.Store({
   modules: {
-    // privileges: privilegesModule
+    // abilities: abilitiesModule
   },
   state() {
     return {

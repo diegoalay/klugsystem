@@ -8,6 +8,7 @@ export default {
     },
     data() {
         return {
+            menu_items_parsed: [],
             role_menu_items: [],
             menu_items: null,
             data: [],
@@ -22,14 +23,13 @@ export default {
             this.menu_items = await this.getMenuItems()
             this.role_menu_items = await this.getRoleMenuItems()
 
-            let menu_items_parsed = []
+            this.menu_items_parsed = []
             for (let index in this.menu_items) {
                 const menu_item = this.menu_items[index]
 
                 const find = this.role_menu_items.find(e =>
                     e.role_id === this.role.id &&
-                    e.menu_item_id === menu_item.id &&
-                    e.status === true
+                    e.menu_item_id === menu_item.id
                 )
 
                 let details = {
@@ -46,20 +46,20 @@ export default {
                 if (find) {
                     details = {
                         ...details,
-                        status: true,
+                        status: find.status,
                         role_menu_item_id: find.id
                     }
                 }
 
-                menu_items_parsed.push(details)
+                this.menu_items_parsed.push(details)
             }
 
-            const menu_items_level1 = menu_items_parsed.filter(e => e.permissions.length === 0)
+            const menu_items_level1 = this.menu_items_parsed.filter(e => e.permissions.length === 0)
 
 
             for(let key in menu_items_level1){
                 let menu_item = menu_items_level1[key]
-                const menu_items = menu_items_parsed.filter(e => e.menu_item_id === menu_item.id)
+                const menu_items = this.menu_items_parsed.filter(e => e.menu_item_id === menu_item.id)
 
                 menu_item = {
                     ...menu_item,
@@ -92,6 +92,10 @@ export default {
             })
         },
         submitRoleMenuItem(menu_item, role_menu_item_id, status){
+            console.log(menu_item)
+            console.log(role_menu_item_id)
+            console.log(status)
+
             if (role_menu_item_id) {
                 this.putForm(menu_item, role_menu_item_id, status)
             } else {
@@ -108,16 +112,18 @@ export default {
             }
             this.http.post(url, form).then(result => {
                 if (result.successful) {
-                    const index = this.data.findIndex(e => e.key === menu_item.key)
+                    const index = this.menu_items_parsed.findIndex(e => e.key === menu_item.key)
 
-                    let details = this.data[index]
+                    let details = this.menu_items_parsed[index]
                     details = {
                         ...details,
                         status: true,
                         role_menu_item_id: result.data.id
                     }
 
-                    this.$set(this.data, index, details)
+                    this.$set(this.menu_items_parsed, index, details)
+
+                    console.log(this.menu_items_parsed[index].details)
 
                     this.$toast.success('Permiso actualizado exitosamente.')
                 } else {
@@ -143,15 +149,15 @@ export default {
 
             this.http.put(url, form).then(result => {
                 if (result.successful) {
-                    const index = this.data.findIndex(e => e.key === menu_item.key)
+                    const index = this.menu_items_parsed.findIndex(e => e.key === menu_item.key)
 
-                    let details = this.data[index]
+                    let details = this.menu_items_parsed[index]
                     details = {
                         ...details,
                         status: status
                     }
 
-                    this.$set(this.data, index, details)
+                    this.$set(this.menu_items_parsed, index, details)
 
                     this.$toast.success('Permiso actualizado exitosamente.')
                 } else {
@@ -183,10 +189,14 @@ export default {
                             </template>
                             <b-form-checkbox
                                 v-if="tools.roleCanBeEdited(role)"
-                                @change="submitRoleMenuItem(appModule, appModule.role_menu_item_id, $event)"
-                                v-model="appModule.status"
+                                @change="submitRoleMenuItem(
+                                    menu_items_parsed.find(e => appModule.key === e.key),
+                                    menu_items_parsed.find(e => appModule.key === e.key).role_menu_item_id,
+                                    $event
+                                )"
+                                v-model="menu_items_parsed.find(e => appModule.key === e.key).status"
                             >
-                                {{ appModule.status ? 'Si' : 'No' }}
+                                {{ menu_items_parsed.find(e => appModule.key === e.key).status ? 'Si' : 'No' }}
                             </b-form-checkbox>
                             <b-form-checkbox
                                 v-else
@@ -225,9 +235,13 @@ export default {
                                     <b-td class="text-center">
                                         <b-form-checkbox
                                             v-if="tools.roleCanBeEdited(role)"
-                                            :disabled="!appModule.status"
-                                            @change="submitRoleMenuItem(menu_item, menu_item.role_menu_item_id, $event)"
-                                            v-model="menu_item.status"
+                                            :disabled="!menu_items_parsed.find(e => appModule.key === e.key).status"
+                                            @change="submitRoleMenuItem(
+                                                menu_items_parsed.find(e => menu_item.key === e.key),
+                                                menu_items_parsed.find(e => menu_item.key === e.key).role_menu_item_id,
+                                                $event
+                                            )"
+                                            v-model="menu_items_parsed[menu_items_parsed.findIndex(e => menu_item.key === e.key)].status"
                                         >
                                             {{ menu_item.status ? 'Si' : 'No' }}
                                         </b-form-checkbox>

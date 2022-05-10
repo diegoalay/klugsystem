@@ -61,7 +61,7 @@ export default {
             if (productSaleQuantity <= 0) {
                 const quantity = 1
 
-                this.$set(this.products[index], 'quantity', quantity)
+                this.$set(this.products[index], 'saleQuantity', quantity)
                 this.$set(this.products[index], 'subtotal', quantity * product.price)
 
                 this.$toast.warning('Debe agregar al menos un artículo.')
@@ -72,10 +72,9 @@ export default {
             if (productSaleQuantity > productmaxQuantity) {
                 const quantity = productmaxQuantity
 
-                this.$set(this.products[index], 'quantity', quantity)
+                this.$set(this.products[index], 'saleQuantity', quantity)
                 this.$set(this.products[index], 'subtotal', quantity * product.price)
             } else {
-                this.$set(this.products[index], 'quantity', quantity)
                 this.$set(this.products[index], 'subtotal', productSaleQuantity * product.price)
             }
 

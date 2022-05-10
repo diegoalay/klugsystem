@@ -127,6 +127,18 @@ ul ul ul a {
     border-right-color: $leftbar-font-color;
 }
 
+.hide-item {
+    opacity: '0';
+    visibility: 'hidden';
+    display: 'none';
+}
+
+.show-item {
+    opacity: '1';
+    visibility: 'visible';
+    display: 'block';
+}
+
 @media (max-width: 768px) {
     .wrapper {
         overflow-x:hidden;

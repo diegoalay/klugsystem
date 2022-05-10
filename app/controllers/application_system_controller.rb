@@ -28,11 +28,14 @@ class ApplicationSystemController < ApplicationController
   def set_account_data
     @data = {
       account: @account,
+      menu_items: MenuItem.all,
       current_user: {
         id: current_user.id,
         email: current_user.email,
         name: current_user.name,
-        cash_register: current_user.current_cash_register&.show
+        role: current_user.roles.first,
+        abilities: current_user.abilities,
+        cash_register: current_user.current_cash_register&.show,
       },
       url: {
         root: request.base_url.to_s,  path: request.path
@@ -44,6 +47,6 @@ class ApplicationSystemController < ApplicationController
     key = params[:controller]
     key = key.gsub('/', '.')
 
-    respond_with_unathorized if !current_user.can?(key) and key.include? 'crm'
+    respond_with_unathorized if !current_user.can?(key)
   end
 end

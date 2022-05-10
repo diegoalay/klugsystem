@@ -7,7 +7,7 @@ import getters from './getters.js';
 const store = new Vuex.Store({
   state() {
     return {
-      privileges: []
+      abilities: []
     };
   },
   mutations,

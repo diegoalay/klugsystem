@@ -12,7 +12,8 @@ class CreateQuotations < ActiveRecord::Migration[6.1]
       t.decimal :received_amount
       t.decimal :change
 
-      t.date :quotation_date
+      t.boolean :status, defaullt: :true
+      t.datetime :quotation_date
 
       t.bigint :user_creator_id
       t.bigint :user_modifier_id

@@ -332,7 +332,7 @@ export default {
                                         @change="getProductsTopSelled()"
                                         v-model="filters.date_range"
                                         lang="es"
-                                        format="DD-MM-YYYY"
+                                        format="DD/MM/YYYY"
                                         range
                                         placeholder="Seleccione un rango de fechas"
                                     >
@@ -441,7 +441,7 @@ export default {
                                 :focus="false"
                                 lang="es"
                                 type="date"
-                                format="DD-MM-YYYY"
+                                format="DD/MM/YYYY"
                                 v-model="sale.sale_date"
                                 placeholder=""
                                 required

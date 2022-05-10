@@ -87,7 +87,7 @@ export default {
             this.totalRows = filteredItems.length
             this.currentPage = 1
         },
-        showPrivileges(role){
+        showprivileges(role){
             this.setRole(role)
             this.$bvModal.show('privileges')
         },
@@ -171,7 +171,7 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button variant="outline-dark" @click.stop="showPrivileges(row.item)" class="mr-1">
+                        <b-button variant="outline-dark" @click.stop="showprivileges(row.item)" class="mr-1">
                             <font-awesome-icon icon="pencil" />
                         </b-button>
 

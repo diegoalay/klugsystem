@@ -1,18 +1,20 @@
 <script type="text/javascript">
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
-import componentProductsList from 'vueApp/components/component-products-list.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
+import componentSaleDetails from 'vueApp/components/component-sale-details.vue'
+import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
 
 export default {
     components:{
         'component-autocomplete': componenentAutocomplete,
-        'component-products-list': componentProductsList,
-        'component-products-icon': componentProductsIcon
+        'component-products-icon': componentProductsIcon,
+        'component-sale-details': componentSaleDetails,
+        'component-confirm-sale': componentConfirmSale
     },
     data() {
         return {
-            selectProductId: null,
             products: [],
+            options: {},
             sale: {
                 id: null,
                 total: 0,
@@ -27,19 +29,7 @@ export default {
             client: {
                 id: null
             },
-            product: {
-                id: null
-            },
-            productViewType: 'search',
-            options: {
-                brands: [],
-                sale_types: [],
-                departments: [],
-                branch_offices: [],
-                payment_methods: []
-            },
             filters: {
-                search: '',
                 date_range: [
                     new Date((new Date().setDate((new Date().getDate()) - 30))),
                     new Date()
@@ -49,57 +39,56 @@ export default {
                 client: false,
             },
             payment_method: {
-                id: null
+                id: null,
+                value: null
             },
             payment_method_discount: {},
             payment_method_interest: {},
-            showFilters: false,
-            topProducts: [],
-            topProductsfields: [{
-                label: 'Imágen',
-                key: 'thumbnail',
-            },{
-                label: 'SKU',
-                key: 'sku',
-                sortable: true
-            },{
-                label: 'Nombre',
+            fields: [{
+                label: 'Artículo',
                 key: 'name',
                 sortable: true
             },{
-                label: 'Precio',
-                key: 'retail_price',
-                sortable: true
+                label: 'Unidad',
+                key: 'unit'
             },{
                 label: 'Cantidad',
-                key: 'quantity',
-                sortable: true
+                key: 'quantity'
             },{
-                label: 'Ventas',
-                key: 'sales',
-                sortable: true
+                label: 'Precio',
+                key: 'price'
+            },{
+                label: 'Subtotal',
+                key: 'subtotal'
+            },{
+                label: 'Descuento (%)',
+                key: 'discount_percentage'
+            },{
+                label: 'Descuento (Q.)',
+                key: 'discount_value'
+            },{
+                label: 'Total',
+                key: 'total'
             },{
                 label: '',
                 key: 'actions'
             }],
-            tabIndex: 0,
-            loadingTopProducts: false
         }
     },
     mounted(){
         this.getOptions()
-        this.getProductsTopSelled()
     },
     methods: {
-        submitSaleOrQuotation(event){
-            if(event){
-                event.preventDefault()
-            }
+        confirmSale(){
+            this.$bvModal.show('confirm-sale')
+        },
 
+        submitSale(sale_type){
             const url = this.url.finance('sales')
             let form = {
                 sale: {
                     ... this.sale,
+                    sale_type: sale_type,
                     client_id: this.client.id,
                     subtotal: this.getSum('subtotal'),
                     total: this.getTotalSale(),
@@ -107,7 +96,8 @@ export default {
                     interest: this.getInterest(),
                     change: this.getChange(),
                     products: this.products,
-                    client: this.client
+                    client: this.client,
+                    cash_register: true
                 }
             }
 
@@ -116,34 +106,10 @@ export default {
                     this.$toast.success('Venta realizada.')
                     this.$router.push(this.url.finance('sales/:id', {id: result.data.id}).toString(false))
                 } else {
-                    this.$toast.error(result.error.message)
+                    this.$toast.error(result.error.message, {
+                        duration: 4000
+                    })
                 }
-            }).catch(error => {
-                console.log(error)
-            })
-        },
-
-        getProductsTopSelled(){
-            const url = this.url.inventory('products')
-            .filters({
-                top_products: true,
-                start_date: this.filters.date_range[0] ?
-                    this.filters.date_range[0].toISOString() :
-                    '',
-                end_date: this.filters.date_range[1] ?
-                    this.filters.date_range[1].toISOString() :
-                    '',
-            })
-
-            this.loadingTopProducts = true
-            this.http.get(url).then(result => {
-                if (result.successful) {
-                    this.topProducts = result.data
-                } else {
-                    this.$toast.error(result.error.message)
-                }
-
-                this.loadingTopProducts = false
             }).catch(error => {
                 console.log(error)
             })
@@ -182,7 +148,7 @@ export default {
             let discount = 0
             const subtotal = this.getSum('subtotal')
 
-            if (this.payment_method_discount.value) {
+            if (this.payment_method && this.payment_method_discount.value) {
                 if (this.payment_method_discount.key == 'discount_percentage') {
                     discount = subtotal * this.payment_method_discount.value
                 } else if (this.payment_method_discount.key == 'discount_value') {
@@ -227,7 +193,7 @@ export default {
         getInterest(){
             let interest = 0
 
-            if (this.payment_method_interest.value) {
+            if (this.payment_method && this.payment_method_interest.value) {
                 if (this.payment_method_interest.key == 'interest_percentage') {
                     interest = this.getTotal() * this.payment_method_interest.value
                 } else if (this.payment_method_interest.key == 'interest_value') {
@@ -289,14 +255,59 @@ export default {
             }
         },
 
-        updateProducts(products) {
-            this.products = products
+        removeProduct(product){
+            this.products = this.products.filter(e => e.id !== product.id)
         },
 
-        selectProduct(product_id) {
-            if (product_id) {
-                this.selectProductId = product_id
-                this.tabIndex = 0
+        addProduct(product){
+            if (product.quantity <= 0) {
+                this.$toast.error('El producto se encuentra agotado.')
+                return
+            }
+
+            if (!product.id) {
+                this.$toast.warning('Debes seleccionar un producto.')
+                return
+            }
+
+            const index = this.products.findIndex(e => e.id === product.id)
+
+            let saleQuantity = 1
+
+            if (index !== -1) {
+                saleQuantity = this.products[index].saleQuantity
+                saleQuantity += 1
+            }
+
+            if (saleQuantity > product.quantity) {
+                this.$toast.error('Artículos agotado.')
+
+                saleQuantity = product.quantity
+            }
+
+            const subtotal = product.retail_price * saleQuantity
+            const discount_value = 0
+            const discount_percentage = (discount_value * 100) / subtotal
+
+            const total = subtotal - discount_value
+
+            const new_product = {
+                id: product.id,
+                name: product.name,
+                price: parseFloat(product.retail_price),
+                quantity: parseFloat(product.quantity),
+                saleQuantity: saleQuantity,
+                subtotal: subtotal,
+                measurement_unit: product.measurement_unit_name,
+                discount_value: discount_value,
+                discount_percentage: discount_percentage,
+                total: total
+            }
+
+            if (index !== -1) {
+                this.$set(this.products, index, new_product)
+            } else {
+                this.products.push(new_product)
             }
         }
     },
@@ -324,12 +335,6 @@ export default {
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
 
-                <b-button variant="outline-primary" class="mb-2" @click.stop="showFilters = !showFilters">
-                    <font-awesome-icon v-if="showFilters" icon="eye-slash" />
-                    <font-awesome-icon v-else icon="filter" />
-                    Filtros
-                </b-button>
-
                 <b-button variant="outline-primary" class="mb-2" href="#finish-sale">
                     <font-awesome-icon icon="cart-shopping" />
                     Vender
@@ -337,58 +342,15 @@ export default {
             </slot>
         </component-header-form>
         <b-row>
-            <b-col md="8" sm="12">
+            <b-col md="5" sm="12">
                 <b-card no-body>
-                    <b-tabs nav-class="font-weight-bold" card pills fill v-model="tabIndex">
-                        <b-tab title="Artículos">
-                            <component-products-list
-                                :show-filters="showFilters"
-                                :select-product-id="selectProductId"
-                                :payment_method_discount="payment_method_discount"
-                                @updateProducts="updateProducts"
-                            >
-                            </component-products-list>
-                        </b-tab>
-                        <b-tab title="Buscar">
-                            <br>
-                            <div class="d-flex justify-content-center">
-                                <b-form-group label="Productos con mayor venta durante">
-                                    <component-datepicker
-                                        @change="getProductsTopSelled()"
-                                        v-model="filters.date_range"
-                                        lang="es"
-                                        format="DD-MM-YYYY"
-                                        range
-                                        placeholder="Seleccione un rango de fechas"
-                                    >
-                                    </component-datepicker>
-                                </b-form-group>
-                            </div>
-                            <br>
-                            <b-table
-                                v-if="!loadingTopProducts"
-                                striped
-                                hover
-                                :items="topProducts"
-                                :fields="topProductsfields"
-                                responsive
-                            >
-
-                                <template v-slot:cell(actions)="row">
-                                    <b-button variant="outline-success" @click.stop="selectProduct(row.item.id)">
-                                        <font-awesome-icon icon="cart-plus" />
-                                    </b-button>
-                                </template>
-
-                                <template v-slot:cell(thumbnail)="row">
-                                    <b-img :src="tools.getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
-                                </template>
-                            </b-table>
-                        </b-tab>
-                    </b-tabs>
+                    <component-products-icon
+                        @addProduct="addProduct"
+                    >
+                    </component-products-icon>
                 </b-card>
             </b-col>
-            <b-col>
+            <b-col md="7" sm="12">
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
@@ -396,7 +358,6 @@ export default {
                         </div>
 
                         <br>
-
                         <component-autocomplete
                             @select="(option) => client = option !== null ? option : {}"
                             text-field="billing_details"
@@ -458,33 +419,7 @@ export default {
                             </b-col>
                         </b-row>
 
-                        <b-form-group>
-                            <template #label>
-                                Fecha de emisión <sup class="text-danger">*</sup>
-                            </template>
-                            <component-datepicker
-                                :focus="false"
-                                lang="es"
-                                type="date"
-                                format="DD-MM-YYYY"
-                                v-model="sale.sale_date"
-                                placeholder=""
-                                required
-                            >
-                            </component-datepicker>
-                        </b-form-group>
-
                         <b-row>
-                            <b-col md="6" sm="12">
-                                <b-form-group>
-                                    <label> Tipo de venta <sup class="text-danger">*</sup> </label>
-                                    <b-form-select required v-model="sale.sale_type" :options="options.sale_types">
-                                        <template #first>
-                                            <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
-                                        </template>
-                                    </b-form-select>
-                                </b-form-group>
-                            </b-col>
                             <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Método de pago <sup class="text-danger">*</sup> </label>
@@ -495,11 +430,9 @@ export default {
                                     </b-form-select>
                                 </b-form-group>
                             </b-col>
-                        </b-row>
 
-                        <template v-if="payment_method.id">
-                            <b-row>
-                                <b-col>
+                            <b-col md="6" sm="12">
+                                <template v-if="payment_method.id">
                                     <b-form-group v-if="getPaymentDiscounts().length > 0">
                                         <label> Descuento </label>
                                         <b-form-select
@@ -509,9 +442,7 @@ export default {
                                         >
                                         </b-form-select>
                                     </b-form-group>
-                                </b-col>
 
-                                <b-col>
                                     <b-form-group v-if="getPaymentInterest().length > 0">
                                         <label> Interés </label>
                                         <b-form-select
@@ -521,12 +452,40 @@ export default {
                                         >
                                         </b-form-select>
                                     </b-form-group>
-                                </b-col>
-                            </b-row>
-                        </template>
+                                </template>
+                            </b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col md="4" sm="12">
+                                <b-form-group>
+                                    <template #label>
+                                        Fecha de emisión <sup class="text-danger">*</sup>
+                                    </template>
+                                    <component-datepicker
+                                        :focus="false"
+                                        lang="es"
+                                        type="date"
+                                        format="DD-MM-YYYY hh:mm"
+                                        v-model="sale.sale_date"
+                                        placeholder=""
+                                        required
+                                    >
+                                    </component-datepicker>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
 
                         <hr>
 
+                        <component-sale-details
+                            :products="products"
+                            :payment_method_discount="payment_method_discount"
+                            @remove="removeProduct"
+                        >
+                        </component-sale-details>
+
+                        <hr>
                         <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Subtotal</b-input-group-text>
@@ -563,14 +522,13 @@ export default {
                                 <b-input-group-text >Envío</b-input-group-text>
                             </template>
                             <b-form-input
+                                min="0"
                                 class="text-right"
                                 v-model="sale.shipping_costs"
-                                min="0"
                             >
                             </b-form-input>
                         </b-input-group>
-                        <hr>
-                        <br>
+
                         <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Cantidad recibida</b-input-group-text>
@@ -597,7 +555,7 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish-sale" block variant="primary" type="submit" @click="submitSaleOrQuotation"> Vender </b-button>
+                                <b-button id="finish-sale" block variant="primary" type="submit" @click.prevent="confirmSale"> Vender </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -606,6 +564,18 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
+
+            <b-modal
+                id="confirm-sale"
+                size="xl"
+                hide-footer
+                hide-backdrop
+                centered
+                content-class="shadow"
+                title="Seleccione el método de pago"
+            >
+                <component-confirm-sale :sale_types="options.sale_types" @submit="submitSale" :total="getTotalSaleWithFormat()"/>
+            </b-modal>
         </b-row>
     </section>
 </template>

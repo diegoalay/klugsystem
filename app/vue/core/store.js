@@ -5,7 +5,9 @@ export default {
             global: {
                 cash_register: options.current_user.cash_register ? options.current_user.cash_register :
                                 { id: null },
-                account: options.account
+                account: options.account,
+                abilities: options.current_user.abilities,
+                menu_items: options.menu_items
             }
         }
 

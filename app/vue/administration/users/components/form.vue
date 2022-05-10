@@ -124,6 +124,20 @@ export default {
                     </b-form-select>
                 </b-form-group>
 
+                <b-form-group>
+                    <template #label>
+                        Sucursal <sup class="text-danger"> *</sup>
+                    </template>
+                    <b-form-select
+                        v-model="user.branch_office_id"
+                        :options="options.branch_offices"
+                        size="sm"
+                        class="mt-3"
+                        required
+                    >
+                    </b-form-select>
+                </b-form-group>
+
                 <b-button type="submit" variant="primary">Guardar</b-button>
             </b-card-body>
         </b-card>

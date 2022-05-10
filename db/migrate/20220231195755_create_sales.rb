@@ -13,7 +13,7 @@ class CreateSales < ActiveRecord::Migration[6.1]
       t.decimal :change
 
       t.boolean :status, defaullt: :true
-      t.date :sale_date
+      t.datetime :sale_date
 
       t.bigint :user_creator_id
       t.bigint :user_modifier_id

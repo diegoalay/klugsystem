@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
   end
 
   def respond_with_unathorized
+    redirect_to dashboard_path and return
+
     render status: 401, json: {
       successful: false,
       error: {

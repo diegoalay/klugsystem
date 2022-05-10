@@ -11,7 +11,7 @@ export default {
         if (meta) {
             token = meta.getAttribute('content')
         }
-    
+
         Vue.prototype.http = axios.create({
             headers: { 'X-CSRF-Token': token }
         })
@@ -37,7 +37,7 @@ export default {
             }
 
         }, error => {
-            
+
             let message = ""
             if (error.response.data.error && error.response.data.error.message) {
                 message = error.response.data.error.message
@@ -56,5 +56,5 @@ export default {
         })
 
     }
-    
+
 }

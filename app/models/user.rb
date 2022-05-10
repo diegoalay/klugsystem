@@ -34,14 +34,7 @@ class User < ApplicationRecord
   end
 
   def show
-    {
-      id: id,
-      first_name: first_name,
-      first_surname: first_surname,
-      email: email,
-      role_id: user_roles.first&.role_id,
-
-    }
+    attributes.merge(role_id: roles.first.id)
   end
 
   def profile
@@ -55,8 +48,21 @@ class User < ApplicationRecord
     }
   end
 
+  def abilities
+    ::MenuItem.select('id', 'key', 'permissions') if admin?
+
+    items = menu_items.joins(menu_items: [:menu_item]).where("role_menu_items.status = ?", true)
+
+    items.select('menu_items.id', 'menu_items.key', 'menu_items.permissions')
+  end
+
+  def admin?
+    roles.map(&:code).include?('admin')
+  end
+
   def can?(permission)
-    return true if roles.map(&:code).include?('admin')
+    return true if permission == 'dashboard'
+    return true if admin?
 
     granted = roles.joins(menu_items: [:menu_item])
     .where('menu_items.key = ?', permission)

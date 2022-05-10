@@ -4,14 +4,11 @@ import DatePicker from 'vue2-datepicker'; import 'vue2-datepicker/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Toast from "vue-toastification"; import "vue-toastification/dist/index.css";
+import Toast from 'vue-toastification'; import 'vue-toastification/dist/index.css';
 import VueApexCharts from 'vue-apexcharts'
 import VModal from 'vue-js-modal'
 import VueI18n from 'vue-i18n'
-
-
-// Vue.use(Vuex)
-// import store from 'vueApp/core/store/index.js';
+import ActionCableVue from 'actioncable-vue';
 
 import {
     FormRadioPlugin,
@@ -39,10 +36,10 @@ import {
 } from 'bootstrap-vue'
 
 // Commponents
-import componentFiles from "../components/shared/component-files.vue"
-import componentHeaderList from "../components/component-header-list.vue"
-import componentSearchList from "../components/component-search-list.vue"
-import componentHeaderForm from "../components/component-header-form.vue"
+import componentFiles from '../components/shared/component-files.vue'
+import componentHeaderList from '../components/component-header-list.vue'
+import componentSearchList from '../components/component-search-list.vue'
+import componentHeaderForm from '../components/component-header-form.vue'
 
 // Libraries
 import VueRouter from 'vue-router'
@@ -89,7 +86,6 @@ Vue.use(ImagePlugin)
 Vue.use(VModal)
 Vue.use(CarouselPlugin)
 Vue.use(VueApexCharts)
-Vue.use(VueI18n)
 
 library.add(fas)
 
@@ -108,10 +104,13 @@ Vue.use(Toast, {
     icon: {
         iconClass: 'xmark'
     }
-});
+})
 
-const i18n = new VueI18n({
-    locale: 'es'
+Vue.use(ActionCableVue, {
+    debug: true,
+    debugLevel: 'error',
+    connectionUrl: 'ws://localhost:3000/cable', // or function which returns a string with your JWT appended to your server URL as a query parameter
+    connectImmediately: true,
 })
 
 export default (base_path, routes=[]) => {
@@ -127,12 +126,74 @@ export default (base_path, routes=[]) => {
         routes: routes
     })
 
+    app_builder['channels'] = {
+        RolesChannel: {
+            connected() {},
+            rejected() {},
+            received(response) {
+                this.store.global.abilities = response.data
+
+
+                this.abilitiesDiff()
+            },
+            disconnected() {},
+        },
+    }
+
+    app_builder['methods'] = {
+        abilitiesDiff: function (){
+            this.store.global.menu_items.forEach(item => {
+                const el = document.getElementById(item.key)
+                if (el) {
+                    const find = this.store.global.abilities.find(e => e.key == item.key)
+
+                    let styles = {
+                        opacity: 0,
+                        visibility: 'hidden',
+                        display: 'none'
+                    }
+
+                    if (find) {
+                        console.log(item.key)
+                        styles = {
+                            opacity: 1,
+                            visibility: 'visible',
+                            display: 'block'
+                        }
+                    }
+
+                    el.style.setProperty('opacity', styles.opacity)
+                    el.style.setProperty('visibility', styles.visibility)
+                    el.style.setProperty('display', styles.display)
+                }
+            })
+        },
+
+        sendMessage: function () {
+            this.$cable.perform({
+                channel: "RolesChannel",
+                action: "send_message",
+                data: {
+                    content: this.message,
+                },
+            });
+        }
+    }
+
+    app_builder['mounted'] = function(){
+        this.$cable.subscribe(
+            {
+                channel: 'RolesChannel',
+                id: system.current_user.role.id
+            }
+        );
+    }
+
     // · Building Vue cloud app
     let app = new Vue({
-        ...app_builder,
-        i18n
+        ...app_builder
     })
 
     // · Mount app once DOM is ready
-    app.$mount("#app")
+    app.$mount('#app')
 }

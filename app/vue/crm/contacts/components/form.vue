@@ -134,7 +134,7 @@ export default {
                                 :focus="false"
                                 lang="es"
                                 valueType="format"
-                                format="DD-MM-YYYY"
+                                format="DD/MM/YYYY"
                                 v-model="contact.birthdate"
                                 placeholder="">
                             </component-datepicker>

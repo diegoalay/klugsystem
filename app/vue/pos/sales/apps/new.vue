@@ -345,7 +345,7 @@ export default {
                     </component-products-icon>
                 </b-card>
             </b-col>
-            <b-col>
+            <b-col md="6" sm="12">
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
@@ -423,7 +423,7 @@ export default {
                                         :focus="false"
                                         lang="es"
                                         type="date"
-                                        format="DD-MM-YYYY"
+                                        format="DD-MM-YYYY hh:mm"
                                         v-model="sale.sale_date"
                                         placeholder=""
                                         required
@@ -456,7 +456,7 @@ export default {
 
                         <template v-if="payment_method.id">
                             <b-row>
-                                <b-col>
+                                <b-col col="4">
                                     <b-form-group v-if="getPaymentDiscounts().length > 0">
                                         <label> Descuento </label>
                                         <b-form-select
@@ -468,7 +468,7 @@ export default {
                                     </b-form-group>
                                 </b-col>
 
-                                <b-col>
+                                <b-col col="4">
                                     <b-form-group v-if="getPaymentInterest().length > 0">
                                         <label> Interés </label>
                                         <b-form-select
