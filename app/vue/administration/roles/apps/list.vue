@@ -111,7 +111,6 @@ export default {
             id="privileges"
             size="xl"
             hide-footer
-            hide-backdrop
             centered
             content-class="shadow"
             :title="`Permisos asignados a ${role.name}`"
@@ -123,7 +122,6 @@ export default {
             id="users"
             size="lg"
             hide-footer
-            hide-backdrop
             centered
             content-class="shadow"
             :title="`Usuarios asignados a ${role.name}`"

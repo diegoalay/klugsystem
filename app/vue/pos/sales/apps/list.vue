@@ -76,8 +76,6 @@
             }
         },
         mounted() {
-            console.log(this.store.global)
-
             if (this.store.global.cash_register.id) {
                 this.list()
                 this.getOptions()
@@ -106,6 +104,49 @@
                 }).catch(error => {
                     console.log(error)
                 })
+            },
+
+            async disableSale(sale_id){
+                const resp = await this.$dialog.confirm(
+                    {
+                        title: '¿Esta seguro que desea deshabilitar la venta?',
+                        text: 'Esta acción volverá a añadir los productos descontados del inventario.',
+                        actions: [
+                            {
+                                text: 'Confirmar',
+                                color: 'success',
+                                key: true,
+                            },
+                            {
+                                text: 'Cancelar',
+                                color: 'danger',
+                                key: false,
+                            },
+                        ]
+                    }
+                )
+
+                if (resp) {
+                    const form = {
+                        sale: {
+                            status: false
+                        }
+                    }
+
+                    const url = this.url.pos('sales/:id', {id: sale_id})
+                    this.http.put(url, form).then(result => {
+                        if (result.successful) {
+                            this.$toast.success('Venta deshabilitada exitosamente.')
+
+                            const index = this.data.findIndex(e => e.id === sale_id)
+                            this.$set(this.data[index], 'status', false)
+                        } else {
+                            this.$toast.error(result.error.message)
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
             },
 
             getOptions(){

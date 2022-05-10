@@ -16,6 +16,7 @@ class Sale < ApplicationRecord
   validate :sale_data
 
   after_create :initialize_sale
+  after_save :rollback_products
 
   enum sale_type: {
     sale: 'sale',
@@ -23,6 +24,28 @@ class Sale < ApplicationRecord
     bill: 'bill',
     electronic_bill: 'electronic_bill'
   }
+
+  def rollback_products
+    if saved_change_to_status?
+      before, after = saved_changes["status"]
+
+      if before && !after
+        ActiveRecord::Base.transaction do
+          details.each do |sale_detail|
+            sale_detail.user_modifier_id = user_modifier_id
+            sale_detail.update(status: false)
+
+            if sale_detail.product.present?
+              quantity = sale_detail.product.quantity
+              quantity += sale_detail.quantity
+
+              sale_detail.product.update(quantity: quantity)
+            end
+          end
+        end
+      end
+    end
+  end
 
   def show
     subtotal1 = subtotal - discount

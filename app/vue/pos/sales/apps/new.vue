@@ -2,12 +2,14 @@
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
 import componentSaleDetails from 'vueApp/components/component-sale-details.vue'
+import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
 
 export default {
     components:{
         'component-autocomplete': componenentAutocomplete,
         'component-products-icon': componentProductsIcon,
-        'component-sale-details': componentSaleDetails
+        'component-sale-details': componentSaleDetails,
+        'component-confirm-sale': componentConfirmSale
     },
     data() {
         return {
@@ -77,15 +79,16 @@ export default {
         this.getOptions()
     },
     methods: {
-        submitSaleOrQuotation(event){
-            if(event){
-                event.preventDefault()
-            }
+        confirmSale(){
+            this.$bvModal.show('confirm-sale')
+        },
 
-            const url = this.url.pos('sales')
+        submitSale(sale_type){
+            const url = this.url.finance('sales')
             let form = {
                 sale: {
                     ... this.sale,
+                    sale_type: sale_type,
                     client_id: this.client.id,
                     subtotal: this.getSum('subtotal'),
                     total: this.getTotalSale(),
@@ -101,9 +104,11 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Venta realizada.')
-                    this.$router.push(this.url.pos('sales/:id', {id: result.data.id}).toString(false))
+                    this.$router.push(this.url.finance('sales/:id', {id: result.data.id}).toString(false))
                 } else {
-                    this.$toast.error(result.error.message)
+                    this.$toast.error(result.error.message, {
+                        duration: 4000
+                    })
                 }
             }).catch(error => {
                 console.log(error)
@@ -111,7 +116,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url.pos('sales/options')
+            const url = this.url.finance('sales/options')
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -143,7 +148,7 @@ export default {
             let discount = 0
             const subtotal = this.getSum('subtotal')
 
-            if (this.payment_method_discount.value) {
+            if (this.payment_method && this.payment_method_discount.value) {
                 if (this.payment_method_discount.key == 'discount_percentage') {
                     discount = subtotal * this.payment_method_discount.value
                 } else if (this.payment_method_discount.key == 'discount_value') {
@@ -188,7 +193,7 @@ export default {
         getInterest(){
             let interest = 0
 
-            if (this.payment_method_interest.value) {
+            if (this.payment_method && this.payment_method_interest.value) {
                 if (this.payment_method_interest.key == 'interest_percentage') {
                     interest = this.getTotal() * this.payment_method_interest.value
                 } else if (this.payment_method_interest.key == 'interest_value') {
@@ -326,7 +331,7 @@ export default {
     <section>
         <component-header-form :title="'Punto de venta'">
             <slot name="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/pos/sales">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
 
@@ -337,7 +342,7 @@ export default {
             </slot>
         </component-header-form>
         <b-row>
-            <b-col md="6" sm="12">
+            <b-col md="5" sm="12">
                 <b-card no-body>
                     <component-products-icon
                         @addProduct="addProduct"
@@ -345,7 +350,7 @@ export default {
                     </component-products-icon>
                 </b-card>
             </b-col>
-            <b-col md="6" sm="12">
+            <b-col md="7" sm="12">
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
@@ -413,6 +418,44 @@ export default {
                                 </b-form-group>
                             </b-col>
                         </b-row>
+
+                        <b-row>
+                            <b-col md="6" sm="12">
+                                <b-form-group>
+                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
+                                        <template #first>
+                                            <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                        </template>
+                                    </b-form-select>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-col md="6" sm="12">
+                                <template v-if="payment_method.id">
+                                    <b-form-group v-if="getPaymentDiscounts().length > 0">
+                                        <label> Descuento </label>
+                                        <b-form-select
+                                            v-model="payment_method_discount"
+                                            :options="getPaymentDiscounts()"
+                                            value-field="item"
+                                        >
+                                        </b-form-select>
+                                    </b-form-group>
+
+                                    <b-form-group v-if="getPaymentInterest().length > 0">
+                                        <label> Interés </label>
+                                        <b-form-select
+                                            v-model="payment_method_interest"
+                                            :options="getPaymentInterest()"
+                                            value-field="item"
+                                        >
+                                        </b-form-select>
+                                    </b-form-group>
+                                </template>
+                            </b-col>
+                        </b-row>
+
                         <b-row>
                             <b-col md="4" sm="12">
                                 <b-form-group>
@@ -431,56 +474,8 @@ export default {
                                     </component-datepicker>
                                 </b-form-group>
                             </b-col>
-
-                            <b-col md="4" sm="12">
-                                <b-form-group>
-                                    <label> Tipo de venta <sup class="text-danger">*</sup> </label>
-                                    <b-form-select required v-model="sale.sale_type" :options="options.sale_types">
-                                        <template #first>
-                                            <b-form-select-option :value="null"> Seleccione un tipo de venta  </b-form-select-option>
-                                        </template>
-                                    </b-form-select>
-                                </b-form-group>
-                            </b-col>
-                            <b-col md="4" sm="12">
-                                <b-form-group>
-                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
-                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
-                                        <template #first>
-                                            <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
-                                        </template>
-                                    </b-form-select>
-                                </b-form-group>
-                            </b-col>
                         </b-row>
 
-                        <template v-if="payment_method.id">
-                            <b-row>
-                                <b-col col="4">
-                                    <b-form-group v-if="getPaymentDiscounts().length > 0">
-                                        <label> Descuento </label>
-                                        <b-form-select
-                                            v-model="payment_method_discount"
-                                            :options="getPaymentDiscounts()"
-                                            value-field="item"
-                                        >
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-col>
-
-                                <b-col col="4">
-                                    <b-form-group v-if="getPaymentInterest().length > 0">
-                                        <label> Interés </label>
-                                        <b-form-select
-                                            v-model="payment_method_interest"
-                                            :options="getPaymentInterest()"
-                                            value-field="item"
-                                        >
-                                        </b-form-select>
-                                    </b-form-group>
-                                </b-col>
-                            </b-row>
-                        </template>
                         <hr>
 
                         <component-sale-details
@@ -560,7 +555,7 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish-sale" block variant="primary" type="submit" @click="submitSaleOrQuotation"> Vender </b-button>
+                                <b-button id="finish-sale" block variant="primary" type="submit" @click.prevent="confirmSale"> Vender </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -569,6 +564,17 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
+
+            <b-modal
+                id="confirm-sale"
+                size="xl"
+                hide-footer
+                centered
+                content-class="shadow"
+                title="Seleccione el método de pago"
+            >
+                <component-confirm-sale :sale_types="options.sale_types" @submit="submitSale" :total="getTotalSaleWithFormat()"/>
+            </b-modal>
         </b-row>
     </section>
 </template>

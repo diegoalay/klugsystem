@@ -95,6 +95,7 @@ class ProductsController < ApplicationSystemController
         name sku retail_price wholesale_price
         purchase_price quantity note status product_type
         brand_id branch_office_id department_id product_file_id
+        measurement_unit_id
       ]
     )
   end

@@ -24,6 +24,7 @@ class ClientQuery
 
   def search query
     search = query[:filters][:search]&.downcase
+    search.gsub("-", "")
 
     clients = @clients.select("
       id,

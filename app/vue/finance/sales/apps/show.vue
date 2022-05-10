@@ -158,6 +158,9 @@ export default {
 
                     <br>
                     <b-row class="justify-content-end">
+                        <b-col class="text-center" md="6" v-if="!sale.status">
+                            <h1 class="text-danger"> {{ 'ANULADA' }} </h1>
+                        </b-col>
                         <b-col md="6" sm="12">
                             <b-table
                                 :fields="totalField"

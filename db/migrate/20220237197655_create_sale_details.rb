@@ -11,6 +11,8 @@ class CreateSaleDetails < ActiveRecord::Migration[6.1]
       t.decimal :discount_percentage
       t.string :measurement_unit
 
+      t.boolean :status, defaullt: :true
+
       t.bigint :user_creator_id
       t.bigint :user_modifier_id
 

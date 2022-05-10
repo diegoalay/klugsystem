@@ -15,7 +15,8 @@ export default {
                 branch_offices: [],
                 departments: [],
                 brands: [],
-                measurement_units: []
+                measurement_units: [],
+                product_types: []
             }
         }
     },
@@ -110,7 +111,7 @@ export default {
                             </b-form-input>
                         </b-form-group>
                     </b-col>
-                    <b-col sm="12">
+                    <b-col md="8" sm="12">
                         <b-form-group>
                             <label> Cantidad <sup class="text-danger">*</sup> </label>
 
@@ -122,6 +123,20 @@ export default {
                                 required
                             >
                             </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                    <b-col md="4" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                Tipo de producto <sup class="text-danger">*</sup>
+                            </template>
+                            <b-form-radio-group
+                                required
+                                id="radio-group-1"
+                                v-model="product.product_type"
+                                :options="options.product_types"
+                                name="radio-options"
+                            ></b-form-radio-group>
                         </b-form-group>
                     </b-col>
                 </b-row>

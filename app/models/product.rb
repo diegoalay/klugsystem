@@ -15,8 +15,14 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :quantity, presence: true
   validates :retail_price, presence: true
+  validates :product_type, presence: true
 
   before_destroy :can_be_destroyed
+
+  enum product_type: {
+    good: 'good',
+    service: 'service',
+  }
 
   def self.index account, query
     search = query[:filters][:search]&.downcase
@@ -173,6 +179,7 @@ class Product < ApplicationRecord
 
   def self.options account
     {
+      product_types: product_types.map {|k,_v| {text: I18n.t("models.products.column_enum_product_type_#{k}"), value: k}},
       measurement_units: account.measurement_units.map {|measurement_unit| {text: measurement_unit.name, value: measurement_unit.id}},
       branch_offices: account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: account.departments.map {|department| {text: department.name, value: department.id}},

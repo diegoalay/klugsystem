@@ -569,7 +569,6 @@ export default {
                 id="confirm-sale"
                 size="xl"
                 hide-footer
-                hide-backdrop
                 centered
                 content-class="shadow"
                 title="Seleccione el método de pago"

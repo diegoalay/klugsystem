@@ -20,7 +20,7 @@ class ProductTransactionType < ApplicationRecord
       .gsub(/\s+/, '_')                   # replace spaces or spaces with single dash
       .gsub("-", "_")                     # replace - (->) _
 
-      self.code = custom_code
+      self.code ||= custom_code
     end
   end
 end

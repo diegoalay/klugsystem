@@ -118,3 +118,8 @@
       </tr>
     </tbody>
   </table>
+  <br>
+  <% if !@details[:sale].dig('status') %>
+    <h1 class="text-danger"> ANULADA </h1>
+  <% end %>
+</div>

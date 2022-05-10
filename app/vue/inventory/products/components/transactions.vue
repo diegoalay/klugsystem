@@ -25,7 +25,7 @@
                     key: 'quantity',
                     sortable: true
                 },{
-                    label: '',
+                    label: 'Detalles',
                     key: 'actions'
                 }],
                 pagination: {
@@ -135,6 +135,27 @@
                 this.product_transaction = {
                     id: null
                 }
+            },
+            modelDetails(details, type){
+                switch(type) {
+                    case 'Sale':
+                        return `Venta (${this.date.datetime(details.created_at)})`
+                    default:
+                        return ''
+                }
+            },
+            showDetails(transaction){
+                if (!transaction.model_type) return
+
+                const model_type = transaction.model_type
+                const model_id = transaction.model_id
+
+                switch(model_type) {
+                    case 'Sale':
+                        this.$router.push(this.url.finance('sales/:id', { id: model_id }).toString(false))
+                    default:
+                        return
+                }
             }
         },
 
@@ -234,6 +255,7 @@
 
         <component-search-list :loading="loading" @search="onSearch"/>
             <b-table
+                @row-clicked="showDetails"
                 striped
                 hover
                 :items="data"
@@ -252,12 +274,22 @@
                     </template>
                 </template>
 
+                <template v-slot:cell(created_at)="row">
+                    {{ date.datetime(row.item.created_at) }}
+                </template>
+
                 <template v-slot:cell(quantity)="row">
                     <div v-if="row.item.category == 'decrease'" class="p-1 text-danger">
                         {{ row.item.quantity }}
                     </div>
                     <div v-else class="p-1 text-success">
                         {{  row.item.quantity }}
+                    </div>
+                </template>
+
+                <template v-slot:cell(actions)="row">
+                    <div v-if="row.item.model_details" class="p-1">
+                        {{ modelDetails(row.item.model_details, row.item.model_type) }}
                     </div>
                 </template>
             </b-table>

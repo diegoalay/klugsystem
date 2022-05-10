@@ -57,7 +57,7 @@ class CashRegister < ApplicationRecord
   end
 
   def show
-    sales_sum = sales.where(cash_register: self).sum(:total)&.to_f
+    sales_sum = sales.where(cash_register: self, status: true).sum(:total)&.to_f
     expeditures_sum = expeditures.where(cash_register: self).sum(:amount)&.to_f
 
     sum_final_value = 0
@@ -89,7 +89,7 @@ class CashRegister < ApplicationRecord
   end
 
   def sum_final_value
-    sales_sum = sales.sum(:total)&.to_f
+    sales_sum = sales.where(status: true).sum(:total)&.to_f
     expeditures_sum = expeditures.sum(:amount)&.to_f
 
     return (initial_value + sales_sum - expeditures_sum)

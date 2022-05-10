@@ -92,10 +92,6 @@ export default {
             })
         },
         submitRoleMenuItem(menu_item, role_menu_item_id, status){
-            console.log(menu_item)
-            console.log(role_menu_item_id)
-            console.log(status)
-
             if (role_menu_item_id) {
                 this.putForm(menu_item, role_menu_item_id, status)
             } else {
@@ -122,8 +118,6 @@ export default {
                     }
 
                     this.$set(this.menu_items_parsed, index, details)
-
-                    console.log(this.menu_items_parsed[index].details)
 
                     this.$toast.success('Permiso actualizado exitosamente.')
                 } else {

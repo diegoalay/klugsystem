@@ -78,7 +78,8 @@ measurement_unit = account.measurement_units.find_or_create_by(name: 'UND')
     user_creator: user,
     user_modifier: user,
     branch_office: branch_office,
-    measurement_unit: measurement_unit
+    measurement_unit: measurement_unit,
+    product_type: 'good'
   )
 end
 

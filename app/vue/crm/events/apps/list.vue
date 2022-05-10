@@ -220,7 +220,7 @@
             </b-col>
         </b-row>
 
-        <b-modal id="modal" centered hide-footer hide-backdrop content-class="shadow" :title="event.modalTitle">
+        <b-modal id="modal" centered hide-footer content-class="shadow" :title="event.modalTitle">
             <component-form
                 :event="event"
                 @submit="submitEvent"

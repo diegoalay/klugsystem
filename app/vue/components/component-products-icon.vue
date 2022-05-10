@@ -14,8 +14,8 @@ export default {
                 total: 0,
                 per_page: 20,
                 current_page: 1,
-                order_by: 'name',
-                order: false,
+                order_by: 'quantity',
+                order: true,
             }
         }
     },

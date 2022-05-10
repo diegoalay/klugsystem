@@ -123,6 +123,9 @@ a.fc-event, a.fc-event:hover {
 
 }
 
+.modal-backdrop {
+    opacity:0.5 !important;
+ }
 
 @media (max-width: 768px) {
     .card {

@@ -52,7 +52,6 @@ class SalesController < ApplicationSystemController
     @sale.user_modifier = current_user
     @sale.cash_register = current_user.current_cash_register if params[:sale][:cash_register]
     @sale.branch_office = current_user.branch_office
-    @sale.status = true
 
     if (params[:sale][:client][:id].blank?)
       create_client
@@ -112,11 +111,14 @@ class SalesController < ApplicationSystemController
   private
 
   def create_client
-    @new_client = @account.clients.new(
+    @new_client = @account.clients.find_or_initialize_by(
+      billing_identifier: params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, ""),
+    )
+
+    @new_client.assign_attributes(
       billing_name: params[:sale][:client][:billing_name],
       billing_address: params[:sale][:client][:billing_address],
       billing_email: params[:sale][:client][:billing_email],
-      billing_identifier: params[:sale][:client][:billing_identifier],
       user_creator: current_user
     )
   end
@@ -145,7 +147,7 @@ class SalesController < ApplicationSystemController
   def sale_params
     params.fetch(:sale, {}).permit(
       %i[
-        client_id subtotal total discount interest shipping_costs
+        client_id subtotal total discount interest shipping_costs status
         received_amount change sale_type employees_id sale_date payment_method_id
       ]
     )
