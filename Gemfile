@@ -11,6 +11,9 @@ gem 'font-awesome-sass', '~> 6.1.1'
 
 gem 'bcrypt', '~> 3.1.7'
 
+# Threads
+gem 'sidekiq'
+
 # user authentication
 gem 'devise'
 gem 'pundit'
@@ -53,7 +56,9 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+gem 'redis'
+gem 'redis-namespace'
+gem 'redis-rails'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
