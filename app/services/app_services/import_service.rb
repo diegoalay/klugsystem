@@ -101,17 +101,13 @@ module AppServices
         name: data["name"].downcase
       )
 
-      if (payment_method.id.nil?)
-        payment_method.assign_attributes(
-          interest_percentage: data["interest_percentage"],
-          category: data["category"],
-          status: true
-        )
+      payment_method.assign_attributes(
+        interest_percentage: data["interest_percentage"],
+        category: data["category"],
+        status: true
+      )
 
-        payment_method.save!
-      end
-
-      payment_method
+      payment_method.save!
     end
 
     def create_user(data)

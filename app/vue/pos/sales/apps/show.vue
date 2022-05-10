@@ -10,7 +10,8 @@ export default {
     data(){
         return {
             sale: {
-                id: null
+                id: null,
+                status: true
             },
             client: {
                 id: null
