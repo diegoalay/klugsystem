@@ -136,7 +136,7 @@ class Product < ApplicationRecord
   end
 
   def sale_statistics
-    statistics = self.account.sales_details.joins(:sale).where(product: self)
+    statistics = self.account.sales_details.joins(:sale).where(product: self, status: true)
     .select(
         "sum(sale_details.quantity) as total",
         "to_char(sales.sale_date, 'MM') as month",
