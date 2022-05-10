@@ -63,6 +63,8 @@
                 this.http.get(url).then(response => {
                     if (response.successful) {
                         this.summary = response.data
+                    } else {
+                        this.$toast.error(result.error.message)
                     }
 
                     this.loading = false
@@ -140,8 +142,8 @@
     <section>
         <b-row>
             <b-col>
-                <b-row>
-                    <b-col md="6" sm="12">
+                <b-row md="7" sm="12">
+                    <b-col md="4" sm="12">
                         <b-card  title="Gastos" class="dashboard-top-box">
                             <b-row>
                                 <b-col md="4" sm="4" class="text-left">
@@ -155,7 +157,7 @@
                             </b-row>
                         </b-card>
                     </b-col>
-                    <b-col md="6" sm="12">
+                    <b-col md="4" sm="12">
                         <b-card title="Ventas" class="dashboard-top-box">
                             <b-row>
                                 <b-col md="4" sm="4" class="dashboard-counter text-left">
@@ -169,6 +171,20 @@
                             </b-row>
                         </b-card>
                     </b-col>
+                    <b-col md="4" sm="12">
+                        <b-card title="Total" class="dashboard-top-box">
+                            <b-row>
+                                <b-col md="4" sm="4" class="dashboard-counter text-left">
+                                    <h5 class="text-info">
+                                        <font-awesome-icon icon="dollar-sign"/>
+                                    </h5>
+                                </b-col>
+                                <b-col md="8" sm="8" class="dashboard-value text-right">
+                                    <h3> Q. {{ summary.final_value }} </h3>
+                                </b-col>
+                            </b-row>
+                        </b-card>
+                    </b-col>
                 </b-row>
                 <b-row>
                     <b-col md="12" sm="12">
@@ -178,7 +194,7 @@
                     </b-col>
                 </b-row>
             </b-col>
-            <b-col md="4" sm="12">
+            <b-col md="5" sm="12">
                 <b-card class="dashboard-products">
                     <component-search-list :loading="loading" @search="onSearch"/>
                     <b-table
