@@ -63,7 +63,10 @@ class SaleQuery
     .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
 
     data = sales.map do |sale|
-      sale.attributes.merge(sale_type: I18n.t("models.sales.column_enum_sale_type_#{sale.sale_type}"))
+      sale.attributes.merge(
+        can_be_disabled: sale.status ? current_user.admin? : false,
+        sale_type: I18n.t("models.sales.column_enum_sale_type_#{sale.sale_type}")
+      )
     end
 
     Responder.pagination(sales, data)
