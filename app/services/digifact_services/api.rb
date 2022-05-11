@@ -10,7 +10,7 @@ module DigifactServices
       @token = current_user.account.digifact_token
       @sale = sale
 
-      if @account.id === 1 || Rails.env == 'development'
+      if @current_user.account.id === 1 || Rails.env == 'development'
         @api_url   = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
       else
         @api_url   = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequestV2'

@@ -3,7 +3,7 @@ module DigifactServices
     def initialize(account)
       @account = account
 
-      if @account.id === 1 || Rails.env == 'development'
+      if @account.id == 1 || Rails.env == 'development'
         @api_url   = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
       else
         @api_url   = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
