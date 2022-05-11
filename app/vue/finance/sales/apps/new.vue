@@ -105,6 +105,8 @@ export default {
                     this.$toast.success('Venta realizada.')
                     this.$router.push(this.url.finance('sales/:id', {id: result.data.id}).toString(false))
                 } else {
+                    this.$bvModal.hide('confirm-sale')
+
                     this.$toast.error(result.error.message, {
                         duration: 4000
                     })
@@ -259,7 +261,7 @@ export default {
         },
 
         addProduct(product){
-            if (product.quantity <= 0) {
+            if (product.quantity <= 0 && product.product_type === 'good') {
                 this.$toast.error('El producto se encuentra agotado.')
                 return
             }
@@ -278,7 +280,7 @@ export default {
                 saleQuantity += 1
             }
 
-            if (saleQuantity > product.quantity) {
+            if (saleQuantity > product.quantity && product.product_type === 'good') {
                 this.$toast.error('Artículos agotado.')
 
                 saleQuantity = product.quantity

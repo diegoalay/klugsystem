@@ -8,7 +8,9 @@ export default {
         'component-show-cash-register': appShowCashRegister
     },
     data() {
-        return {}
+        return {
+            finished: false
+        }
     },
     mounted(){
         this.getData()
@@ -16,15 +18,16 @@ export default {
     methods:{
         getData(){
             const url = this.url.pos('cash_register')
-
             this.http.get(url).then(result => {
                 if (result.successful) {
                     const cash_register = result.data ? result.data : { id: null }
 
                     this.$set(this.store.global, 'cash_register', cash_register)
-                }else{
+                } else {
                     this.$toast.error(result.error.message)
                 }
+
+                this.finished = true
             }).catch(error => {
                 console.log(error)
             })
@@ -34,6 +37,8 @@ export default {
 </script>
 
 <template>
-    <component-show-cash-register v-if="store.global.cash_register.id" />
-    <component-new-cash-register v-else />
+    <div>
+        <component-show-cash-register v-if="store.global.cash_register.id && finished" />
+        <component-new-cash-register v-if="!store.global.cash_register.id" />
+    </div>
 </template>

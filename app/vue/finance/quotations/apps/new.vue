@@ -247,11 +247,6 @@ export default {
         },
 
         addProduct(product){
-            if (product.quantity <= 0) {
-                this.$toast.error('El producto se encuentra agotado.')
-                return
-            }
-
             if (!product.id) {
                 this.$toast.warning('Debes seleccionar un producto.')
                 return
@@ -264,12 +259,6 @@ export default {
             if (index !== -1) {
                 saleQuantity = this.products[index].saleQuantity
                 saleQuantity += 1
-            }
-
-            if (saleQuantity > product.quantity) {
-                this.$toast.error('Artículos agotado.')
-
-                saleQuantity = product.quantity
             }
 
             const subtotal = product.retail_price * saleQuantity

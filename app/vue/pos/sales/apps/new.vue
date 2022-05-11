@@ -109,6 +109,8 @@ export default {
                     this.$toast.error(result.error.message, {
                         duration: 4000
                     })
+
+                    this.$bvModal.hide('confirm-sale')
                 }
             }).catch(error => {
                 console.log(error)
