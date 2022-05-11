@@ -61,6 +61,11 @@ es:
       brands: 'Marcas'
       departments: 'Departamentos'
       measurement_units: 'Unidades de medida'
+    pos:
+      title: 'Punto de venta'
+      cash_register: 'Mi caja'
+      sales: 'Mis Ventas'
+      expeditures: 'Mis gastos'
     hr:
       title: 'Recursos humanos'
       employees: 'Empleados'

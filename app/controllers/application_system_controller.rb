@@ -47,6 +47,7 @@ class ApplicationSystemController < ApplicationController
     key = params[:controller]
     key = key.gsub('/', '.')
 
+    return if request.format === "json"
     respond_with_unathorized if !current_user.can?(key)
   end
 end

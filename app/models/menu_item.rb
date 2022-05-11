@@ -113,6 +113,36 @@ class MenuItem < ApplicationRecord
 
     MenuItem.find_or_create_by!(
       order: 4,
+      key: 'pos',
+      icon: 'store'
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'pos'),
+      order: 0,
+      key: 'pos.cash_register',
+      icon: 'cash-register',
+      permissions: %w[cash_register.show]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'pos'),
+      order: 1,
+      key: 'pos.sales',
+      icon: 'file-invoice-dollar',
+      permissions: %w[sales.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      menu_item: MenuItem.find_by(key: 'pos'),
+      order: 2,
+      key: 'pos.expeditures',
+      icon: 'money-bill-wave',
+      permissions: %w[expeditures.index]
+    )
+
+    MenuItem.find_or_create_by!(
+      order: 4,
       key: 'hr',
       icon: 'address-card',
     )
@@ -126,13 +156,13 @@ class MenuItem < ApplicationRecord
     )
 
     MenuItem.find_or_create_by!(
-      order: 5,
+      order: 6,
       key: 'books',
       icon: 'image-portrait',
     )
 
     MenuItem.find_or_create_by!(
-      order: 6,
+      order: 7,
       key: 'configurations',
       icon: 'screwdriver-wrench',
     )
