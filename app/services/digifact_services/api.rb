@@ -3,8 +3,14 @@ module DigifactServices
     include DigifactServices::GenerateBill
     include DigifactServices::AnulateBill
 
-    DEFAULT_API_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
-    DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequestV2' if Rails.env == 'production'
+
+    DEFAULT_API_URL2 = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequest'
+
+    if Rails.env == 'production'
+      DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequestV2'
+    else
+      DEFAULT_API_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
+    end
 
     def initialize(current_user, sale)
       @current_user = current_user
@@ -31,7 +37,7 @@ module DigifactServices
 
     def get(url, query = {}, body = {})
       HTTParty.get(
-        DEFAULT_API_URL + url,
+        DEFAULT_API_URL2 + url,
         headers: headers,
         query: query,
         body: body,

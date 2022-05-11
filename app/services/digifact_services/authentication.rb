@@ -1,8 +1,11 @@
 module DigifactServices
   class Authentication
 
-    AUTHENTICATION_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
-    AUTHENTICATION_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token' if Rails.env == 'production'
+    if Rails.env == 'production'
+      AUTHENTICATION_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
+    else
+      AUTHENTICATION_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
+    end
 
     def initialize(account)
       @account = account
