@@ -113,11 +113,11 @@ export default {
                 } else {
                     if (sale_type === 'electronic_bill') {
                         this.$toast.error(result.error.message, {
-                            duration: 1000
+                            timeout: 10000,
                         })
                     } else {
                         this.$toast.error(result.error.message, {
-                            duration: 4000
+                            timeout: 4000,
                         })
                     }
 

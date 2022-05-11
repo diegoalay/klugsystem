@@ -42,7 +42,7 @@ module XmlServices
                           </dte:DireccionReceptor>
                       </dte:Receptor>
                       <dte:Frases>
-                        <dte:Frase TipoFrase="1" CodigoEscenario="1"/>
+                        <dte:Frase TipoFrase="1" CodigoEscenario="2"/>
                       </dte:Frases>
                       <dte:Items>
                         #{generate_items}
