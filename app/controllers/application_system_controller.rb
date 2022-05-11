@@ -48,6 +48,8 @@ class ApplicationSystemController < ApplicationController
     key = key.gsub('/', '.')
 
     return if request.format === "json"
+    return if request.format === "pdf"
+
     respond_with_unathorized if !current_user.can?(key)
   end
 end
