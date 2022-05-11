@@ -3181,360 +3181,420 @@
   },
   {
     "name": "Consulta",
+    "product_type": "service",
     "branch_office": "Kaminal",
     "measurement_unit": "Unidad",
     "retail_price": "130"
   },
   {
     "name": "Reconsulta",
+    "product_type": "service",
     "branch_office": "Kaminal",
     "measurement_unit": "Unidad",
     "retail_price": "70"
   },
   {
     "name": "Vacuna Multiple de perro",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "140"
   },
   {
     "name": "Vacuna triple felina",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "140"
   },
   {
     "name": "Vacuna Leucemia felina",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "130"
   },
   {
     "name": "Vacuna quintuple felina",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "195"
   },
   {
     "name": "Vacuna antirrábica",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "120"
   },
   {
     "name": "Vacuna tos de las perreras",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "140"
   },
   {
     "name": "Desparasitación de 0 a 10 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "55"
   },
   {
     "name": "Desparasitación de 11 a 20 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "60"
   },
   {
     "name": "Desparasitación de 21 a 30 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "75"
   },
   {
     "name": "Desparasitación de 31 a 40 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "80"
   },
   {
     "name": "Desparasitación de 41 a 50 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "85"
   },
   {
     "name": "Desparasitación de 51 a 60 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "90"
   },
   {
     "name": "Desparasitación de 61 a 70 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "95"
   },
   {
     "name": "Desparasitación de 71 lbs o más",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "100"
   },
   {
     "name": "Dosis de medicamento inyectado",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "40"
   },
   {
     "name": "Dosis de cerenia (cada ml)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "70"
   },
   {
     "name": "Hidroterapia",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "225"
   },
   {
     "name": "Test de schimer o fluoreceina c/ojo",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "100"
   },
   {
     "name": "Osurnia (c/ampolla)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "185"
   },
   {
     "name": "Ultrasonido",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "260"
   },
   {
     "name": "Doppler",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "120"
   },
   {
     "name": "Raspado de piel",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "75"
   },
   {
     "name": "Tricograma",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "75"
   },
   {
     "name": "Corte de uñas sin sedación",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "80"
   },
   {
     "name": "Citología Diff Quick",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "100"
   },
   {
     "name": "SNAP  de giardia",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "150"
   },
   {
     "name": "SNAP 4DX perro",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "275"
   },
   {
     "name": "SNAP 3ple felino",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "295"
   },
   {
     "name": "Certificado de exportación",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "850"
   },
   {
     "name": "Eutanacia de 1 a 25 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "250"
   },
   {
     "name": "Eutanacia de 26 a 50 lbs",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "325"
   },
   {
     "name": "Eutanacia de mas de 51 libras",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "450"
   },
   {
     "name": "Hematología simple (sin plaquetas)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "120"
   },
   {
     "name": "Hematología completa (con plaquetas)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "170"
   },
   {
     "name": "T4 libre",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "145"
   },
   {
     "name": "T4 total",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "120"
   },
   {
     "name": "Panel tiroideo",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "360"
   },
   {
     "name": "Cortisol",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "160"
   },
   {
     "name": "Panel Cushing",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "420"
   },
   {
     "name": "Prueba de glucosa",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "90"
   },
   {
     "name": "Urianálisis",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "80"
   },
   {
     "name": "BUN y creatinina (renales)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "110"
   },
   {
     "name": "GPT y GOT (hepáticas)",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "125"
   },
   {
     "name": "Fosfatasa Alcalina",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "100"
   },
   {
     "name": "Cultivo de hongos",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "170"
   },
   {
     "name": "Muestra de orina para sedimento",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "75"
   },
   {
     "name": "Examen de heces",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "140"
   },
   {
     "name": "Hemoglobina glicosilada",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "130"
   },
   {
     "name": "Fenobarbital",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "210"
   },
   {
     "name": "Trglicéridos",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "70"
   },
   {
     "name": "KOH hongos",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "100"
   },
   {
     "name": "Estradiol",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "160"
   },
   {
     "name": "Progesterona",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "160"
   },
   {
     "name": "Cirugía menor perro/gato pequeño",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "650"
   },
   {
     "name": "Cirugía mayor perro/gato gato pequeño",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "950"
   },
   {
     "name": "Cirugia abdominal perro pequeño",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "1200"
   },
   {
     "name": "Cirugía abdominal perro mediano",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "1500"
   },
   {
     "name": "Cirugía abdominal perro grande",
+    "product_type": "service",
     "measurement_unit": "Unidad",
     "branch_office": "Kaminal",
     "retail_price": "1900"
