@@ -158,7 +158,7 @@
                     <component-datepicker
                         v-model="filters.date_range"
                         lang="es"
-                        format="DD/MM/YYYY"
+                        format="DD-MM-YYYY"
                         range
                         placeholder="Seleccione un rango de fechas"
                     >

@@ -131,12 +131,12 @@ export default {
 
                         <b-form-group label="Fecha de nacimiento">
                             <component-datepicker
-                                :focus="false"
-                                lang="es"
-                                valueType="format"
-                                format="DD/MM/YYYY"
                                 v-model="contact.birthdate"
-                                placeholder="">
+                                lang="es"
+                                format="DD-MM-YYYY"
+                                type="date"
+                                placeholder=""
+                            >
                             </component-datepicker>
                         </b-form-group>
 
