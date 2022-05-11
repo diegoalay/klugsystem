@@ -54,7 +54,7 @@ module AppServices
         wholesale_price: data["wholesale_price"],
         brand: create_object(data["brand"], "brand"),
         department: create_object(data["department"], "department"),
-        product_type: data["product_type"]
+        product_type: data["product_type"] || "good"
       )
 
       product.save!

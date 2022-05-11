@@ -840,6 +840,7 @@ ActiveRecord::Schema.define(version: 2022_04_26_151850) do
     t.decimal "discount_value"
     t.decimal "discount_percentage"
     t.string "measurement_unit"
+    t.string "product_type"
     t.boolean "status"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
