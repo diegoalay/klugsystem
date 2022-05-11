@@ -94,6 +94,7 @@ class SaleQuery
   def sale_types(current_user)
     Sale.sale_types.each_with_object([]) do |(k, v), sale_types|
 
+      next if current_user.account.id == 2 && v === 'bill'
       if k == 'electronic_bill'
         unless current_user.branch_office.electronic_billing? && current_user.account.electronic_billing?
           next
