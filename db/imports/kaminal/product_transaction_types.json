@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Producto de ingreso"
+  },
+  {
+    "name": "Producto vencido"
+  },
+  {
+    "name": "Producto dañado"
+  },
+  {
+    "name": "Producto donado"
+  },
+  {
+    "name": "Producto vendido"
+  }
+]

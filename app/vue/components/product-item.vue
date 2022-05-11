@@ -33,9 +33,15 @@ export default {
 
                 <b-card-body>
                     <p> <b>Precio: </b> {{ 'Q ' + product.retail_price }} </p>
-                    <p> <b>Existencias:</b> {{ product.quantity }} </p>
-                    <p> <b>Marca:</b> {{ product.brand_name }} </p>
-
+                    <template v-if="product.product_type === 'good'">
+                        <p> <b>Existencias:</b> {{ product.quantity }} </p>
+                        <p v-if="product.brand_name"> <b>Marca:</b> {{ product.brand_name }} </p>
+                        <p v-if="product.department_name"> <b>Marca:</b> {{ product.department_name }} </p>
+                        <p class="text-info"> <b> (Bien) </b></p>
+                    </template>
+                    <template v-else>
+                        <p class="text-dark"> <b> (Servicio) </b></p>
+                    </template>
                 </b-card-body>
             </b-row>
         </b-card>

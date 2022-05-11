@@ -4,7 +4,7 @@ class Product < ApplicationRecord
   belongs_to :brand, optional: :true
   belongs_to :department, optional: :true
   belongs_to :branch_office
-  belongs_to :measurement_unit
+  belongs_to :measurement_unit, optional: :true
 
   has_many :sale_details,  class_name: "Sale::Detail", foreign_key: "product_id"
   has_many :transactions
@@ -12,7 +12,6 @@ class Product < ApplicationRecord
   has_many :files
 
   validates :name, presence: true
-  validates :quantity, presence: true
   validates :retail_price, presence: true
   validates :product_type, presence: true
 
@@ -35,6 +34,7 @@ class Product < ApplicationRecord
       products.wholesale_price,
       products.quantity,
       products.product_file_id,
+      products.product_type,
       brands.name as brand_name,
       measurement_units.name as measurement_unit_name,
       case
@@ -42,8 +42,8 @@ class Product < ApplicationRecord
         else 'Disponible'
       end as status
     ")
-    .joins(:branch_office, :measurement_unit)
-    .left_joins(:brand, :department)
+    .joins(:branch_office)
+    .left_joins(:brand, :department, :measurement_unit)
 
     products = products.where("
       lower(products.status) like '%#{search}%' or
@@ -53,6 +53,8 @@ class Product < ApplicationRecord
       cast(products.wholesale_price as varchar) like '%#{search}%' or
       cast(products.quantity as varchar) like '%#{search}%'
     ") unless search.blank?
+
+    products = products.where("products.product_type = ?", query[:filters][:product_type]) if query[:filters] && !query[:filters][:product_type].blank?
 
     if (query[:filters] && !!query[:filters][:top_products])
       return [] if (query[:filters][:start_date].blank?||query[:filters][:end_date].blank?)
@@ -67,6 +69,7 @@ class Product < ApplicationRecord
         "products.wholesale_price",
         "products.quantity",
         "products.product_file_id",
+        "products.product_type",
         "brands.name",
         "measurement_units.name"
       )
@@ -93,7 +96,11 @@ class Product < ApplicationRecord
       total_pages: products.total_pages,
       total_count: products.total_count,
       total_lenght: products.length,
-      products: products
+      products: products.map do |product|
+        product.attributes.merge(
+          product_type_translation: I18n.t("models.products.column_enum_product_type_#{product.product_type}")
+        )
+      end
     }
   end
 
@@ -120,8 +127,8 @@ class Product < ApplicationRecord
       ) as details,
       products.product_file_id
     ")
-    .joins(:branch_office, :measurement_unit)
-    .left_joins(:brand, :department)
+    .joins(:branch_office)
+    .left_joins(:brand, :department, :measurement_unit)
 
     products = products.where("
       lower(products.sku) like '%#{search}%' or

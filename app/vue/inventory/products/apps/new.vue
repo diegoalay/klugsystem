@@ -6,7 +6,9 @@
         },
         data() {
             return {
-                product: {}
+                product: {
+                    product_type: 'good'
+                }
             }
         },
     }

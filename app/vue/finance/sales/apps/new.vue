@@ -96,8 +96,7 @@ export default {
                     interest: this.getInterest(),
                     change: this.getChange(),
                     products: this.products,
-                    client: this.client,
-                    cash_register: true
+                    client: this.client
                 }
             }
 

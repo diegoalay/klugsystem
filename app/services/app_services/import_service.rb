@@ -122,7 +122,7 @@ module AppServices
         branch_office: @account.branch_offices.first
       )
 
-      user.password = @account.name.gsub(" ", "_").downcase + "$2022"
+      user.password = data["password"]
       if (user.save!)
         user.user_roles.find_or_create_by(role_id: @account.roles.first.id)
       end

@@ -221,7 +221,7 @@
                         </template>
 
                         <template v-slot:cell(status)="row">
-                            <div v-if="row.item.quantity <= 0" class="p-1 text-danger">
+                            <div v-if="row.item.quantity <= 0 && row.item.product_type === 'good'" class="p-1 text-danger">
                                 {{ row.item.status }}
                             </div>
                             <div v-else class="p-1 text-success">

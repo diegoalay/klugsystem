@@ -213,6 +213,7 @@ export default {
                 subtotal: subtotal,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
+                product_type: product_type,
                 total: total
             }
             if (index !== -1) {

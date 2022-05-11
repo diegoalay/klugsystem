@@ -69,7 +69,7 @@ export default {
                 return
             }
 
-            if (productSaleQuantity > productmaxQuantity) {
+            if (productSaleQuantity > productmaxQuantity && product.product_type === 'good') {
                 const quantity = productmaxQuantity
 
                 this.$set(this.products[index], 'saleQuantity', quantity)

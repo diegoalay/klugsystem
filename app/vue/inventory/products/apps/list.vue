@@ -26,6 +26,10 @@
                     key: 'quantity',
                     sortable: true
                 },{
+                    label: 'Tipo',
+                    key: 'product_type',
+                    sortable: true
+                },{
                     label: 'Estado',
                     key: 'status',
                     sortable: true
@@ -40,19 +44,24 @@
                     order_by: 'name',
                     order: false,
                 },
-                search_text: '',
-                loading: false
+                options: {},
+                loading: false,
+                filters: {
+                    search: '',
+                    product_type: ''
+                }
             }
         },
         mounted() {
             this.list()
+            this.getOptions()
         },
         methods: {
             list(){
                 this.loading = true
 
                 const url = this.url.inventory('products')
-                .filters({search: this.search_text})
+                .filters(this.filters)
                 .paginate(this.pagination.current_page, this.pagination.per_page)
                 .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
@@ -65,6 +74,18 @@
                     }
 
                     this.loading = false
+                }).catch(error => {
+                    console.log(error)
+                })
+            },
+            getOptions(){
+                const url = this.url.inventory('products/options')
+                this.http.get(url).then(result => {
+                    if (result.successful) {
+                        this.options = result.data
+                    } else {
+                        this.$toast.error(result.error.message)
+                    }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -86,7 +107,7 @@
                 })
             },
             onSearch(text){
-                this.search_text = text
+                this.filters.search = text
 
                 this.list()
             },
@@ -123,7 +144,20 @@
         </component-header-list>
 
         <b-card>
-            <component-search-list :loading="loading" @search="onSearch"/>
+            <component-search-list :loading="loading" @search="onSearch">
+                <slot name="filters">
+                    <b-form-select
+                        v-model="filters.product_type"
+                        :options="options.product_types"
+                        @change="list()"
+                    >
+                        <template #first>
+                            <option value=""> Bien y Servicio </option>
+                        </template>
+                    </b-form-select>
+                    &nbsp;
+                </slot>
+            </component-search-list>
             <b-card-body>
                 <b-table
                     striped
@@ -149,8 +183,12 @@
                         <b-img :src="tools.getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
                     </template>
 
+                    <template v-slot:cell(product_type)="row">
+                        {{ row.item.product_type_translation }}
+                    </template>
+
                     <template v-slot:cell(status)="row">
-                        <div v-if="row.item.quantity <= 0" class="p-1 text-danger">
+                        <div v-if="row.item.quantity <= 0 && row.item.product_type === 'good'" class="p-1 text-danger">
                             {{ row.item.status }}
                         </div>
                         <div v-else class="p-1 text-success">

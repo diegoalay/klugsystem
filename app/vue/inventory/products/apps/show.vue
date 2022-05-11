@@ -57,7 +57,7 @@ export default {
                 <b-tab title="Archivos" fill>
                     <component-files v-if="product.id" default-file-key="product" :has-picture="true" :file-id="product.product_file_id" :url="url.inventory('products/:id/files', {id: this.product.id}).toString(false)"> </component-files>
                 </b-tab>
-                <b-tab title="Transacciones" fill>
+                <b-tab title="Transacciones" fill v-if="product.product_type === 'good'">
                     <component-transactions v-if="product.id" :product="product"> </component-transactions>
                 </b-tab>
                 <b-tab title="Estadísticas" fill>

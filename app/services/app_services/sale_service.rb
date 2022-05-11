@@ -25,13 +25,13 @@ module AppServices
           if (sale_detail.save!)
             product = @current_user.account.products.find_by(id: sale_product["id"])
 
-            if (product)
+            if (product && product.good?)
               ActiveRecord::Base.transaction do
                 transaction = product.transactions.new(
                   category: "decrease",
                   user_creator: @current_user,
                   transaction_type: @current_user.account.product_transaction_sale_type,
-                  quantity: sale_product["quantity"],
+                  quantity: sale_product["saleQuantity"],
                   model_id: @sale.id,
                   model_type: "Sale",
                 )

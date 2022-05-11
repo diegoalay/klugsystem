@@ -1,38 +1,38 @@
 [
   {
-      "name": "Compra de medicamento"
+    "name": "Compra de medicamento"
   },
   {
-      "name": "Compra de alimento"
+    "name": "Compra de alimento"
   },
   {
-      "name": "Compra de insumos descartables"
+    "name": "Compra de insumos descartables"
   },
   {
-      "name": "Compra de farmacos uso interno"
+    "name": "Compra de farmacos uso interno"
   },
   {
-      "name": "Compra de equipo"
+    "name": "Compra de equipo"
   },
   {
-      "name": "Compra de accesorios para mascota"
+    "name": "Compra de accesorios para mascota"
   },
   {
-      "name": "Pago de servicios"
+    "name": "Pago de servicios"
   },
   {
-      "name": "Pago de personal"
+    "name": "Pago de personal"
   },
   {
-      "name": "Pago de renta"
+    "name": "Pago de renta"
   },
   {
-      "name": "Pago de mantenimiento"
+    "name": "Pago de mantenimiento"
   },
   {
-      "name": "Compra insumos varios (super/librería)"
+    "name": "Compra insumos varios (super/librería)"
   },
   {
-      "name": "Remodelaciones y mejoras"
+    "name": "Remodelaciones y mejoras"
   }
 ]

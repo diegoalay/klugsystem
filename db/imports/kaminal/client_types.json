@@ -1,14 +1,14 @@
 [
   {
-      "name": "Normal"
+    "name": "Normal"
   },
   {
-      "name": "VIP"
+    "name": "VIP"
   },
   {
-      "name": "Amigos y familia"
+    "name": "Amigos y familia"
   },
   {
-      "name": "Cliente problema"
+    "name": "Cliente problema"
   }
 ]

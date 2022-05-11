@@ -3,18 +3,21 @@
     "first_name": "Escritorio",
     "first_surname": "Kaminal",
     "email": "veterinariakaminal@hotmail.com",
-    "username": "Escritorio"
+    "username": "Escritorio",
+    "password": "veterinaria_kaminal$2022"
   },
   {
     "first_name": "Doctores",
     "first_surname": "Chajón",
     "email": "pame.achz@gmail.com",
-    "username": "Doctores"
+    "username": "Doctores",
+    "password": "kaminal$2022*docs"
   },
   {
     "first_name": "System",
     "first_surname": "Support",
     "email": "diego.alay@veterinariakaminal.com",
-    "username": "systemsupport"
+    "username": "systemsupport",
+    "password": "kaminal$2022"
   }
 ]

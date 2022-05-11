@@ -75,6 +75,9 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
+        },
+        isGood(){
+            return this.product.product_type === 'good'
         }
     }
 }
@@ -85,46 +88,7 @@ export default {
         <b-card>
             <b-card-body>
                 <b-row>
-                    <b-col md="6" sm="12">
-                        <b-form-group>
-                            <label> Nombre <sup class="text-danger">*</sup> </label>
-
-                            <b-form-input
-                                v-model="product.name"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-                    <b-col md="6" sm="12">
-                        <b-form-group>
-                            <label> Sku <sup class="text-danger">*</sup> </label>
-
-                            <b-form-input
-                                v-model="product.sku"
-                                type="text"
-                                placeholder=""
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-                    <b-col md="8" sm="12">
-                        <b-form-group>
-                            <label> Cantidad <sup class="text-danger">*</sup> </label>
-
-                            <b-form-input
-                                :disabled="product.id ? true : false"
-                                v-model="product.quantity"
-                                type="number"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-                    <b-col md="4" sm="12">
+                    <b-col md="2" sm="12">
                         <b-form-group>
                             <template #label>
                                 Tipo de producto <sup class="text-danger">*</sup>
@@ -138,28 +102,21 @@ export default {
                             ></b-form-radio-group>
                         </b-form-group>
                     </b-col>
-                </b-row>
-
-                <b-row>
-                    <b-col md="6" sm="12">
+                    <b-col md="5" sm="12">
                         <b-form-group>
-                            <label> Unidad de medida <sup class="text-danger">*</sup> </label>
-                            <b-form-select required v-model="product.measurement_unit_id" :options="options.measurement_units">
-                            </b-form-select>
+                            <template #label>
+                                Nombre  <sup class="text-danger"> * </sup>
+                            </template>
+                            <b-form-input
+                                v-model="product.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
                         </b-form-group>
                     </b-col>
-
-                    <b-col md="6" sm="12">
-                        <b-form-group>
-                            <label> Sucursal <sup class="text-danger">*</sup> </label>
-                            <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
-                            </b-form-select>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
-
-                <b-row>
-                    <b-col md="4" sm="12">
+                    <b-col md="5" sm="12">
                         <b-form-group>
                             <label> Precio <sup class="text-danger">*</sup> </label>
 
@@ -173,47 +130,109 @@ export default {
                             </b-form-input>
                         </b-form-group>
                     </b-col>
-                    <b-col md="4" sm="12">
-                        <b-form-group>
-                            <label> Precio mayoreo </label>
-
-                            <b-form-input
-                                v-model="product.wholesale_price"
-                                type="number"
-                                placeholder=""
-                                step="any"
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-                    <b-col md="4" sm="12">
-                        <b-form-group>
-                            <label> Precio compra </label>
-
-                            <b-form-input
-                                v-model="product.purchase_price"
-                                type="number"
-                                placeholder=""
-                                step="any"
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
                 </b-row>
 
-                <b-form-group>
-                    <label> Marca </label>
-                    <b-form-select v-model="product.brand_id" :options="options.brands">
-                    </b-form-select>
-                </b-form-group>
+                <template v-if="isGood()">
+                    <b-row>
+                        <b-col md="3" sm="12">
+                            <b-form-group>
+                                <label> Cantidad <sup class="text-danger">*</sup> </label>
 
-                <b-form-group>
-                    <label> Departamento </label>
-                    <b-form-select v-model="product.department_id" :options="options.departments">
-                    </b-form-select>
-                </b-form-group>
+                                <b-form-input
+                                    :disabled="product.id ? true : false"
+                                    v-model="product.quantity"
+                                    type="number"
+                                    placeholder=""
+                                    required
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
 
-                <b-button type="submit" variant="primary">Guardar</b-button>
+                        <b-col md="4" sm="12">
+                            <b-form-group>
+                                <label> Unidad de medida <sup class="text-danger">*</sup> </label>
+                                <b-form-select required v-model="product.measurement_unit_id" :options="options.measurement_units">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="5" sm="12">
+                            <b-form-group>
+                                <label> Sucursal <sup class="text-danger">*</sup> </label>
+                                <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+
+                    <b-row>
+                        <b-col md="4" sm="12">
+                            <b-form-group>
+                                <label> Precio mayoreo </label>
+
+                                <b-form-input
+                                    v-model="product.wholesale_price"
+                                    type="number"
+                                    placeholder=""
+                                    step="any"
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="4" sm="12">
+                            <b-form-group>
+                                <label> Precio compra </label>
+
+                                <b-form-input
+                                    v-model="product.purchase_price"
+                                    type="number"
+                                    placeholder=""
+                                    step="any"
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="4" sm="12">
+                            <b-form-group>
+                                <template #label> Sku </template>
+                                <b-form-input
+                                    v-model="product.sku"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+
+                    <b-form-group>
+                        <label> Marca </label>
+                        <b-form-select v-model="product.brand_id" :options="options.brands">
+                        </b-form-select>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <label> Departamento </label>
+                        <b-form-select v-model="product.department_id" :options="options.departments">
+                        </b-form-select>
+                    </b-form-group>
+                </template>
+                <template v-else>
+                    <b-row>
+                        <b-col md="12" sm="12">
+                            <b-form-group>
+                                <label> Sucursal <sup class="text-danger">*</sup> </label>
+                                <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+                    </b-row>
+                </template>
+
+                <div class="text-right">
+                    <b-button type="submit" variant="primary">Guardar</b-button>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

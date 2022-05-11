@@ -524,10 +524,12 @@ ActiveRecord::Schema.define(version: 2022_04_26_151850) do
     t.string "name"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.index ["account_id"], name: "index_measurement_units_on_account_id"
+    t.index ["deleted_at"], name: "index_measurement_units_on_deleted_at"
   end
 
   create_table "menu_items", force: :cascade do |t|
