@@ -41,7 +41,6 @@ twilio.env
 /config/credentials/production.yml.enc
 deploy.sh
 .gitignore
-Gemfile.lock
 .gitconfig.personal
 /public/uploads/
 /config/credentials/production.key
