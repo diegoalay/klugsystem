@@ -10,13 +10,13 @@ class Role < ApplicationRecord
   end
 
   def send_menu_items_ws
-    ::MenuItem.select('id', 'key', 'permissions') if admin?
+    # ::MenuItem.select('id', 'key', 'permissions') if admin?
 
-    items = self.reload.menu_items.joins(:menu_item).where("status = ?", true)
-    items = items.select('menu_items.id', 'menu_items.key', 'menu_items.permissions')
+    # items = self.reload.menu_items.joins(:menu_item).where("status = ?", true)
+    # items = items.select('menu_items.id', 'menu_items.key', 'menu_items.permissions')
 
-    RolesChannel.broadcast_to(self, {
-      data: items
-    })
+    # RolesChannel.broadcast_to(self, {
+    #   data: items
+    # })
   end
 end
