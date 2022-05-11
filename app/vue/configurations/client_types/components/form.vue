@@ -62,29 +62,27 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-form-group>
-                        <label> Nombre <sup class="text-danger">*</sup> </label>
+                <b-form-group>
+                    <label> Nombre <sup class="text-danger">*</sup> </label>
 
-                        <b-form-input
-                            v-model="client_type.name"
-                            type="text"
-                            placeholder=""
-                            required
-                        >
-                        </b-form-input>
-                    </b-form-group>
+                    <b-form-input
+                        v-model="client_type.name"
+                        type="text"
+                        placeholder=""
+                        required
+                    >
+                    </b-form-input>
+                </b-form-group>
 
 
-                    <b-form-group label="Nota">
-                        <b-form-textarea
-                            v-model="client_type.note"
-                            placeholder="Ingrese observaciones"
-                            rows="3"
-                        >
-                        </b-form-textarea>
-                    </b-form-group>
-                </b-container>
+                <b-form-group label="Nota">
+                    <b-form-textarea
+                        v-model="client_type.note"
+                        placeholder="Ingrese observaciones"
+                        rows="3"
+                    >
+                    </b-form-textarea>
+                </b-form-group>
 
                 <div class="text-right">
                     <b-button type="submit" variant="primary">Guardar</b-button>

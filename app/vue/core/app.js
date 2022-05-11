@@ -114,7 +114,7 @@ Vue.use(Toast, {
 
 Vue.use(VueLoading, {
     dark: true, // default false
-    text: 'Cargando', // default 'Loading'
+    text: 'Cargando ...', // default 'Loading'
     loading: false, // default false
 })
 

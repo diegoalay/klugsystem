@@ -1,4 +1,4 @@
-class ClientType < Shared::Activity
+class ClientType < ApplicationRecord
   validates :name, presence: true
 
   belongs_to :client_type, class_name: "ClientType", foreign_key: "client_type_id", optional: true

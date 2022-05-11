@@ -86,7 +86,7 @@ export default {
                 </b-form-group>
 
                 <div class="text-right">
-                    <b-button v-if="productTransactionCanBeEdited(product_transaction_type)" type="submit" variant="primary">Guardar</b-button>
+                    <b-button v-if="tools.productTransactionCanBeEdited(product_transaction_type)" type="submit" variant="primary">Guardar</b-button>
                 </div>
             </b-card-body>
         </b-card>

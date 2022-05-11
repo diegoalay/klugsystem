@@ -10,6 +10,7 @@ module AppServices
         class_name = file_path.split('/').last.gsub('.json', '')
         class_name = class_name.singularize
 
+
         if File.exists?(file_path)
           file = File.open(file_path)
           data = file.read

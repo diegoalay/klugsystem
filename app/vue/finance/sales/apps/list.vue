@@ -104,6 +104,49 @@
                 })
             },
 
+            async disableSale(sale_id){
+                const resp = await this.$dialog.confirm(
+                    {
+                        title: '¿Esta seguro que desea deshabilitar la venta?',
+                        text: 'Esta acción volverá a añadir los productos descontados del inventario.',
+                        actions: [
+                            {
+                                text: 'Confirmar',
+                                color: 'success',
+                                key: true,
+                            },
+                            {
+                                text: 'Cancelar',
+                                color: 'danger',
+                                key: false,
+                            },
+                        ]
+                    }
+                )
+
+                if (resp) {
+                    const form = {
+                        sale: {
+                            status: false
+                        }
+                    }
+
+                    const url = this.url.finance('sales/:id', {id: sale_id})
+                    this.http.put(url, form).then(result => {
+                        if (result.successful) {
+                            this.$toast.success('Venta deshabilitada exitosamente.')
+
+                            const index = this.data.findIndex(e => e.id === sale_id)
+                            this.$set(this.data[index], 'status', false)
+                        } else {
+                            this.$toast.error(result.error.message)
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                }
+            },
+
             getOptions(){
                 const url = this.url.finance('sales/index_options')
 
@@ -179,7 +222,7 @@
                         @change="list()"
                     >
                         <template #first>
-                            <option value=""> Todos los tipos de ventas </option>
+                            <option value=""> Todos los tifinance de ventas </option>
                         </template>
                     </b-form-select>
                     &nbsp;
@@ -242,6 +285,10 @@
                     <template v-slot:cell(actions)="row">
                         <b-button @click="tools.printSale(row.item.id)" variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
+                        </b-button>
+
+                        <b-button v-if="row.item.can_be_disabled" @click="disableSale(row.item)" variant="outline-danger" class="mr-1">
+                            <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>
                 </b-table>
