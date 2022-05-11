@@ -7,7 +7,7 @@ class SalesController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(SaleQuery.new(@account).index(current_user, @query))
+        respond_with_successful(ad.new(@account).index(current_user, @query))
       end
     end
   end

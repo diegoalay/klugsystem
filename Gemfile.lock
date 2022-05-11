@@ -118,6 +118,7 @@ GEM
       sassc (~> 2.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    honeybadger (4.12.1)
     httparty (0.20.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -290,6 +291,7 @@ DEPENDENCIES
   devise
   faker!
   font-awesome-sass (~> 6.1.1)
+  honeybadger (~> 4.0)
   httparty
   jbuilder (~> 2.7)
   kaminari
