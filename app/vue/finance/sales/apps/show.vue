@@ -173,7 +173,7 @@ export default {
 
                     <hr>
                     <div class="text-right">
-                        <b-button variant="primary" @click="tools.printSale(sale.id)">
+                        <b-button variant="primary" @click="tools.printSale(sale)">
                             <font-awesome-icon icon="print"/> Imprimir
                         </b-button>
                     </div>

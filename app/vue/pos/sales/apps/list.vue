@@ -275,7 +275,7 @@
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button @click="tools.printSale(row.item.id)" variant="outline-dark" class="mr-1">
+                        <b-button @click="tools.printSale(row.item)" variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
                         </b-button>
 

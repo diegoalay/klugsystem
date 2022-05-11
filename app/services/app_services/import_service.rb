@@ -6,6 +6,8 @@ module AppServices
     end
 
     def call
+      @files = [Rails.root.join('db', 'imports', 'kaminal', 'products2.json').to_s]
+
       @files.each do |file_path|
         class_name = file_path.split('/').last.gsub('.json', '')
         class_name = class_name.singularize
@@ -24,6 +26,9 @@ module AppServices
           when "account"
             create_account(data)
           when "product"
+          when "products2"
+            @account = Account.last
+
             create_product(data)
           when "branch_office"
             create_branch_office(data)

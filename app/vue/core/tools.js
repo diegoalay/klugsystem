@@ -59,8 +59,8 @@ export default {
             return "https://klugsystem-public-storage.s3.amazonaws.com/assets/images/employee-default.png"
         }
 
-        const printSale = (sale_id) => {
-            const url = `/finance/sales/${sale_id}.pdf`
+        const printSale = (sale) => {
+            const url = `/finance/sales/${sale.id}.pdf`
 
             window.open(url, '_blank')
         }
