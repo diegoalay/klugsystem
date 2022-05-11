@@ -1,14 +1,14 @@
 module DigifactServices
   class Authentication
-
-    if Rails.env == 'production'
-      AUTHENTICATION_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
-    else
-      AUTHENTICATION_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
-    end
-
     def initialize(account)
       @account = account
+
+      if @account.id === 1 || Rails.env == 'development'
+        @api_url   = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
+      else
+        @api_url   = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/login/get_token'
+      end
+
     end
 
     def call(validate)
@@ -49,7 +49,7 @@ module DigifactServices
 
     def authentication()
       HTTParty.post(
-        AUTHENTICATION_URL,
+        @api_url  ,
         headers: {
           'Content-Type': 'application/json'
         },

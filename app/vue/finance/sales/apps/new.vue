@@ -202,6 +202,16 @@ export default {
             return values
         },
 
+        getInterestInfo(total){
+            const percentage = this.getInterest() / this.getTotal()
+            const value = total * percentage
+
+            return {
+                value,
+                percentage
+            }
+        },
+
         getInterest(){
             let interest = 0
 
@@ -301,7 +311,11 @@ export default {
             const discount_value = 0
             const discount_percentage = (discount_value * 100) / subtotal
 
+            const discount_value = 0
+            const discount_percentage = (discount_value * 100) / subtotal
+
             const total = subtotal - discount_value
+            const interes = getInterestInfo(product)
 
             const new_product = {
                 id: product.id,
@@ -313,6 +327,8 @@ export default {
                 measurement_unit: product.measurement_unit_name,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
+                interest_value: interes.value,
+                interest_percentage: interes.percentage,
                 total: total
             }
 
