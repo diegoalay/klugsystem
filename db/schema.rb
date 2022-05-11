@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_26_151850) do
+ActiveRecord::Schema.define(version: 2022_05_11_225841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -718,6 +718,9 @@ ActiveRecord::Schema.define(version: 2022_04_26_151850) do
     t.bigint "account_id"
     t.bigint "product_id"
     t.bigint "quotation_id"
+    t.string "product_type"
+    t.decimal "interest_percentage", default: "0.0"
+    t.decimal "interest_value", default: "0.0"
     t.index ["account_id"], name: "index_quotation_details_on_account_id"
     t.index ["deleted_at"], name: "index_quotation_details_on_deleted_at"
     t.index ["product_id"], name: "index_quotation_details_on_product_id"
@@ -850,6 +853,8 @@ ActiveRecord::Schema.define(version: 2022_04_26_151850) do
     t.bigint "account_id"
     t.bigint "product_id"
     t.bigint "sale_id"
+    t.decimal "interest_percentage", default: "0.0"
+    t.decimal "interest_value", default: "0.0"
     t.index ["account_id"], name: "index_sale_details_on_account_id"
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
     t.index ["product_id"], name: "index_sale_details_on_product_id"

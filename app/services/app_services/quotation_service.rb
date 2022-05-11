@@ -19,7 +19,9 @@ module AppServices
             subtotal: quotation_product["subtotal"],
             discount_value: quotation_product["discount_value"],
             discount_percentage: quotation_product["discount_percentage"],
-            product_type: sale_product["product_type"]
+            interest_value: sale_product["interest_value"],
+            interest_percentage: sale_product["interest_percentage"],
+            product_type: quotation_product["product_type"]
           )
 
           quotation_detail.save!

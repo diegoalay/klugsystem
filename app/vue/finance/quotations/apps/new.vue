@@ -74,6 +74,13 @@ export default {
     },
     methods: {
         submitSale(sale_type){
+            for(let key in this.products) {
+                const interest = this.getInterestInfo(this.products[key])
+
+                this.products[key]['interest_value'] = interest.value
+                this.products[key]['interest_percentage'] = interest.percentage
+            }
+
             const url = this.url.finance('quotations')
             let form = {
                 quotation: {
@@ -175,6 +182,16 @@ export default {
             if (this.payment_method.discount_value > 0) values.push({item: {value: value, key: 'discount_value'}, text: `Q. ${value}`})
 
             return values
+        },
+
+        getInterestInfo(product){
+            const percentage = this.getInterest() / this.getTotal()
+            const value = total * percentage
+
+            return {
+                value,
+                percentage
+            }
         },
 
         getInterest(){

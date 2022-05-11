@@ -2,7 +2,7 @@
   <div class="pdf-row pdf-details-section">
     <div class="pdf-col">
       <b> Datos generales de la cotización: </b> <br>
-      <b> Fecha: </b> <%= @details[:quotation].dig('quotation_date') %> <br>
+      <b> Fecha: </b> <%= DateParser.datetime_string(@details[:quotation].dig('created_at')) %> <br>
       <b> Método de pago: </b> <%= @details[:payment_method].name %> <br>
     </div>
 

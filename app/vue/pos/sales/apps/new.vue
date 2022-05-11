@@ -86,6 +86,15 @@ export default {
         submitSale(sale_type){
             this.$bvModal.hide('confirm-sale')
 
+            for(let key in this.products) {
+                const interest = this.getInterestInfo(this.products[key])
+
+                console.log(interest)
+
+                this.products[key]['interest_value'] = interest.value
+                this.products[key]['interest_percentage'] = interest.percentage
+            }
+
             const url = this.url.pos('sales')
             let form = {
                 sale: {
@@ -190,6 +199,16 @@ export default {
             if (this.payment_method.interest_value > 0) values.push({item: {value: value, key: 'interest_value'}, text: `Q. ${value}`})
 
             return values
+        },
+
+        getInterestInfo(product){
+            const percentage = this.getInterest() / this.getTotal()
+            const value = total * percentage
+
+            return {
+                value,
+                percentage
+            }
         },
 
         getPaymentDiscounts(){

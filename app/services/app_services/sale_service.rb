@@ -19,6 +19,8 @@ module AppServices
             subtotal: sale_product["subtotal"],
             discount_value: sale_product["discount_value"],
             discount_percentage: sale_product["discount_percentage"],
+            interest_value: sale_product["interest_value"],
+            interest_percentage: sale_product["interest_percentage"],
             measurement_unit: sale_product["measurement_unit"],
             product_type: sale_product["product_type"]
           )
