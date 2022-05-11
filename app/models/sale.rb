@@ -1,4 +1,6 @@
 class Sale < ApplicationRecord
+  acts_as_paranoid
+
   include LoggerConcern
 
   belongs_to :client,         class_name: 'Client',        foreign_key: 'client_id'
@@ -13,8 +15,8 @@ class Sale < ApplicationRecord
 
   validate :sale_data
 
-  after_create :initialize_sale
-  after_save :rollback_products
+  after_create  :initialize_sale
+  after_save    :rollback_products_edition
 
   attribute :status, :boolean, default: true
 
@@ -25,11 +27,16 @@ class Sale < ApplicationRecord
     electronic_bill: 'electronic_bill'
   }
 
-  def rollback_products
-    if saved_change_to_status?
-      before, after = saved_changes["status"]
+  def rollback_products_edition
+    if saved_change_to_status? || saved_change_to_deleted_at?
+      before_status, after_status = saved_changes["status"]
 
-      if before && !after
+      if before_status && !after_status
+
+        if (is_electronic_billing? && electronic_bill.identifier.present?)
+          DigifactServices::Api.new(user_modifier, self).anulate_bill
+        end
+
         ActiveRecord::Base.transaction do
           details.each do |sale_detail|
             sale_detail.user_modifier_id = user_modifier_id
@@ -40,6 +47,7 @@ class Sale < ApplicationRecord
               quantity += sale_detail.quantity
 
               sale_detail.product.update(quantity: quantity)
+              sale_detail.product.transactions.find_by(model_id: id, model_type: 'Sale')&.destroy!
             end
           end
         end

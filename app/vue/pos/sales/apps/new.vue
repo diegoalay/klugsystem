@@ -84,7 +84,9 @@ export default {
         },
 
         submitSale(sale_type){
-            const url = this.url.finance('sales')
+            this.$bvModal.hide('confirm-sale')
+
+            const url = this.url.pos('sales')
             let form = {
                 sale: {
                     ... this.sale,
@@ -101,16 +103,25 @@ export default {
                 }
             }
 
-            this.http.post(url, form).then(result => {
-                if (result.successful) {
-                    this.$toast.success('Venta realizada.')
-                    this.$router.push(this.url.finance('sales/:id', {id: result.data.id}).toString(false))
-                } else {
-                    this.$toast.error(result.error.message, {
-                        duration: 4000
-                    })
+            if (sale_type === 'electronic_bill') this.$loading(true)
 
-                    this.$bvModal.hide('confirm-sale')
+            this.http.post(url, form).then(result => {
+                if (sale_type === 'electronic_bill') this.$loading(false)
+
+                if (result.successful) {
+                    this.$toast.success('Venta realizada exitosamente.')
+                    this.$router.push(this.url.pos('sales/:id', {id: result.data.id}).toString(false))
+                } else {
+                    if (sale_type === 'electronic_bill') {
+                        this.$toast.error(result.error.message, {
+                            duration: 1000
+                        })
+                    } else {
+                        this.$toast.error(result.error.message, {
+                            duration: 4000
+                        })
+                    }
+
                 }
             }).catch(error => {
                 console.log(error)

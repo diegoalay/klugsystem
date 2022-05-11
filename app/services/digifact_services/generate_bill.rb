@@ -3,7 +3,7 @@ module DigifactServices
     include XmlServices::Helper
 
     def generate_bill
-      file = XmlServices::BillService.new(@sale).call
+      file = XmlServices::BillCertificationService.new(@sale).call
 
       resp = certificate(file)
 
@@ -13,13 +13,17 @@ module DigifactServices
           serie: resp.parsed_response['SERIE'],
           number: resp.parsed_response['NUMERO'],
           identifier: resp.parsed_response['Autorizacion'],
-          data: resp.parsed_response
+          certification_data: resp.parsed_response
         )
       else
+        @sale.electronic_bill.update(
+          certification_data: resp.parsed_response
+        )
+
         # save error
         @sale.activities.create(
           description: resp.parsed_response['ResponseDATA1'],
-          category: 'electronic_bill_failed',
+          category: 'electronic_certification_failed',
           user_creator: @sale.user_creator
         )
       end

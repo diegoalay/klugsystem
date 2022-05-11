@@ -1,9 +1,10 @@
 module DigifactServices
   class Api
     include DigifactServices::GenerateBill
+    include DigifactServices::AnulateBill
 
     DEFAULT_API_URL = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
-    # DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3'
+    DEFAULT_API_URL = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequestV2' if Rails.env == "production"
 
     def initialize(current_user, sale)
       @current_user = current_user

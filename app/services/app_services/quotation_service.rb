@@ -15,10 +15,11 @@ module AppServices
             name: quotation_product["name"],
             price: quotation_product["price"],
             total: quotation_product["total"],
-            quantity: quotation_product["quantity"],
+            quantity: quotation_product["saleQuantity"],
             subtotal: quotation_product["subtotal"],
             discount_value: quotation_product["discount_value"],
-            discount_percentage: quotation_product["discount_percentage"]
+            discount_percentage: quotation_product["discount_percentage"],
+            product_type: sale_product["product_type"]
           )
 
           quotation_detail.save!

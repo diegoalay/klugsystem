@@ -25,7 +25,7 @@ class SalesController < ApplicationSystemController
         set_sale
 
         if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
-          attachment = @sale.electronic_bill['data']['ResponseDATA3']
+          attachment = @sale.electronic_bill['certification_data']['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
           send_data decode_base64_content, filename: 'Factura.pdf'
@@ -70,9 +70,34 @@ class SalesController < ApplicationSystemController
 
       if @sale.is_electronic_billing?
         DigifactServices::Api.new(current_user, @sale).generate_bill
+
+        if (@sale.electronic_bill.identifier.blank?)
+          @sale.destroy!
+
+          return respond_with_error(@sale.electronic_bill['certification_data']["ResponseDATA1"])
+        end
       end
 
       respond_with_successful(@sale)
+
+      @sale.details.each do |sale_detail|
+        product = @current_user.account.products.find_by(id: sale_detail.product_id)
+
+        if (product && product.good?)
+          ActiveRecord::Base.transaction do
+            transaction = product.transactions.new(
+              category: "decrease",
+              user_creator: @current_user,
+              transaction_type: @current_user.account.product_transaction_sale_type,
+              quantity: sale_detail.quantity,
+              model_id: @sale.id,
+              model_type: "Sale",
+            )
+
+            transaction.save!
+          end
+        end
+      end
     else
       respond_sale_with_error
     end

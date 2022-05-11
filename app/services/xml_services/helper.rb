@@ -37,6 +37,11 @@ module XmlServices
       (item.subtotal - item.discount_value) / 1.12
     end
 
+    def item_product_type(item)
+      return "B" if item.product_type == "good"
+      return "S"
+    end
+
     def round(val, decimals = 2)
       val.round(decimals)
     end

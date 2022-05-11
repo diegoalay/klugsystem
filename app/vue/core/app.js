@@ -11,6 +11,7 @@ import VueI18n from 'vue-i18n'
 import ActionCableVue from 'actioncable-vue';
 import VueConfirmDialog from 'vue-confirm-dialog'
 import Dialog from 'bootstrap-vue-dialog'
+import VueLoading from 'vuejs-loading-plugin'
 
 
 import {
@@ -109,6 +110,12 @@ Vue.use(Toast, {
     icon: {
         iconClass: 'xmark'
     }
+})
+
+Vue.use(VueLoading, {
+    dark: true, // default false
+    text: 'Cargando', // default 'Loading'
+    loading: false, // default false
 })
 
 Vue.use(ActionCableVue, {

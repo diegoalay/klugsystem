@@ -220,10 +220,18 @@ export default {
                 </template>
                 <template v-else>
                     <b-row>
-                        <b-col md="12" sm="12">
+                        <b-col md="6" sm="12">
                             <b-form-group>
                                 <label> Sucursal <sup class="text-danger">*</sup> </label>
                                 <b-form-select required v-model="product.branch_office_id" :options="options.branch_offices">
+                                </b-form-select>
+                            </b-form-group>
+                        </b-col>
+
+                        <b-col md="6" sm="12">
+                            <b-form-group>
+                                <label> Unidad de medida <sup class="text-danger">*</sup> </label>
+                                <b-form-select required v-model="product.measurement_unit_id" :options="options.measurement_units">
                                 </b-form-select>
                             </b-form-group>
                         </b-col>

@@ -4,7 +4,7 @@ class Product < ApplicationRecord
   belongs_to :brand, optional: :true
   belongs_to :department, optional: :true
   belongs_to :branch_office
-  belongs_to :measurement_unit, optional: :true
+  belongs_to :measurement_unit
 
   has_many :sale_details,  class_name: "Sale::Detail", foreign_key: "product_id"
   has_many :transactions

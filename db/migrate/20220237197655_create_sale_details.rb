@@ -10,6 +10,7 @@ class CreateSaleDetails < ActiveRecord::Migration[6.1]
       t.decimal :discount_value
       t.decimal :discount_percentage
       t.string :measurement_unit
+      t.string :product_type
 
       t.boolean :status, defaullt: :true
 

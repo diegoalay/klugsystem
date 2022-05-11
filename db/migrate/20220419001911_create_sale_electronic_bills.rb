@@ -8,7 +8,8 @@ class CreateSaleElectronicBills < ActiveRecord::Migration[6.1]
       t.datetime :certification_datetime
       t.datetime :annulment_datetime
 
-      t.jsonb :data
+      t.jsonb :certification_data
+      t.jsonb :annulment_data
 
       # documents
       t.text :billing_base_64_xml
