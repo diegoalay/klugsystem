@@ -212,7 +212,7 @@
 
                         <b-form-input
                             min="0"
-                            :max="product.quantity"
+                            :max="product_transaction.category === 'decrease' ? product.quantity : ''"
                             v-model="product_transaction.quantity"
                             type="number"
                             placeholder=""

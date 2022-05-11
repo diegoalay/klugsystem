@@ -12,6 +12,7 @@ class ClientQuery
       billing_email,
       billing_address,
       billing_name,
+      billing_address,
       first_name,
       first_surname,
       concat(
@@ -31,6 +32,7 @@ class ClientQuery
       first_name,
       first_surname,
       billing_identifier,
+      billing_address,
       billing_email,
       billing_name,
       concat(
