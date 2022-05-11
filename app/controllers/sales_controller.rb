@@ -25,7 +25,7 @@ class SalesController < ApplicationSystemController
         set_sale
 
         if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
-          attachment = @sale.electronic_bill['certification_data']['ResponseDATA3']
+          attachment = DigifactServices::Api.new(User.first, Sale::ElectronicBill.last.sale).download['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
           send_data decode_base64_content, filename: 'Factura.pdf'
