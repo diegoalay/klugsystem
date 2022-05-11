@@ -42,6 +42,10 @@ module XmlServices
       return "S"
     end
 
+    def item_measurement_unit(item)
+      item.measurement_unit.upcase.split(" ").map do |word| word.first end.join
+    end
+
     def round(val, decimals = 2)
       val.round(decimals)
     end

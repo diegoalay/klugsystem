@@ -70,7 +70,7 @@ module XmlServices
         items.push(%{
             <dte:Item NumeroLinea="#{index}" BienOServicio="#{item_product_type(sale_detail)}">
               <dte:Cantidad>#{sale_detail.quantity}</dte:Cantidad>
-              <dte:UnidadMedida>#{sale_detail.measurement_unit}</dte:UnidadMedida>
+              <dte:UnidadMedida>#{item_measurement_unit(sale_detail)}</dte:UnidadMedida>
               <dte:Descripcion>#{sale_detail.name}</dte:Descripcion>
               <dte:PrecioUnitario>#{round(sale_detail.price)}</dte:PrecioUnitario>
               <dte:Precio>#{round(sale_detail.subtotal)}</dte:Precio>
