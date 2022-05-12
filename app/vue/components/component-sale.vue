@@ -94,7 +94,7 @@ export default {
                 label: '',
                 key: 'actions'
             }],
-            storedData: null
+            storedData: {}
         }
     },
     mounted(){
