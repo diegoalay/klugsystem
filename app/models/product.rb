@@ -23,6 +23,8 @@ class Product < ApplicationRecord
     service: 'service',
   }
 
+  acts_as_paranoid
+
   def self.index account, query
     search = query[:filters][:search]&.downcase if query[:filters]
 
