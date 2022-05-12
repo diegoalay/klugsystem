@@ -38,7 +38,7 @@ module DigifactServices
     end
 
     def download()
-      if Rails.env === 'production'
+      unless test_mode?
         get('', generate_params('GET_DOCUMENT').merge('GUID' => @sale.electronic_bill.identifier))
       else
         @sale.electronic_bill.certification_data
