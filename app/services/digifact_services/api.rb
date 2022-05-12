@@ -3,12 +3,12 @@ module DigifactServices
     include DigifactServices::GenerateBill
     include DigifactServices::AnulateBill
 
-    @api_url2 = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequest'
-
     def initialize(current_user, sale)
       @current_user = current_user
       @token = current_user.account.digifact_token
       @sale = sale
+
+      @api_url2 = 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequest'
 
       if @current_user.account.id === 1 || Rails.env == 'development'
         @api_url   = 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
