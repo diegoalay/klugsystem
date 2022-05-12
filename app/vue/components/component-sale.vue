@@ -183,7 +183,7 @@ export default {
                 if (result.successful) {
                     this.options = result.data
 
-                    if (this.storedData.payment_method_id) {
+                    if (this.storedData && this.storedData.payment_method_id) {
                         const found = this.options.payment_methods.find(e => e.value.id === this.storedData.payment_method_id)
 
                         if (found) {
