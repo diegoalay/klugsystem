@@ -239,6 +239,14 @@ export default {
             }
         },
 
+        payment_method_interest(interest){
+            if (discount.value) {
+                for(let key in this.products) {
+                    this.$set(this.products[key], 'discount_value', 0)
+                }
+            }
+        },
+
         products(){
             this.$emit('updateProducts', this.products)
         }

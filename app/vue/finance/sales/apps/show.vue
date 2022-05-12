@@ -29,7 +29,10 @@ export default {
                 label: 'Precio',
                 key: 'price'
             },{
-                label: 'Descuento (Q.)',
+                label: 'Interés',
+                key: 'interest_value'
+            },{
+                label: 'Descuento',
                 key: 'discount_value'
             },{
                 label: 'Cantidad',
@@ -74,17 +77,17 @@ export default {
                                 description: 'Subtotal',
                                 value: this.sale.subtotal
                             },{
-                                description: 'Descuento',
-                                value: this.sale.discount
-                            },{
-                                description: 'Total (- Descuento)',
-                                value: this.sale.subtotal1
-                            },{
                                 description: 'Interés',
                                 value: this.sale.interest
                             },{
                                 description: 'Total (+ Intéres)',
                                 value: this.sale.subtotal2
+                            },{
+                                description: 'Descuento',
+                                value: this.sale.discount
+                            },{
+                                description: 'Total (- Descuento)',
+                                value: this.sale.subtotal1
                             },{
                                 description: 'Envío',
                                 value: this.sale.shipping_costs

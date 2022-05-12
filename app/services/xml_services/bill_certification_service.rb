@@ -32,7 +32,7 @@ module XmlServices
                               <dte:Pais>GT</dte:Pais>
                           </dte:DireccionEmisor>
                       </dte:Emisor>
-                      <dte:Receptor NombreReceptor="#{@sale.client.billing_name}" IDReceptor="#{@sale.client.billing_identifier}">
+                      <dte:Receptor NombreReceptor="#{@sale.client.billing_name}" IDReceptor="#{@sale.client.billing_identifier}" CorreoReceptor="#{@sale.client.billing_email}">
                           <dte:DireccionReceptor>
                             <dte:Direccion>#{@sale.client.billing_address}</dte:Direccion>
                             <dte:CodigoPostal>#{client_billing_postcode}</dte:CodigoPostal>
@@ -42,7 +42,7 @@ module XmlServices
                           </dte:DireccionReceptor>
                       </dte:Receptor>
                       <dte:Frases>
-                        <dte:Frase TipoFrase="1" CodigoEscenario="2"/>
+                        <dte:Frase TipoFrase="#{@sale.account.billing_phrase}" CodigoEscenario="#{@sale.account.billing_stage}"/>
                       </dte:Frases>
                       <dte:Items>
                         #{generate_items}
@@ -63,6 +63,7 @@ module XmlServices
     def generate_items
       index = 1
       @sale.details.each_with_object([]) do |(sale_detail), items|
+        price = round(item_price(sale_detail))
         taxable_amount = round(item_taxable_amount(sale_detail))
         taxes_amount = round(item_tax_amount(sale_detail))
         total = round(sale_detail.total)
@@ -72,8 +73,8 @@ module XmlServices
               <dte:Cantidad>#{sale_detail.quantity}</dte:Cantidad>
               <dte:UnidadMedida>#{item_measurement_unit(sale_detail)}</dte:UnidadMedida>
               <dte:Descripcion>#{sale_detail.name}</dte:Descripcion>
-              <dte:PrecioUnitario>#{round(sale_detail.price)}</dte:PrecioUnitario>
-              <dte:Precio>#{round(sale_detail.subtotal)}</dte:Precio>
+              <dte:PrecioUnitario>#{price}</dte:PrecioUnitario>
+              <dte:Precio>#{round(sale_detail.final_subtotal)}</dte:Precio>
               <dte:Descuento>#{round(sale_detail.discount_value)}</dte:Descuento>
               <dte:Impuestos>
                   <dte:Impuesto>

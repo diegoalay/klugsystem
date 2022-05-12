@@ -2,7 +2,7 @@
   <div class="pdf-row pdf-details-section">
     <div class="pdf-col">
       <b> Datos generales: </b> <br>
-      <b> Fecha: </b> <%= @details[:sale].dig('sale_date') %> <br>
+      <b> Fecha: </b> <%= DateParser.datetime_string(@details[:sale].dig('sale_date')) %> <br>
       <b> Tipo de venta: </b> <%= @details[:sale].dig('sale_type') %> <br>
       <b> Método de pago: </b> <%= @details[:payment_method].name %> <br>
     </div>
@@ -73,22 +73,6 @@
         <td class="pdf-td-borderless"></td>
         <td class="pdf-td-borderless"></td>
         <td class="pdf-td-borderless"></td>
-        <td> <b> Descuento </b> </td>
-        <td> <%= @details[:sale].dig('discount') %> </td>
-      </tr>
-      <tr>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
-        <td> <b> Total (- Descuento) </b> </td>
-        <td> <%= @details[:sale].dig('subtotal1') %> </td>
-      </tr>
-      <tr>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
-        <td class="pdf-td-borderless"></td>
         <td> <b> Interés </b> </td>
         <td> <%= @details[:sale].dig('interest') %> </td>
       </tr>
@@ -99,6 +83,22 @@
         <td class="pdf-td-borderless"></td>
         <td> <b> Total (+ Intéres) </b> </td>
         <td> <%= @details[:sale].dig('subtotal2') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Descuento </b> </td>
+        <td> <%= @details[:sale].dig('discount') %> </td>
+      </tr>
+      <tr>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td class="pdf-td-borderless"></td>
+        <td> <b> Total (- Descuento) </b> </td>
+        <td> <%= @details[:sale].dig('subtotal1') %> </td>
       </tr>
       <tr>
         <td class="pdf-td-borderless"></td>

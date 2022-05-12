@@ -56,13 +56,13 @@ class Sale < ApplicationRecord
   end
 
   def show
-    subtotal1 = subtotal - discount
-    subtotal2 = subtotal1 + interest
+    subtotal1_val = subtotal + interest
+    subtotal2_val = subtotal1_val - discount
 
     {
       sale: self.attributes.merge({
-        'subtotal1' => subtotal1.to_f,
-        'subtotal2' => subtotal2.to_f,
+        'subtotal1' => subtotal1_val.to_f,
+        'subtotal2' => subtotal2_val.to_f,
         'sale_type' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
       }),
       client: client,

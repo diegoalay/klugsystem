@@ -135,19 +135,6 @@ export default {
                             </b-form-input>
                         </b-form-group>
                     </b-col>
-
-                    <b-col md="6" sm="12">
-                        <b-form-group>
-                            <label> Interés (Q.) </label>
-
-                            <b-form-input
-                                v-model="payment_method.interest_value"
-                                type="number"
-                                placeholder=""
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
                 </b-row>
 
                 <b-row v-if="payment_method.category === 'discount'">
@@ -162,19 +149,6 @@ export default {
                                 placeholder=""
                                 min=0
                                 max=100
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-
-                    <b-col md="6" sm="12">
-                        <b-form-group>
-                            <label> Descuento (Q.) </label>
-
-                            <b-form-input
-                                v-model="payment_method.discount_value"
-                                type="number"
-                                placeholder=""
                             >
                             </b-form-input>
                         </b-form-group>

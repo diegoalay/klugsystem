@@ -54,6 +54,7 @@ import url from './url'
 import tools from './tools'
 import date from './date'
 import store from './store'
+import storage from './storage'
 
 // Global registration
 Vue.component('apexchart', VueApexCharts)
@@ -103,6 +104,7 @@ Vue.use(url, system.url)
 Vue.use(tools)
 Vue.use(date, tools)
 Vue.use(store, system)
+Vue.use(storage, system)
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,

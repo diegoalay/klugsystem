@@ -1,5 +1,5 @@
 import appQuotationsList  from 'vueApp/finance/quotations/apps/list.vue'
-import appQuotationsNew   from 'vueApp/finance/quotations/apps/new.vue'
+import appQuotationsNew   from 'vueApp/components/component-sale.vue'
 import appQuotationsShow from 'vueApp/finance/quotations/apps/show.vue'
 
 
@@ -10,7 +10,8 @@ const routes =  [
     },
     {
         path: "/finance/quotations/new",
-        component: appQuotationsNew
+        component: appQuotationsNew,
+        props: { quotation: true, app_module: 'finance', controller_name: 'quotations' }
     },
     {
         path: "/finance/quotations/:id",

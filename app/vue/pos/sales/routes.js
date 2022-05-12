@@ -1,5 +1,5 @@
 import appPosList  from 'vueApp/pos/sales/apps/list.vue'
-import appPosNew   from 'vueApp/pos/sales/apps/new.vue'
+import appPosNew  from 'vueApp/components/component-sale.vue'
 import appPosShow from 'vueApp/pos/sales/apps/show.vue'
 
 
@@ -10,7 +10,8 @@ const routes =  [
     },
     {
         path: "/pos/sales/new",
-        component: appPosNew
+        component: appPosNew,
+        props: { cash_register: true, app_module: 'pos' }
     },
     {
         path: "/pos/sales/:id",

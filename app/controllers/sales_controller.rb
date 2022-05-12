@@ -25,6 +25,7 @@ class SalesController < ApplicationSystemController
         set_sale
 
         if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
+
           attachment = DigifactServices::Api.new(current_user, @sale).download['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
@@ -172,7 +173,7 @@ class SalesController < ApplicationSystemController
   def sale_params
     params.fetch(:sale, {}).permit(
       %i[
-        client_id subtotal total discount interest shipping_costs status
+        client_id subtotal subtotal1 subtotal2 total discount interest shipping_costs status
         received_amount change sale_type employees_id sale_date payment_method_id
       ]
     )

@@ -22,7 +22,8 @@ module AppServices
             interest_value: sale_product["interest_value"],
             interest_percentage: sale_product["interest_percentage"],
             measurement_unit: sale_product["measurement_unit"],
-            product_type: sale_product["product_type"]
+            product_type: sale_product["product_type"],
+            final_subtotal: sale_product["final_subtotal"]
           )
 
           sale_detail.save!

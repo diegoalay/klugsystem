@@ -34,7 +34,7 @@ module XmlServices
     end
 
     def item_taxable_amount(item)
-      (item.subtotal - item.discount_value) / 1.12
+      (item.final_subtotal - item.discount_value) / 1.12
     end
 
     def item_product_type(item)
@@ -44,6 +44,10 @@ module XmlServices
 
     def item_measurement_unit(item)
       item.measurement_unit.upcase.split(" ").map do |word| word.first end.join
+    end
+
+    def item_price(item)
+      item.price + (item.price * item.interest_percentage.to_f)
     end
 
     def round(val, decimals = 2)

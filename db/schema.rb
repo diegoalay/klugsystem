@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_11_225841) do
+ActiveRecord::Schema.define(version: 2022_05_12_072951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 2022_05_11_225841) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.jsonb "digifact", default: {}
+    t.string "billing_phrase"
+    t.string "billing_stage"
   end
 
   create_table "branch_office_activities", force: :cascade do |t|
@@ -721,6 +723,7 @@ ActiveRecord::Schema.define(version: 2022_05_11_225841) do
     t.string "product_type"
     t.decimal "interest_percentage", default: "0.0"
     t.decimal "interest_value", default: "0.0"
+    t.decimal "final_subtotal"
     t.index ["account_id"], name: "index_quotation_details_on_account_id"
     t.index ["deleted_at"], name: "index_quotation_details_on_deleted_at"
     t.index ["product_id"], name: "index_quotation_details_on_product_id"
@@ -855,6 +858,7 @@ ActiveRecord::Schema.define(version: 2022_05_11_225841) do
     t.bigint "sale_id"
     t.decimal "interest_percentage", default: "0.0"
     t.decimal "interest_value", default: "0.0"
+    t.decimal "final_subtotal"
     t.index ["account_id"], name: "index_sale_details_on_account_id"
     t.index ["deleted_at"], name: "index_sale_details_on_deleted_at"
     t.index ["product_id"], name: "index_sale_details_on_product_id"
@@ -901,6 +905,8 @@ ActiveRecord::Schema.define(version: 2022_05_11_225841) do
     t.bigint "cash_register_id"
     t.bigint "payment_method_id"
     t.bigint "branch_office_id"
+    t.decimal "subtotal1"
+    t.decimal "subtotal2"
     t.index ["account_id"], name: "index_sales_on_account_id"
     t.index ["branch_office_id"], name: "index_sales_on_branch_office_id"
     t.index ["cash_register_id"], name: "index_sales_on_cash_register_id"

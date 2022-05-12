@@ -5,6 +5,24 @@ import componentSaleDetails from 'vueApp/components/component-sale-details.vue'
 import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
 
 export default {
+    props: {
+        app_module: {
+            type: String,
+            required: true
+        },
+        controller_name: {
+            type: String,
+            default: 'sales'
+        },
+        quotation: {
+            type: Boolean,
+            default: false
+        },
+        cash_register: {
+            type: Boolean,
+            default: false
+        },
+    },
     components:{
         'component-autocomplete': componenentAutocomplete,
         'component-products-icon': componentProductsIcon,
@@ -15,7 +33,7 @@ export default {
         return {
             products: [],
             options: {},
-            quotation: {
+            sale: {
                 id: null,
                 total: 0,
                 subtotal: 0,
@@ -26,18 +44,27 @@ export default {
                 received_amount: 0,
                 change: 0
             },
+            client: {
+                id: null
+            },
             filters: {
                 date_range: [
                     new Date((new Date().setDate((new Date().getDate()) - 30))),
                     new Date()
                 ]
             },
+            clearAutocompletes: {
+                client: false,
+            },
             payment_method: {
                 id: null,
                 value: null
             },
             payment_method_discount: {},
-            payment_method_interest: {},
+            payment_method_interest: {
+                key: 'interest_percentage',
+                value: 0
+            },
             fields: [{
                 label: 'Artículo',
                 key: 'name',
@@ -67,42 +94,82 @@ export default {
                 label: '',
                 key: 'actions'
             }],
+            storedData: null
         }
     },
     mounted(){
+        this.storedData = this.storage.local('sale')
+
         this.getOptions()
     },
     methods: {
+        confirmSale(){
+            this.$bvModal.show('confirm-sale')
+        },
+
         submitSale(sale_type){
-            for(let key in this.products) {
-                const interest = this.getInterestInfo(this.products[key])
+            this.$bvModal.hide('confirm-sale')
 
-                this.products[key]['interest_value'] = interest.value
-                this.products[key]['interest_percentage'] = interest.percentage
-            }
-
-            const url = this.url.finance('quotations')
-            let form = {
-                quotation: {
-                    ... this.quotation,
-                    sale_type: sale_type,
-                    subtotal: this.getSum('subtotal'),
-                    total: this.getTotalSale(),
-                    discount: this.getDiscount(),
-                    interest: this.getInterest(),
-                    change: this.getChange(),
-                    products: this.products
+            const url = this.url[this.app_module](this.controller_name)
+            let form = {}
+            if (this.quotation) {
+                form = {
+                    quotation: {
+                        ... this.sale,
+                        sale_type: sale_type,
+                        subtotal: this.getSum('subtotal'),
+                        subtotal1: this.getTotalWithInterest(),
+                        subtotal2: this.getTotalWithDiscount(),
+                        total: this.getTotalSale(),
+                        discount: this.getDiscount(),
+                        interest: this.getInterest(),
+                        change: this.getChange(),
+                        products: this.products
+                    }
+                }
+            } else {
+                form = {
+                    sale: {
+                        ... this.sale,
+                        sale_type: sale_type,
+                        client_id: this.client.id,
+                        subtotal: this.getSum('subtotal'),
+                        subtotal1: this.getTotalWithInterest(),
+                        subtotal2: this.getTotalWithDiscount(),
+                        total: this.getTotalSale(),
+                        discount: this.getDiscount(),
+                        interest: this.getInterest(),
+                        change: this.getChange(),
+                        products: this.products,
+                        client: this.client,
+                        cash_register: this.cash_register
+                    }
                 }
             }
 
+            if (sale_type === 'electronic_bill') this.$loading(true)
+
             this.http.post(url, form).then(result => {
+                if (sale_type === 'electronic_bill') this.$loading(false)
+
                 if (result.successful) {
-                    this.$toast.success('Cotización creada exitosamente.')
-                    this.$router.push(this.url.finance('quotations/:id', {id: result.data.id}).toString(false))
+                    if (this.quotation) {
+                        this.$toast.success('Cotización realizada exitosamente.')
+                    } else {
+                        this.$toast.success('Venta realizada exitosamente.')
+                    }
+                    this.$router.push(this.url[this.app_module](`${this.controller_name}/:id`, {id: result.data.id}).toString(false))
                 } else {
-                    this.$toast.error(result.error.message, {
-                        timeout: 4000,
-                    })
+                    if (sale_type === 'electronic_bill') {
+                        this.$toast.error(result.error.message, {
+                            timeout: 10000,
+                        })
+                    } else {
+                        this.$toast.error(result.error.message, {
+                            timeout: 4000,
+                        })
+                    }
+
                 }
             }).catch(error => {
                 console.log(error)
@@ -110,11 +177,19 @@ export default {
         },
 
         getOptions(){
-            const url = this.url.finance('quotations/options')
+            const url = this.url[this.app_module](`${this.controller_name}/options`)
 
             this.http.get(url).then(result => {
                 if (result.successful) {
                     this.options = result.data
+
+                    if (this.storedData.payment_method_id) {
+                        const found = this.options.payment_methods.find(e => e.value.id === this.storedData.payment_method_id)
+
+                        if (found) {
+                            this.payment_method = found.value
+                        }
+                    }
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -128,14 +203,22 @@ export default {
             let value = 0
 
             if (this.products.length > 0)  {
-                value = this.products.map(e => e[key]).reduce((oldValue, newValue) => oldValue + newValue)
+                value = this.products.map(e => e[key]).reduce((oldValue, newValue) => {
+                    let val1 = parseFloat(oldValue)
+                    let val2 = parseFloat(newValue)
+
+                    if (Number.isNaN(val1)) val1 = 0
+                    if (Number.isNaN(val2)) val2 = 0
+
+                    return val1 + val2
+                })
             }
 
             return parseFloat(value).toFixed(2)
         },
 
         getTotal(){
-            return (this.getSum('subtotal') - this.getDiscount()).toFixed(2)
+            return parseFloat(this.getSum('subtotal')).toFixed(2)
         },
 
         getDiscount(){
@@ -152,14 +235,18 @@ export default {
                 discount = this.getSum('discount_value')
             }
 
-            return parseFloat(discount).toFixed(2)
+            return parseFloat(discount||0).toFixed(2)
         },
 
         getTotalWithInterest(){
             const total = this.getTotal()
             const interest = this.getInterest()
 
-            return parseFloat(total) + parseFloat(interest)
+            return (parseFloat(total) + parseFloat(interest)).toFixed(2)
+        },
+
+        getTotalWithDiscount(){
+            return parseFloat(this.getTotalWithInterest()) - parseFloat(this.getDiscount()).toFixed(2)
         },
 
         getPaymentInterest(){
@@ -168,7 +255,9 @@ export default {
             const value = this.payment_method.interest_value
 
             if (this.payment_method.interest_percentage > 0) values.push({item: {value: (percentage/100), key: 'interest_percentage'}, text: `% ${percentage}`})
-            if (this.payment_method.interest_value > 0) values.push({item: {value: value, key: 'interest_value'}, text: `Q. ${value}`})
+
+
+            values.push({item: {value: 0, key: 'interest_percentage'}, text: `N/A`})
 
             return values
         },
@@ -184,24 +273,12 @@ export default {
             return values
         },
 
-        getInterestInfo(product){
-            const percentage = this.getInterest() / this.getTotal()
-            const value = total * percentage
-
-            return {
-                value,
-                percentage
-            }
-        },
-
         getInterest(){
             let interest = 0
 
             if (this.payment_method && this.payment_method_interest.value) {
                 if (this.payment_method_interest.key == 'interest_percentage') {
                     interest = this.getTotal() * this.payment_method_interest.value
-                } else if (this.payment_method_interest.key == 'interest_value') {
-                    interest = this.payment_method_interest.value
                 }
             }
 
@@ -210,11 +287,11 @@ export default {
 
 
         getTotalSale(){
-            return (parseFloat(this.quotation.shipping_costs) + this.getTotalWithInterest()).toFixed(2)
+            return (parseFloat(this.sale.shipping_costs) + parseFloat(this.getTotalWithDiscount())).toFixed(2)
         },
 
         getChange(){
-            return (parseFloat(this.quotation.received_amount) - this.getTotalSale()).toFixed(2)
+            return (parseFloat(this.sale.received_amount) - this.getTotalSale()).toFixed(2)
         },
 
         getSumWithFormat(key){
@@ -242,20 +319,24 @@ export default {
             return `Q ${this.getTotalWithInterest()}`
         },
 
+        getTotalWithDiscountAndFormat(){
+            return `Q ${this.getTotalWithDiscount()}`
+        },
+
         getChangeWithFormat(){
             return `Q ${this.getChange()}`
         },
 
         // Setters
         setReceivedAmount(){
-            this.$set(this.quotation, 'received_amount', this.getTotalSale())
+            this.$set(this.sale, 'received_amount', this.getTotalSale())
         },
 
         // validators
         validateReceivedAmount(){
-            if (this.quotation.received_amount <= this.getTotalSale()){
+            if (this.sale.received_amount <= this.getTotalSale()){
                 this.$toast.error('La cantidad es menor al valor total de la venta.')
-                this.$set(this.quotation, 'received_amount', this.getTotalSale())
+                this.$set(this.sale, 'received_amount', this.getTotalSale())
             }
         },
 
@@ -264,6 +345,11 @@ export default {
         },
 
         addProduct(product){
+            if (product.quantity <= 0 && product.product_type === 'good') {
+                this.$toast.error('El producto se encuentra agotado.')
+                return
+            }
+
             if (!product.id) {
                 this.$toast.warning('Debes seleccionar un producto.')
                 return
@@ -272,17 +358,32 @@ export default {
             const index = this.products.findIndex(e => e.id === product.id)
 
             let saleQuantity = 1
-
+            let discount_percentage = 0
             if (index !== -1) {
                 saleQuantity = this.products[index].saleQuantity
                 saleQuantity += 1
+
+                discount_percentage = this.products[index].discount_percentage
+            }
+
+            if (saleQuantity > product.quantity && product.product_type === 'good') {
+                this.$toast.error('Artículos agotado.')
+
+                saleQuantity = product.quantity
             }
 
             const subtotal = product.retail_price * saleQuantity
-            const discount_value = 0
-            const discount_percentage = (discount_value * 100) / subtotal
+            let interest_value = 0
+            let interest_percentage = 0
 
-            const total = subtotal - discount_value
+            if (this.payment_method_interest.key == 'interest_percentage') {
+                interest_percentage = this.payment_method_interest.value
+                interest_value = parseFloat(parseFloat(subtotal * interest_percentage).toFixed(2))
+            }
+
+            const final_subtotal = subtotal + interest_value
+            const discount_value = final_subtotal * discount_percentage
+            const total = final_subtotal - discount_value
 
             const new_product = {
                 id: product.id,
@@ -291,9 +392,13 @@ export default {
                 quantity: parseFloat(product.quantity),
                 saleQuantity: saleQuantity,
                 subtotal: subtotal,
+                final_subtotal: final_subtotal,
                 measurement_unit: product.measurement_unit_name,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
+                interest_value: interest_value,
+                interest_percentage: interest_percentage,
+                product_type: product.product_type,
                 total: total
             }
 
@@ -308,13 +413,20 @@ export default {
     watch: {
         payment_method(value){
             if (value.id) {
-                this.$set(this.quotation, 'payment_method_id', value.id)
+                this.$set(this.sale, 'payment_method_id', value.id)
             } else {
-                this.$set(this.quotation, 'payment_method_id', null)
+                this.$set(this.sale, 'payment_method_id', null)
             }
 
+            this.storage.local('sale', {
+                payment_method_id: value.id
+            })
+
             this.payment_method_discount = {}
-            this.payment_method_interest = {}
+            this.payment_method_interest = {
+                key: 'interest_percentage',
+                value: 0
+            }
         }
     }
 }
@@ -322,15 +434,15 @@ export default {
 
 <template>
     <section>
-        <component-header-form :title="'Cotización'">
+        <component-header-form :title="quotation ? 'Cotización' : 'Venta'">
             <slot name="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/finance/quotations">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
 
-                <b-button variant="outline-primary" class="mb-2" href="#finish-quotation">
+                <b-button variant="outline-primary" class="mb-2" href="#finish">
                     <font-awesome-icon icon="cart-shopping" />
-                    Cotizar
+                    {{ quotation ? 'Terminar cotización' : 'Terminar venta' }}
                 </b-button>
             </slot>
         </component-header-form>
@@ -349,14 +461,23 @@ export default {
                         <div class="bg-primary total-header text-center">
                             {{ getTotalSaleWithFormat() }}
                         </div>
+
                         <br>
-                        <b-row>
+                        <component-autocomplete
+                            v-if="!quotation"
+                            @select="(option) => client = option !== null ? option : {}"
+                            text-field="billing_details"
+                            placeholder="Buscar por número de nit"
+                            :endpoint="url.crm('/clients/search').toString(false)"
+                        />
+
+                        <b-row v-if="quotation">
                             <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Nombre <sup class="text-danger">* </sup> </label>
                                     <b-form-input
                                         ref="client-name"
-                                        v-model="quotation.client_name"
+                                        v-model="sale.client_name"
                                         type="text"
                                         placeholder=""
                                         required
@@ -368,7 +489,7 @@ export default {
                                 <b-form-group>
                                     <label> E-Mail </label>
                                     <b-form-input
-                                        v-model="quotation.client_email"
+                                        v-model="sale.client_email"
                                         type="email"
                                         placeholder=""
                                     >
@@ -376,6 +497,61 @@ export default {
                                 </b-form-group>
                             </b-col>
                         </b-row>
+                        <template v-else>
+                            <b-row>
+                                <b-col md="6" sm="12">
+                                    <b-form-group>
+                                        <label> Nit <sup class="text-danger">*</sup> </label>
+                                        <b-form-input
+                                            v-model="client.billing_identifier"
+                                            type="text"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col md="6" sm="12">
+                                    <b-form-group>
+                                        <label> Nombre <sup class="text-danger">* </sup> </label>
+                                        <b-form-input
+                                            ref="client-name"
+                                            v-model="client.billing_name"
+                                            type="text"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+
+                            <b-row>
+                                <b-col md="6" sm="12">
+                                    <b-form-group>
+                                        <label> Dirección </label>
+                                        <b-form-input
+                                            v-model="client.billing_address"
+                                            type="text"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col md="6" sm="12">
+                                    <b-form-group>
+                                        <label> E-Mail </label>
+                                        <b-form-input
+                                            v-model="client.billing_email"
+                                            type="email"
+                                            placeholder=""
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                        </template>
 
                         <b-row>
                             <b-col md="6" sm="12">
@@ -391,17 +567,7 @@ export default {
 
                             <b-col md="6" sm="12">
                                 <template v-if="payment_method.id">
-                                    <b-form-group v-if="getPaymentDiscounts().length > 0">
-                                        <label> Descuento </label>
-                                        <b-form-select
-                                            v-model="payment_method_discount"
-                                            :options="getPaymentDiscounts()"
-                                            value-field="item"
-                                        >
-                                        </b-form-select>
-                                    </b-form-group>
-
-                                    <b-form-group v-if="getPaymentInterest().length > 0">
+                                    <b-form-group v-if="getPaymentInterest().length > 1">
                                         <label> Interés </label>
                                         <b-form-select
                                             v-model="payment_method_interest"
@@ -425,7 +591,7 @@ export default {
                                         lang="es"
                                         type="date"
                                         format="DD-MM-YYYY hh:mm"
-                                        v-model="quotation.sale_date"
+                                        v-model="sale.sale_date"
                                         placeholder=""
                                         required
                                     >
@@ -439,6 +605,7 @@ export default {
                         <component-sale-details
                             :products="products"
                             :payment_method_discount="payment_method_discount"
+                            :payment_method_interest="payment_method_interest"
                             @remove="removeProduct"
                         >
                         </component-sale-details>
@@ -449,19 +616,6 @@ export default {
                                 <b-input-group-text >Subtotal</b-input-group-text>
                             </template>
                             <b-form-input disabled readonly class="text-right" :value="getSumWithFormat('subtotal')"> </b-form-input>
-                        </b-input-group>
-
-                        <b-input-group>
-                            <template #prepend>
-                                <b-input-group-text >Descuento</b-input-group-text>
-                            </template>
-                            <b-form-input disabled readonly class="text-right" :value="getDiscountWithFormat()"> </b-form-input>
-                        </b-input-group>
-                        <b-input-group>
-                            <template #prepend>
-                                <b-input-group-text >Total</b-input-group-text>
-                            </template>
-                            <b-form-input disabled readonly class="text-right" :value="getTotalWithFormat()"> </b-form-input>
                         </b-input-group>
                         <b-input-group>
                             <template #prepend>
@@ -477,12 +631,24 @@ export default {
                         </b-input-group>
                         <b-input-group>
                             <template #prepend>
+                                <b-input-group-text >Descuento</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getDiscountWithFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Total</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getTotalWithDiscountAndFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
                                 <b-input-group-text >Envío</b-input-group-text>
                             </template>
                             <b-form-input
                                 min="0"
                                 class="text-right"
-                                v-model="quotation.shipping_costs"
+                                v-model="sale.shipping_costs"
                             >
                             </b-form-input>
                         </b-input-group>
@@ -495,7 +661,7 @@ export default {
                                 class="text-right"
                                 type="number"
                                 @change="validateReceivedAmount()"
-                                v-model="quotation.received_amount"
+                                v-model="sale.received_amount"
                                 :min="getTotalSale()"
                             >
                             </b-form-input>
@@ -513,7 +679,8 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish-quotation" block variant="primary" type="submit" @click.prevent="submitSale"> Cotizar </b-button>
+                                <b-button v-if="!quotation" id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Vender </b-button>
+                                <b-button v-else id="finish" block variant="primary" type="submit" @click.prevent="submitSale"> Cotizar </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -522,6 +689,17 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
+
+            <b-modal
+                id="confirm-sale"
+                size="xl"
+                hide-footer
+                centered
+                content-class="shadow"
+                title="Seleccione tipo de venta"
+            >
+                <component-confirm-sale :sale_types="options.sale_types" @submit="submitSale" :total="getTotalSaleWithFormat()"/>
+            </b-modal>
         </b-row>
     </section>
 </template>

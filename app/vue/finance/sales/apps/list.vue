@@ -287,7 +287,7 @@
                             <font-awesome-icon icon="print" />
                         </b-button>
 
-                        <b-button v-if="row.item.can_be_disabled" @click="disableSale(row.item.id)" variant="outline-danger" class="mr-1">
+                        <b-button v-if="row.item.can_be_disabled && row.item.status" @click="disableSale(row.item.id)" variant="outline-danger" class="mr-1">
                             <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>
