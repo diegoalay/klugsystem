@@ -21,7 +21,7 @@ module XmlServices
           <dte:SAT ClaseDocumento="dte">
               <dte:DTE ID="DatosCertificados">
                   <dte:DatosEmision ID="DatosEmision">
-                      <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.created_at)}" CodigoMoneda="GTQ" />
+                      <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.sale_date)}" CodigoMoneda="GTQ" />
                       <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_address}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
                           NombreComercial="#{@sale.account.name}" AfiliacionIVA="GEN">
                           <dte:DireccionEmisor>

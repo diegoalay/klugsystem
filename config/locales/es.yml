@@ -77,6 +77,9 @@ es:
       expediture_types: 'Tipos de gasto'
       event_types: 'Tipos de evento'
       product_transaction_types: 'Tipos de transacción de productos'
+    reports:
+      title: 'Reportes'
+      sales: 'Ventas'
     administration:
       title: 'Administración'
       users: 'Usuarios'

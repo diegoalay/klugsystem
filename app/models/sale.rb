@@ -38,16 +38,18 @@ class Sale < ApplicationRecord
         end
 
         ActiveRecord::Base.transaction do
-          details.each do |sale_detail|
-            sale_detail.user_modifier_id = user_modifier_id
-            sale_detail.update(status: false)
+          if (!is_electronic_billing? || (is_electronic_billing? && electronic_bill&.annulment_datetime.present?))
+            details.each do |sale_detail|
+              sale_detail.user_modifier_id = user_modifier_id
+              sale_detail.update(status: false)
 
-            if sale_detail.product.present?
-              quantity = sale_detail.product.quantity
-              quantity += sale_detail.quantity
+              if sale_detail.product.present?
+                quantity = sale_detail.product.quantity
+                quantity += sale_detail.quantity
 
-              sale_detail.product.update(quantity: quantity)
-              sale_detail.product.transactions.find_by(model_id: id, model_type: 'Sale')&.destroy!
+                sale_detail.product.update(quantity: quantity)
+                sale_detail.product.transactions.find_by(model_id: id, model_type: 'Sale')&.destroy!
+              end
             end
           end
         end

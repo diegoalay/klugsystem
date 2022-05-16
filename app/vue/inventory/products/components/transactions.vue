@@ -25,6 +25,9 @@
                     key: 'quantity',
                     sortable: true
                 },{
+                    label: 'Descripción',
+                    key: 'description'
+                },{
                     label: 'Detalles',
                     key: 'actions'
                 }],
@@ -33,7 +36,7 @@
                     per_page: 10,
                     current_page: 1,
                     order_by: 'created_at',
-                    order: false,
+                    order: true,
                 },
                 search_text: '',
                 loading: false,

@@ -149,6 +149,15 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :reports do
+        resource :sales do
+          collection do
+            get :options
+            get :index_options
+          end
+        end
+      end
+
       resources :books do
       end
 

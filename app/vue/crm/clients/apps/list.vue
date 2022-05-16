@@ -6,19 +6,8 @@
         data() {
             return {
                 data: [],
-                fields: [{
-                    label: 'Nombre',
-                    key: 'name',
-                    sortable: false
-                },{
-                    label: 'Teléfono',
-                    key: 'telephone',
-                    sortable: true
-                },{
-                    label: 'E-Mail',
-                    key: 'email',
-                    sortable: true
-                },{
+                fields: [
+                {
                     label: 'Nit',
                     key: 'billing_identifier',
                     sortable: true
@@ -29,6 +18,18 @@
                 },{
                     label: 'Dirección de facturación',
                     key: 'billing_address',
+                    sortable: true
+                },{
+                    label: 'Nombre',
+                    key: 'name',
+                    sortable: false
+                },{
+                    label: 'Teléfono',
+                    key: 'telephone',
+                    sortable: true
+                },{
+                    label: 'E-Mail',
+                    key: 'email',
                     sortable: true
                 },{
                     label: '',

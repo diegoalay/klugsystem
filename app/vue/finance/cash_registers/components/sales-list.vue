@@ -76,10 +76,7 @@
                 this.loading = true
 
                 const url = this.url.build('sales')
-                .filters({
-                    ...this.filters,
-                    cash_register_id: this.cash_register.id
-                })
+                .filters(this.filters)
                 .paginate(this.pagination.current_page, this.pagination.per_page)
                 .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 

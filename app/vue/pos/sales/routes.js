@@ -1,21 +1,27 @@
-import appPosList  from 'vueApp/pos/sales/apps/list.vue'
-import appPosNew  from 'vueApp/components/component-sale.vue'
-import appPosShow from 'vueApp/pos/sales/apps/show.vue'
+import appPosSaleList  from 'vueApp/components/component-sales-list.vue'
+import appPosSaleNew  from 'vueApp/components/component-sale.vue'
+import appPosSaleShow from 'vueApp/pos/sales/apps/show.vue'
 
 
 const routes =  [
     {
         path: "/pos/sales",
-        component: appPosList
+        component: appPosSaleList,
+        props: {
+            app_module: 'pos'
+        }
     },
     {
         path: "/pos/sales/new",
-        component: appPosNew,
-        props: { cash_register: true, app_module: 'pos' }
+        component: appPosSaleNew,
+        props: {
+            cash_register: true,
+            app_module: 'pos'
+        }
     },
     {
         path: "/pos/sales/:id",
-        component: appPosShow
+        component: appPosSaleShow
     }
 ]
 

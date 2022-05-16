@@ -57,7 +57,9 @@ class CashRegister < ApplicationRecord
   end
 
   def show
-    sales_sum = sales.where(cash_register: self, status: true).sum(:total)&.to_f
+    cash_register_sales = sales.where(cash_register: self)
+    sales_sum = cash_register_sales.where(status: true).sum(:total)&.to_f
+    sales_disabled_sum = cash_register_sales.where(status: false).sum(:total)&.to_f
     expeditures_sum = expeditures.where(cash_register: self).sum(:amount)&.to_f
 
     sum_final_value = 0
@@ -69,8 +71,8 @@ class CashRegister < ApplicationRecord
     end
 
     chart = {
-      series: [sales_sum, expeditures_sum],
-      labels: ["Ventas", "Gastos"]
+      series: [sales_sum, sales_disabled_sum, expeditures_sum],
+      labels: ["Ventas Realizadas", "Ventas Anuladas", "Gastos"]
     }
 
     {

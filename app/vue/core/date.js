@@ -40,7 +40,12 @@ export default {
 
         }
 
+        const daysInMonth = (month, year) =>  {
+            return new Date(year, month, 0).getDate();
+        }
+
         Vue.prototype.date = {
+            daysInMonth,
             parseISOString,
             parse,
             datetime,

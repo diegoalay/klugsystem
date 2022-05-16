@@ -39,7 +39,8 @@ class Product::Transaction < ApplicationRecord
       "product_transactions.category",
       "product_transactions.created_at",
       "product_transactions.model_type",
-      "product_transactions.model_id"
+      "product_transactions.model_id",
+      "product_transactions.description"
     )
 
     transactions = transactions.page(query[:pagination][:current_page])

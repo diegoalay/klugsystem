@@ -20,6 +20,8 @@ class ExpeditureQuery
       expeditures = expeditures.where("expeditures.cash_register_id = ?", current_user.current_cash_register&.id) if query[:filters][:user_creator_type].eql? "current_cash_register"
     end
 
+    expeditures = expeditures.where("expeditures.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
+
 
     expeditures
   end

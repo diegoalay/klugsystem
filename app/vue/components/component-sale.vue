@@ -246,7 +246,7 @@ export default {
         },
 
         getTotalWithDiscount(){
-            return parseFloat(this.getTotalWithInterest()) - parseFloat(this.getDiscount()).toFixed(2)
+            return parseFloat(parseFloat(this.getTotalWithInterest()) - parseFloat(this.getDiscount())).toFixed(2)
         },
 
         getPaymentInterest(){
@@ -590,7 +590,7 @@ export default {
                                         :focus="false"
                                         lang="es"
                                         type="date"
-                                        format="DD-MM-YYYY hh:mm"
+                                        format="DD-MM-YYYY HH:mm"
                                         v-model="sale.sale_date"
                                         placeholder=""
                                         required

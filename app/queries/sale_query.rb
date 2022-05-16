@@ -53,23 +53,35 @@ class SaleQuery
       sales = sales.where("sales.cash_register_id = ?", current_user.current_cash_register&.id) if query[:filters][:user_creator_type].eql? "current_cash_register"
     end
 
+    if (query[:filters][:start_date].present? && query[:filters][:end_date].present?)
+      sales = sales.where(
+          "sales.created_at >= ? and sales.created_at <= ?",
+          "#{DateTime.iso8601(query[:filters][:start_date]).beginning_of_day}",
+          "#{DateTime.iso8601(query[:filters][:end_date]).end_of_day}",
+      )
+  end
+
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
     sales = sales.where("sales.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
     sales = sales.where("sales.status = ?", query[:filters][:status]) unless query[:filters][:status].blank?
 
-    sales = sales.page(query[:pagination][:current_page])
-    .per(query[:pagination][:per_page])
-    .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
+    unless (query[:pagination][:disable])
+      sales = sales.page(query[:pagination][:current_page])
+      .per(query[:pagination][:per_page])
+      .order("#{query[:pagination][:order_by]} #{query[:pagination][:order]} nulls last")
 
-    data = sales.map do |sale|
-      sale.attributes.merge(
-        can_be_disabled: sale.status ? current_user.admin? : false,
-        sale_type: I18n.t("models.sales.column_enum_sale_type_#{sale.sale_type}")
-      )
+      data = sales.map do |sale|
+        sale.attributes.merge(
+          can_be_disabled: sale.status ? current_user.admin? : false,
+          sale_type_text: I18n.t("models.sales.column_enum_sale_type_#{sale.sale_type}")
+        )
+      end
+
+      return Responder.pagination(sales, data)
     end
 
-    Responder.pagination(sales, data)
+    sales
   end
 
   def index_options(current_user)

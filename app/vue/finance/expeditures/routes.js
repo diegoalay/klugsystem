@@ -1,19 +1,22 @@
-import appBrandsList  from 'vueApp/finance/expeditures/apps/list.vue'
-import appBrandsNew   from 'vueApp/finance/expeditures/apps/new.vue'
-import appBrandsShow from 'vueApp/finance/expeditures/apps/show.vue'
+import appFinanceExpedituresList  from 'vueApp/components/component-expeditures-list.vue'
+import appFinanceExpedituresNew   from 'vueApp/finance/expeditures/apps/new.vue'
+import appFinanceExpedituresShow from 'vueApp/finance/expeditures/apps/show.vue'
 
 const routes =  [
     {
         path: "/finance/expeditures",
-        component: appBrandsList
+        component: appFinanceExpedituresList,
+        props: {
+            app_module: 'finance',
+        }
     },
     {
         path: "/finance/expeditures/new",
-        component: appBrandsNew
+        component: appFinanceExpedituresNew
     },
     {
         path: "/finance/expeditures/:id",
-        component: appBrandsShow
+        component: appFinanceExpedituresShow
     }
 ]
 

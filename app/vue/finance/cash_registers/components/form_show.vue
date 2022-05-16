@@ -1,6 +1,6 @@
 <script>
-import componentSalesList from './sales-list.vue'
-import componentExpedituresList from './expeditures-list.vue'
+import componentExpedituresList from 'vueApp/components/component-expeditures-list.vue'
+import componentSalesList  from 'vueApp/components/component-sales-list.vue'
 
 export default {
     props: {
@@ -17,24 +17,24 @@ export default {
         return {
           chartOptions: {
             chart: {
-              type: 'pie',
+                type: 'pie',
             },
             labels: this.cash_register.chart.labels,
             responsive: [{
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200
-                },
-                legend: {
-                  position: 'bottom'
+                breakpoint: 480,
+                options: {
+                    chart: {
+                    width: 200
+                    },
+                    legend: {
+                    position: 'bottom'
+                    }
                 }
-              }
             }]
           },
+          tabIndex: 0
         }
     },
-    mounted() {},
     methods: {
         onSubmit(){
             this.putForm()
@@ -71,45 +71,58 @@ export default {
 </script>
 
 <template>
-    <b-row>
-        <b-col md="8" sm="12">
-            <b-card>
-                <b-card-body>
-                    <b-form @submit.prevent="onSubmit">
-                        <b-form-group>
-                            <label> Valor inicial <sup class="text-danger">*</sup> </label>
+    <b-card no-body>
+        <b-tabs v-model="tabIndex" card>
+            <b-tab title="Detalles">
+                <b-row>
+                    <b-col md="8" sm="12">
 
-                            <b-form-input
-                                v-model="cash_register.initial_value"
-                                type="number"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
+                        <b-card>
+                            <b-card-body>
+                                <b-form @submit.prevent="onSubmit">
+                                    <b-form-group>
+                                        <label> Valor inicial <sup class="text-danger">*</sup> </label>
 
-                        <b-form-group label="Valor final">
-                            <b-form-input
-                                disabled
-                                readonly
-                                :value="cash_register.final_value"
-                                type="number"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-form>
-                </b-card-body>
-            </b-card>
-        </b-col>
+                                        <b-form-input
+                                            v-model="cash_register.initial_value"
+                                            type="number"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
 
-        <b-col class="text-center" md="4" sm="12">
-            <b-card>
-                <b-card-body>
-                    <apexchart v-if="cash_register.id" type="pie" :options="chartOptions" :series="cash_register.chart.series"></apexchart>
-                </b-card-body>
-            </b-card>
-        </b-col>
-    </b-row>
+                                    <b-form-group label="Valor final">
+                                        <b-form-input
+                                            disabled
+                                            readonly
+                                            :value="cash_register.final_value"
+                                            type="number"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-form>
+                            </b-card-body>
+                        </b-card>
+                    </b-col>
+
+                    <b-col class="text-center" md="4" sm="12">
+                        <b-card>
+                            <b-card-body>
+                                <apexchart v-if="cash_register.id" type="pie" :options="chartOptions" :series="cash_register.chart.series"></apexchart>
+                            </b-card-body>
+                        </b-card>
+                    </b-col>
+                </b-row>
+            </b-tab>
+            <b-tab title="Listado de ventas">
+                <component-sales-list app_module='finance' :hideHeader="true" :cash-register-id="cash_register.id"></component-sales-list>
+            </b-tab>
+            <b-tab title="Listado de gastos">
+                <component-expeditures-list app_module='finance' :cash-register-id="cash_register.id"></component-expeditures-list>
+            </b-tab>
+        </b-tabs>
+    </b-card>
 </template>

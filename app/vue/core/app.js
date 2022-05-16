@@ -9,7 +9,6 @@ import VueApexCharts from 'vue-apexcharts'
 import VModal from 'vue-js-modal'
 import VueI18n from 'vue-i18n'
 import ActionCableVue from 'actioncable-vue';
-import VueConfirmDialog from 'vue-confirm-dialog'
 import Dialog from 'bootstrap-vue-dialog'
 import VueLoading from 'vuejs-loading-plugin'
 
@@ -91,7 +90,6 @@ Vue.use(ImagePlugin)
 Vue.use(VModal)
 Vue.use(CarouselPlugin)
 Vue.use(VueApexCharts)
-Vue.use(VueConfirmDialog)
 Vue.use(Dialog)
 
 library.add(fas)

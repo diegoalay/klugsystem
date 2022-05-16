@@ -34,6 +34,9 @@ import clientTypesRoutes from 'vueApp/configurations/client_types/routes.js';
 import expeditureTypesRoutes from 'vueApp/configurations/expediture_types/routes.js';
 import productTransactionTypesRoutes from 'vueApp/configurations/product_transaction_types/routes.js';
 
+// REPORTS
+import reportRoutes from 'vueApp/report/routes.js';
+
 // ADMINISTRATION
 import usersRoutes from 'vueApp/administration/users/routes.js';
 import rolesRoutes from 'vueApp/administration/roles/routes.js';
@@ -62,13 +65,6 @@ app("",
     .concat(brandsRoutes)
     .concat(departmentsRoutes)
     .concat(measurementUnitsRoutes)
-    // ADMINISTRATION
-    .concat(usersRoutes)
-    .concat(rolesRoutes)
-    .concat(branchOfficesRoutes)
-    .concat(paymentMethodsRoutes)
-    .concat(digifactRoutes)
-    .concat(accountRoutes)
     // HR
     .concat(employeeRoutes)
     // POS
@@ -81,6 +77,15 @@ app("",
     .concat(productTransactionTypesRoutes)
     .concat(eventTypesRoutes)
     .concat(booksRoutes)
+    // REPORTS
+    .concat(reportRoutes)
+    // ADMINISTRATION
+    .concat(usersRoutes)
+    .concat(rolesRoutes)
+    .concat(branchOfficesRoutes)
+    .concat(paymentMethodsRoutes)
+    .concat(digifactRoutes)
+    .concat(accountRoutes)
     // PROFILE
     .concat(profileRoutes)
 )

@@ -1,4 +1,4 @@
-import appSalesList  from 'vueApp/finance/sales/apps/list.vue'
+import appSalesList  from 'vueApp/components/component-sales-list.vue'
 import appSalesNew  from 'vueApp/components/component-sale.vue'
 import appSalesShow from 'vueApp/finance/sales/apps/show.vue'
 
@@ -6,12 +6,19 @@ import appSalesShow from 'vueApp/finance/sales/apps/show.vue'
 const routes =  [
     {
         path: "/finance/sales",
-        component: appSalesList
+        component: appSalesList,
+        props: {
+            app_module: 'finance',
+            controller: 'sales',
+            userCreatorTypes: true
+        }
     },
     {
         path: "/finance/sales/new",
         component: appSalesNew,
-        props: { app_module: 'finance' }
+        props: {
+            app_module: 'finance'
+        }
     },
     {
         path: "/finance/sales/:id",

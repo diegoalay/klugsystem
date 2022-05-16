@@ -193,6 +193,22 @@
     </li>
 
     <li>
+      <%= navigation_vue_item("/reports", ['list']) do %>
+        <i class="fa-solid fa-file-arrow-down"></i>
+        <span> Reportes </span>
+        <span class="float-right caret right"></span>
+      <% end %>
+      <ul class="list-unstyled dropdown">
+        <li>
+          <%= navigation_vue_item("/reports/sales") do %>
+            <i class="fa-solid fa-chart-line"></i>
+            <span> Ventas </span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+
+    <li>
       <%= navigation_vue_item("/administration", ['list']) do %>
         <i class="fa-solid fa-gears"></i>
         <span> Administración </span>
