@@ -20,6 +20,10 @@ export default {
         }
     },
     mounted(){
+        if (this.tools.isMobile()) {
+            this.pagination.per_page = 2
+        }
+
         this.getProducts()
     },
     methods: {

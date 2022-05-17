@@ -34,7 +34,7 @@ export default {
                 sortable: true
             },{
                 label: 'Unidad',
-                key: 'unit'
+                key: 'measurement_unit_name'
             },{
                 label: 'Cantidad',
                 key: 'saleQuantity'
