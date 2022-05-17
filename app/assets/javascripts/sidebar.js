@@ -43,7 +43,7 @@ if (document) {
         const w = window.innerWidth;
 
         if (w <= 768) {
-            // tooggleSideBar()
+            tooggleSideBar()
         }
     }
 
@@ -169,7 +169,6 @@ if (document) {
                 if (tag === "#") return
 
                 disableActiveItems(this)
-                toggleMobile()
                 setActiveWithDropdown(this)
             }
         }
