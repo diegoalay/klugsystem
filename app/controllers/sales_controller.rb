@@ -1,5 +1,5 @@
 class SalesController < ApplicationSystemController
-  before_action :set_sale, only: %i[update destroy]
+  before_action :set_sale, only: %i[update destroy send_sale emails_sent]
 
   # GET /sales or /sales.json
   def index
@@ -76,6 +76,8 @@ class SalesController < ApplicationSystemController
           @sale.destroy!
 
           return respond_with_error(@sale.electronic_bill['certification_data']["ResponseDATA1"])
+        else
+          SaleMailer.send_sale(@sale, current_user).deliver_later
         end
       end
 
@@ -126,6 +128,16 @@ class SalesController < ApplicationSystemController
     end
   end
 
+  def emails_sent
+    respond_with_successful(@sale.activities.where(category: 'sale_sent'))
+  end
+
+  def send_sale
+    SaleMailer.send_sale(@sale, current_user, params[:client][:email]).deliver_now
+
+    respond_with_successful
+  end
+
   def index_options
     respond_with_successful(SaleQuery.new(@account).index_options(current_user))
   end
@@ -137,14 +149,16 @@ class SalesController < ApplicationSystemController
   private
 
   def create_client
+    billing_identifier = params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")&.upcase == "cf"
+
     @new_client = @account.clients.find_or_initialize_by(
-      billing_identifier: params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, ""),
+      billing_identifier: billing_identifier
     )
 
     @new_client.assign_attributes(
       billing_name: params[:sale][:client][:billing_name],
       billing_address: params[:sale][:client][:billing_address],
-      billing_email: params[:sale][:client][:billing_email],
+      billing_email: billing_identifier == 'CF' ? nil : params[:sale][:client][:billing_email],
       user_creator: current_user
     )
   end

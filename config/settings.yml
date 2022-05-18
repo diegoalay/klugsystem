@@ -1,0 +1,7 @@
+development:
+    default_url: 'http://localhost:3000'
+    default_host_url: 'klugsystem.com <no-reply@klugsystem.com>'
+
+production:
+    default_url: 'https://klugsystem.com'
+    default_host_url: 'klugsystem.com <no-reply@klugsystem.com>'

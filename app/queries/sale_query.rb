@@ -26,6 +26,7 @@ class SaleQuery
       "concat(clients.first_name, ' ', clients.first_surname) as client_name",
       'clients.billing_name as client_blling_name',
       'clients.billing_identifier as client_billing_identifier',
+      'clients.billing_email as client_billing_email',
       'users.email as user_creator_email',
       'sales.created_at'
     )

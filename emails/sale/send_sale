@@ -1,0 +1,62 @@
+<mjml>
+  <mj-head>
+    <mj-style>
+      .celeste {
+          color: #3cbeff;
+      }
+
+      .account-item {
+          margin: 0.2rem;
+          text-align: left;
+      }
+
+    </mj-style>
+  </mj-head>
+<mj-body>
+  <mj-section>
+    <mj-column>
+
+      <mj-text align="center" font-size="20px" font-family="helvetica">
+          Gracias por tu compra <mj-raw> <%= @data[:client][:name] %> </mj-raw>
+      </mj-text>
+
+      <mj-text align="center" font-size="20px" font-family="helvetica">
+        Hemos adjuntado los detalles de tu factura.
+      </mj-text>
+
+    </mj-column>
+  </mj-section>
+
+  <mj-section>
+    <mj-column>
+      <mj-divider border-color="#2A3F54"></mj-divider>
+
+        <mj-text align="center" font-size="15px" font-family="helvetica">
+            <mj-text mj-class="account-item">
+              <p class="account-item"><b> <%= @data[:account][:name] %> </b></p>
+            </mj-text>
+            <mj-raw> <% if @data[:account][:telephone] %> </mj-raw>
+              <p class="account-item"> Tel: <mj-raw>
+                <a href="<%= "tel:#{@data[:account][:telephone]}" %>"> <%= @data[:account][:telephone] %> </a>
+                  </mj-raw>
+                </p>
+            <mj-raw> <% end %></mj-raw>
+            <mj-raw> </mj-raw>
+            <mj-raw> <% if @data[:account][:email] %> </mj-raw>
+              <p class="account-item"> Email: <a class="link celeste" href="<%= "mailto:#{@data[:account][:email]}" %>">
+                <mj-raw> <%= @data[:account][:email] %> </mj-raw>
+                  </a>
+                </p>
+            <mj-raw> <% end %></mj-raw>
+            <mj-raw> <% if @data[:account][:website] %> </mj-raw>
+              <p class="account-item"> Website:
+                <a class="link celeste" href="<%= "#{@data[:account][:website]}" %>">
+                  <mj-raw> <%= @data[:account][:website] %> </mj-raw>
+                    </a>
+                  </p>
+            <mj-raw> <% end %></mj-raw>
+        </mj-text>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>

@@ -25,7 +25,8 @@ class Client < ApplicationRecord
   private
 
   def sanitize_billing_identifier
-    billing_identifier = billing_identifier&.gsub("-", "")
+    identifier = self.billing_identifier&.gsub("-", "")
+    self.billing_identifier = identifier
   end
 
   def can_be_destroyed

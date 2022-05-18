@@ -1,5 +1,6 @@
 <script type="text/javascript">
 import ComponentDialogDelete from 'vueApp/components/component-dialog-delete.vue'
+import componenSaleEmails from 'vueApp/components/component-sale-emails.vue'
 
 export default {
     props: {
@@ -23,6 +24,9 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    components: {
+        'component-sale-emails': componenSaleEmails
     },
     data() {
         return {
@@ -95,6 +99,7 @@ export default {
                 cash_register_id: '',
                 date_range: this.dateRange ? this.dateRange : ''
             },
+            sale: {},
             loading: false,
             timer: null
         }
@@ -239,6 +244,11 @@ export default {
             this.$router.push(this.url[this.app_module]('sales/:id', {id: sale.id}).toString(false))
         },
 
+        sendSale(sale){
+            this.sale = sale
+            this.$bvModal.show('emails')
+        },
+
         onSearch(text){
             this.filters.search = text
 
@@ -273,6 +283,17 @@ export default {
 
 <template>
     <section>
+        <b-modal
+            id="emails"
+            size="xl"
+            hide-footer
+            centered
+            content-class="shadow"
+            title="Correos enviados"
+        >
+            <component-sale-emails :app_module="app_module" :sale-id="sale.id" :email="sale.client_billing_email"/>
+        </b-modal>
+
         <component-header-list
             v-if="!hideHeader"
             title="Ventas"
@@ -375,6 +396,10 @@ export default {
                     <template v-slot:cell(actions)="row">
                         <b-button @click="tools.printSale(row.item)" variant="outline-dark" class="mr-1">
                             <font-awesome-icon icon="print" />
+                        </b-button>
+
+                        <b-button v-if="app_module !== 'reports'" @click="sendSale(row.item)" variant="outline-success" class="mr-1">
+                            <font-awesome-icon icon="envelope-open-text" />
                         </b-button>
 
                         <b-button v-if="row.item.can_be_disabled && row.item.status && app_module !== 'reports'" @click="disableSale(row.item)" variant="outline-danger" class="mr-1">

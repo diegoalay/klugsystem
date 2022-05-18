@@ -46,7 +46,12 @@ Rails.application.routes.draw do
             get :options
             get :index_options
           end
+          member do
+            post :send_sale
+            get :emails_sent
+          end
         end
+
         resources :expeditures do
           collection do
             get :options
@@ -64,6 +69,10 @@ Rails.application.routes.draw do
           collection do
             get :options
             get :index_options
+          end
+          member do
+            post :send_sale
+            get :emails_sent
           end
         end
 

@@ -64,7 +64,6 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -109,4 +108,19 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # mailer configuration for production
+  config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:smtp, :default_host_url) }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.credentials.dig(:aws, :ses, :address),
+    port: Rails.application.credentials.dig(:aws, :ses, :port),
+    authentication: Rails.application.credentials.dig(:aws, :ses, :authentication),
+    domain: Rails.application.credentials.dig(:aws, :ses, :domain),
+    user_name: Rails.application.credentials.dig(:aws, :ses, :user_name),
+    password: Rails.application.credentials.dig(:aws, :ses, :password),
+    enable_starttls_auto: true,
+  }
 end
