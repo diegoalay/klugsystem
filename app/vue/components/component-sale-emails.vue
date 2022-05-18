@@ -175,6 +175,8 @@ export default {
                         class="my-0"
                     ></b-pagination>
                 </b-col>
+                <br>
+                <p> Si no está en la bandeja de entrada, busca en las carpetas. Si un filtro antispam o una regla de correo electrónico movió el correo, es posible que se encuentre en la carpeta Spam, Correo no deseado, Basurero, Elementos eliminados o Archivo </p>
             </b-card-body>
         </b-card>
     </section>

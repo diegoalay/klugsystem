@@ -149,7 +149,7 @@ class SalesController < ApplicationSystemController
   private
 
   def create_client
-    billing_identifier = params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")&.upcase == "cf"
+    billing_identifier = params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")&.upcase
 
     @new_client = @account.clients.find_or_initialize_by(
       billing_identifier: billing_identifier

@@ -129,7 +129,7 @@ export default {
                     <b-row>
                         <b-col md="4" sm="12">
                             <h5> <b>  Datos generales </b> </h5>
-                            <b> Fecha: </b> {{ sale.sale_date }} <br>
+                            <b> Fecha: </b> {{ date.datetime(sale.sale_date) }} <br>
                             <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
                             <b> Método de pago: </b> {{ payment_method.name }} <br>
                         </b-col>
