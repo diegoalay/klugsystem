@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
+    mount ActionCable.server => '/cable'
+
     get '/sign_out', to: 'devise/sessions#destroy', as: :signout
 
     authenticated :user do

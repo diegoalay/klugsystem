@@ -121,7 +121,7 @@ Vue.use(VueLoading, {
 Vue.use(ActionCableVue, {
     debug: true,
     debugLevel: 'error',
-    connectionUrl: 'ws://localhost:3000/cable', // or function which returns a string with your JWT appended to your server URL as a query parameter
+    connectionUrl: system.url.cable, // or function which returns a string with your JWT appended to your server URL as a query parameter
     connectImmediately: true,
 })
 

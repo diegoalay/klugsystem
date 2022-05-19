@@ -38,9 +38,16 @@ class ApplicationSystemController < ApplicationController
         cash_register: current_user.current_cash_register&.show,
       },
       url: {
+        cable: cable_url,
         root: request.base_url.to_s,  path: request.path
       }
     }
+  end
+
+  def cable_url
+    return 'ws://localhost:3000/cable' if Rails.env == "development"
+
+    return 'https://ws.klugsystem.com/cable'
   end
 
   def verify_authorized_module
