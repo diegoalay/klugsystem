@@ -101,7 +101,7 @@ export default {
                 payment_method: '',
                 user_creator_type: '',
                 cash_register_id: '',
-                date_range: this.dateRange ? this.dateRange : ''
+                date_range: this.dateRange ? this.dateRange : []
             },
             sale: {},
             loading: false,
@@ -137,9 +137,10 @@ export default {
                 this.loading = true
 
                 let filters = null
+
                 if (this.filters.date_range.length > 0){
                     filters = {
-                        ...this.filter,
+                        ...this.filters,
                         start_date: this.filters.date_range[0] ?
                             this.filters.date_range[0].toISOString() :
                             '',
