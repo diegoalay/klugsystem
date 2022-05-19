@@ -8,6 +8,7 @@ const routes =  [
         component: appPosExpedituresList,
         props: {
             app_module: 'pos',
+            validateCashRegister: true
         }
     },
     {

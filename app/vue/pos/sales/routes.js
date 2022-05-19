@@ -8,7 +8,8 @@ const routes =  [
         path: "/pos/sales",
         component: appPosSaleList,
         props: {
-            app_module: 'pos'
+            app_module: 'pos',
+            validateCashRegister: true
         }
     },
     {

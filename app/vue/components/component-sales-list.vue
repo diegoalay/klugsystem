@@ -23,6 +23,10 @@ export default {
         userCreatorTypes: {
             type: Boolean,
             default: false
+        },
+        validateCashRegister: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -117,8 +121,14 @@ export default {
             this.addUserCreatorColumn()
         }
 
-        this.list()
-        this.getOptions()
+
+        if ((this.store.global.cash_register.id && this.validateCashRegister) || (!this.validateCashRegister)) {
+            this.list()
+            this.getOptions()
+        } else {
+            const url = this.url.pos('cash_register').toString(false)
+            this.$router.push(url)
+        }
     },
     methods: {
         list(){

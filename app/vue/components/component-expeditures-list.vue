@@ -4,6 +4,10 @@
             cashRegisterId: {
                 type: Number,
                 default: null
+            },
+            validateCashRegister: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -71,8 +75,17 @@
                 this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
             }
 
-            this.getOptions()
-            this.list()
+            if ((this.store.global.cash_register.id) || (!this.validateCashRegister)) {
+                if (this.validateCashRegister) {
+                    this.$set(this.filters, 'user_creator_type', 'current_cash_register')
+                }
+
+                this.getOptions()
+                this.list()
+            } else {
+                const url = this.url.pos('cash_register').toString(false)
+                this.$router.push(url)
+            }
         },
         methods: {
             getOptions(){
