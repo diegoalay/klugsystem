@@ -47,7 +47,7 @@ class ApplicationSystemController < ApplicationController
   def cable_url
     return 'ws://localhost:3000/cable' if Rails.env == "development"
 
-    return 'https://ws.klugsystem.com/cable'
+    'wss://klugsystem.app/cable'
   end
 
   def verify_authorized_module
