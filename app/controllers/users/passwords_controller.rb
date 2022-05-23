@@ -12,26 +12,24 @@ class Users::PasswordsController < Devise::PasswordsController
   def create
 
     if params[:user].blank? || params[:user][:email].blank?
-      return respond_with_error(I18n.t("Usuario no encontrado"))
+      return respond_with_error("Usuario no encontrado")
     end
 
     user = User.find_by(:email => params[:user][:email])
 
     if user.blank?
-      return respond_with_error(I18n.t("Usuario no encontrado"))
+      return respond_with_error("Usuario no encontrado")
     end
 
     unless user.active
-      return respond_with_error(I18n.t("El usuario se encuentra inactivo"))
+      return respond_with_error("El usuario se encuentra inactivo")
     end
-
-
 
     token = user.generate_password_reset_token
 
-    user.logs.create({ title: "password_creation_successful" })
-
     begin
+      user.logs.create({ category: "reset_password_sent" })
+
       UserMailer.reset_password_instructions(user, token).deliver_now
       respond_with_successful
     rescue => exception
