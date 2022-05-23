@@ -2,11 +2,12 @@ class ApplicationMailer < ActionMailer::Base
   default from: Rails.application.credentials.dig(:smtp, :default_host_url)
   layout 'mailer'
 
-  def send2(to, subject)
+  def build_data_from_params(params)
+    @data = {} if @data.blank?
     @data = @data.merge({
       url: Rails.application.credentials.dig(:smtp, :default_url)
     })
 
-    mail(to: to, subject: subject)
+    @data = @data.merge(params)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_12_072951) do
+ActiveRecord::Schema.define(version: 2022_05_23_050525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -932,6 +932,16 @@ ActiveRecord::Schema.define(version: 2022_05_12_072951) do
     t.index ["user_id"], name: "index_user_activities_on_user_id"
   end
 
+  create_table "user_logs", force: :cascade do |t|
+    t.string "description"
+    t.string "category"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_logs_on_user_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
@@ -943,6 +953,17 @@ ActiveRecord::Schema.define(version: 2022_05_12_072951) do
     t.index ["deleted_at"], name: "index_user_roles_on_deleted_at"
     t.index ["role_id"], name: "index_user_roles_on_role_id"
     t.index ["user_id"], name: "index_user_roles_on_user_id"
+  end
+
+  create_table "user_sessions", force: :cascade do |t|
+    t.inet "user_remote"
+    t.string "user_agent"
+    t.datetime "last_used_at"
+    t.boolean "active", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_sessions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -976,6 +997,7 @@ ActiveRecord::Schema.define(version: 2022_05_12_072951) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.bigint "branch_office_id"
+    t.boolean "active"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["branch_office_id"], name: "index_users_on_branch_office_id"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
@@ -1155,10 +1177,12 @@ ActiveRecord::Schema.define(version: 2022_05_12_072951) do
   add_foreign_key "user_activities", "users"
   add_foreign_key "user_activities", "users", column: "user_creator_id"
   add_foreign_key "user_activities", "users", column: "user_modifier_id"
+  add_foreign_key "user_logs", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_roles", "users", column: "user_creator_id"
   add_foreign_key "user_roles", "users", column: "user_modifier_id"
+  add_foreign_key "user_sessions", "users"
   add_foreign_key "users", "accounts"
   add_foreign_key "users", "branch_offices"
   add_foreign_key "users", "users", column: "user_creator_id"

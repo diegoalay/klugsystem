@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :user_roles, foreign_key: 'user_id',class_name: 'User::Role'
   has_many :roles, through: :user_roles, source: :roles
   has_many :menu_items, through: :user_roles, source: :roles
+  has_many :logs, inverse_of: :user
+  has_many :sessions, inverse_of: :user
 
   has_many :cash_registers, foreign_key: 'user_creator_id'
 
@@ -48,12 +50,41 @@ class User < ApplicationRecord
     }
   end
 
+  def create_session(remote_ip, http_user_agent)
+    # register a new unique session
+    self.sessions.create({
+      user_agent: get_user_agent(http_user_agent),
+      user_remote: remote_ip,
+      last_used_at: Time.now
+    })
+  end
+
+  def get_user_agent http_user_agent, as_string = true
+    # parse user agent
+    user_agent = UserAgent.parse(http_user_agent)
+
+    # return user agent info as string
+    return "#{user_agent.platform} #{user_agent.os} - #{user_agent.browser} #{user_agent.version}" if as_string == true
+
+    user_agent
+  end
+
   def abilities
     ::MenuItem.select('id', 'key', 'permissions') if admin?
 
     items = menu_items.joins(menu_items: [:menu_item]).where("role_menu_items.status = ?", true)
 
     items.select('menu_items.id', 'menu_items.key', 'menu_items.permissions')
+  end
+
+  def generate_password_reset_token
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc
+    self.save(validate: false)
+
+    raw
   end
 
   def admin?

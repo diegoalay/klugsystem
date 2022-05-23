@@ -11,8 +11,13 @@ class Users::SessionsController < Devise::SessionsController
     return respond_with_error('Usuario no encontrado') unless resource
 
     unless resource.valid_password?(sign_in_params[:password])
-        return respond_with_error('Credenciales incorrectas.')
+      return respond_with_error('Contraseña incorrecta.')
     end
+
+    resource.create_session(
+      request.remote_ip,
+      request.env["HTTP_USER_AGENT"]
+    )
 
     sign_in :user, resource
 
@@ -23,7 +28,9 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    super
+    super do |resource|
+      redirect_to '/login' and return
+    end
   end
 
   private

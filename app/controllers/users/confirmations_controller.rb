@@ -12,9 +12,27 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+
+    # get the confirmation token sent through get params
+    token = params[:confirmation_token]
+
+    # validate that token were sent
+    if token.blank?
+        respond_with_error("El token es inválido")
+    end
+
+    # check if token belongs to an specific user
+    user = User.find_by(confirmation_token: token)
+
+    # validate that user were found
+    if user.blank?
+      respond_with_error("El token es inválido")
+    end
+
+    # confirm the user
+    respond_with_successful("Usuario confirmado exitosamente")
+end
 
   # protected
 

@@ -43,6 +43,7 @@ module.exports = env => {
                 // resolve vuejs
                 vue: production ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
                 vueApp: path.resolve(__dirname, "./app/vue"),
+                vuePublicApp: path.resolve(__dirname, "./app/vue/public"),
 
             },
             extensions: ['.js', '.mjs']
@@ -97,17 +98,23 @@ module.exports = env => {
 
     webpackBase.entry[fileName] = filePath
 
-    fs.readdirSync(path.join('app', 'vue')).forEach(action => {
-        if (action !== 'users_sessions') {
-            return
-        }
 
-        let filePath = './'+path.join('app', 'vue', action, 'app.js')
-        let fileName = `${action.replace('.js')}`
+    let filePublicPath = './'+path.join('app', 'vue', 'app_public.js')
+    let filePublicName = 'klug_public_app'
 
-        webpackBase.entry[fileName] = filePath
+    webpackBase.entry[filePublicName] = filePublicPath
 
-    })
+    // fs.readdirSync(path.join('app', 'vue')).forEach(action => {
+    //     if (action !== 'users_sessions') {
+    //         return
+    //     }
+
+    //     let filePath = './'+path.join('app', 'vue', action, 'app.js')
+    //     let fileName = `${action.replace('.js')}`
+
+    //     webpackBase.entry[fileName] = filePath
+
+    // })
 
     webpackConfig.push(webpackBase)
 

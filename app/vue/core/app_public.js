@@ -11,6 +11,7 @@ import {
     FormInputPlugin,
     FormGroupPlugin,
     LayoutPlugin,
+    InputGroupPlugin
 } from 'bootstrap-vue'
 
 // Libraries
@@ -26,6 +27,7 @@ Vue.use(CardPlugin)
 Vue.use(FormInputPlugin)
 Vue.use(FormGroupPlugin)
 Vue.use(LayoutPlugin)
+Vue.use(InputGroupPlugin)
 
 // Global registration
 Vue.component('font-awesome-icon', FontAwesomeIcon)

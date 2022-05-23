@@ -109,6 +109,16 @@ Rails.application.configure do
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
+  config.middleware.insert_before 0, Rack::Cors do
+    allow do
+      origins "https://klugsystem.com/", "https://www.klugsystem.com"
+      resource "/*",
+      headers: %w(Authorization),
+      expose: %w(Authorization),
+      methods: %i(get post put delete)
+    end
+  end
+
   # mailer configuration for production
   config.action_mailer.default_url_options = { host: Rails.application.credentials.dig(:smtp, :default_host_url) }
   config.action_mailer.raise_delivery_errors = true

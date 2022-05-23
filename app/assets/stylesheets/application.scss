@@ -106,11 +106,17 @@ label {
     visibility: hidden;
 }
 
-a.fc-event, a.fc-event:hover {
-
+a, a:hover, a:focus, a:active {
     text-decoration: none;
-
+    color: inherit;
 }
+
+a, a:hover {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+}
+
 .fc-timegrid-event-harness-inset .fc-timegrid-event, .fc-timegrid-event.fc-event-mirror, .fc-timegrid-more-link {
 
     box-shadow: 0px 0px 0px 1px #fff;

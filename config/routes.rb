@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     mount ActionCable.server => '/cable'
 
-    get '/sign_out', to: 'devise/sessions#destroy', as: :signout
+    get '/sign_out', to: 'users/sessions#destroy', as: :signout
 
     authenticated :user do
       root 'dashboard#default', as: :authenticated_root
@@ -183,7 +183,10 @@ Rails.application.routes.draw do
     unauthenticated do
       root 'users/sessions#new', as: :unauthenticated_root
 
-      get '*path' => redirect('/')
+      get :reset_password, to: 'users/passwords#new'
+
+      get '*path' => redirect('/login')
+      get '/' => redirect('/login')
     end
   end
 
