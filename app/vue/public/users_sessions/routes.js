@@ -4,6 +4,10 @@ const routes =  [
     {
         path: "/login",
         component: appUserSessionNew
+    },
+    {
+        path: "/",
+        component: appUserSessionNew
     }
 ]
 

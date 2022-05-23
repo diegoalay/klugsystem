@@ -181,12 +181,13 @@ Rails.application.routes.draw do
     end
 
     unauthenticated do
-      root 'users/sessions#new', as: :unauthenticated_root
-
       get :reset_password, to: 'users/passwords#new'
 
       get '*path' => redirect('/login')
-      get '/' => redirect('/login')
+
+      get '/login', to: 'users/passwords#new'
+
+      root to: "users/passwords#new"
     end
   end
 
