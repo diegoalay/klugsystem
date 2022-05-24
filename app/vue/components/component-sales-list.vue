@@ -45,7 +45,7 @@ export default {
                 sortable: true
             },{
                 label: 'Tipo de venta',
-                key: 'sale_type_text',
+                key: 'sale_type',
                 sortable: true
             },{
                 label: 'Cliente',
@@ -402,6 +402,10 @@ export default {
 
                     <template v-slot:cell(created_at)="row">
                         {{ date.datetime(row.item.created_at) }}
+                    </template>
+
+                    <template v-slot:cell(sale_type)="row">
+                        {{ row.item.sale_type_text }}
                     </template>
 
                     <template v-slot:cell(actions)="row">
