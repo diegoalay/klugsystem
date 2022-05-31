@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Provider Contacts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @provider_contacts.each do |provider_contact| %>
+      <tr>
+        <td><%= link_to 'Show', provider_contact %></td>
+        <td><%= link_to 'Edit', edit_provider_contact_path(provider_contact) %></td>
+        <td><%= link_to 'Destroy', provider_contact, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Provider Contact', new_provider_contact_path %>

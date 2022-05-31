@@ -5,6 +5,7 @@ class ApplicationSystemController < ApplicationController
   before_action :set_account
   before_action :set_query
   before_action :set_account_data
+  before_action :logger_request
 
   include Pundit::Authorization
 
@@ -48,6 +49,10 @@ class ApplicationSystemController < ApplicationController
     return 'ws://localhost:3000/cable' if Rails.env == "development"
 
     'wss://klugsystem.com/cable'
+  end
+
+  def logger_request
+    current_user.log_request(request, params)
   end
 
   def verify_authorized_module

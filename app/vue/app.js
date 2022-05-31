@@ -24,9 +24,11 @@ import posSalesRoutes from 'vueApp/pos/sales/routes.js';
 import posExpedituresRoutes from 'vueApp/pos/expeditures/routes.js';
 import cashRegisterRoutes from 'vueApp/pos/cash_registers/routes.js';
 
-
 // HR
-import employeeRoutes from 'vueApp/hr/employees/routes.js';
+import hrEmployeeRoutes from 'vueApp/hr/employees/routes.js';
+
+// PURCHASES
+import purchasesProvidersRoutes from 'vueApp/purchases/providers/routes.js';
 
 // CONFIGURATIONS
 import eventTypesRoutes from 'vueApp/configurations/event_types/routes.js';
@@ -35,7 +37,7 @@ import expeditureTypesRoutes from 'vueApp/configurations/expediture_types/routes
 import productTransactionTypesRoutes from 'vueApp/configurations/product_transaction_types/routes.js';
 
 // REPORTS
-import reportRoutes from 'vueApp/report/routes.js';
+import reportRoutes from 'vueApp/reports/routes.js';
 
 // ADMINISTRATION
 import usersRoutes from 'vueApp/administration/users/routes.js';
@@ -65,12 +67,14 @@ app("",
     .concat(brandsRoutes)
     .concat(departmentsRoutes)
     .concat(measurementUnitsRoutes)
-    // HR
-    .concat(employeeRoutes)
     // POS
     .concat(posSalesRoutes)
     .concat(posExpedituresRoutes)
     .concat(cashRegisterRoutes)
+    // HR
+    .concat(hrEmployeeRoutes)
+    // PURCHASES
+    .concat(purchasesProvidersRoutes)
     // CONFIGURATIONS
     .concat(clientTypesRoutes)
     .concat(expeditureTypesRoutes)

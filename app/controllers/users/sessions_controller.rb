@@ -14,10 +14,7 @@ class Users::SessionsController < Devise::SessionsController
       return respond_with_error('Contraseña incorrecta.')
     end
 
-    resource.create_session(
-      request.remote_ip,
-      request.env["HTTP_USER_AGENT"]
-    )
+    resource.create_session(request)
 
     sign_in :user, resource
 

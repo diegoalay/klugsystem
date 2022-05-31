@@ -39,6 +39,10 @@
         watch: {
             text(value){
                 this.search()
+            },
+
+            defaultValue(value) {
+                this.text = value
             }
         }
     }

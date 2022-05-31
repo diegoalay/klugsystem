@@ -278,6 +278,11 @@ export default {
                 return url.buildModuleUrl('reports', path, params)
             },
 
+            purchases(path, params={}) {
+                let url = new BuildUrl(options.root)
+                return url.buildModuleUrl('purchases', path, params)
+            },
+
             build(path, params={}) {
                 const url = new BuildUrl(options.root)
                 return url.buildUrl(path, params)

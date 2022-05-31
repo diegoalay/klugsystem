@@ -116,37 +116,6 @@ Rails.application.routes.draw do
         end
       end
 
-      namespace :administration do
-        resources :menu_items, only: %i[index]
-        resource :account
-        resource :digifact do
-          collection do
-            post :validate
-          end
-        end
-        resources :users do
-          collection do
-            get :options
-            get :search
-          end
-        end
-        resources :branch_offices
-        resources :roles do
-          scope module: :role do
-            resources :menu_items
-          end
-          member do
-            get :users
-          end
-        end
-        resources :payment_methods do
-          collection do
-            get :options
-            get :search
-          end
-        end
-      end
-
       namespace :hr do
         resources :employees do
           scope module: :employee do
@@ -160,12 +129,23 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :purchases  do
+        resources :providers do
+          scope module: :provider do
+            resources :contacts
+          end
+        end
+      end
+
       namespace :reports do
         resource :sales do
           collection do
             get :options
             get :index_options
           end
+        end
+        resource :sale_details do
+          get :options
         end
       end
 
@@ -177,6 +157,37 @@ Rails.application.routes.draw do
         resources :expediture_types
         resources :client_types
         resources :event_types
+      end
+    end
+
+    namespace :administration do
+      resources :menu_items, only: %i[index]
+      resource :account
+      resource :digifact do
+        collection do
+          post :validate
+        end
+      end
+      resources :users do
+        collection do
+          get :options
+          get :search
+        end
+      end
+      resources :branch_offices
+      resources :roles do
+        scope module: :role do
+          resources :menu_items
+        end
+        member do
+          get :users
+        end
+      end
+      resources :payment_methods do
+        collection do
+          get :options
+          get :search
+        end
       end
     end
 

@@ -27,6 +27,10 @@ export default {
         validateCashRegister: {
             type: Boolean,
             default: false
+        },
+        initFilters: {
+            type: Object,
+            default: () => {}
         }
     },
     components: {
@@ -46,6 +50,10 @@ export default {
             },{
                 label: 'Tipo de venta',
                 key: 'sale_type',
+                sortable: true
+            },{
+                label: 'Método de pago',
+                key: 'payment_method',
                 sortable: true
             },{
                 label: 'Cliente',
@@ -128,6 +136,17 @@ export default {
         } else {
             const url = this.url.pos('cash_register').toString(false)
             this.$router.push(url)
+        }
+
+        for(let key in this.filters) {
+            if (key === 'date_range' && this.initFilters[key]) {
+                this.$set(this.filters, key, [
+                    new Date(this.initFilters[key][0]),
+                    new Date(this.initFilters[key][1]),
+                ])
+            } else if (this.initFilters[key]) {
+                this.$set(this.filters, key, this.initFilters[key])
+            }
         }
     },
     methods: {
@@ -324,7 +343,7 @@ export default {
                         @change="list()"
                     >
                         <template #first>
-                            <option value=""> Todas </option>
+                            <option value=""> Todas las ventas </option>
                         </template>
                     </b-form-select>
                     &nbsp;

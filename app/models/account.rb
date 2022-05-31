@@ -13,6 +13,7 @@ class Account < ApplicationRecord
   has_many :departments
   has_many :quotations
   has_many :employees
+  has_many :providers
   has_many :products
   has_many :contacts
   has_many :clients

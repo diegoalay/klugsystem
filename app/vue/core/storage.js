@@ -16,6 +16,7 @@ export default {
                 return
             }
 
+            if (!localStorage.getItem(storageKey(key))) return {}
             return JSON.parse(localStorage.getItem(storageKey(key)))
 
         }

@@ -167,10 +167,10 @@
         </li>
       </ul>
     </li>
+
     <li>
       <%= navigation_vue_item("/hr", ['list']) do %>
         <i class="fa-solid fa-address-card"></i>
-        </i>
         <span>Recursos Humanos </span>
         <span class="float-right caret right"></span>
       <% end %>
@@ -183,7 +183,6 @@
         </li>
       </ul>
     </li>
-
 
     <li>
       <%= navigation_vue_item("/books") do %>
@@ -203,6 +202,13 @@
           <%= navigation_vue_item("/reports/sales") do %>
             <i class="fa-solid fa-chart-line"></i>
             <span> Ventas </span>
+          <% end %>
+        </li>
+
+        <li>
+          <%= navigation_vue_item("/reports/sale_details") do %>
+            <i class="fa-solid fa-chart-column"></i>
+            <span> Productos vendidos </span>
           <% end %>
         </li>
       </ul>

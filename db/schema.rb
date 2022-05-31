@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_23_050525) do
+ActiveRecord::Schema.define(version: 2022_05_27_045055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -688,6 +688,81 @@ ActiveRecord::Schema.define(version: 2022_05_23_050525) do
     t.index ["product_file_id"], name: "index_products_on_product_file_id"
   end
 
+  create_table "provider_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "provider_id"
+    t.index ["provider_id"], name: "index_provider_activities_on_provider_id"
+  end
+
+  create_table "provider_contact_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "provider_contact_id"
+    t.index ["provider_contact_id"], name: "index_provider_contact_activities_on_provider_contact_id"
+  end
+
+  create_table "provider_contacts", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "telephone"
+    t.string "mobile_number"
+    t.string "description"
+    t.string "gender"
+    t.string "title"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_provider_contacts_on_account_id"
+    t.index ["deleted_at"], name: "index_provider_contacts_on_deleted_at"
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.string "company_name"
+    t.string "billing_name"
+    t.string "billing_identifier"
+    t.string "billing_address"
+    t.string "billing_postcode"
+    t.string "billing_department"
+    t.string "billing_municipality"
+    t.string "address"
+    t.string "email"
+    t.string "telephone"
+    t.string "mobile_number"
+    t.string "fax"
+    t.string "website"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_providers_on_account_id"
+    t.index ["deleted_at"], name: "index_providers_on_deleted_at"
+  end
+
   create_table "quotation_activities", force: :cascade do |t|
     t.string "description"
     t.string "field_name"
@@ -942,6 +1017,20 @@ ActiveRecord::Schema.define(version: 2022_05_23_050525) do
     t.index ["user_id"], name: "index_user_logs_on_user_id"
   end
 
+  create_table "user_requests", force: :cascade do |t|
+    t.string "user_agent"
+    t.string "controller"
+    t.string "method"
+    t.string "action"
+    t.string "url"
+    t.string "format"
+    t.jsonb "params"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_requests_on_user_id"
+  end
+
   create_table "user_roles", force: :cascade do |t|
     t.datetime "deleted_at"
     t.bigint "user_creator_id"
@@ -1130,6 +1219,18 @@ ActiveRecord::Schema.define(version: 2022_05_23_050525) do
   add_foreign_key "products", "product_files"
   add_foreign_key "products", "users", column: "user_creator_id"
   add_foreign_key "products", "users", column: "user_modifier_id"
+  add_foreign_key "provider_activities", "providers"
+  add_foreign_key "provider_activities", "users", column: "user_creator_id"
+  add_foreign_key "provider_activities", "users", column: "user_modifier_id"
+  add_foreign_key "provider_contact_activities", "provider_contacts"
+  add_foreign_key "provider_contact_activities", "users", column: "user_creator_id"
+  add_foreign_key "provider_contact_activities", "users", column: "user_modifier_id"
+  add_foreign_key "provider_contacts", "accounts"
+  add_foreign_key "provider_contacts", "users", column: "user_creator_id"
+  add_foreign_key "provider_contacts", "users", column: "user_modifier_id"
+  add_foreign_key "providers", "accounts"
+  add_foreign_key "providers", "users", column: "user_creator_id"
+  add_foreign_key "providers", "users", column: "user_modifier_id"
   add_foreign_key "quotation_activities", "quotations"
   add_foreign_key "quotation_activities", "users", column: "user_creator_id"
   add_foreign_key "quotation_activities", "users", column: "user_modifier_id"
@@ -1178,6 +1279,7 @@ ActiveRecord::Schema.define(version: 2022_05_23_050525) do
   add_foreign_key "user_activities", "users", column: "user_creator_id"
   add_foreign_key "user_activities", "users", column: "user_modifier_id"
   add_foreign_key "user_logs", "users"
+  add_foreign_key "user_requests", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
   add_foreign_key "user_roles", "users", column: "user_creator_id"

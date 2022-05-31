@@ -54,7 +54,7 @@ class Finance::QuotationQuery
 
   def index_options(current_user)
     {
-      quotation_types: quotation_types(current_user),
+      quotation_types: ::Sale.fetch_sale_types(current_user),
       user_creator_types: [{ text: 'Mis cotizaciones', value: 'mine'}],
       payment_methods: @account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}}
     }
@@ -62,24 +62,8 @@ class Finance::QuotationQuery
 
   def options(current_user)
     {
-      quotation_types: quotation_types(current_user),
+      quotation_types: ::Sale.fetch_sale_types(current_user),
       payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}}
     }
-  end
-
-  def quotation_types(current_user)
-    Sale.sale_types.each_with_object([]) do |(k, v), quotation_types|
-
-      if k == 'electronic_bill'
-        unless current_user.branch_office.electronic_billing?
-          next
-        end
-      end
-
-      quotation_types.push({
-        text: I18n.t("models.sales.column_enum_sale_type_#{k}"),
-        value: v
-      })
-    end
   end
 end

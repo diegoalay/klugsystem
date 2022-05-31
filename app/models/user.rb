@@ -7,12 +7,12 @@ class User < ApplicationRecord
 
   belongs_to :branch_office
   has_many :user_roles, foreign_key: 'user_id',class_name: 'User::Role'
+  has_many :cash_registers, foreign_key: 'user_creator_id'
   has_many :roles, through: :user_roles, source: :roles
   has_many :menu_items, through: :user_roles, source: :roles
   has_many :logs, inverse_of: :user
   has_many :sessions, inverse_of: :user
-
-  has_many :cash_registers, foreign_key: 'user_creator_id'
+  has_many :requests, inverse_of: :user
 
   def self.search account, query
     search = query[:filters][:search]&.downcase
@@ -50,7 +50,10 @@ class User < ApplicationRecord
     }
   end
 
-  def create_session(remote_ip, http_user_agent)
+  def create_session(request)
+    remote_ip = request.env["HTTP_USER_AGENT"]
+    http_user_agent = request.env["HTTP_USER_AGENT"]
+
     # register a new unique session
     self.sessions.create({
       user_agent: get_user_agent(http_user_agent),
@@ -59,7 +62,7 @@ class User < ApplicationRecord
     })
   end
 
-  def get_user_agent http_user_agent, as_string = true
+  def get_user_agent(http_user_agent, as_string = true)
     # parse user agent
     user_agent = UserAgent.parse(http_user_agent)
 
@@ -85,6 +88,21 @@ class User < ApplicationRecord
     self.save(validate: false)
 
     raw
+  end
+
+  def log_request(request, params)
+    remote_ip = request.env["HTTP_USER_AGENT"]
+    http_user_agent = request.env["HTTP_USER_AGENT"]
+
+    requests.create(
+      url: request.path,
+      method: request.method,
+      action: params[:action],
+      controller: params[:controller],
+      format: request.format.symbol.to_s,
+      params: request.request_parameters,
+      user_agent: get_user_agent(http_user_agent)
+    )
   end
 
   def admin?

@@ -15,12 +15,12 @@ class SaleQuery
       'sales.shipping_costs',
       'sales.subtotal',
       'sales.total',
-      'sales.discount',
       'sales.interest',
       'sales.received_amount',
       'sales.change',
       'sales.status',
       'sales.sale_date',
+      'payment_methods.name as payment_method',
       "concat(employees.first_name, ' ', employees.first_surname) as employee_name",
       "concat(users.first_name, ' ', users.first_surname) as user_creator_name",
       "concat(clients.first_name, ' ', clients.first_surname) as client_name",
@@ -30,7 +30,7 @@ class SaleQuery
       'users.email as user_creator_email',
       'sales.created_at'
     )
-    .joins(:client, :user_creator)
+    .joins(:client, :user_creator, :payment_method)
     .left_joins(:employee, :cash_register)
 
     sales = sales.where("
@@ -90,7 +90,7 @@ class SaleQuery
       statuses: [{text: 'Activa', value: true }, {text: 'Anulada', value: false }],
       user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
       payment_methods: @account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}},
-      sale_types: sale_types(current_user)
+      sale_types: ::Sale.fetch_sale_types(current_user)
     }
   end
 
@@ -100,24 +100,7 @@ class SaleQuery
       branch_office: @account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: @account.departments.map {|department| {text: department.name, value: department.id}},
       brands: @account.brands.map {|brand| {text: brand.name, value: brand.id}},
-      sale_types: sale_types(current_user)
+      sale_types: ::Sale.fetch_sale_types(current_user)
     }
-  end
-
-  def sale_types(current_user)
-    Sale.sale_types.each_with_object([]) do |(k, v), sale_types|
-
-      next if current_user.account.id == 2 && v === 'bill'
-      if k == 'electronic_bill'
-        unless current_user.branch_office.electronic_billing? && current_user.account.electronic_billing?
-          next
-        end
-      end
-
-      sale_types.push({
-        text: I18n.t("models.sales.column_enum_sale_type_#{k}"),
-        value: v
-      })
-    end
   end
 end
