@@ -69,3 +69,4 @@ class Provider::ContactsController < ApplicationController
       %i[quantity contact_type_id description category]
     )
   end
+end
