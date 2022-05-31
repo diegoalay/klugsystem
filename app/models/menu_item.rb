@@ -4,17 +4,11 @@ class MenuItem < ApplicationRecord
 
   def self.call_new
     MenuItem.find_or_initialize_by(
-      order: 6,
-      key: 'reports',
-      icon: 'file-arrow-down'
-    ).save!
-
-    MenuItem.find_or_initialize_by(
       menu_item: MenuItem.find_by(key: 'reports'),
       order: 0,
-      key: 'reports.sales',
-      icon: 'chart-line',
-      permissions: %w[sales.index]
+      key: 'reports.sale_details',
+      icon: 'chart-column',
+      permissions: %w[sale_details.index]
     ).save!
   end
 
@@ -267,6 +261,20 @@ class MenuItem < ApplicationRecord
       key: 'administration.account',
       icon: 'gear',
       permissions: %w[account.show]
+    ).save!
+
+    MenuItem.find_or_initialize_by(
+      order: 6,
+      key: 'reports',
+      icon: 'file-arrow-down'
+    ).save!
+
+    MenuItem.find_or_initialize_by(
+      menu_item: MenuItem.find_by(key: 'reports'),
+      order: 0,
+      key: 'reports.sales',
+      icon: 'chart-line',
+      permissions: %w[sales.index]
     ).save!
   end
 end
