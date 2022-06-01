@@ -30,7 +30,7 @@ export default {
         },
         initFilters: {
             type: Object,
-            default: () => {}
+            default: () => { return {} }
         }
     },
     components: {
