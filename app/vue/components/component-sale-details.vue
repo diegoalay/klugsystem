@@ -17,18 +17,39 @@ export default {
             default: () => {
                 return {}
             }
+        },
+        manualSale: {
+            type: Boolean,
+            default: false
+
+        },
+        options: {
+            type: Object,
+            default: () => {
+                return {}
+            }
         }
     },
-
-    components:{},
-
     data(){
         return {
             product: {
                 id: null
             },
             product_quantity: 1,
-            fields: [{
+            fields: [],
+            items: []
+        }
+    },
+    mounted(){
+        if (this.manualSale) {
+            this.manualSaleFields()
+        } else {
+            this.normalSaleFields()
+        }
+    },
+    methods: {
+        normalSaleFields(){
+            this.fields = [{
                 label: 'Artículo',
                 key: 'name',
                 sortable: true
@@ -57,10 +78,41 @@ export default {
                 label: '',
                 key: 'actions'
             }]
-        }
-    },
-
-    methods: {
+        },
+        manualSaleFields(){
+            this.fields = [{
+                label: '#',
+                key: 'index',
+                sortable: true
+            },{
+                label: 'Unidad',
+                key: 'measurement_unit_name'
+            },{
+                label: 'B/S',
+                key: 'product_type'
+            },{
+                label: 'Descripción',
+                key: 'name'
+            },{
+                label: 'Valor',
+                key: 'price'
+            },{
+                label: 'Cantidad',
+                key: 'saleQuantity'
+            },{
+                label: 'Subtotal',
+                key: 'final_subtotal'
+            },{
+                label: 'Descuento',
+                key: 'discount'
+            },{
+                label: 'Total',
+                key: 'total'
+            },{
+                label: '',
+                key: 'actions'
+            }]
+        },
         setProductQuantity(product){
             const index = this.products.findIndex(e => e.id === product.id)
 
@@ -130,6 +182,29 @@ export default {
 
         removeProduct(product){
             this.$emit('remove', product)
+        },
+
+        addManualItem(type){
+            let product = null
+
+            if (type === 'copy') {
+                product = JSON.parse(JSON.stringify(this.products[this.products.length - 1]))
+            } else {
+                product = {
+                    measurement_unit_name: 'UND',
+                    name: '',
+                    price: 0,
+                    saleQuantity: 1,
+                    subtotal: 0,
+                    final_subtotal: 0,
+                    discount_value: 0,
+                    discount_percentage: 0,
+                    product_type: 'service',
+                    total: 0
+                }
+            }
+            product.id = this.products.length + 1
+            this.products.push(product)
         }
     },
 
@@ -167,13 +242,35 @@ export default {
         <br>
         <br>
         <b-table
-            class="table-scroll"
+            v-if="manualSale"
             responsive
             striped
             hover
             :items="products"
             :fields="fields"
         >
+
+           <template v-slot:cell(index)="row">
+               {{ row.item.id }}
+            </template>
+
+            <template v-slot:cell(product_type)="row">
+                <b-form-select
+                    v-model="row.item.product_type"
+                    :options="options.product_types"
+                >
+                </b-form-select>
+            </template>
+
+           <template v-slot:cell(name)="row">
+                <b-form-textarea
+                    v-model="row.item.name"
+                    placeholder="Ingrese descripción"
+                    autocomplete="off"
+                    rows="5"
+                >
+                </b-form-textarea>
+            </template>
 
             <template v-slot:cell(saleQuantity)="row">
                 <b-row>
@@ -192,8 +289,15 @@ export default {
                 </b-row>
             </template>
 
-           <template v-slot:cell(interest)="row">
-                {{ row.item.interest_value }}
+           <template v-slot:cell(price)="row">
+                <b-form-input
+                    size="sm"
+                    type="number"
+                    v-model="row.item.price"
+                    min="0"
+                    autocomplete="off"
+                >
+                </b-form-input>
             </template>
 
             <template v-slot:cell(discount)="row">
@@ -248,5 +352,110 @@ export default {
                 </b-button>
             </template>
         </b-table>
+
+        <b-table
+            v-else
+            responsive
+            striped
+            hover
+            :items="products"
+            :fields="fields"
+        >
+
+            <template v-slot:cell(saleQuantity)="row">
+                <b-row>
+                    <b-col md="10">
+                        <b-form-input
+                            @change="setProductQuantity(row.item)"
+                            size="sm"
+                            type="number"
+                            v-model="row.item.saleQuantity"
+                            min="1"
+                            :max="row.item.quantity"
+                            autocomplete="off"
+                        >
+                        </b-form-input>
+                    </b-col>
+                </b-row>
+            </template>
+
+            <template v-slot:cell(price)="row">
+                <b-row>
+                    <b-col md="10">
+                        <b-form-input
+                            @change="setProductQuantity(row.item)"
+                            size="sm"
+                            type="number"
+                            v-model="row.item.price"
+                            min="0"
+                            autocomplete="off"
+                        >
+                        </b-form-input>
+                    </b-col>
+                </b-row>
+            </template>
+
+            <template v-slot:cell(discount)="row">
+                <b-row v-if="!payment_method_discount.value">
+                    <b-col md="10">
+                        <b-input-group>
+                            <b-form-input
+                                @change="setProductDiscountPercentage(row.item)"
+                                size="sm"
+                                type="number"
+                                v-model="row.item.discount_percentage"
+                                min="1"
+                                autocomplete="off"
+                            >
+                            </b-form-input>
+                            <template #prepend>
+                                <b-input-group-text >%</b-input-group-text>
+                            </template>
+                        </b-input-group>
+                    </b-col>
+                </b-row>
+                <template v-else >
+                    --
+                </template>
+
+                <b-row v-if="!payment_method_discount.value">
+                    <b-col md="10">
+                        <b-input-group>
+                            <b-form-input
+                                @change="setProductDiscountValue(row.item)"
+                                size="sm"
+                                type="number"
+                                v-model="row.item.discount_value"
+                                min="1"
+                                autocomplete="off"
+                            >
+                            </b-form-input>
+                            <template #prepend>
+                                <b-input-group-text >Q.</b-input-group-text>
+                            </template>
+                        </b-input-group>
+                    </b-col>
+                </b-row>
+                <template v-else >
+                    --
+                </template>
+            </template>
+
+            <template v-slot:cell(actions)="row">
+                <b-button size="sm" variant="outline-danger" @click.stop="removeProduct(row.item)" class="mr-1">
+                    <font-awesome-icon icon="trash" />
+                </b-button>
+            </template>
+        </b-table>
+
+        <div class="text-right"  v-if="manualSale">
+            <b-button v-if="products.length > 0" @click="addManualItem('copy')" variant="primary" pill>
+                <font-awesome-icon icon="copy" /> Copiar
+            </b-button>
+
+            <b-button @click="addManualItem" variant="primary" pill>
+                <font-awesome-icon icon="plus" /> Agregar
+            </b-button>
+        </div>
     </div>
 </template>

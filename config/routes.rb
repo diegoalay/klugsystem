@@ -78,6 +78,17 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :bills do
+          collection do
+            get :options
+            get :index_options
+          end
+          member do
+            post :send_sale
+            get :emails_sent
+          end
+        end
+
         resources :quotations do
           collection do
             get :options

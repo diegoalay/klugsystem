@@ -8,6 +8,10 @@ export default {
         total: {
             type: String,
             required: true
+        },
+        textBottom: {
+            type: String,
+            default: 'Total a pagar'
         }
     },
     data() {
@@ -49,7 +53,7 @@ export default {
         <br>
         <b-row>
             <b-col class="text-center">
-                <b><h3> Total a pagar: {{ total }} </h3></b>
+                <b><h3> {{ textBottom }}: {{ total }} </h3></b>
             </b-col>
         </b-row>
     </section>

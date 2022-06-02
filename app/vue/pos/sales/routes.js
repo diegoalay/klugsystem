@@ -9,7 +9,8 @@ const routes =  [
         component: appPosSaleList,
         props: {
             app_module: 'pos',
-            validateCashRegister: true
+            validateCashRegister: true,
+            origin: 'sale'
         }
     },
     {

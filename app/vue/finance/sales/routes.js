@@ -10,7 +10,8 @@ const routes =  [
         props: {
             app_module: 'finance',
             controller: 'sales',
-            userCreatorTypes: true
+            userCreatorTypes: true,
+            origin: 'sale'
         }
     },
     {

@@ -31,6 +31,14 @@ export default {
         initFilters: {
             type: Object,
             default: () => { return {} }
+        },
+        titleHeader: {
+            type: String,
+            default: 'Ventas'
+        },
+        origin: {
+            type: String,
+            default: 'sale'
         }
     },
     components: {
@@ -117,39 +125,43 @@ export default {
         }
     },
     mounted() {
-        if (this.app_module ===  'finance') {
-            if (this.cashRegisterId) {
-                this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
-            }
-
-            this.addUserCreatorColumn()
-        } else if (this.app_module === 'pos'){
-            this.$set(this.filters, 'user_creator_type', 'current_cash_register')
-        } else if (this.app_module === 'reports') {
-            this.addUserCreatorColumn()
-        }
-
-
-        if ((this.store.global.cash_register.id && this.validateCashRegister) || (!this.validateCashRegister)) {
-            this.list()
-            this.getOptions()
-        } else {
-            const url = this.url.pos('cash_register').toString(false)
-            this.$router.push(url)
-        }
-
-        for(let key in this.filters) {
-            if (key === 'date_range' && this.initFilters[key]) {
-                this.$set(this.filters, key, [
-                    new Date(this.initFilters[key][0]),
-                    new Date(this.initFilters[key][1]),
-                ])
-            } else if (this.initFilters[key]) {
-                this.$set(this.filters, key, this.initFilters[key])
-            }
-        }
     },
     methods: {
+        watchProps(){
+            this.$set(this.filters, 'origin', this.origin) // bills source
+
+            if (this.app_module ===  'finance') {
+                if (this.cashRegisterId) {
+                    this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
+                }
+
+                this.addUserCreatorColumn()
+            } else if (this.app_module === 'pos'){
+                this.$set(this.filters, 'user_creator_type', 'current_cash_register')
+            } else if (this.app_module === 'reports') {
+                this.addUserCreatorColumn()
+            }
+
+
+            if ((this.store.global.cash_register.id && this.validateCashRegister) || (!this.validateCashRegister)) {
+                this.list()
+                this.getOptions()
+            } else {
+                const url = this.url.pos('cash_register').toString(false)
+                this.$router.push(url)
+            }
+
+            for(let key in this.filters) {
+                if (key === 'date_range' && this.initFilters[key]) {
+                    this.$set(this.filters, key, [
+                        new Date(this.initFilters[key][0]),
+                        new Date(this.initFilters[key][1]),
+                    ])
+                } else if (this.initFilters[key]) {
+                    this.$set(this.filters, key, this.initFilters[key])
+                }
+            }
+        },
         list(){
             clearTimeout(this.timer)
             this.timer = setTimeout(() => {
@@ -307,6 +319,13 @@ export default {
         'filters.date_range'(){
             this.list()
         },
+        $props: {
+            handler() {
+                this.watchProps()
+            },
+            deep: true,
+            immediate: true,
+        },
     }
 }
 </script>
@@ -326,7 +345,7 @@ export default {
 
         <component-header-list
             v-if="!hideHeader"
-            title="Ventas"
+            :title="titleHeader"
             title-button-create="Vender"
             :loading="loading"
             @reloadList="list"
