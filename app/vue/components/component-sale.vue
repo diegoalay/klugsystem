@@ -393,7 +393,7 @@ export default {
                 saleQuantity: saleQuantity,
                 subtotal: subtotal,
                 final_subtotal: final_subtotal,
-                measurement_unit: product.measurement_unit_name,
+                measurement_unit_name: product.measurement_unit_name,
                 discount_value: discount_value,
                 discount_percentage: discount_percentage,
                 interest_value: interest_value,

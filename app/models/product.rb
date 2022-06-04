@@ -100,6 +100,7 @@ class Product < ApplicationRecord
       total_lenght: products.length,
       products: products.map do |product|
         product.attributes.merge(
+          measurement_unit_name: Product.measurement_unit_parser(product.measurement_unit_name),
           product_type_translation: I18n.t("models.products.column_enum_product_type_#{product.product_type}")
         )
       end
@@ -175,6 +176,18 @@ class Product < ApplicationRecord
     end
 
     data
+  end
+
+  def self.measurement_unit_parser(text)
+    return text if text.length <= 3
+
+    text = text&.upcase&.split(" ")&.map do |word|
+      word.first
+    end
+    .join
+
+    return nil if text.blank?
+    text[0..2]
   end
 
   def show

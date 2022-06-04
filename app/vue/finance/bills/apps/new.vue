@@ -462,7 +462,7 @@ export default {
                         </b-row>
 
                         <b-row>
-                            <b-col md="6" sm="12">
+                            <b-col md="12" sm="12">
                                 <b-form-group>
                                     <label> Dirección </label>
                                     <b-form-input
@@ -474,7 +474,7 @@ export default {
                                     </b-form-input>
                                 </b-form-group>
                             </b-col>
-                            <b-col md="6" sm="12">
+                            <b-col md="12" sm="12">
                                 <b-form-group>
                                     <label> E-Mail </label>
                                     <b-form-input
@@ -515,7 +515,7 @@ export default {
                         </b-row>
 
                         <b-row>
-                            <b-col md="4" sm="12">
+                            <b-col md="12" sm="12">
                                 <b-form-group>
                                     <template #label>
                                         Fecha de emisión <sup class="text-danger">*</sup>
@@ -568,7 +568,7 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Generar Factura </b-button>
+                                <b-button id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Facturar </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>

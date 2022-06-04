@@ -1,5 +1,5 @@
 class Finance::BillQuery < SaleQuery
-  def options
+  def options(current_user)
     {
       product_types: Product.product_types.map { |k,_v|
         {
@@ -8,7 +8,10 @@ class Finance::BillQuery < SaleQuery
         }
       },
       payment_methods: @account.payment_methods.where(status: true)
-                      .map {|payment_method| { text: payment_method.name, value: payment_method }}
+                      .map {|payment_method| { text: payment_method.name, value: payment_method }},
+      measurement_units: @account.measurement_units
+                        .map {|measurement_unit| {text: measurement_unit.name, value: measurement_unit.id}},
+      sale_types: ::Sale.fetch_sale_types(current_user)
     }
   end
 end

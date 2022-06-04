@@ -1,6 +1,11 @@
 <script>
-export default {
+import componentItem from 'vueApp/components/component-item.vue'
 
+
+export default {
+    components: {
+        'component-item': componentItem
+    },
     props: {
         products: {
             type: Array,
@@ -32,12 +37,12 @@ export default {
     },
     data(){
         return {
-            product: {
+            item: {
                 id: null
             },
             product_quantity: 1,
             fields: [],
-            items: []
+            items: [],
         }
     },
     mounted(){
@@ -86,92 +91,132 @@ export default {
                 sortable: true
             },{
                 label: 'Unidad',
-                key: 'measurement_unit_name'
+                key: 'measurement_unit_name',
+                thClass: 'item-measurement-unit-header'
             },{
                 label: 'B/S',
-                key: 'product_type'
+                key: 'product_type',
+                thClass: 'item-type-header'
             },{
                 label: 'Descripción',
-                key: 'name'
+                key: 'name',
+                thClass: 'item-name-header'
             },{
                 label: 'Valor',
-                key: 'price'
+                key: 'price',
+                thClass: 'item-price-header',
+                tdClass: 'item-price-header',
             },{
                 label: 'Cantidad',
-                key: 'saleQuantity'
+                key: 'saleQuantity',
+                thClass: 'item-quantity-header',
+                tdClass: 'item-quantity-header'
+            },{
+                label: 'Interés',
+                key: 'interest'
             },{
                 label: 'Subtotal',
                 key: 'final_subtotal'
             },{
                 label: 'Descuento',
-                key: 'discount'
+                key: 'discount',
+                thClass: 'item-discount-header'
             },{
                 label: 'Total',
                 key: 'total'
-            },{
-                label: '',
-                key: 'actions'
             }]
-        },
-        setProductQuantity(product){
-            const index = this.products.findIndex(e => e.id === product.id)
 
-            const productSaleQuantity = parseFloat(product.saleQuantity)
-            const productmaxQuantity = parseFloat(product.quantity)
+            if (this.tools.isMobile()) {
+                this.fields.unshift({
+                    label: '',
+                    key: 'actions'
+                })
+            } else {
+                this.fields.push({
+                    label: '',
+                    key: 'actions'
+                })
+            }
+        },
+        setProductQuantity(item){
+            if (this.manualSale) {
+                this.setProductQuantityManual(item)
+            } else {
+                this.setProductQuantityNormal(item)
+            }
+        },
+        setProductQuantityManual(item){
+            const index = this.products.findIndex(e => e.id === item.id)
+
+            const productSaleQuantity = parseFloat(item.saleQuantity)
+            this.$set(this.products[index], 'subtotal', productSaleQuantity * item.price)
+            this.setProductTotal(index, item)
+        },
+        setProductQuantityNormal(){
+            const index = this.products.findIndex(e => e.id === item.id)
+
+            const productSaleQuantity = parseFloat(item.saleQuantity)
+            const productmaxQuantity = parseFloat(item.quantity)
 
             if (productSaleQuantity <= 0) {
                 const quantity = 1
 
                 this.$set(this.products[index], 'saleQuantity', quantity)
-                this.$set(this.products[index], 'subtotal', quantity * product.price)
+                this.$set(this.products[index], 'subtotal', quantity * item.price)
 
                 this.$toast.warning('Debe agregar al menos un artículo.')
 
                 return
             }
 
-            if ((productSaleQuantity > productmaxQuantity) && (product.product_type === 'good')) {
+            if ((productSaleQuantity > productmaxQuantity) && (item.product_type === 'good')) {
                 const quantity = productmaxQuantity
 
                 this.$set(this.products[index], 'saleQuantity', quantity)
-                this.$set(this.products[index], 'subtotal', quantity * product.price)
+                this.$set(this.products[index], 'subtotal', quantity * item.price)
             } else {
-                this.$set(this.products[index], 'subtotal', productSaleQuantity * product.price)
+                this.$set(this.products[index], 'subtotal', productSaleQuantity * item.price)
             }
 
-            this.setProductTotal(index, product)
+            this.setProductTotal(index, item)
         },
+        setProductPriceManual(item){
+            const index = this.products.findIndex(e => e.id === item.id)
 
-        setProductDiscountValue(product){
-            const discount = product.discount_value||0
-            const index = this.products.findIndex(e => e.id === product.id)
-            const value = parseFloat(parseFloat((product.discount_value * 100) / product.final_subtotal).toFixed(2))
+            const productPrice = parseFloat(item.price)
+            this.$set(this.products[index], 'subtotal', (productPrice * parseFloat(item.saleQuantity)))
+            this.setProductTotal(index, item)
+        },
+        setProductDiscountValue(item){
+            const discount = item.discount_value||0
+            const index = this.products.findIndex(e => e.id === item.id)
+            const value = parseFloat(parseFloat((item.discount_value * 100) / item.final_subtotal).toFixed(2))
 
             this.$set(this.products[index], 'discount_percentage', value)
 
-            this.setProductTotal(index, product)
+            this.setProductTotal(index, item)
         },
 
-        setProductDiscountPercentage(product){
-            const discount = product.discount_percentage||0
-            const index = this.products.findIndex(e => e.id === product.id)
-            const value = parseFloat(parseFloat((product.final_subtotal * (discount / 100))).toFixed(2))
+        setProductDiscountPercentage(item){
+            const discount = item.discount_percentage||0
+            const index = this.products.findIndex(e => e.id === item.id)
+            const value = parseFloat(parseFloat((item.final_subtotal * (discount / 100))).toFixed(2))
 
             this.$set(this.products[index], 'discount_value', value)
 
-            this.setProductTotal(index, product)
+            this.setProductTotal(index, item)
         },
 
-        setProductDiscountPercentage(product){
-            const index = this.products.findIndex(e => e.id === product.id)
+        setProductDiscountPercentage(item){
+            const index = this.products.findIndex(e => e.id === item.id)
 
-            this.setProductTotal(index, product)
+            this.setProductTotal(index, item)
         },
 
-        setProductTotal(index, product){
-            const interest_value = parseFloat(parseFloat(product.subtotal * product.interest_percentage).toFixed(2))
-            const final_subtotal = parseFloat(parseFloat(product.subtotal + interest_value).toFixed(2))
-            const discount_value = parseFloat(parseFloat(final_subtotal * (product.discount_percentage / 100))).toFixed(2)
+        setProductTotal(index, item){
+            const interest_value = parseFloat(parseFloat(item.subtotal * item.interest_percentage).toFixed(2))
+            const final_subtotal = parseFloat(parseFloat(item.subtotal + interest_value).toFixed(2))
+            const discount_value = parseFloat(parseFloat(final_subtotal * (item.discount_percentage / 100))).toFixed(2)
             const total = parseFloat(parseFloat(final_subtotal - discount_value).toFixed(2))
 
             this.$set(this.products[index], 'discount_value', discount_value)
@@ -180,18 +225,24 @@ export default {
             this.$set(this.products[index], 'total', total)
         },
 
-        removeProduct(product){
-            this.$emit('remove', product)
+        removeProduct(item){
+            this.$emit('remove', item)
         },
 
         addManualItem(type){
-            let product = null
+            let item = null
+
+            const id = this.products.length + 1
 
             if (type === 'copy') {
-                product = JSON.parse(JSON.stringify(this.products[this.products.length - 1]))
+                item = {
+                    ...JSON.parse(JSON.stringify(this.products[this.products.length - 1])),
+                    id: id
+                }
             } else {
-                product = {
-                    measurement_unit_name: 'UND',
+                item = {
+                    id: id,
+                    measurement_unit_name: null,
                     name: '',
                     price: 0,
                     saleQuantity: 1,
@@ -199,12 +250,33 @@ export default {
                     final_subtotal: 0,
                     discount_value: 0,
                     discount_percentage: 0,
+                    interest_percentage: 0,
+                    interest_value: 0,
                     product_type: 'service',
                     total: 0
                 }
             }
-            product.id = this.products.length + 1
-            this.products.push(product)
+
+            this.products.push(item)
+
+            if (this.tools.isMobile()) {
+                this.showModal(item)
+            } else {
+                this.$nextTick(()=>{
+                    const key = `item-${id}`
+                    this.$refs[key].focus()
+                })
+            }
+        },
+        showModal(item){
+            this.item = item
+            this.openModal()
+        },
+        openModal(){
+            this.$bvModal.show('item-modal')
+        },
+        hideModal(){
+            this.$bvModal.hide('item-modal')
         }
     },
 
@@ -239,6 +311,26 @@ export default {
 
 <template>
     <div>
+        <b-modal
+            id="item-modal"
+            size="xl"
+            hide-footer
+            centered
+            content-class="shadow"
+            :title="`Editar bien/servicio # ` + item.id"
+        >
+            <component-item
+                @hide="hideModal"
+                :item="item"
+                :options="options"
+                :payment_method_discount="payment_method_discount"
+                :payment_method_interest="payment_method_interest"
+                :setProductQuantity="setProductQuantity"
+                :setProductPriceManual="setProductPriceManual"
+                :setProductDiscountValue="setProductDiscountValue"
+                :setProductDiscountPercentage="setProductDiscountPercentage"
+            />
+        </b-modal>
         <br>
         <br>
         <b-table
@@ -254,10 +346,19 @@ export default {
                {{ row.item.id }}
             </template>
 
-            <template v-slot:cell(product_type)="row">
+            <template v-slot:cell(product_type)="row" class="col-md-2">
                 <b-form-select
                     v-model="row.item.product_type"
                     :options="options.product_types"
+                >
+                </b-form-select>
+            </template>
+
+            <template v-slot:cell(measurement_unit_name)="row" class="col-md-2">
+                <b-form-select
+                    :ref="`item-${row.item.id}`"
+                    v-model="row.item.measurement_unit_name"
+                    :options="options.measurement_units"
                 >
                 </b-form-select>
             </template>
@@ -291,6 +392,7 @@ export default {
 
            <template v-slot:cell(price)="row">
                 <b-form-input
+                    @change="setProductPriceManual(row.item)"
                     size="sm"
                     type="number"
                     v-model="row.item.price"
@@ -298,6 +400,10 @@ export default {
                     autocomplete="off"
                 >
                 </b-form-input>
+            </template>
+
+           <template v-slot:cell(interest)="row">
+                {{ row.item.interest_value }}
             </template>
 
             <template v-slot:cell(discount)="row">
@@ -349,6 +455,10 @@ export default {
             <template v-slot:cell(actions)="row">
                 <b-button size="sm" variant="outline-danger" @click.stop="removeProduct(row.item)" class="mr-1">
                     <font-awesome-icon icon="trash" />
+                </b-button>
+                &nbsp;
+                <b-button size="sm" variant="outline-primary" @click.stop="showModal(row.item)" class="mr-1">
+                    <font-awesome-icon icon="pen-to-square" />
                 </b-button>
             </template>
         </b-table>
@@ -379,20 +489,8 @@ export default {
                 </b-row>
             </template>
 
-            <template v-slot:cell(price)="row">
-                <b-row>
-                    <b-col md="10">
-                        <b-form-input
-                            @change="setProductQuantity(row.item)"
-                            size="sm"
-                            type="number"
-                            v-model="row.item.price"
-                            min="0"
-                            autocomplete="off"
-                        >
-                        </b-form-input>
-                    </b-col>
-                </b-row>
+           <template v-slot:cell(interest)="row">
+                {{ row.item.interest_value }}
             </template>
 
             <template v-slot:cell(discount)="row">
@@ -445,6 +543,10 @@ export default {
                 <b-button size="sm" variant="outline-danger" @click.stop="removeProduct(row.item)" class="mr-1">
                     <font-awesome-icon icon="trash" />
                 </b-button>
+
+                <b-button size="sm" variant="outline-primary" @click.stop="showModal(row.item)" class="mr-1">
+                    <font-awesome-icon icon="pen-to-square" />
+                </b-button>
             </template>
         </b-table>
 
@@ -459,3 +561,34 @@ export default {
         </div>
     </div>
 </template>
+
+<style>
+.item-measurement-unit-header {
+    width: 135px;
+}
+
+.item-name-header {
+    width: 190px;
+}
+
+.item-type-header {
+    width: 100px;
+}
+
+.item-quantity-header {
+    width: 120px;
+}
+
+.item-price-header {
+    width: 200px;
+}
+
+.item-discount-header {
+    width: 225px;
+}
+
+.input-group-text {
+  padding: 0.3rem 0.3rem;
+}
+
+</style>
