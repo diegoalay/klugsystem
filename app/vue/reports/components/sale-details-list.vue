@@ -1,6 +1,6 @@
 <script type="text/javascript">
 import ComponentDialogDelete from 'vueApp/components/component-dialog-delete.vue'
-import componenSaleEmails from 'vueApp/components/component-sale-emails.vue'
+import componenSaleEmails from 'vueApp/components/sales/component-sale-emails.vue'
 
 export default {
     props: {

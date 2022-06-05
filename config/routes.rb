@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :bill_templates
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -65,8 +66,14 @@ Rails.application.routes.draw do
       end
 
       namespace :finance do
-        resources :cash_registers do
+        resources :cash_registers
+
+        resources :bill_templates do
+          collection do
+            get :options
+          end
         end
+
         resources :sales do
           collection do
             get :options

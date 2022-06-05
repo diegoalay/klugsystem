@@ -1,5 +1,5 @@
 <script>
-import componentProductItem from 'vueApp/components/product-item.vue'
+import componentProductItem from 'vueApp/components/sales/product-item.vue'
 
 export default {
     components: {

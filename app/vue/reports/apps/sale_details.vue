@@ -42,8 +42,8 @@ export default {
 
 <template>
     <section>
-        <b-row md="12" sm="12">
-            <b-col md="3" sm="12">
+        <b-row>
+            <b-col col="3">
                 <b-card  title="Intereses" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="text-left">
@@ -57,7 +57,7 @@ export default {
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col md="3" sm="12">
+            <b-col col="3">
                 <b-card  title="Descuentos" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="text-left">
@@ -71,7 +71,7 @@ export default {
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col md="3" sm="6">
+            <b-col col="3">
                 <b-card title="# Artículos/Servicios" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="dashboard-counter text-left">
@@ -85,7 +85,7 @@ export default {
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col md="3" sm="6">
+            <b-col col="3">
                 <b-card title="Total Ventas" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="dashboard-counter text-left">
@@ -100,6 +100,7 @@ export default {
                 </b-card>
             </b-col>
         </b-row>
+
         <component-sale-details-list
             v-if="dateRange"
             app_module='reports'

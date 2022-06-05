@@ -60,9 +60,10 @@ class SaleQuery
           "#{DateTime.iso8601(query[:filters][:start_date]).beginning_of_day}",
           "#{DateTime.iso8601(query[:filters][:end_date]).end_of_day}",
       )
-  end
+    end
 
-  sales = sales.where("sales.origin = ?", query[:filters][:origin]) unless query[:filters][:origin].blank?
+
+    sales = sales.where("sales.origin = ?", query[:filters][:origin]) unless query[:filters][:origin].blank?
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
     sales = sales.where("sales.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?

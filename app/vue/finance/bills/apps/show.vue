@@ -64,7 +64,7 @@ export default {
         },
 
         getData(){
-            const url = this.url.finance('sales/:id', {id: this.id})
+            const url = this.url.finance('bills/:id', {id: this.id})
             this.http.get(url).then(result => {
                 if (result.successful) {
                     for (let key in result.data) {
@@ -110,13 +110,13 @@ export default {
 <template lang="">
     <section class="application-componeent">
         <component-header-form
-            title="Ventas">
+            title="Facturas">
             <slot name="buttons">
-                <b-button variant="outline-dark" to="/finance/sales/new" class="mb-2">
-                    Vender <font-awesome-icon icon="cart-shopping" />
+                <b-button variant="outline-dark" to="/finance/bills/new" class="mb-2">
+                    Facturar <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
+                <b-button variant="outline-dark" class="mb-2" to="/finance/bills">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>

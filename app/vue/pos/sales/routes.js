@@ -1,5 +1,5 @@
-import appPosSaleList  from 'vueApp/components/component-sales-list.vue'
-import appPosSaleNew  from 'vueApp/components/component-sale.vue'
+import appPosSaleList  from 'vueApp/components/sales/component-sales-list.vue'
+import appPosSaleNew  from 'vueApp/components/sales/component-sale.vue'
 import appPosSaleShow from 'vueApp/pos/sales/apps/show.vue'
 
 

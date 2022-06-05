@@ -1,4 +1,4 @@
-import appBillList  from 'vueApp/components/component-sales-list.vue'
+import appBillList  from 'vueApp/components/sales/component-sales-list.vue'
 import appBillNew  from 'vueApp/finance/bills/apps/new.vue'
 import appBillShow from 'vueApp/finance/bills/apps/show.vue'
 

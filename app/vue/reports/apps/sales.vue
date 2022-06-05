@@ -1,5 +1,5 @@
 <script type="text/javascript">
-import componentSalesList  from 'vueApp/components/component-sales-list.vue'
+import componentSalesList  from 'vueApp/components/sales/component-sales-list.vue'
 
 export default {
     components: {

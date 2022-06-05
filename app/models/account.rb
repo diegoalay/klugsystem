@@ -7,6 +7,7 @@ class Account < ApplicationRecord
   has_many :sales_details, class_name: 'Sale::Detail'
   has_many :measurement_units
   has_many :payment_methods
+  has_many :bill_templates
   has_many :branch_offices
   has_many :cash_registers
   has_many :expeditures

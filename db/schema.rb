@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_01_234916) do
+ActiveRecord::Schema.define(version: 2022_06_05_061609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,37 @@ ActiveRecord::Schema.define(version: 2022_06_01_234916) do
     t.jsonb "digifact", default: {}
     t.string "billing_phrase"
     t.string "billing_stage"
+  end
+
+  create_table "bill_template_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "bill_template_id"
+    t.index ["bill_template_id"], name: "index_bill_template_activities_on_bill_template_id"
+  end
+
+  create_table "bill_templates", force: :cascade do |t|
+    t.text "name"
+    t.string "measurement_unit"
+    t.string "product_type"
+    t.string "title"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_bill_templates_on_account_id"
+    t.index ["deleted_at"], name: "index_bill_templates_on_deleted_at"
   end
 
   create_table "branch_office_activities", force: :cascade do |t|
@@ -1100,6 +1131,12 @@ ActiveRecord::Schema.define(version: 2022_06_01_234916) do
   add_foreign_key "account_activities", "users", column: "user_modifier_id"
   add_foreign_key "accounts", "users", column: "user_creator_id"
   add_foreign_key "accounts", "users", column: "user_modifier_id"
+  add_foreign_key "bill_template_activities", "bill_templates"
+  add_foreign_key "bill_template_activities", "users", column: "user_creator_id"
+  add_foreign_key "bill_template_activities", "users", column: "user_modifier_id"
+  add_foreign_key "bill_templates", "accounts"
+  add_foreign_key "bill_templates", "users", column: "user_creator_id"
+  add_foreign_key "bill_templates", "users", column: "user_modifier_id"
   add_foreign_key "branch_office_activities", "branch_offices"
   add_foreign_key "branch_office_activities", "users", column: "user_creator_id"
   add_foreign_key "branch_office_activities", "users", column: "user_modifier_id"

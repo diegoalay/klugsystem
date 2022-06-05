@@ -1,5 +1,5 @@
 import appQuotationsList  from 'vueApp/finance/quotations/apps/list.vue'
-import appQuotationsNew   from 'vueApp/components/component-sale.vue'
+import appQuotationsNew   from 'vueApp/components/sales/component-sale.vue'
 import appQuotationsShow from 'vueApp/finance/quotations/apps/show.vue'
 
 

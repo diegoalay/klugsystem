@@ -142,8 +142,8 @@
     <section>
         <b-row>
             <b-col>
-                <b-row md="7" sm="12">
-                    <b-col md="4" sm="12">
+                <b-row>
+                    <b-col col="4">
                         <b-card  title="Gastos" class="dashboard-top-box">
                             <b-row>
                                 <b-col md="4" sm="4" class="text-left">
@@ -157,7 +157,7 @@
                             </b-row>
                         </b-card>
                     </b-col>
-                    <b-col md="4" sm="12">
+                    <b-col col="4">
                         <b-card title="Ventas" class="dashboard-top-box">
                             <b-row>
                                 <b-col md="4" sm="4" class="dashboard-counter text-left">
@@ -171,7 +171,7 @@
                             </b-row>
                         </b-card>
                     </b-col>
-                    <b-col md="4" sm="12">
+                    <b-col col="4">
                         <b-card title="Total" class="dashboard-top-box">
                             <b-row>
                                 <b-col md="4" sm="4" class="dashboard-counter text-left">

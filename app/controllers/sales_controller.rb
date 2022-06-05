@@ -83,21 +83,25 @@ class SalesController < ApplicationSystemController
 
       respond_with_successful(@sale)
 
-      @sale.details.each do |sale_detail|
-        product = @current_user.account.products.find_by(id: sale_detail.product_id)
+      debugger
 
-        if (product && product.good?)
-          ActiveRecord::Base.transaction do
-            transaction = product.transactions.new(
-              category: "decrease",
-              user_creator: @current_user,
-              transaction_type: @current_user.account.product_transaction_sale_type,
-              quantity: sale_detail.quantity,
-              model_id: @sale.id,
-              model_type: "Sale",
-            )
+      if (@sale.origin != 'bill')
+        @sale.details.each do |sale_detail|
+          product = @current_user.account.products.find_by(id: sale_detail.product_id)
 
-            transaction.save!
+          if (product && product.good?)
+            ActiveRecord::Base.transaction do
+              transaction = product.transactions.new(
+                category: "decrease",
+                user_creator: @current_user,
+                transaction_type: @current_user.account.product_transaction_sale_type,
+                quantity: sale_detail.quantity,
+                model_id: @sale.id,
+                model_type: "Sale",
+              )
+
+              transaction.save!
+            end
           end
         end
       end
@@ -187,7 +191,7 @@ class SalesController < ApplicationSystemController
   def sale_params
     params.fetch(:sale, {}).permit(
       %i[
-        client_id subtotal subtotal1 subtotal2 total discount interest shipping_costs status
+        origin client_id subtotal subtotal1 subtotal2 total discount interest shipping_costs status
         received_amount change sale_type employees_id sale_date payment_method_id
       ]
     )

@@ -61,28 +61,25 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-container>
-                    <b-row>
-                        <b-col cols="8">
-                            <b-form-group>
-                                <label> Nombre de la marca <sup class="text-danger">*</sup> </label>
+                <b-row>
+                    <b-col cols="8">
+                        <b-form-group>
+                            <label> Nombre de la marca <sup class="text-danger">*</sup> </label>
 
-                                <b-form-input
-                                    v-model="brand.name"
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                >
-                                </b-form-input>
-                            </b-form-group>
-                        </b-col>
-                    </b-row>
-                </b-container>
+                            <b-form-input
+                                v-model="brand.name"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
-                <b-container>
+                <div class="text-right">
                     <b-button type="submit" variant="primary">Guardar</b-button>
-                    <b-button type="reset" variant="outline-dark">Limpiar</b-button>
-                </b-container>
+                </div>
             </b-card-body>
         </b-card>
     </b-form>

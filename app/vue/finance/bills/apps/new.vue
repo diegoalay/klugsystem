@@ -1,7 +1,7 @@
 <script type="text/javascript">
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
-import componentSaleDetails from 'vueApp/components/component-sale-details.vue'
+import componentSaleDetails from 'vueApp/components/sales/component-sale-details.vue'
 import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
 
 export default {
@@ -121,7 +121,7 @@ export default {
                     change: this.getChange(),
                     products: this.products,
                     client: this.client,
-                    cash_register: this.cash_register
+                    origin: 'bill'
                 }
                 }
 
@@ -259,9 +259,12 @@ export default {
             return parseFloat(interest).toFixed(2)
         },
 
-
         getTotalSale(){
             return (parseFloat(this.sale.shipping_costs) + parseFloat(this.getTotalWithDiscount())).toFixed(2)
+        },
+
+        getChange(){
+            return (parseFloat(this.sale.received_amount) - this.getTotalSale()).toFixed(2)
         },
 
         getSumWithFormat(key){
@@ -297,7 +300,19 @@ export default {
             return `Q ${this.getChange()}`
         },
 
+        // Setters
+        setReceivedAmount(){
+            this.$set(this.sale, 'received_amount', this.getTotalSale())
+        },
+
         // validators
+        validateReceivedAmount(){
+            if (this.sale.received_amount <= this.getTotalSale()){
+                this.$toast.error('La cantidad es menor al valor total de la venta.')
+                this.$set(this.sale, 'received_amount', this.getTotalSale())
+            }
+        },
+
         removeProduct(product){
             this.products = this.products.filter(e => e.id !== product.id)
         },
@@ -563,6 +578,40 @@ export default {
                                 <b-input-group-text >Total</b-input-group-text>
                             </template>
                             <b-form-input disabled readonly class="text-right" :value="getTotalWithDiscountAndFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Envío</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                min="0"
+                                class="text-right"
+                                v-model="sale.shipping_costs"
+                            >
+                            </b-form-input>
+                        </b-input-group>
+
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cantidad recibida</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                class="text-right"
+                                type="number"
+                                @change="validateReceivedAmount()"
+                                v-model="sale.received_amount"
+                                :min="getTotalSale()"
+                            >
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cambio</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getChangeWithFormat()"> </b-form-input>
                         </b-input-group>
                         <hr>
                         <br>
