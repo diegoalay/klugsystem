@@ -1,6 +1,8 @@
 class SalesController < ApplicationSystemController
   before_action :set_sale, only: %i[update destroy send_sale emails_sent]
 
+  require 'prawn'
+
   # GET /sales or /sales.json
   def index
     respond_to do |format|
@@ -25,11 +27,22 @@ class SalesController < ApplicationSystemController
         set_sale
 
         if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
-
           attachment = DigifactServices::Api.new(current_user, @sale).download['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
-          send_data decode_base64_content, filename: 'Factura.pdf'
+          if true
+            output_filename =  Rails.root.join('test.pdf').to_s
+
+            fragua_pdf = FraguaServices::PdfService.new(@sale).call
+
+            fragua_details = CombinePDF.parse(fragua_pdf.render).pages[0]
+            pdf = CombinePDF.parse(decode_base64_content)
+            pdf.pages.each { |page| page << fragua_details }
+
+            send_data pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
+          else
+            send_data decode_base64_content, filename: 'Factura.pdf', type: "application/pdf"
+          end
         else
           @details = @sale.show
           render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"
@@ -82,8 +95,6 @@ class SalesController < ApplicationSystemController
       end
 
       respond_with_successful(@sale)
-
-      debugger
 
       if (@sale.origin != 'bill')
         @sale.details.each do |sale_detail|
@@ -190,9 +201,26 @@ class SalesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def sale_params
     params.fetch(:sale, {}).permit(
-      %i[
-        origin client_id subtotal subtotal1 subtotal2 total discount interest shipping_costs status
-        received_amount change sale_type employees_id sale_date payment_method_id
+      :origin,
+      :client_id,
+      :subtotal,
+      :subtotal1,
+      :subtotal2,
+      :total,
+      :discount,
+      :interest,
+      :shipping_costs,
+      :status,
+      :received_amount,
+      :change,
+      :sale_type,
+      :employees_id,
+      :sale_date,
+      :payment_method_id,
+      custom_fields: [
+        :id,
+        :value,
+        :title
       ]
     )
   end

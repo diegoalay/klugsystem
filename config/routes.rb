@@ -186,6 +186,7 @@ Rails.application.routes.draw do
           post :validate
         end
       end
+      resources :billing_fields
       resources :users do
         collection do
           get :options

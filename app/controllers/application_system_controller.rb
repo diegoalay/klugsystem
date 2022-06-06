@@ -28,6 +28,7 @@ class ApplicationSystemController < ApplicationController
 
   def set_account_data
     @data = {
+      walmart_billing: @account.walmart_billing?,
       account: @account,
       menu_items: MenuItem.all,
       current_user: {
@@ -37,6 +38,7 @@ class ApplicationSystemController < ApplicationController
         role: current_user.roles.first,
         abilities: current_user.abilities,
         cash_register: current_user.current_cash_register&.show,
+
       },
       url: {
         cable: cable_url,

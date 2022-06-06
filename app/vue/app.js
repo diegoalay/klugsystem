@@ -47,6 +47,7 @@ import rolesRoutes from 'vueApp/administration/roles/routes.js'
 import branchOfficesRoutes from 'vueApp/administration/branch_offices/routes.js'
 import paymentMethodsRoutes from 'vueApp/administration/payment_methods/routes.js'
 import digifactRoutes from 'vueApp/administration/digifact/routes.js'
+import billingFields from 'vueApp/administration/billing_fields/routes.js'
 import accountRoutes from 'vueApp/administration/account/routes.js'
 
 import booksRoutes from './books/routes.js'
@@ -93,6 +94,7 @@ app("",
     .concat(branchOfficesRoutes)
     .concat(paymentMethodsRoutes)
     .concat(digifactRoutes)
+    .concat(billingFields)
     .concat(accountRoutes)
     // PROFILE
     .concat(profileRoutes)

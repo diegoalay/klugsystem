@@ -1,6 +1,6 @@
 import appBillList  from 'vueApp/components/sales/component-sales-list.vue'
 import appBillNew  from 'vueApp/finance/bills/apps/new.vue'
-import appBillShow from 'vueApp/finance/bills/apps/show.vue'
+import appBillShow from 'vueApp/components/sales/component-sale-show.vue'
 
 
 const routes =  [
@@ -24,7 +24,11 @@ const routes =  [
     },
     {
         path: "/finance/bills/:id",
-        component: appBillShow
+        component: appBillShow,
+        props: {
+            app_module: 'finance',
+            controller: 'bills'
+        }
     }
 ]
 

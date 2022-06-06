@@ -324,11 +324,11 @@ export default {
             this.list()
         },
         $props: {
-            // handler() {
-            //     this.watchProps()
-            // },
-            // deep: true,
-            // immediate: true,
+            handler() {
+                this.watchProps()
+            },
+            deep: true,
+            immediate: true,
         },
     }
 }

@@ -551,6 +551,7 @@ export default {
         </b-table>
 
         <div class="text-right" v-if="manualSale">
+            <hr>
             <b-button v-if="products.length > 0" size="sm" @click="addManualItem('copy')" variant="primary" pill>
                 <font-awesome-icon icon="copy" /> Copiar
             </b-button>

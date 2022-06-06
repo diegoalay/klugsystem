@@ -29,6 +29,8 @@ gem "honeybadger", "~> 4.0"
 # PDF generation
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'prawn'
+gem 'combine_pdf'
 
 # Pagination
 gem 'kaminari'
