@@ -3,6 +3,8 @@ class BillTemplate < ApplicationRecord
 
   validates :name, presence: true
 
+  acts_as_paranoid
+
   def self.options(current_user)
     {
       product_types: Product.product_types.map { |k,_v|

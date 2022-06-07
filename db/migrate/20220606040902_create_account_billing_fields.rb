@@ -2,6 +2,7 @@ class CreateAccountBillingFields < ActiveRecord::Migration[6.1]
   def change
     create_table :account_billing_fields do |t|
       t.string :title
+      t.string :label
       t.string :type
       t.string :value
       t.string :color

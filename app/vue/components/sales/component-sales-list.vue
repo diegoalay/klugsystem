@@ -20,10 +20,6 @@ export default {
             type: Boolean,
             default: false
         },
-        dateRange: {
-            type: Array,
-            default: null
-        },
         userCreatorTypes: {
             type: Boolean,
             default: false
@@ -42,7 +38,7 @@ export default {
         },
         origin: {
             type: String,
-            default: 'sale'
+            default: ''
         }
     },
     components: {
@@ -121,7 +117,7 @@ export default {
                 payment_method: '',
                 user_creator_type: '',
                 cash_register_id: '',
-                date_range: this.dateRange ? this.dateRange : []
+                date_range: []
             },
             sale: {},
             loading: false,
@@ -229,7 +225,7 @@ export default {
                     ]
                 }
             )
-            if (resp) {
+            if (resp === true) {
                 const form = {
                     sale: {
                         status: false
@@ -324,11 +320,11 @@ export default {
             this.list()
         },
         $props: {
-            handler() {
+            handler(value) {
                 this.watchProps()
             },
             deep: true,
-            immediate: true,
+            immediate: true
         },
     }
 }
@@ -401,7 +397,7 @@ export default {
                     </b-form-select>
                     &nbsp;
                     <component-datepicker
-                        v-if="dateRange"
+                        v-if="filters.date_range.length > 0"
                         v-model="filters.date_range"
                         lang="es"
                         format="DD-MM-YYYY"

@@ -89,7 +89,8 @@ export default {
                         return {
                             id: e.id,
                             value: e.value,
-                            title: e.title
+                            title: e.title,
+                            label: e.label
                         }
                     })
                 }
@@ -184,6 +185,15 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
+        },
+
+        textAreaComponent(obj){
+            console.log(obj)
+
+            if (!obj) return 0
+            if (!obj['value']) return 0
+
+            return obj['value'].length > 50
         }
     }
 }
@@ -193,7 +203,7 @@ export default {
         <component-header-form
             title="Ventas">
             <slot name="buttons">
-                <b-button variant="outline-dark" to="/finance/sales/new" class="mb-2">
+                <b-button variant="outline-dark" :to="`${app_module}/${controller}/new`" class="mb-2">
                     Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
@@ -214,7 +224,14 @@ export default {
                                 {{ custom_field.title }}
                             </template>
 
+                            <b-form-textarea
+                                v-if="textAreaComponent(custom_fields[index])"
+                                v-model="custom_fields[index].value"
+                                rows="3"
+                            >
+                            </b-form-textarea>
                             <b-form-input
+                                v-else
                                 v-model="custom_fields[index].value"
                                 type="text"
                                 placeholder=""

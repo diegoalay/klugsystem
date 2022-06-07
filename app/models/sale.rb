@@ -38,7 +38,7 @@ class Sale < ApplicationRecord
         end
 
         ActiveRecord::Base.transaction do
-          if (!is_electronic_billing? || (is_electronic_billing? && electronic_bill&.annulment_datetime.present?))
+          if (origin != 'bill' && (!is_electronic_billing? || (is_electronic_billing? && electronic_bill&.annulment_datetime.present?)))
             details.each do |sale_detail|
               sale_detail.user_modifier_id = user_modifier_id
               sale_detail.update(status: false)

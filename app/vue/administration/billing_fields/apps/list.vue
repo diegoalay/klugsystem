@@ -11,6 +11,10 @@
                     key: 'title',
                     sortable: true
                 },{
+                    label: 'Etiqueta',
+                    key: 'label',
+                    sortable: true
+                },{
                     label: 'Valor Default',
                     key: 'value',
                     sortable: true

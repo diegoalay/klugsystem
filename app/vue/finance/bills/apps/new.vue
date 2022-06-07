@@ -264,6 +264,9 @@ export default {
         },
 
         getChange(){
+            console.log(this.sale.received_amount)
+            console.log(this.getTotalSale())
+
             return (parseFloat(this.sale.received_amount) - this.getTotalSale()).toFixed(2)
         },
 
@@ -300,16 +303,38 @@ export default {
             return `Q ${this.getChange()}`
         },
 
+        getReceivedAmount(){
+            return this.sale.received_amount
+        },
+
         // Setters
+        setShippingCosts(value){
+            if (Number.isNaN(value) || value === '') {
+                this.sale.shipping_costs = 0
+
+                return
+            }
+
+            this.sale.shipping_costs = parseFloat(parseFloat(value).toFixed(2))
+        },
+
         setReceivedAmount(){
             this.$set(this.sale, 'received_amount', this.getTotalSale())
         },
 
         // validators
-        validateReceivedAmount(){
-            if (this.sale.received_amount <= this.getTotalSale()){
+        validateReceivedAmount(value){
+            value = parseFloat(parseFloat(value).toFixed(2))
+
+            console.log(value)
+
+            if (value <= this.getTotalSale()){
                 this.$toast.error('La cantidad es menor al valor total de la venta.')
                 this.$set(this.sale, 'received_amount', this.getTotalSale())
+            } else if (Number.isNaN(value) || value === '') {
+                this.sale.received_amount = 0.0
+            } else {
+                this.sale.received_amount = value
             }
         },
 
@@ -586,7 +611,7 @@ export default {
                             <b-form-input
                                 min="0"
                                 class="text-right"
-                                v-model="sale.shipping_costs"
+                                @change="setShippingCosts"
                             >
                             </b-form-input>
                         </b-input-group>
@@ -598,8 +623,8 @@ export default {
                             <b-form-input
                                 class="text-right"
                                 type="number"
-                                @change="validateReceivedAmount()"
-                                v-model="sale.received_amount"
+                                :value="getReceivedAmount()"
+                                @change="validateReceivedAmount"
                                 :min="getTotalSale()"
                             >
                             </b-form-input>

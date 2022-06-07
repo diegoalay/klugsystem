@@ -8,15 +8,17 @@ export default {
     data() {
         return {
             summary: {},
-            dateRange: null
+            initFilters: null
         }
     },
     mounted() {
         const date = new Date()
-        this.dateRange = [
-            new Date(date.getFullYear(), date.getMonth(), 1),
-            new Date(date.getFullYear(), date.getMonth(), this.date.daysInMonth(date.getMonth()+1, date.getFullYear()))
-        ]
+        this.initFilters = {
+            date_range: [
+                new Date(date.getFullYear(), date.getMonth(), 1),
+                new Date(date.getFullYear(), date.getMonth(), this.date.daysInMonth(date.getMonth()+1, date.getFullYear()))
+            ]
+        }
     },
     methods: {
         changeSummary(filters){
@@ -101,11 +103,11 @@ export default {
             </b-col>
         </b-row>
         <component-sales-list
-            v-if="dateRange"
+            v-if="initFilters"
             :hideHeader="true"
             app_module='reports'
             :userCreatorTypes="true"
-            :date-range="dateRange"
+            :initFilters="initFilters"
             @change="changeSummary"
             :init-filters="storage.local('reports/sales')"
         >

@@ -83,7 +83,7 @@ class Administration::BillingFieldsController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def billing_field_params
     params.fetch(:billing_field, {}).permit(
-      %i[title type value color position_x position_y settings]
+      %i[title label type value color position_x position_y settings]
     )
   end
 end

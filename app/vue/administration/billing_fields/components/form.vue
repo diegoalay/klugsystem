@@ -75,19 +75,86 @@ export default {
     <b-form @submit.prevent="onSubmit">
         <b-card>
             <b-card-body>
-                <b-form-group>
-                    <template #label>
-                        Titulo <sup class="text-danger">*</sup>
-                    </template>
+                <b-row>
+                    <b-col md="6" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                Titulo <sup class="text-danger">*</sup>
+                            </template>
 
-                    <b-form-input
-                        v-model="billing_field.title"
-                        type="text"
-                        placeholder=""
-                        required
-                    >
-                    </b-form-input>
-                </b-form-group>
+                            <b-form-input
+                                v-model="billing_field.title"
+                                type="text"
+                                placeholder=""
+                                required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md="3" sm="12">
+                        <b-form-group label>
+                            <template #label>
+                                Posición x (cm) <sup class="text-danger">*</sup>
+                            </template>
+
+                            <b-form-input
+                                v-model="billing_field.position_x"
+                                type="number"
+                                step="any"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md="3" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                Posición y (cm) <sup class="text-danger">*</sup>
+                            </template>
+                            <b-form-input
+                                v-model="billing_field.position_y"
+                                type="number"
+                                step="any"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-row>
+                    <b-col md="6" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                Etiqueta
+                            </template>
+
+                            <b-form-input
+                                v-model="billing_field.label"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+
+                    <b-col md="6" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                Valor default
+                            </template>
+
+                            <b-form-input
+                                v-model="billing_field.value"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
 
                 <b-form-group v-if="billing_field.color">
                     <template #label>
@@ -101,46 +168,6 @@ export default {
                         ]"
                     >
                     </color-picker>
-                </b-form-group>
-
-                <b-form-group label>
-                    <template #label>
-                        Posición x (cm) <sup class="text-danger">*</sup>
-                    </template>
-
-                    <b-form-input
-                        v-model="billing_field.position_x"
-                        type="number"
-                        step="any"
-                        placeholder=""
-                    >
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group>
-                    <template #label>
-                        Posición y (cm) <sup class="text-danger">*</sup>
-                    </template>
-                    <b-form-input
-                        v-model="billing_field.position_y"
-                        type="number"
-                        step="any"
-                        placeholder=""
-                    >
-                    </b-form-input>
-                </b-form-group>
-
-                <b-form-group>
-                    <template #label>
-                        Valor default
-                    </template>
-
-                    <b-form-input
-                        v-model="billing_field.value"
-                        type="text"
-                        placeholder=""
-                    >
-                    </b-form-input>
                 </b-form-group>
 
                 <div class="text-right">

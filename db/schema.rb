@@ -49,11 +49,13 @@ ActiveRecord::Schema.define(version: 2022_06_06_055953) do
 
   create_table "account_billing_fields", force: :cascade do |t|
     t.string "title"
+    t.string "label"
     t.string "type"
     t.string "value"
     t.string "color"
     t.decimal "position_x"
     t.decimal "position_y"
+    t.boolean "disabled"
     t.jsonb "settings"
     t.bigint "user_creator_id"
     t.bigint "user_modifier_id"

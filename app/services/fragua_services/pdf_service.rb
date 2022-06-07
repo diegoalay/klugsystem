@@ -30,11 +30,19 @@ module FraguaServices
         position_y = to_pt(settings['position_y'])
 
         @pdf.fill_color color
-        @pdf.text_box "#{custom_field['title']}: #{custom_field['value']}",
+
+        begin
+          @pdf.text_box generate_text(settings['label'], custom_field['value']),
           at: [position_x, position_y],
           color: color,
           size: @font_size = 8
+        rescue => exception; end;
       end
+    end
+
+    def generate_text label, value
+      return value if label.blank?
+      return "#{label}: #{value}"
     end
 
     def to_pt(val)

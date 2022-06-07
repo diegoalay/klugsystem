@@ -7,7 +7,13 @@ class BillTemplatesController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(@account.bill_templates)
+        bill_templates = @account.bill_templates.map do |bill_template|
+          bill_template.attributes.merge({
+            product_type: I18n.t("models.products.column_enum_product_type_#{bill_template.product_type}")
+          })
+        end
+
+        respond_with_successful(bill_templates)
       end
     end
   end
