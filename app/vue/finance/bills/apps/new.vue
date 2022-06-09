@@ -2,7 +2,7 @@
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
 import componentSaleDetails from 'vueApp/components/sales/component-sale-details.vue'
-import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
+import componentConfirmSale from 'vueApp/components/sales/component-confirm-sale.vue'
 
 export default {
     props: {
@@ -90,7 +90,8 @@ export default {
                 label: '',
                 key: 'actions'
             }],
-            storedData: {}
+            storedData: {},
+            options_loaded: false
         }
     },
     mounted(){
@@ -100,7 +101,11 @@ export default {
     },
     methods: {
         confirmSale(){
-            this.$bvModal.show('confirm-sale')
+            if (this.options.sale_types.length === 1) {
+                this.submitSale(this.options.sale_types[0])
+            } else {
+                this.$bvModal.show('confirm-sale')
+            }
         },
 
         submitSale(sale_type){
@@ -164,6 +169,8 @@ export default {
                             this.payment_method = found.value
                         }
                     }
+
+                    this.options_loaded = true
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -264,9 +271,6 @@ export default {
         },
 
         getChange(){
-            console.log(this.sale.received_amount)
-            console.log(this.getTotalSale())
-
             return (parseFloat(this.sale.received_amount) - this.getTotalSale()).toFixed(2)
         },
 
@@ -439,7 +443,7 @@ export default {
                 </b-button>
 
                 <b-button variant="outline-primary" class="mb-2" href="#finish">
-                    <font-awesome-icon icon="cart-shopping" />
+                    <font-awesome-icon icon="file-invoice-dollar" />
                     {{ 'Terminar factura' }}
                 </b-button>
             </slot>
@@ -467,6 +471,8 @@ export default {
 
                         <br>
                         <component-autocomplete
+                            v-if="options_loaded"
+                            :default-option-id="options.sale_client_id"
                             @select="(option) => client = option !== null ? option : {}"
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
@@ -489,14 +495,13 @@ export default {
                             <b-col md="6" sm="12">
                                 <b-form-group>
                                     <label> Nombre <sup class="text-danger">* </sup> </label>
-                                    <b-form-input
+                                    <b-form-textarea
                                         ref="client-name"
                                         v-model="client.billing_name"
-                                        type="text"
-                                        placeholder=""
-                                        required
+                                        autocomplete="off"
+                                        rows="2"
                                     >
-                                    </b-form-input>
+                                    </b-form-textarea>
                                 </b-form-group>
                             </b-col>
                         </b-row>
@@ -604,7 +609,7 @@ export default {
                             </template>
                             <b-form-input disabled readonly class="text-right" :value="getTotalWithDiscountAndFormat()"> </b-form-input>
                         </b-input-group>
-                        <b-input-group>
+                        <!-- <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Envío</b-input-group-text>
                             </template>
@@ -614,8 +619,8 @@ export default {
                                 @change="setShippingCosts"
                             >
                             </b-form-input>
-                        </b-input-group>
-
+                        </b-input-group> -->
+                        <!--
                         <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Cantidad recibida</b-input-group-text>
@@ -631,13 +636,13 @@ export default {
                             <b-input-group-append>
                                 <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
                             </b-input-group-append>
-                        </b-input-group>
-                        <b-input-group>
+                        </b-input-group> -->
+                        <!-- <b-input-group>
                             <template #prepend>
                                 <b-input-group-text >Cambio</b-input-group-text>
                             </template>
                             <b-form-input disabled readonly class="text-right" :value="getChangeWithFormat()"> </b-form-input>
-                        </b-input-group>
+                        </b-input-group> -->
                         <hr>
                         <br>
                         <b-row>

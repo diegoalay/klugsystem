@@ -13,7 +13,8 @@ class Finance::BillQuery < SaleQuery
                         .map {|measurement_unit| {text: measurement_unit.name, value: measurement_unit.name}},
       sale_types: ::Sale.fetch_sale_types(current_user),
       bill_templates: @account.bill_templates,
-      billing_fields: @account.billing_fields
+      billing_fields: @account.billing_fields,
+      sale_client_id: @account.sale_client_id
     }
   end
 end

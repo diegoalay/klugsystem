@@ -2,7 +2,7 @@
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
 import componentSaleDetails from 'vueApp/components/sales/component-sale-details.vue'
-import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
+import componentConfirmSale from 'vueApp/components/sales/component-confirm-sale.vue'
 
 export default {
     props: {
@@ -10,7 +10,7 @@ export default {
             type: String,
             required: true
         },
-        controller_name: {
+        controller: {
             type: String,
             default: 'sales'
         },
@@ -22,6 +22,14 @@ export default {
             type: Boolean,
             default: false
         },
+        buttonListHeader: {
+            type: String,
+            default: 'Listado'
+        },
+        buttonFinishHeader: {
+            type: String,
+            required: true
+        }
     },
     components:{
         'component-autocomplete': componenentAutocomplete,
@@ -94,7 +102,8 @@ export default {
                 label: '',
                 key: 'actions'
             }],
-            storedData: {}
+            storedData: {},
+            options_loaded: false
         }
     },
     mounted(){
@@ -104,13 +113,17 @@ export default {
     },
     methods: {
         confirmSale(){
-            this.$bvModal.show('confirm-sale')
+            if (this.options.sale_types.length === 1) {
+                this.submitSale(this.options.sale_types[0].value)
+            } else {
+                this.$bvModal.show('confirm-sale')
+            }
         },
 
         submitSale(sale_type){
             this.$bvModal.hide('confirm-sale')
 
-            const url = this.url[this.app_module](this.controller_name)
+            const url = this.url[this.app_module](this.controller)
             let form = {}
             if (this.quotation) {
                 form = {
@@ -158,7 +171,7 @@ export default {
                     } else {
                         this.$toast.success('Venta realizada exitosamente.')
                     }
-                    this.$router.push(this.url[this.app_module](`${this.controller_name}/:id`, {id: result.data.id}).toString(false))
+                    this.$router.push(this.url[this.app_module](`${this.controller}/:id`, {id: result.data.id}).toString(false))
                 } else {
                     if (sale_type === 'electronic_bill') {
                         this.$toast.error(result.error.message, {
@@ -177,7 +190,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url[this.app_module](`${this.controller_name}/options`)
+            const url = this.url[this.app_module](`${this.controller}/options`)
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -190,6 +203,8 @@ export default {
                             this.payment_method = found.value
                         }
                     }
+
+                    this.options_loaded = true
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -460,13 +475,13 @@ export default {
     <section>
         <component-header-form :title="quotation ? 'Cotización' : 'Venta'">
             <slot name="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
-                    Listado <font-awesome-icon icon="list" />
+                <b-button variant="outline-dark" class="mb-2" :to="`/${app_module}/${controller}`">
+                    {{ buttonListHeader }} <font-awesome-icon icon="list" />
                 </b-button>
 
                 <b-button variant="outline-primary" class="mb-2" href="#finish">
                     <font-awesome-icon icon="cart-shopping" />
-                    {{ quotation ? 'Terminar cotización' : 'Terminar venta' }}
+                    {{ buttonFinishHeader  }}
                 </b-button>
             </slot>
         </component-header-form>
@@ -488,7 +503,8 @@ export default {
 
                         <br>
                         <component-autocomplete
-                            v-if="!quotation"
+                            v-if="!quotation && options_loaded"
+                            :default-option-id="options.sale_client_id"
                             @select="(option) => client = option !== null ? option : {}"
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
@@ -704,8 +720,27 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button v-if="!quotation" id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Vender </b-button>
-                                <b-button v-else id="finish" block variant="primary" type="submit" @click.prevent="submitSale"> Cotizar </b-button>
+                                <b-button
+                                    v-if="!quotation"
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="confirmSale"
+                                >
+                                    Vender
+                                </b-button>
+
+                                <b-button
+                                    v-else
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="submitSale"
+                                >
+                                    Cotizar
+                                </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -723,7 +758,11 @@ export default {
                 content-class="shadow"
                 title="Seleccione tipo de venta"
             >
-                <component-confirm-sale :sale_types="options.sale_types" @submit="submitSale" :total="getTotalSaleWithFormat()"/>
+                <component-confirm-sale
+                    :sale_types="options.sale_types"
+                    @submit="submitSale"
+                    :total="getTotalSaleWithFormat()"
+                />
             </b-modal>
         </b-row>
     </section>

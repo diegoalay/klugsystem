@@ -11,7 +11,12 @@ const routes =  [
     {
         path: "/finance/quotations/new",
         component: appQuotationsNew,
-        props: { quotation: true, app_module: 'finance', controller_name: 'quotations' }
+        props: {
+            quotation: true,
+            app_module: 'finance',
+            controller_name: 'quotations',
+            buttonFinishHeader: 'Terminar cotización'
+        }
     },
     {
         path: "/finance/quotations/:id",

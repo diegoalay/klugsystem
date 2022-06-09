@@ -37,6 +37,8 @@ class Account < ApplicationRecord
   store_accessor :digifact, :digifact_token_expires_at, :digifact_token, :digifact_valid, :digifact_errors,
                             :digifact_billing_identifier, :digifact_user, :digifact_password, :digifact_status
 
+  # attribute :sale_types, :jsonb, default: ['sale', 'receipt', 'bill', 'electronic_bill']
+
   def setup_account
     # create default sale catalog type
     type = product_transaction_types.find_or_create_by!(code: 'product-sale', name: 'Venta')
@@ -81,6 +83,17 @@ class Account < ApplicationRecord
     DigifactServices::Authentication.new(self).call
 
     digifact_token
+  end
+
+  def self.options
+    {
+      sale_types: ::Sale.sale_types.map do |k, v|
+        {
+          text: I18n.t("models.sales.column_enum_sale_type_#{k}"),
+          value: v
+        }
+      end
+    }
   end
 
   def walmart_billing?

@@ -36,6 +36,10 @@ export default {
             type: String,
             default: 'Ventas'
         },
+        buttonHeader: {
+            type: String,
+            default: 'Vender'
+        },
         origin: {
             type: String,
             default: ''
@@ -346,7 +350,7 @@ export default {
         <component-header-list
             v-if="!hideHeader"
             :title="titleHeader"
-            title-button-create="Vender"
+            :title-button-create="buttonHeader"
             :loading="loading"
             @reloadList="list"
         >

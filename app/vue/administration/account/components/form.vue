@@ -54,66 +54,6 @@ export default {
                 </b-form-group>
 
                 <b-row>
-                    <b-col md="3" sm="12">
-                        <b-form-group>
-                            <template #label>
-                                NIT de facturación <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="account.billing_identifier"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-
-                    <b-col md="3" sm="12">
-                        <b-form-group>
-                            <template #label>
-                                Nombre de facturación <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="account.billing_name"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-
-                    <b-col md="3" sm="12">
-                        <b-form-group>
-                            <template #label>
-                                Dirección de facturación <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="account.billing_address"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-                    </b-col>
-
-                    <b-col md="3" sm="12">
-                        <b-form-group label="Facturación electrónica">
-                            <b-form-checkbox
-                                v-model="account.electronic_billing"
-                            >
-                                {{ account.electronic_billing ? 'Deshabilitar' : 'Habilitar'}}
-                            </b-form-checkbox>
-                        </b-form-group>
-                    </b-col>
-                </b-row>
-
-                <b-row>
                     <b-col md="4" sm="12">
                         <b-form-group>
                             <template #label>

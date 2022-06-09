@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_06_055953) do
+ActiveRecord::Schema.define(version: 2022_06_09_074301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 2022_06_06_055953) do
     t.jsonb "digifact", default: {}
     t.string "billing_phrase"
     t.string "billing_stage"
+    t.jsonb "sale_types"
+    t.bigint "sale_client_id"
   end
 
   create_table "bill_template_activities", force: :cascade do |t|
@@ -1201,6 +1203,7 @@ ActiveRecord::Schema.define(version: 2022_06_06_055953) do
   add_foreign_key "account_sale_custom_fields", "accounts"
   add_foreign_key "account_sale_custom_fields", "users", column: "user_creator_id"
   add_foreign_key "account_sale_custom_fields", "users", column: "user_modifier_id"
+  add_foreign_key "accounts", "clients", column: "sale_client_id"
   add_foreign_key "accounts", "users", column: "user_creator_id"
   add_foreign_key "accounts", "users", column: "user_modifier_id"
   add_foreign_key "bill_template_activities", "bill_templates"

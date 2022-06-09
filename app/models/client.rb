@@ -14,8 +14,15 @@ class Client < ApplicationRecord
 
   acts_as_paranoid
 
-  def identifier
-    full_name
+  def show
+    self.attributes.merge({
+      billing_details: billing_details
+    })
+  end
+
+  def billing_details
+    info = billing_identifier
+    info += " [ #{billing_name} ]"
   end
 
   def full_name
@@ -30,6 +37,7 @@ class Client < ApplicationRecord
   end
 
   def can_be_destroyed
-    errors.add(:base, "Existen ventas asignadas a este cliente'") and throw(:abort) unless account.sales.where(client: self).blank?
+    errors.add(:base, "Existen ventas asignadas a este cliente") and throw(:abort) unless account.sales.where(client: self).blank?
+    errors.add(:base, "El cliente ha sido configurado como predeterminado al momento de realizar una venta") and throw(:abort) unless account.sale_client_id == self.id
   end
 end

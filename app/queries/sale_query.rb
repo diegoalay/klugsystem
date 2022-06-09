@@ -103,7 +103,8 @@ class SaleQuery
       departments: @account.departments.map {|department| {text: department.name, value: department.id}},
       brands: @account.brands.map {|brand| {text: brand.name, value: brand.id}},
       sale_types: ::Sale.fetch_sale_types(current_user),
-      billing_fields: @account.billing_fields
+      billing_fields: @account.billing_fields,
+      sale_client_id: @account.sale_client_id
     }
   end
 end

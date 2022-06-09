@@ -1,6 +1,6 @@
 import appPosSaleList  from 'vueApp/components/sales/component-sales-list.vue'
 import appPosSaleNew  from 'vueApp/components/sales/component-sale.vue'
-import appPosSaleShow from 'vueApp/pos/sales/apps/show.vue'
+import appPosSaleShow from 'vueApp/components/sales/component-sale-show.vue'
 
 
 const routes =  [
@@ -18,12 +18,17 @@ const routes =  [
         component: appPosSaleNew,
         props: {
             cash_register: true,
-            app_module: 'pos'
+            app_module: 'pos',
+            buttonFinishHeader: 'Terminar venta'
         }
     },
     {
         path: "/pos/sales/:id",
-        component: appPosSaleShow
+        component: appPosSaleShow,
+        props: {
+            app_module: 'pos',
+            controller: 'sales'
+        }
     }
 ]
 

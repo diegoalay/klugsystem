@@ -180,7 +180,12 @@ Rails.application.routes.draw do
 
     namespace :administration do
       resources :menu_items, only: %i[index]
-      resource :account
+      resource :account do
+        collection do
+          get :options
+        end
+      end
+
       resource :digifact do
         collection do
           post :validate

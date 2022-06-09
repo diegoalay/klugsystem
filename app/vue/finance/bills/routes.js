@@ -12,6 +12,7 @@ const routes =  [
             controller: 'bills',
             userCreatorTypes: true,
             titleHeader: 'Facturas',
+            buttonHeader: 'Facturar',
             origin: 'bill'
         }
     },
