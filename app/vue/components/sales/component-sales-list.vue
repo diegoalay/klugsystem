@@ -43,6 +43,10 @@ export default {
         origin: {
             type: String,
             default: ''
+        },
+        hiddenColumns: {
+            type: Array,
+            default: []
         }
     },
     components: {
@@ -129,8 +133,14 @@ export default {
         }
     },
     mounted() {
+        if (this.data.copySaleId) {
+            this.copySale()
+        }
     },
     methods: {
+        copySale(){
+
+        },
         watchProps(){
             this.$set(this.filters, 'origin', this.origin) // bills source
 
@@ -164,6 +174,11 @@ export default {
                 } else if (this.initFilters[key]) {
                     this.$set(this.filters, key, this.initFilters[key])
                 }
+            }
+
+
+            for (let column of this.hiddenColumns) {
+                this.fields = this.fields.filter(e => e.key !== column)
             }
         },
         list(){
@@ -265,7 +280,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url[this.app_module]('sales/index_options')
+            const url = this.url[this.app_module]('sales/options')
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -276,6 +291,13 @@ export default {
 
                         this.$set(this.options, 'user_creator_types', user_creator_types)
                     }
+
+                    this.$set(this.options, 'payment_methods', this.options.payment_methods.map((e) => {
+                        return {
+                            text: e.text,
+                            value: e.value.id,
+                        }
+                    }))
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -284,7 +306,13 @@ export default {
             })
         },
 
-        show(sale){
+        copySale(sale){
+            this.$set(this.store, 'copySaleId', sale.id)
+
+            this.$router.push(`/${this.app_module}/${this.controller}/new`)
+        },
+
+        showSale(sale){
             if (this.app_module === 'reports') return
 
             this.$router.push(this.url[this.app_module](`${this.controller}/:id`, {id: sale.id}).toString(false))
@@ -324,7 +352,7 @@ export default {
             this.list()
         },
         $props: {
-            handler(value) {
+            handler() {
                 this.watchProps()
             },
             deep: true,
@@ -418,7 +446,7 @@ export default {
                     :items="data"
                     :fields="fields"
                     @filtered="onFiltered"
-                    @row-clicked="show"
+                    @row-clicked="showSale"
                     :sort-desc.sync="pagination.order"
                     :sort-by.sync="pagination.order_by"
                     responsive
@@ -434,7 +462,7 @@ export default {
                     </template>
 
                     <template v-slot:cell(status)="row">
-                      <div v-if="row.item.status" class="p-1 text-success">
+                        <div v-if="row.item.status" class="p-1 text-success">
                             {{ 'Activa' }}
                         </div>
                         <div v-else class="p-1 text-danger">
@@ -451,15 +479,36 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button @click="tools.printSale(row.item)" variant="outline-dark" class="mr-1">
+                        <b-button
+                            @click="tools.printSale(row.item)"
+                            variant="outline-dark" class="mr-1"
+                        >
                             <font-awesome-icon icon="print" />
                         </b-button>
 
-                        <b-button v-if="app_module !== 'reports'" @click="sendSale(row.item)" variant="outline-success" class="mr-1">
+                        <b-button
+                            v-if="app_module !== 'reports'"
+                            @click="sendSale(row.item)"
+                            variant="outline-success"
+                            class="mr-1"
+                        >
                             <font-awesome-icon icon="envelope-open-text" />
                         </b-button>
 
-                        <b-button v-if="row.item.can_be_disabled && row.item.status && app_module !== 'reports'" @click="disableSale(row.item)" variant="outline-danger" class="mr-1">
+                        <b-button
+                            @click="copySale(row.item)"
+                            variant="outline-info"
+                            class="mr-1"
+                        >
+                            <font-awesome-icon icon="copy" />
+                        </b-button>
+
+                        <b-button
+                            v-if="row.item.can_be_disabled && row.item.status && app_module !== 'reports'"
+                            @click="disableSale(row.item)"
+                            variant="outline-danger"
+                            class="mr-1"
+                        >
                             <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>

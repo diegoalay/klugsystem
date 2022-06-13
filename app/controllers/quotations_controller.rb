@@ -75,10 +75,6 @@ class QuotationsController < ApplicationSystemController
     end
   end
 
-  def index_options
-    respond_with_successful(Finance::QuotationQuery.new(@account).index_options(current_user))
-  end
-
   def options
     respond_with_successful(Finance::QuotationQuery.new(@account).options(current_user))
   end

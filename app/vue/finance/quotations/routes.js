@@ -15,7 +15,9 @@ const routes =  [
             quotation: true,
             app_module: 'finance',
             controller_name: 'quotations',
-            buttonFinishHeader: 'Terminar cotización'
+            buttonFinishHeader: 'Terminar cotización',
+            successMessage: 'Cotización creada exitosamente.',
+            titleHeader: 'Cotización'
         }
     },
     {

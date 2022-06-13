@@ -80,6 +80,7 @@ es:
     reports:
       title: 'Reportes'
       sales: 'Ventas'
+      sale_details: 'Detalles de venta'
     administration:
       title: 'Administración'
       users: 'Usuarios'

@@ -1,5 +1,5 @@
 import appBillList  from 'vueApp/components/sales/component-sales-list.vue'
-import appBillNew  from 'vueApp/finance/bills/apps/new.vue'
+import appBillNew  from 'vueApp/components/sales/component-sale.vue'
 import appBillShow from 'vueApp/components/sales/component-sale-show.vue'
 
 
@@ -13,14 +13,21 @@ const routes =  [
             userCreatorTypes: true,
             titleHeader: 'Facturas',
             buttonHeader: 'Facturar',
-            origin: 'bill'
+            origin: 'bill',
+            hiddenColumns: ['received_amount', 'change']
         }
     },
     {
         path: "/finance/bills/new",
         component: appBillNew,
         props: {
-            app_module: 'finance'
+            app_module: 'finance',
+            controller: 'bills',
+            buttonFinishHeader: 'Terminar factura',
+            successMessage: 'Factura creada exitosamente.',
+            manualSale: true,
+            titleHeader: 'Facturación',
+            origin: 'bill'
         }
     },
     {

@@ -19,7 +19,9 @@ const routes =  [
         component: appSalesNew,
         props: {
             app_module: 'finance',
-            buttonFinishHeader: 'Terminar venta'
+            buttonFinishHeader: 'Terminar venta',
+            successMessage: 'Venta realizada exitosamente.',
+            titleHeader: 'Venta'
         }
     },
     {

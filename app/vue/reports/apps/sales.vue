@@ -7,18 +7,31 @@ export default {
     },
     data() {
         return {
-            summary: {},
+            summary: {
+                total: 0
+            },
             initFilters: null
         }
     },
     mounted() {
-        const date = new Date()
-        this.initFilters = {
-            date_range: [
+        let filters = {}
+        for(let key in this.storage.local('reports/sales')) {
+            const value = this.storage.local('reports/sales')[key]
+
+            if (value) {
+                filters[key] = value
+            }
+        }
+
+        if (!filters['date_range'] || filters['date_range'].length === 0) {
+            const date = new Date()
+            filters['date_range'] =  [
                 new Date(date.getFullYear(), date.getMonth(), 1),
                 new Date(date.getFullYear(), date.getMonth(), this.date.daysInMonth(date.getMonth()+1, date.getFullYear()))
             ]
         }
+
+        this.initFilters = JSON.parse(JSON.stringify(filters))
     },
     methods: {
         changeSummary(filters){
@@ -102,14 +115,21 @@ export default {
                 </b-card>
             </b-col>
         </b-row>
+        <component-header-form v-if="summary.total > 0">
+            <slot name="buttons">
+                <b-button variant="outline-danger" @click="tools.printSales()" class="mb-2">
+                    <font-awesome-icon icon="file-pdf" />
+                    {{ 'Fact. electrónicas' }}
+                </b-button>
+            </slot>
+        </component-header-form>
         <component-sales-list
-            v-if="initFilters"
+            v-if="initFilters !== null"
             :hideHeader="true"
             app_module='reports'
             :userCreatorTypes="true"
-            :initFilters="initFilters"
             @change="changeSummary"
-            :init-filters="storage.local('reports/sales')"
+            :init-filters="initFilters"
         >
         </component-sales-list>
     </section>

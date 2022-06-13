@@ -33,7 +33,7 @@ class Sale < ApplicationRecord
 
       if before_status && !after_status
 
-        if (is_electronic_billing? && electronic_bill.identifier.present?)
+        if (is_electronic_billing?)
           DigifactServices::Api.new(user_modifier, self).anulate_bill
         end
 
@@ -82,7 +82,9 @@ class Sale < ApplicationRecord
   end
 
   def is_electronic_billing?
-    sale_type == 'electronic_bill'
+    sale_type == 'electronic_bill' &&
+    electronic_bill &&
+    electronic_bill.identifier.present?
   end
 
   def self.fetch_sale_types(current_user)
@@ -109,8 +111,7 @@ class Sale < ApplicationRecord
   end
 
   def sale_data
-    errors.add(:base, 'Debe seleccionar al menos un producto.') if (subtotal == 0)
-    errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total)
+    errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total && origin != 'bill')
     errors.add(:base, 'Debe seleccionar un tipo de venta.') if sale_type.blank?
     errors.add(:base, 'Debe seleccionar un cliente.') if client.blank?
   end

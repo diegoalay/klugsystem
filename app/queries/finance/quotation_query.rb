@@ -52,17 +52,10 @@ class Finance::QuotationQuery
     Responder.pagination(quotations)
   end
 
-  def index_options(current_user)
-    {
-      quotation_types: ::Sale.fetch_sale_types(current_user),
-      user_creator_types: [{ text: 'Mis cotizaciones', value: 'mine'}],
-      payment_methods: @account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}}
-    }
-  end
-
   def options(current_user)
     {
       quotation_types: ::Sale.fetch_sale_types(current_user),
+      user_creator_types: [{ text: 'Mis cotizaciones', value: 'mine'}],
       payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}}
     }
   end

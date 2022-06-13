@@ -65,7 +65,7 @@
                     if (result.successful) {
                         this.data = this.data.filter(e => e.id !== id)
                         this.pagination.total -= 1
-                        this.$toast.success('Marca eliminada exitosamente.')
+                        this.$toast.success('Plantilla de facturación eliminada exitosamente.')
                     } else {
                         this.$toast.error(result.error.message)
                     }
@@ -88,7 +88,7 @@
     <section>
         <component-header-list
             title="Plantillas de facturación"
-            title-button-create="Agregar marca"
+            title-button-create="Agregar Plantilla"
             :loading="loading"
             @reloadList="list"
         >

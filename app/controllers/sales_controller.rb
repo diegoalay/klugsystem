@@ -31,15 +31,13 @@ class SalesController < ApplicationSystemController
           decode_base64_content = Base64.decode64(attachment)
 
           if true
-            output_filename =  Rails.root.join('test.pdf').to_s
+            pdf = DocumentGeneratorServices::PdfService.new(@sale).call
 
-            fragua_pdf = FraguaServices::PdfService.new(@sale).call
+            fragua_details = CombinePDF.parse(pdf.render).pages[0]
+            final_pdf = CombinePDF.parse(decode_base64_content)
+            final_pdf.pages.each { |page| page << fragua_details }
 
-            fragua_details = CombinePDF.parse(fragua_pdf.render).pages[0]
-            pdf = CombinePDF.parse(decode_base64_content)
-            pdf.pages.each { |page| page << fragua_details }
-
-            send_data pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
+            send_data final_pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
           else
             send_data decode_base64_content, filename: 'Factura.pdf', type: "application/pdf"
           end
@@ -82,7 +80,7 @@ class SalesController < ApplicationSystemController
     if @sale.save
       AppServices::SaleService.new(@sale, params[:sale][:products], current_user).call
 
-      if @sale.is_electronic_billing?
+      if @sale.electronic_bill?
         DigifactServices::Api.new(current_user, @sale).generate_bill
 
         if (@sale.electronic_bill.identifier.blank?)
@@ -151,10 +149,6 @@ class SalesController < ApplicationSystemController
     SaleMailer.send_sale(@sale, current_user, params[:client][:email]).deliver_now
 
     respond_with_successful
-  end
-
-  def index_options
-    respond_with_successful(SaleQuery.new(@account).index_options(current_user))
   end
 
   def options

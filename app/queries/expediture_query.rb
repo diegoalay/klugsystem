@@ -32,12 +32,6 @@ class ExpeditureQuery
     }
   end
 
-  def index_options
-    {
-      expediture_types: expediture_types
-    }
-  end
-
   def expediture_types
     return @account.expediture_types.map { |expediture_type|
       {

@@ -62,7 +62,6 @@ class SaleQuery
       )
     end
 
-
     sales = sales.where("sales.origin = ?", query[:filters][:origin]) unless query[:filters][:origin].blank?
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
@@ -84,20 +83,13 @@ class SaleQuery
       return Responder.pagination(sales, data)
     end
 
-    sales
-  end
-
-  def index_options(current_user)
-    {
-      statuses: [{text: 'Activa', value: true }, {text: 'Anulada', value: false }],
-      user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
-      payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}},
-      sale_types: ::Sale.fetch_sale_types(current_user)
-    }
+    return sales
   end
 
   def options(current_user)
     {
+      statuses: [{text: 'Activa', value: true }, {text: 'Anulada', value: false }],
+      user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
       payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}},
       branch_office: @account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: @account.departments.map {|department| {text: department.name, value: department.id}},

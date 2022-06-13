@@ -270,13 +270,16 @@ export default {
         },
         showModal(item){
             this.item = item
-            this.openModal()
+
+            this.$nextTick(()=>{
+                this.openModal()
+            })
         },
         openModal(){
-            this.$bvModal.show('item-modal')
+            this.$bvModal.show('item-form')
         },
         hideModal(){
-            this.$bvModal.hide('item-modal')
+            this.$bvModal.hide('item-form')
         }
     },
 
@@ -312,7 +315,8 @@ export default {
 <template>
     <div>
         <b-modal
-            id="item-modal"
+            v-if="item.id"
+            id="item-form"
             size="xl"
             hide-footer
             centered

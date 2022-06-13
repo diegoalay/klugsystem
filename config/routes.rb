@@ -47,7 +47,6 @@ Rails.application.routes.draw do
         resources :sales do
           collection do
             get :options
-            get :index_options
           end
           member do
             post :send_sale
@@ -58,7 +57,6 @@ Rails.application.routes.draw do
         resources :expeditures do
           collection do
             get :options
-            get :index_options
           end
         end
         resource :cash_register
@@ -77,7 +75,6 @@ Rails.application.routes.draw do
         resources :sales do
           collection do
             get :options
-            get :index_options
           end
           member do
             post :send_sale
@@ -88,7 +85,6 @@ Rails.application.routes.draw do
         resources :bills do
           collection do
             get :options
-            get :index_options
           end
           member do
             post :send_sale
@@ -99,14 +95,12 @@ Rails.application.routes.draw do
         resources :quotations do
           collection do
             get :options
-            get :index_options
           end
         end
 
         resources :expeditures do
           collection do
             get :options
-            get :index_options
           end
         end
       end
@@ -159,7 +153,6 @@ Rails.application.routes.draw do
         resource :sales do
           collection do
             get :options
-            get :index_options
           end
         end
         resource :sale_details do

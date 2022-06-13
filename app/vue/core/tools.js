@@ -65,6 +65,14 @@ export default {
             window.open(url, '_blank')
         }
 
+        const printSales = () => {
+            let url = `${window.location.href}.pdf`
+
+            url += `?disable_pagination=${true}`
+
+            window.open(url, '_blank')
+        }
+
         const printQuotation = (quotation_id) => {
             const url = `/finance/quotations/${quotation_id}.pdf`
 
@@ -122,6 +130,7 @@ export default {
             getProductImage,
             getEmployeeImage,
             printSale,
+            printSales,
             printQuotation,
             roleCanBeEdited,
             productTransactionCanBeEdited,

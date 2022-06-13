@@ -207,7 +207,7 @@ export default {
                     Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
+                <b-button variant="outline-dark" class="mb-2" :to="`/finance/${controller}`">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>
@@ -216,7 +216,25 @@ export default {
             <b-col v-if="!billingFieldsEmpty()">
                 <b-card>
                     <b-form @submit.prevent="putForm">
-                        <b-form-group
+
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cantidad recibida</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                class="text-right"
+                                type="number"
+                                @change="validateReceivedAmount"
+                                :value="getReceivedAmount()"
+                                :min="getTotalSale()"
+                            >
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
+                            </b-input-group-append>
+                        </b-input-group>
+
+                        <b-input-group
                             v-for="(custom_field, index) in custom_fields"
                             :key="custom_field.key"
                         >
@@ -224,6 +242,7 @@ export default {
                                 {{ custom_field.title }}
                             </template>
 
+                            <b-form-input>
                             <b-form-textarea
                                 v-if="textAreaComponent(custom_fields[index])"
                                 v-model="custom_fields[index].value"
@@ -237,6 +256,7 @@ export default {
                                 placeholder=""
                             >
                             </b-form-input>
+                            </b-form-input>
                         </b-form-group>
 
                         <div class="text-right">
@@ -245,7 +265,7 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
-            <b-col :md="billingFieldsEmpty() ? 10 : 9" sm="12">
+            <b-col :md="billingFieldsEmpty() ? '10' : '8'" sm="12">
                 <b-card>
                     <div class="bg-primary total-header text-center">
                         {{ sale.total ? 'Q ' + sale.total : '' }}
