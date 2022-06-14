@@ -65,8 +65,13 @@ class Sale < ApplicationRecord
       sale: self.attributes.merge({
         'subtotal1' => subtotal1_val.to_f,
         'subtotal2' => subtotal2_val.to_f,
-        'sale_type' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
+        'sale_type_translated' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
       }),
+      electronic_bill: {
+        serie: electronic_bill['certification_data'].dig('Serie'),
+        number: electronic_bill['certification_data'].dig('NUMERO'),
+        identifier: electronic_bill&.identifier
+      },
       client: client,
       details: details,
       employee: employee,

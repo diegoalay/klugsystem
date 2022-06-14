@@ -185,13 +185,29 @@ export default {
         },
 
         textAreaComponent(obj){
-            console.log(obj)
-
             if (!obj) return 0
             if (!obj['value']) return 0
 
             return obj['value'].length > 50
-        }
+        },
+
+        isElectronicBill(){
+            return (this.sale.sale_type === 'electronic_bill')
+        },
+
+        sendToClipboard(string) {
+            const el = document.createElement('textarea');
+            el.value = string
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            this.$toast.success('Texto copiado al portapapeles')
+        },
     }
 }
 </script>
@@ -209,9 +225,82 @@ export default {
                 </b-button>
             </slot>
         </component-header-form>
-        <b-row :class="billingFieldsEmpty() ? 'justify-content-md-center' : ''" v-if="loading_options">
-            <b-col v-if="!billingFieldsEmpty()">
+        <b-row :class="!isElectronicBill() ? 'justify-content-md-center' : ''" v-if="loading_options">
+            <b-col v-if="isElectronicBill()">
                 <b-card>
+                    <template #header>
+                        <h5 class="mb-0 font-weight-bold">Información de facturación electrónica</h5>
+                    </template>
+
+                    <b-form-group>
+                        <template #label>
+                            {{ 'Serie' }}
+                        </template>
+
+                        <b-input-group>
+                            <b-form-input
+                                readonly
+                                :value="electronic_bill.serie"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                            <b-input-group-prepend>
+                                <button @click="sendToClipboard(electronic_bill.serie)">
+                                    <font-awesome-icon icon="copy" />
+                                </button>
+                            </b-input-group-prepend>
+                        </b-input-group>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <template #label>
+                            {{ 'Número' }}
+                        </template>
+
+                        <b-input-group>
+                            <b-form-input
+                                readonly
+                                :value="electronic_bill.number"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                            <b-input-group-prepend>
+                                <button @click="sendToClipboard(electronic_bill.number)">
+                                    <font-awesome-icon icon="copy" />
+                                </button>
+                            </b-input-group-prepend>
+                        </b-input-group>
+                    </b-form-group>
+
+                    <b-form-group>
+                        <template #label>
+                            {{ 'N0. Autorización' }}
+                        </template>
+
+                        <b-input-group>
+                            <b-form-input
+                                readonly
+                                :value="electronic_bill.identifier"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                            <b-input-group-prepend>
+                                <button @click="sendToClipboard(electronic_bill.identifier)">
+                                    <font-awesome-icon icon="copy" />
+                                </button>
+                            </b-input-group-prepend>
+                        </b-input-group>
+                    </b-form-group>
+                </b-card>
+
+                <b-card v-if="!billingFieldsEmpty()">
+                    <template #header>
+                        <h5 class="mb-0 font-weight-bold">Campos Personalizados</h5>
+                    </template>
+
                     <b-form @submit.prevent="putForm">
 
                         <b-form-group
@@ -262,7 +351,7 @@ export default {
                         <b-col md="4" sm="12">
                             <h5> <b>  Datos generales </b> </h5>
                             <b> Fecha: </b> {{ date.datetime(sale.sale_date) }} <br>
-                            <b> Tipo de venta: </b> {{ sale.sale_type }} <br>
+                            <b> Tipo de venta: </b> {{ sale.sale_type_translated }} <br>
                             <b> Método de pago: </b> {{ payment_method.name }} <br>
                         </b-col>
 

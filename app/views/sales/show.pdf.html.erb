@@ -3,7 +3,7 @@
     <div class="pdf-col">
       <b> Datos generales: </b> <br>
       <b> Fecha: </b> <%= DateParser.datetime_string(@details[:sale].dig('sale_date')) %> <br>
-      <b> Tipo de venta: </b> <%= @details[:sale].dig('sale_type') %> <br>
+      <b> Tipo de venta: </b> <%= @details[:sale].dig('sale_type_translated') %> <br>
       <b> Método de pago: </b> <%= @details[:payment_method].name %> <br>
     </div>
 
