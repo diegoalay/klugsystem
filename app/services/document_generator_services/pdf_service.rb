@@ -24,7 +24,7 @@ module DocumentGeneratorServices
     def draw_field(custom_field)
       settings = ::Account::BillingField.find_by(id: custom_field['id'])
 
-      if (settings && !custom_field['value'].blank?)
+      if (settings && !custom_field['value'].blank? && custom_field['visible'])
         color = settings['color'].gsub('#', '')
         position_x = to_pt(settings['position_x'])
         position_y = to_pt(settings['position_y'])

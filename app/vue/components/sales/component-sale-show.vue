@@ -85,12 +85,12 @@ export default {
             let form = {
                 sale: {
                     custom_fields: this.custom_fields.map(e => {
-                        console.log(e)
                         return {
                             id: e.id,
                             value: e.value,
                             title: e.title,
-                            label: e.label
+                            label: e.label,
+                            visible: e.visible
                         }
                     })
                 }
@@ -116,7 +116,6 @@ export default {
             const url = this.url[this.app_module](`${this.controller}/options`)
 
             this.http.get(url).then(result => {
-                console.log(this.sale.custom_fields)
                 if (result.successful) {
                     this.options = result.data
 
@@ -131,8 +130,6 @@ export default {
                             this.custom_fields[key].value = find.value
                         }
                     }
-
-                    console.log(this.custom_fields)
 
                     this.loading_options = true
                 } else {
@@ -217,24 +214,7 @@ export default {
                 <b-card>
                     <b-form @submit.prevent="putForm">
 
-                        <b-input-group>
-                            <template #prepend>
-                                <b-input-group-text >Cantidad recibida</b-input-group-text>
-                            </template>
-                            <b-form-input
-                                class="text-right"
-                                type="number"
-                                @change="validateReceivedAmount"
-                                :value="getReceivedAmount()"
-                                :min="getTotalSale()"
-                            >
-                            </b-form-input>
-                            <b-input-group-append>
-                                <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
-                            </b-input-group-append>
-                        </b-input-group>
-
-                        <b-input-group
+                        <b-form-group
                             v-for="(custom_field, index) in custom_fields"
                             :key="custom_field.key"
                         >
@@ -242,23 +222,29 @@ export default {
                                 {{ custom_field.title }}
                             </template>
 
-                            <b-form-input>
-                            <b-form-textarea
-                                v-if="textAreaComponent(custom_fields[index])"
-                                v-model="custom_fields[index].value"
-                                rows="3"
-                            >
-                            </b-form-textarea>
-                            <b-form-input
-                                v-else
-                                v-model="custom_fields[index].value"
-                                type="text"
-                                placeholder=""
-                            >
-                            </b-form-input>
-                            </b-form-input>
+                            <b-input-group>
+                                <b-form-textarea
+                                    v-if="textAreaComponent(custom_fields[index])"
+                                    v-model="custom_fields[index].value"
+                                    rows="3"
+                                >
+                                </b-form-textarea>
+                                <b-form-input
+                                    v-else
+                                    v-model="custom_fields[index].value"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                                <b-input-group-prepend is-text>
+                                    <b-form-checkbox v-model="custom_fields[index].visible">
+                                        {{ custom_fields[index].visible ? 'Ocultar' : 'Mostrar' }}
+                                    </b-form-checkbox>
+                                </b-input-group-prepend>
+                            </b-input-group>
                         </b-form-group>
 
+                        <br>
                         <div class="text-right">
                             <b-button type="submit" variant="primary">Guardar</b-button>
                         </div>

@@ -145,13 +145,19 @@ export default {
                             <template #label>
                                 Valor default
                             </template>
-
-                            <b-form-input
-                                v-model="billing_field.value"
-                                type="text"
-                                placeholder=""
-                            >
-                            </b-form-input>
+                            <b-input-group>
+                                <b-form-input
+                                    v-model="billing_field.value"
+                                    type="text"
+                                    placeholder=""
+                                >
+                                </b-form-input>
+                                <b-input-group-prepend is-text>
+                                    <b-form-checkbox v-model="billing_field.visible">
+                                        {{ billing_field.visible ? 'Ocultar' : 'Mostrar'}}
+                                    </b-form-checkbox>
+                                </b-input-group-prepend>
+                            </b-input-group>
                         </b-form-group>
                     </b-col>
                 </b-row>

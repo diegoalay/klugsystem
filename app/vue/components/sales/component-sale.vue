@@ -135,12 +135,14 @@ export default {
     },
     methods: {
         copySale(){
-            const url = this.url[this.app_module](`${this.controller}/:id`, {id: this.store.copySaleId||26})
+            const url = this.url[this.app_module](`${this.controller}/:id`, {id: this.store.copySaleId})
 
             this.http.get(url).then(result => {
                 if (result.successful) {
                     this.payment_method = result.data.payment_method
                     this.initialClientId = result.data.client.id
+
+                    this.$set(this.sale, 'custom_fields', result.data.sale.custom_fields)
 
                     result.data.details.forEach((product, index) => {
                         product = {

@@ -214,7 +214,8 @@ class SalesController < ApplicationSystemController
       custom_fields: [
         :id,
         :value,
-        :title
+        :title,
+        :visible
       ]
     )
   end

@@ -8,7 +8,7 @@ class CreateAccountBillingFields < ActiveRecord::Migration[6.1]
       t.string :color
       t.decimal :position_x
       t.decimal :position_y
-      t.boolean :disabled
+      t.boolean :visible
 
       t.jsonb  :settings
 
