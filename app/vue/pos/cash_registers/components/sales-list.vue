@@ -96,7 +96,7 @@
             },
 
             getOptions(){
-                const url = this.url.build('sales/index_options')
+                const url = this.url.build('sales/options')
 
                 this.http.get(url).then(result => {
                     if (result.successful) {

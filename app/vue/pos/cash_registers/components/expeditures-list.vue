@@ -49,7 +49,7 @@
         },
         methods: {
             getOptions(){
-                const url = this.url.build('expeditures/index_options')
+                const url = this.url.build('expeditures/options')
 
                 this.http.get(url).then(response => {
                     this.options = response.data

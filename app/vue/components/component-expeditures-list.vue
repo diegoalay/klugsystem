@@ -89,7 +89,7 @@
         },
         methods: {
             getOptions(){
-                const url = this.url.finance('expeditures/index_options')
+                const url = this.url.finance('expeditures/options')
 
                 this.http.get(url).then(response => {
                     this.options = response.data

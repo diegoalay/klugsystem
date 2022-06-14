@@ -120,7 +120,7 @@
             },
 
             getOptions(){
-                const url = this.url.finance('quotations/index_options')
+                const url = this.url.finance('quotations/options').filters({action: 'index'})
 
                 this.http.get(url).then(result => {
                     if (result.successful) {

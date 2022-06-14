@@ -121,11 +121,12 @@ export default {
             }],
             storedData: {},
             options_loaded: false,
-            initialClientId: null
+            initialClientId: null,
+            timer_product: null
         }
     },
     mounted(){
-        this.storedData = this.storage.local('sale')
+        this.storedData = this.storage.local(`${this.app_module}/${this.controller}`)
 
         this.getOptions()
 
@@ -461,11 +462,15 @@ export default {
                 this.$toast.error('Artículos agotado.')
 
                 saleQuantity = product.quantity
+            } else {
+                clearTimeout(this.timer_product)
+
+                this.timer_product = setTimeout(e => {
+                    this.$toast.info(`${product.name} a sido agregado exitosamente.`)
+                }, 200)
             }
 
-            this.addProductToSale(product, saleQuantity, discount_percentage)
-
-            this.$toast.info(`El ${type} ${product.name} a sido agregado exitosamente.`)
+            this.addProductToSale(product, saleQuantity, discount_percentage, index)
         },
 
         addProductToSale(product, saleQuantity, discount_percentage, index = -1){
@@ -504,11 +509,6 @@ export default {
             } else {
                 this.products.push(new_product)
             }
-
-            let type = 'servicio'
-            if (product.product_type === 'good') {
-                type = 'producto'
-            }
         }
     },
 
@@ -520,7 +520,7 @@ export default {
                 this.$set(this.sale, 'payment_method_id', null)
             }
 
-            this.storage.local('sale', {
+            this.storage.local(`${this.app_module}/${this.controller}`, {
                 payment_method_id: value.id
             })
 

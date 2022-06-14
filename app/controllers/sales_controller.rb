@@ -152,7 +152,7 @@ class SalesController < ApplicationSystemController
   end
 
   def options
-    respond_with_successful(SaleQuery.new(@account).options(current_user))
+    respond_with_successful(SaleQuery.new(@account).options(current_user, @query))
   end
 
   private

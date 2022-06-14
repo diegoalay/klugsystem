@@ -280,7 +280,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url[this.app_module]('sales/options')
+            const url = this.url[this.app_module]('sales/options').filters({action: 'index'})
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -291,13 +291,6 @@ export default {
 
                         this.$set(this.options, 'user_creator_types', user_creator_types)
                     }
-
-                    this.$set(this.options, 'payment_methods', this.options.payment_methods.map((e) => {
-                        return {
-                            text: e.text,
-                            value: e.value.id,
-                        }
-                    }))
                 } else {
                     this.$toast.error(result.error.message)
                 }

@@ -93,7 +93,7 @@
             },
 
             getOptions(){
-                const url = this.url.finance('cash_registers/index_options')
+                const url = this.url.finance('cash_registers/options')
 
                 this.http.get(url).then(result => {
                     if (result.successful) {
