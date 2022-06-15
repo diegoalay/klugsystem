@@ -46,7 +46,7 @@ export default {
         },
         hiddenColumns: {
             type: Array,
-            default: []
+            default: () => { return [] }
         }
     },
     components: {
@@ -489,6 +489,7 @@ export default {
                         </b-button>
 
                         <b-button
+                            v-if="controller === 'bills'"
                             @click="copySale(row.item)"
                             variant="outline-info"
                             class="mr-1"

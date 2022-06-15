@@ -125,7 +125,7 @@ export default {
 
                         let value = custom_field.value
 
-                        const find = this.sale.custom_fields.find(e => e.id === custom_field.id)
+                        const find = (this.sale.custom_fields||[]).find(e => e.id === custom_field.id)
                         if (find && find.value) {
                             this.custom_fields[key].value = find.value
                         }
@@ -220,14 +220,14 @@ export default {
                     Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
-                <b-button variant="outline-dark" class="mb-2" :to="`/finance/${controller}`">
+                <b-button variant="outline-dark" class="mb-2" :to="`/${app_module}/${controller}`">
                     Listado <font-awesome-icon icon="list" />
                 </b-button>
             </slot>
         </component-header-form>
-        <b-row :class="!isElectronicBill() ? 'justify-content-md-center' : ''" v-if="loading_options">
-            <b-col v-if="isElectronicBill()">
-                <b-card>
+        <b-row :class="!billingFieldsEmpty() ? 'justify-content-md-center' : ''" v-if="loading_options">
+            <b-col v-if="!billingFieldsEmpty()">
+                <b-card v-if="isElectronicBill()">
                     <template #header>
                         <h5 class="mb-0 font-weight-bold">Información de facturación electrónica</h5>
                     </template>

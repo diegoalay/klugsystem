@@ -19,7 +19,9 @@ const routes =  [
         props: {
             cash_register: true,
             app_module: 'pos',
-            buttonFinishHeader: 'Terminar venta'
+            buttonFinishHeader: 'Terminar venta',
+            successMessage: 'Venta realizada exitosamente.',
+            titleHeader: 'Punto de venta'
         }
     },
     {

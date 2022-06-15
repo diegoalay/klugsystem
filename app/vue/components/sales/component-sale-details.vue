@@ -88,29 +88,34 @@ export default {
             this.fields = [{
                 label: '#',
                 key: 'index',
-                sortable: true
+                sortable: true,
             },{
                 label: 'Unidad',
                 key: 'measurement_unit_name',
-                thClass: 'item-measurement-unit-header'
+                thClass: 'item-measurement-unit-header',
+                required: true
             },{
                 label: 'B/S',
                 key: 'product_type',
-                thClass: 'item-type-header'
+                thClass: 'item-type-header',
+                required: true
             },{
                 label: 'Descripción',
                 key: 'name',
-                thClass: 'item-name-header'
+                thClass: 'item-name-header',
+                required: true
             },{
                 label: 'Valor',
                 key: 'price',
                 thClass: 'item-price-header',
                 tdClass: 'item-price-header',
+                required: true
             },{
                 label: 'Cantidad',
                 key: 'saleQuantity',
                 thClass: 'item-quantity-header',
-                tdClass: 'item-quantity-header'
+                tdClass: 'item-quantity-header',
+                required: true
             },{
                 label: 'Interés',
                 key: 'interest'
@@ -152,7 +157,7 @@ export default {
             this.$set(this.products[index], 'subtotal', productSaleQuantity * item.price)
             this.setProductTotal(index, item)
         },
-        setProductQuantityNormal(){
+        setProductQuantityNormal(item){
             const index = this.products.findIndex(e => e.id === item.id)
 
             const productSaleQuantity = parseFloat(item.saleQuantity)
@@ -345,6 +350,11 @@ export default {
             :items="products"
             :fields="fields"
         >
+
+            <template #head()="{ label, field: { required }}">
+                {{ label }}
+                <sup v-if="required" class="text-danger">*</sup>
+            </template>
 
            <template v-slot:cell(index)="row">
                {{ row.item.id }}

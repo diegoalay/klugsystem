@@ -18,11 +18,7 @@ class Reports::SalesController < ApplicationSystemController
     end
   end
 
-  def index_options
-    respond_with_successful(Report::SaleQuery.new(@account).index_options(current_user))
-  end
-
   def options
-    respond_with_successful(Report::SaleQuery.new(@account).options(current_user))
+    respond_with_successful(Report::SaleQuery.new(@account).options(current_user, @query))
   end
 end

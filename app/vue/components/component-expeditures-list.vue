@@ -8,6 +8,10 @@
             validateCashRegister: {
                 type: Boolean,
                 default: false
+            },
+            app_module: {
+                type: String,
+                default: 'finance'
             }
         },
         data() {
@@ -51,43 +55,43 @@
                 options: []
             }
         },
-        mounted() {
-            if (this.app_module ===  'finance'){
-                this.fields.push({
-                    label: 'Usuario creador',
-                    key: 'user_creator_name',
-                    sortable: true
-                })
-            } else if (this.app_module === 'pos'){
-                if (this.store.global.cash_register.id) {
-                    this.$set(this.filters, 'user_creator_type', 'current_cash_register')
-
-                } else {
-                    const url = this.url[this.app_module]('cash_register').toString(false)
-
-                    this.$router.push(url)
-
-                    return
-                }
-            }
-
-            if (this.cashRegisterId) {
-                this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
-            }
-
-            if ((this.store.global.cash_register.id) || (!this.validateCashRegister)) {
-                if (this.validateCashRegister) {
-                    this.$set(this.filters, 'user_creator_type', 'current_cash_register')
-                }
-
-                this.getOptions()
-                this.list()
-            } else {
-                const url = this.url.pos('cash_register').toString(false)
-                this.$router.push(url)
-            }
-        },
         methods: {
+            watchProps(){
+                if (this.app_module ===  'finance'){
+                    this.fields.push({
+                        label: 'Usuario creador',
+                        key: 'user_creator_name',
+                        sortable: true
+                    })
+                } else if (this.app_module === 'pos'){
+                    if (this.store.global.cash_register.id) {
+                        this.$set(this.filters, 'user_creator_type', 'current_cash_register')
+
+                    } else {
+                        const url = this.url[this.app_module]('cash_register').toString(false)
+
+                        this.$router.push(url)
+
+                        return
+                    }
+                }
+
+                if (this.cashRegisterId) {
+                    this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
+                }
+
+                if ((this.store.global.cash_register.id) || (!this.validateCashRegister)) {
+                    if (this.validateCashRegister) {
+                        this.$set(this.filters, 'user_creator_type', 'current_cash_register')
+                    }
+
+                    this.getOptions()
+                    this.list()
+                } else {
+                    const url = this.url.pos('cash_register').toString(false)
+                    this.$router.push(url)
+                }
+            },
             getOptions(){
                 const url = this.url.finance('expeditures/options')
 
@@ -112,7 +116,7 @@
                 })
             },
             show(expediture){
-                this.$router.push(this.url.finance('expeditures/:id', {id: expediture.id}).toString(false))
+                this.$router.push(this.url[this.app_module](`expeditures/:id`, {id: expediture.id}).toString(false))
             },
             deleteRecord(id){
                 const url = this.url.finance('expeditures/:id', {id: id})
@@ -136,6 +140,15 @@
                 this.totalRows = filteredItems.length
                 this.currentPage = 1
             }
+        },
+        watch: {
+            $props: {
+                handler() {
+                    this.watchProps()
+                },
+                deep: true,
+                immediate: true
+            },
         }
     }
 </script>

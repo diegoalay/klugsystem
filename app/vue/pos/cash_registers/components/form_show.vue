@@ -137,10 +137,10 @@ export default {
                 </b-row>
             </b-tab>
             <b-tab title="Listado de ventas">
-                <component-sales-list app_module='finance' :hideHeader="true" :cash-register-id="cash_register.id"></component-sales-list>
+                <component-sales-list app_module='pos' :hideHeader="true" :cash-register-id="cash_register.id"></component-sales-list>
             </b-tab>
             <b-tab title="Listado de gastos">
-                <component-expeditures-list app_module='finance' :cash-register-id="cash_register.id"></component-expeditures-list>
+                <component-expeditures-list app_module='pos' :cash-register-id="cash_register.id"></component-expeditures-list>
             </b-tab>
         </b-tabs>
     </b-card>

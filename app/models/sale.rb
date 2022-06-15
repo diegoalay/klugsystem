@@ -61,22 +61,29 @@ class Sale < ApplicationRecord
     subtotal1_val = subtotal + interest
     subtotal2_val = subtotal1_val - discount
 
-    {
+    data = {
       sale: self.attributes.merge({
         'subtotal1' => subtotal1_val.to_f,
         'subtotal2' => subtotal2_val.to_f,
         'sale_type_translated' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
       }),
-      electronic_bill: {
-        serie: electronic_bill['certification_data'].dig('Serie'),
-        number: electronic_bill['certification_data'].dig('NUMERO'),
-        identifier: electronic_bill&.identifier
-      },
       client: client,
       details: details,
       employee: employee,
       payment_method: payment_method
     }
+
+    if self.is_electronic_billing?
+      return data.merge({
+        electronic_bill: {
+          serie: electronic_bill['certification_data'].dig('Serie'),
+          number: electronic_bill['certification_data'].dig('NUMERO'),
+          identifier: electronic_bill&.identifier
+        }
+      })
+    end
+
+    data
   end
 
   def calculations

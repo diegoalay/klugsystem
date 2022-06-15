@@ -165,11 +165,28 @@ export default {
         },
 
         confirmSale(){
+            if (this.manualSale) {
+                for(let product of this.products) {
+                    if (!product.name ||
+                        !product.price ||
+                        !product.saleQuantity ||
+                        !product.measurement_unit ||
+                        !product.product_type
+                    ) {
+                        this.$toast.warning('Complete los campos requerridos de todos los productos')
+
+                        return
+                    }
+                }
+            }
+
             if (this.options.sale_types.length === 1) {
                 this.submitSale(this.options.sale_types[0].value)
-            } else {
-                this.$bvModal.show('confirm-sale')
+
+                return
             }
+
+            this.$bvModal.show('confirm-sale')
         },
 
         submitSale(sale_type){
@@ -398,10 +415,6 @@ export default {
             return `Q ${this.getChange()}`
         },
 
-        getReceivedAmount(){
-            return this.sale.received_amount
-        },
-
         // Setters
         setShippingCosts(value){
             if (Number.isNaN(value) || value === '') {
@@ -415,10 +428,12 @@ export default {
 
         setReceivedAmount(){
             this.$set(this.sale, 'received_amount', this.getTotalSale())
+
+            console.log(this.sale.received_amount)
         },
 
         // validators
-        validateReceivedAmount(){
+        validateReceivedAmount(value){
             if (this.manualSale)  return
             value = parseFloat(parseFloat(value).toFixed(2))
 
@@ -458,13 +473,15 @@ export default {
                 discount_percentage = this.products[index].discount_percentage
             }
 
+            clearTimeout(this.timer_product)
+
             if (saleQuantity > product.quantity && product.product_type === 'good') {
-                this.$toast.error('Artículos agotado.')
+                this.timer_product = setTimeout(e => {
+                    this.$toast.error('Artículos agotado.')
+                }, 200)
 
                 saleQuantity = product.quantity
             } else {
-                clearTimeout(this.timer_product)
-
                 this.timer_product = setTimeout(e => {
                     this.$toast.info(`${product.name} a sido agregado exitosamente.`)
                 }, 200)
@@ -728,7 +745,7 @@ export default {
                             <b-form-input
                                 class="text-right"
                                 type="number"
-                                :value="getReceivedAmount()"
+                                :value="sale.received_amount"
                                 @change="validateReceivedAmount"
                                 :min="getTotalSale()"
                             >
@@ -747,7 +764,16 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Facturar </b-button>
+                                <b-button
+                                    v-if="!quotation"
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="confirmSale"
+                                >
+                                    Facturar
+                                </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -974,7 +1000,7 @@ export default {
                                 class="text-right"
                                 type="number"
                                 @change="validateReceivedAmount"
-                                :value="getReceivedAmount()"
+                                :value="sale.received_amount"
                                 :min="getTotalSale()"
                             >
                             </b-form-input>
@@ -1021,21 +1047,20 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
-
-            <b-modal
-                id="confirm-sale"
-                size="xl"
-                hide-footer
-                centered
-                content-class="shadow"
-                title="Seleccione tipo de venta"
-            >
-                <component-confirm-sale
-                    :sale_types="options.sale_types"
-                    @submit="submitSale"
-                    :total="getTotalSaleWithFormat()"
-                />
-            </b-modal>
         </b-row>
+        <b-modal
+            id="confirm-sale"
+            size="xl"
+            hide-footer
+            centered
+            content-class="shadow"
+            title="Seleccione tipo de venta"
+        >
+            <component-confirm-sale
+                :sale_types="options.sale_types"
+                @submit="submitSale"
+                :total="getTotalSaleWithFormat()"
+            />
+        </b-modal>
     </section>
 </template>
