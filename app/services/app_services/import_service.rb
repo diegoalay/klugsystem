@@ -37,8 +37,6 @@ module AppServices
           when "user"
             create_user(data)
           when "employee"
-            debugger
-
             create_employee(data)
           else
             create_object(data["name"], class_name)
