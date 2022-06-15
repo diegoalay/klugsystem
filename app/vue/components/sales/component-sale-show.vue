@@ -225,7 +225,7 @@ export default {
                 </b-button>
             </slot>
         </component-header-form>
-        <b-row :class="!billingFieldsEmpty() ? 'justify-content-md-center' : ''" v-if="loading_options">
+        <b-row :class="billingFieldsEmpty() ? 'justify-content-md-center' : ''" v-if="loading_options">
             <b-col v-if="!billingFieldsEmpty()">
                 <b-card v-if="isElectronicBill()">
                     <template #header>
