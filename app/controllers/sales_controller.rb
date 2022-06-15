@@ -88,7 +88,7 @@ class SalesController < ApplicationSystemController
 
           return respond_with_error(@sale.electronic_bill['certification_data']["ResponseDATA1"])
         else
-          SaleMailer.send_sale(@sale, current_user).deliver_later
+          SaleMailer.send_sale(@sale, current_user, params[:sale][:client][:billing_email]).deliver_later
         end
       end
 
@@ -173,12 +173,19 @@ class SalesController < ApplicationSystemController
   end
 
   def set_client
-    @account.clients.find_by(id: params[:sale][:client][:id]).update(
-      billing_name: params[:sale][:client][:billing_name],
-      billing_address: params[:sale][:client][:billing_address],
-      billing_email: params[:sale][:client][:billing_email],
-      user_modifier: current_user
-    )
+    client = @account.clients.find_by(id: params[:sale][:client][:id])
+
+
+    unless client.billing_identifier == 'CF'
+      client.update(
+        billing_name: params[:sale][:client][:billing_name],
+        billing_address: params[:sale][:client][:billing_address],
+        billing_email: params[:sale][:client][:billing_email],
+        user_modifier: current_user
+      )
+    end
+
+    client
   end
 
   def respond_sale_with_error
