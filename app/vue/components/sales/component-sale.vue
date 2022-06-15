@@ -173,7 +173,7 @@ export default {
                         !product.measurement_unit ||
                         !product.product_type
                     ) {
-                        this.$toast.warning('Complete los campos requerridos de todos los productos')
+                        this.$toast.warning('Complete los campos requerridos de todos los bienes/servicios')
 
                         return
                     }
@@ -323,7 +323,12 @@ export default {
                 discount = this.getSum('discount_value')
             }
 
-            return parseFloat(discount||0).toFixed(2)
+            discount = parseFloat(discount||0).toFixed(2)
+
+            if (Number.isNaN(discount)) return 0
+
+            return discount
+
         },
 
         getTotalWithInterest(){

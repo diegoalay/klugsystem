@@ -42,7 +42,7 @@ export default {
     mounted(){
         setTimeout(() => {
             this.$nextTick(()=>{
-                const key = `item-${this.item.id}`
+                const key = `item-description-${this.item.id}`
                 this.$refs[key].focus()
             })
         })
@@ -86,6 +86,7 @@ export default {
                 <b-form-group>
                     <template #label> Descripción <sup class="text-danger">*</sup> </template>
                     <b-form-textarea
+                        :ref="`item-description-${item.id}`"
                         v-model="item.name"
                         placeholder="Ingrese descripción"
                         autocomplete="off"
@@ -105,7 +106,8 @@ export default {
                                 size="sm"
                                 type="number"
                                 v-model="item.price"
-                                min="1"
+                                min="0"
+                                step="any"
                                 autocomplete="off"
                             >
                             </b-form-input>
@@ -122,6 +124,7 @@ export default {
                                 type="number"
                                 v-model="item.saleQuantity"
                                 min="1"
+                                step="any"
                                 autocomplete="off"
                             >
                             </b-form-input>
@@ -174,6 +177,7 @@ export default {
                                     type="number"
                                     v-model="item.discount_percentage"
                                     min="0"
+                                    step="any"
                                     autocomplete="off"
                                 >
                                 </b-form-input>
@@ -191,6 +195,7 @@ export default {
                                     type="number"
                                     v-model="item.discount_value"
                                     min="0"
+                                    step="any"
                                     autocomplete="off"
                                 >
                                 </b-form-input>

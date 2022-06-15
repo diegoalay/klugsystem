@@ -153,7 +153,9 @@ export default {
         setProductQuantityManual(item){
             const index = this.products.findIndex(e => e.id === item.id)
 
-            const productSaleQuantity = parseFloat(item.saleQuantity)
+            let productSaleQuantity = parseFloat(item.saleQuantity)
+            if (Number.isNaN(productSaleQuantity)) productSaleQuantity = 0
+
             this.$set(this.products[index], 'subtotal', productSaleQuantity * item.price)
             this.setProductTotal(index, item)
         },
@@ -188,14 +190,23 @@ export default {
         setProductPriceManual(item){
             const index = this.products.findIndex(e => e.id === item.id)
 
-            const productPrice = parseFloat(item.price)
+            let price = parseFloat(item.price)
+
+            if (Number.isNaN(price)) price = 0
+
+            const productPrice = price
             this.$set(this.products[index], 'subtotal', (productPrice * parseFloat(item.saleQuantity)))
             this.setProductTotal(index, item)
         },
         setProductDiscountValue(item){
-            const discount = item.discount_value||0
+            let discount = item.discount_value||0
+            let final_subtotal = item.final_subtotal||0
+
+            if (Number.isNaN(discount)) discount = 0
+            if (Number.isNaN(final_subtotal)) final_subtotal = 0
+
             const index = this.products.findIndex(e => e.id === item.id)
-            const value = parseFloat(parseFloat((item.discount_value * 100) / item.final_subtotal).toFixed(2))
+            const value = parseFloat(parseFloat((discount * 100) / final_subtotal).toFixed(2))
 
             this.$set(this.products[index], 'discount_percentage', value)
 
@@ -203,9 +214,14 @@ export default {
         },
 
         setProductDiscountPercentage(item){
-            const discount = item.discount_percentage||0
+            let discount = item.discount_percentage||0
+            let final_subtotal = item.final_subtotal||0
+
+            if (Number.isNaN(discount)) discount = 0
+            if (Number.isNaN(final_subtotal)) final_subtotal = 0
+
             const index = this.products.findIndex(e => e.id === item.id)
-            const value = parseFloat(parseFloat((item.final_subtotal * (discount / 100))).toFixed(2))
+            const value = parseFloat(parseFloat((final_subtotal * (discount / 100))).toFixed(2))
 
             this.$set(this.products[index], 'discount_value', value)
 
@@ -219,9 +235,17 @@ export default {
         },
 
         setProductTotal(index, item){
-            const interest_value = parseFloat(parseFloat(item.subtotal * item.interest_percentage).toFixed(2))
-            const final_subtotal = parseFloat(parseFloat(item.subtotal + interest_value).toFixed(2))
-            const discount_value = parseFloat(parseFloat(final_subtotal * (item.discount_percentage / 100))).toFixed(2)
+            let subtotal = item.subtotal
+            let interest_percentage = item.interest_percentage
+            let discount_percentage = item.discount_percentage
+
+            if (Number.isNaN(subtotal)) subtotal = 0
+            if (Number.isNaN(interest_percentage)) interest_percentage = 0
+            if (Number.isNaN(discount_percentage)) discount_percentage = 0
+
+            const interest_value = parseFloat(parseFloat(subtotal * interest_percentage).toFixed(2))
+            const final_subtotal = parseFloat(parseFloat(subtotal + interest_value).toFixed(2))
+            const discount_value = parseFloat(parseFloat(final_subtotal * (discount_percentage / 100))).toFixed(2)
             const total = parseFloat(parseFloat(final_subtotal - discount_value).toFixed(2))
 
             this.$set(this.products[index], 'discount_value', discount_value)
@@ -264,14 +288,8 @@ export default {
 
             this.products.push(item)
 
-            if (this.tools.isMobile()) {
-                this.showModal(item)
-            } else {
-                this.$nextTick(()=>{
-                    const key = `item-${id}`
-                    this.$refs[key].focus()
-                })
-            }
+
+            this.showModal(item)
         },
         showModal(item){
             this.item = item
