@@ -2,21 +2,21 @@ module XmlServices
   module Helper
     def client_billing_municipality
       municipality = @sale.client.billing_municipality
-      municipality = @sale.branch_office.billing_municipality if municipality.blank?
+      municipality = '' if municipality.blank?
 
       municipality
     end
 
     def client_billing_department
       department = @sale.client.billing_department
-      department = @sale.branch_office.billing_department if department.blank?
+      department = '' if department.blank?
 
       department
     end
 
     def client_billing_postcode
       postcode = @sale.client.billing_postcode
-      postcode = @sale.branch_office.billing_postcode if postcode.blank?
+      postcode = 0 if postcode.blank?
 
       postcode
     end

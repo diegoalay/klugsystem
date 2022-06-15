@@ -25,8 +25,6 @@ module AppServices
             create_account(data)
           when "product"
           when "products2"
-            @account = Account.last
-
             create_product(data)
           when "branch_office"
             create_branch_office(data)
