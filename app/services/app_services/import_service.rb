@@ -2,12 +2,10 @@
 module AppServices
   class ImportService
     def initialize
-      @files = Dir.glob(Rails.root.join('db', 'imports', 'kaminal', '**')).sort
+      @files = Dir.glob(Rails.root.join('db', 'imports', 'transnunfio', '**')).sort
     end
 
     def call
-      @files = [Rails.root.join('db', 'imports', 'kaminal', 'products2.json').to_s]
-
       @files.each do |file_path|
         class_name = file_path.split('/').last.gsub('.json', '')
         class_name = class_name.singularize
@@ -38,6 +36,10 @@ module AppServices
             create_payment_method(data)
           when "user"
             create_user(data)
+          when "employee"
+            debugger
+
+            create_employee(data)
           else
             create_object(data["name"], class_name)
           end
@@ -134,6 +136,20 @@ module AppServices
         user.user_roles.find_or_create_by(role_id: @account.roles.first.id)
       end
       user
+    end
+
+    def create_employee(data)
+      employee = @account.employees.find_or_initialize_by(
+        first_name: data["first_name"],
+        first_surname: data["first_surname"],
+      )
+
+      employee.assign_attributes(
+        second_name: data["second_name"],
+        second_surname: data["second_surname"]
+      )
+
+      employee.save!
     end
 
     def create_object(name, class_name)
