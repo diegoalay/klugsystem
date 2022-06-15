@@ -50,6 +50,7 @@ class Account < ApplicationRecord
     clients.find_or_initialize_by(billing_identifier: 'CF') do |record|
       record.billing_address = ''
       record.billing_name = 'CF'
+      record.billing_address = '-'
       record.save(validate: false)
     end
   end
