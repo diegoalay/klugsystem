@@ -19,11 +19,24 @@ class Administration::AccountsController < ApplicationSystemController
     end
   end
 
+  def options
+    respond_with_successful(Account.options)
+  end
+
   private
 
   def account_params
     params.fetch(:account, {}).permit(
-      %i[name billing_identifier billing_name billing_address email telephone website electronic_billing]
+      :name,
+      :billing_identifier,
+      :billing_name,
+      :billing_address,
+      :email,
+      :telephone,
+      :website,
+      :electronic_billing,
+      :sale_client_id,
+      sale_types: []
     )
   end
 end

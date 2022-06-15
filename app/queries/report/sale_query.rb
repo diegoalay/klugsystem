@@ -7,6 +7,7 @@ class Report::SaleQuery < SaleQuery
       invalid_sales = sales.where(status: false)
 
       return {
+        total: sales.length,
         valid_sales_count: valid_sales.length,
         valid_sales: valid_sales.sum(:total),
         invalid_sales_count: invalid_sales.length,

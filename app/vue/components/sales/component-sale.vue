@@ -1,8 +1,8 @@
 <script type="text/javascript">
 import componenentAutocomplete from 'vueApp/components/component-autocomplete.vue'
 import componentProductsIcon from 'vueApp/components/component-products-icon.vue'
-import componentSaleDetails from 'vueApp/components/component-sale-details.vue'
-import componentConfirmSale from 'vueApp/components/component-confirm-sale.vue'
+import componentSaleDetails from 'vueApp/components/sales/component-sale-details.vue'
+import componentConfirmSale from 'vueApp/components/sales/component-confirm-sale.vue'
 
 export default {
     props: {
@@ -10,7 +10,7 @@ export default {
             type: String,
             required: true
         },
-        controller_name: {
+        controller: {
             type: String,
             default: 'sales'
         },
@@ -22,6 +22,30 @@ export default {
             type: Boolean,
             default: false
         },
+        buttonListHeader: {
+            type: String,
+            default: 'Listado'
+        },
+        titleHeader: {
+            type: String,
+            required: true
+        },
+        buttonFinishHeader: {
+            type: String,
+            required: true
+        },
+        manualSale: {
+            type: Boolean,
+            default: false
+        },
+        successMessage: {
+            type: String,
+            required: true
+        },
+        origin: {
+            type: String,
+            default: 'sale'
+        }
     },
     components:{
         'component-autocomplete': componenentAutocomplete,
@@ -42,7 +66,8 @@ export default {
                 sale_date: new Date(),
                 sale_type: null,
                 received_amount: 0,
-                change: 0
+                change: 0,
+                origin: this.origin
             },
             client: {
                 id: null
@@ -94,23 +119,80 @@ export default {
                 label: '',
                 key: 'actions'
             }],
-            storedData: {}
+            storedData: {},
+            options_loaded: false,
+            initialClientId: null,
+            timer_product: null
         }
     },
     mounted(){
-        this.storedData = this.storage.local('sale')
+        this.storedData = this.storage.local(`${this.app_module}/${this.controller}`)
 
         this.getOptions()
+
+        if (this.store.copySaleId) {
+            this.copySale()
+        }
     },
     methods: {
+        copySale(){
+            const url = this.url[this.app_module](`${this.controller}/:id`, {id: this.store.copySaleId})
+
+            this.http.get(url).then(result => {
+                if (result.successful) {
+                    this.payment_method = result.data.payment_method
+                    this.initialClientId = result.data.client.id
+
+                    this.$set(this.sale, 'custom_fields', result.data.sale.custom_fields)
+
+                    result.data.details.forEach((product, index) => {
+                        product = {
+                            ...product,
+                            id: index + 1,
+                            retail_price: product.price,
+                            measurement_unit_name: product.measurement_unit
+                        }
+                        this.addProductToSale(product, product.quantity, product.discount_percentage)
+                    })
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+            }).catch(error => {
+                console.log(error)
+            })
+
+            this.$set(this.store, 'copySaleId', null)
+        },
+
         confirmSale(){
+            if (this.manualSale) {
+                for(let product of this.products) {
+                    if (!product.name ||
+                        !product.price ||
+                        !product.saleQuantity ||
+                        !product.measurement_unit ||
+                        !product.product_type
+                    ) {
+                        this.$toast.warning('Complete los campos requerridos de todos los productos')
+
+                        return
+                    }
+                }
+            }
+
+            if (this.options.sale_types.length === 1) {
+                this.submitSale(this.options.sale_types[0].value)
+
+                return
+            }
+
             this.$bvModal.show('confirm-sale')
         },
 
         submitSale(sale_type){
             this.$bvModal.hide('confirm-sale')
 
-            const url = this.url[this.app_module](this.controller_name)
+            const url = this.url[this.app_module](this.controller)
             let form = {}
             if (this.quotation) {
                 form = {
@@ -128,9 +210,17 @@ export default {
                     }
                 }
             } else {
+                let received_amount = this.sale.received_amount
+                let change = this.getChange()
+
+                if (this.manualSale) received_amount = 0
+                if (this.manualSale) change = 0
+
                 form = {
                     sale: {
                         ... this.sale,
+                        change,
+                        received_amount,
                         sale_type: sale_type,
                         client_id: this.client.id,
                         subtotal: this.getSum('subtotal'),
@@ -139,7 +229,6 @@ export default {
                         total: this.getTotalSale(),
                         discount: this.getDiscount(),
                         interest: this.getInterest(),
-                        change: this.getChange(),
                         products: this.products,
                         client: this.client,
                         cash_register: this.cash_register
@@ -153,12 +242,9 @@ export default {
                 if (sale_type === 'electronic_bill') this.$loading(false)
 
                 if (result.successful) {
-                    if (this.quotation) {
-                        this.$toast.success('Cotización realizada exitosamente.')
-                    } else {
-                        this.$toast.success('Venta realizada exitosamente.')
-                    }
-                    this.$router.push(this.url[this.app_module](`${this.controller_name}/:id`, {id: result.data.id}).toString(false))
+                    this.$toast.success(this.successMessage)
+
+                    this.$router.push(this.url[this.app_module](`${this.controller}/:id`, {id: result.data.id}).toString(false))
                 } else {
                     if (sale_type === 'electronic_bill') {
                         this.$toast.error(result.error.message, {
@@ -177,7 +263,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url[this.app_module](`${this.controller_name}/options`)
+            const url = this.url[this.app_module](`${this.controller}/options`)
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -186,10 +272,12 @@ export default {
                     if (this.storedData && this.storedData.payment_method_id) {
                         const found = this.options.payment_methods.find(e => e.value.id === this.storedData.payment_method_id)
 
-                        if (found) {
+                        if (found && !this.payment_method?.id) {
                             this.payment_method = found.value
                         }
                     }
+
+                    this.options_loaded = true
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -287,7 +375,7 @@ export default {
 
 
         getTotalSale(){
-            return (parseFloat(this.sale.shipping_costs) + parseFloat(this.getTotalWithDiscount())).toFixed(2)
+            return (this.sale.shipping_costs + parseFloat(this.getTotalWithDiscount())).toFixed(2)
         },
 
         getChange(){
@@ -328,15 +416,34 @@ export default {
         },
 
         // Setters
+        setShippingCosts(value){
+            if (Number.isNaN(value) || value === '') {
+                this.sale.shipping_costs = 0
+
+                return
+            }
+
+            this.sale.shipping_costs = parseFloat(parseFloat(value).toFixed(2))
+        },
+
         setReceivedAmount(){
             this.$set(this.sale, 'received_amount', this.getTotalSale())
+
+            console.log(this.sale.received_amount)
         },
 
         // validators
-        validateReceivedAmount(){
-            if (this.sale.received_amount <= this.getTotalSale()){
+        validateReceivedAmount(value){
+            if (this.manualSale)  return
+            value = parseFloat(parseFloat(value).toFixed(2))
+
+            if (value <= this.getTotalSale()){
                 this.$toast.error('La cantidad es menor al valor total de la venta.')
                 this.$set(this.sale, 'received_amount', this.getTotalSale())
+            } else if (Number.isNaN(value) || value === '') {
+                this.sale.received_amount = 0.0
+            } else {
+                this.sale.received_amount = value
             }
         },
 
@@ -366,12 +473,24 @@ export default {
                 discount_percentage = this.products[index].discount_percentage
             }
 
+            clearTimeout(this.timer_product)
+
             if (saleQuantity > product.quantity && product.product_type === 'good') {
-                this.$toast.error('Artículos agotado.')
+                this.timer_product = setTimeout(e => {
+                    this.$toast.error('Artículos agotado.')
+                }, 200)
 
                 saleQuantity = product.quantity
+            } else {
+                this.timer_product = setTimeout(e => {
+                    this.$toast.info(`${product.name} a sido agregado exitosamente.`)
+                }, 200)
             }
 
+            this.addProductToSale(product, saleQuantity, discount_percentage, index)
+        },
+
+        addProductToSale(product, saleQuantity, discount_percentage, index = -1){
             const subtotal = product.retail_price * saleQuantity
             let interest_value = 0
             let interest_percentage = 0
@@ -418,7 +537,7 @@ export default {
                 this.$set(this.sale, 'payment_method_id', null)
             }
 
-            this.storage.local('sale', {
+            this.storage.local(`${this.app_module}/${this.controller}`, {
                 payment_method_id: value.id
             })
 
@@ -434,19 +553,237 @@ export default {
 
 <template>
     <section>
-        <component-header-form :title="quotation ? 'Cotización' : 'Venta'">
+        <component-header-form :title="titleHeader">
             <slot name="buttons">
-                <b-button variant="outline-dark" class="mb-2" to="/finance/sales">
-                    Listado <font-awesome-icon icon="list" />
+                <b-button variant="outline-dark" class="mb-2" :to="`/${app_module}/${controller}`">
+                    {{ buttonListHeader }} <font-awesome-icon icon="list" />
                 </b-button>
 
                 <b-button variant="outline-primary" class="mb-2" href="#finish">
                     <font-awesome-icon icon="cart-shopping" />
-                    {{ quotation ? 'Terminar cotización' : 'Terminar venta' }}
+                    {{ buttonFinishHeader  }}
                 </b-button>
             </slot>
         </component-header-form>
-        <b-row>
+        <b-row v-if="manualSale">
+            <b-col md="8" sm="12">
+                <b-card>
+                    <component-sale-details
+                        :options="options"
+                        :products="products"
+                        :payment_method_discount="payment_method_discount"
+                        :payment_method_interest="payment_method_interest"
+                        @remove="removeProduct"
+                        :manualSale="true"
+                    >
+                    </component-sale-details>
+                </b-card>
+            </b-col>
+            <b-col md="4" sm="12">
+                <b-card>
+                    <b-form>
+                        <div class="bg-primary total-header text-center">
+                            {{ getTotalSaleWithFormat() }}
+                        </div>
+
+                        <br>
+                        <component-autocomplete
+                            v-if="options_loaded"
+                            :default-option-id="initialClientId || options.sale_client_id"
+                            @select="(option) => client = option !== null ? option : {}"
+                            text-field="billing_details"
+                            placeholder="Buscar por número de nit"
+                            :endpoint="url.crm('/clients/search').toString(false)"
+                        />
+
+                        <b-row>
+                            <b-col md="6" sm="12">
+                                <b-form-group>
+                                    <label> Nit <sup class="text-danger">*</sup> </label>
+                                    <b-form-input
+                                        v-model="client.billing_identifier"
+                                        type="text"
+                                        placeholder=""
+                                        required
+                                    >
+                                    </b-form-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col md="6" sm="12">
+                                <b-form-group>
+                                    <label> Nombre <sup class="text-danger">* </sup> </label>
+                                    <b-form-textarea
+                                        ref="client-name"
+                                        v-model="client.billing_name"
+                                        autocomplete="off"
+                                        rows="3"
+                                    >
+                                    </b-form-textarea>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col md="12" sm="12">
+                                <b-form-group>
+                                    <label> Dirección </label>
+                                    <b-form-input
+                                        v-model="client.billing_address"
+                                        type="text"
+                                        placeholder=""
+                                        required
+                                    >
+                                    </b-form-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col md="12" sm="12">
+                                <b-form-group>
+                                    <label> E-Mail </label>
+                                    <b-form-input
+                                        v-model="client.billing_email"
+                                        type="email"
+                                        placeholder=""
+                                    >
+                                    </b-form-input>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col md="6" sm="12">
+                                <b-form-group>
+                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
+                                        <template #first>
+                                            <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                        </template>
+                                    </b-form-select>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-col md="6" sm="12">
+                                <template v-if="payment_method.id">
+                                    <b-form-group v-if="getPaymentInterest().length > 1">
+                                        <label> Interés </label>
+                                        <b-form-select
+                                            v-model="payment_method_interest"
+                                            :options="getPaymentInterest()"
+                                            value-field="item"
+                                        >
+                                        </b-form-select>
+                                    </b-form-group>
+                                </template>
+                            </b-col>
+                        </b-row>
+
+                        <b-row>
+                            <b-col md="12" sm="12">
+                                <b-form-group>
+                                    <template #label>
+                                        Fecha de emisión <sup class="text-danger">*</sup>
+                                    </template>
+                                    <component-datepicker
+                                        :focus="false"
+                                        lang="es"
+                                        type="date"
+                                        format="DD-MM-YYYY HH:mm"
+                                        v-model="sale.sale_date"
+                                        placeholder=""
+                                        required
+                                    >
+                                    </component-datepicker>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+                        <hr>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Subtotal</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getSumWithFormat('subtotal')"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Interés</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getInterestWithFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Total</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getTotalWithInterestAndFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Descuento</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getDiscountWithFormat()"> </b-form-input>
+                        </b-input-group>
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Total</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getTotalWithDiscountAndFormat()"> </b-form-input>
+                        </b-input-group>
+                        <!-- <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Envío</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                min="0"
+                                class="text-right"
+                                @change="setShippingCosts"
+                            >
+                            </b-form-input>
+                        </b-input-group> -->
+                        <!--
+                        <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cantidad recibida</b-input-group-text>
+                            </template>
+                            <b-form-input
+                                class="text-right"
+                                type="number"
+                                :value="sale.received_amount"
+                                @change="validateReceivedAmount"
+                                :min="getTotalSale()"
+                            >
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-button variant="outline-primary" @click="setReceivedAmount()"><font-awesome-icon icon="copy" /></b-button>
+                            </b-input-group-append>
+                        </b-input-group> -->
+                        <!-- <b-input-group>
+                            <template #prepend>
+                                <b-input-group-text >Cambio</b-input-group-text>
+                            </template>
+                            <b-form-input disabled readonly class="text-right" :value="getChangeWithFormat()"> </b-form-input>
+                        </b-input-group> -->
+                        <hr>
+                        <br>
+                        <b-row>
+                            <b-col cols="6">
+                                <b-button
+                                    v-if="!quotation"
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="confirmSale"
+                                >
+                                    Facturar
+                                </b-button>
+                            </b-col>
+                            <b-col clas="total-value">
+                                <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
+                            </b-col>
+                        </b-row>
+                    </b-form>
+                </b-card>
+            </b-col>
+        </b-row>
+        <b-row v-else>
             <b-col md="5" sm="12">
                 <b-card no-body>
                     <component-products-icon
@@ -464,7 +801,8 @@ export default {
 
                         <br>
                         <component-autocomplete
-                            v-if="!quotation"
+                            v-if="!quotation && options_loaded"
+                            :default-option-id="initialClientId || options.sale_client_id"
                             @select="(option) => client = option !== null ? option : {}"
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
@@ -647,8 +985,9 @@ export default {
                             </template>
                             <b-form-input
                                 min="0"
+                                type="number"
                                 class="text-right"
-                                v-model="sale.shipping_costs"
+                                @change="setShippingCosts"
                             >
                             </b-form-input>
                         </b-input-group>
@@ -660,8 +999,8 @@ export default {
                             <b-form-input
                                 class="text-right"
                                 type="number"
-                                @change="validateReceivedAmount()"
-                                v-model="sale.received_amount"
+                                @change="validateReceivedAmount"
+                                :value="sale.received_amount"
                                 :min="getTotalSale()"
                             >
                             </b-form-input>
@@ -679,8 +1018,27 @@ export default {
                         <br>
                         <b-row>
                             <b-col cols="6">
-                                <b-button v-if="!quotation" id="finish" block variant="primary" type="submit" @click.prevent="confirmSale"> Vender </b-button>
-                                <b-button v-else id="finish" block variant="primary" type="submit" @click.prevent="submitSale"> Cotizar </b-button>
+                                <b-button
+                                    v-if="!quotation"
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="confirmSale"
+                                >
+                                    Vender
+                                </b-button>
+
+                                <b-button
+                                    v-else
+                                    id="finish"
+                                    block
+                                    variant="primary"
+                                    type="submit"
+                                    @click.prevent="submitSale"
+                                >
+                                    Cotizar
+                                </b-button>
                             </b-col>
                             <b-col clas="total-value">
                                 <b-form-input readonly class="text-right" :value="getTotalSaleWithFormat()"> </b-form-input>
@@ -689,17 +1047,20 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
-
-            <b-modal
-                id="confirm-sale"
-                size="xl"
-                hide-footer
-                centered
-                content-class="shadow"
-                title="Seleccione tipo de venta"
-            >
-                <component-confirm-sale :sale_types="options.sale_types" @submit="submitSale" :total="getTotalSaleWithFormat()"/>
-            </b-modal>
         </b-row>
+        <b-modal
+            id="confirm-sale"
+            size="xl"
+            hide-footer
+            centered
+            content-class="shadow"
+            title="Seleccione tipo de venta"
+        >
+            <component-confirm-sale
+                :sale_types="options.sale_types"
+                @submit="submitSale"
+                :total="getTotalSaleWithFormat()"
+            />
+        </b-modal>
     </section>
 </template>

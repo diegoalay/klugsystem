@@ -18,7 +18,7 @@ class ClientsController < ApplicationSystemController
       format.json do
         set_client
 
-        respond_with_successful(@client)
+        respond_with_successful(@client.show)
       end
     end
   end

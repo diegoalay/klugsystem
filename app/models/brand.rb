@@ -5,9 +5,9 @@ class Brand < ApplicationRecord
 
   before_destroy :can_be_destroyed
 
-  private
-
   acts_as_paranoid
+
+  private
 
   def can_be_destroyed
     errors.add(:base, "Existen productos asignados a esta marca.") and throw(:abort) unless account.products.where(brand: self).blank?

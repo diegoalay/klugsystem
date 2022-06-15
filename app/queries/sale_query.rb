@@ -60,8 +60,9 @@ class SaleQuery
           "#{DateTime.iso8601(query[:filters][:start_date]).beginning_of_day}",
           "#{DateTime.iso8601(query[:filters][:end_date]).end_of_day}",
       )
-  end
+    end
 
+    sales = sales.where("sales.origin = ?", query[:filters][:origin]) unless query[:filters][:origin].blank?
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
     sales = sales.where("sales.cash_register_id = ?", query[:filters][:cash_register_id]) unless query[:filters][:cash_register_id].blank?
@@ -82,25 +83,34 @@ class SaleQuery
       return Responder.pagination(sales, data)
     end
 
-    sales
+    return sales
   end
 
-  def index_options(current_user)
+  def options(current_user, query)
+    filters = query[:filters]||{}
+
+    if filters[:action] === 'index'
+      payment_methods = @account.payment_methods.map {|payment_method| { text: payment_method.name, value: payment_method.id }}
+    else
+      payment_methods = @account.payment_methods
+                                .where(status: true)
+                                .map {|payment_method| {
+                                    text: payment_method.name,
+                                    value: payment_method
+                                  }
+                                }
+    end
+
     {
       statuses: [{text: 'Activa', value: true }, {text: 'Anulada', value: false }],
       user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
-      payment_methods: @account.payment_methods.map {|payment_method| {text: payment_method.name, value: payment_method.id}},
-      sale_types: ::Sale.fetch_sale_types(current_user)
-    }
-  end
-
-  def options(current_user)
-    {
-      payment_methods: @account.payment_methods.where(status: true).map {|payment_method| {text: payment_method.name, value: payment_method}},
+      payment_methods: payment_methods,
       branch_office: @account.branch_offices.map {|branch_office| {text: branch_office.name, value: branch_office.id}},
       departments: @account.departments.map {|department| {text: department.name, value: department.id}},
       brands: @account.brands.map {|brand| {text: brand.name, value: brand.id}},
-      sale_types: ::Sale.fetch_sale_types(current_user)
+      sale_types: ::Sale.fetch_sale_types(current_user),
+      billing_fields: @account.billing_fields,
+      sale_client_id: @account.sale_client_id
     }
   end
 end

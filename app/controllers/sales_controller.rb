@@ -1,6 +1,8 @@
 class SalesController < ApplicationSystemController
   before_action :set_sale, only: %i[update destroy send_sale emails_sent]
 
+  require 'prawn'
+
   # GET /sales or /sales.json
   def index
     respond_to do |format|
@@ -25,11 +27,20 @@ class SalesController < ApplicationSystemController
         set_sale
 
         if @sale.electronic_bill.present? && @sale.electronic_bill.identifier
-
           attachment = DigifactServices::Api.new(current_user, @sale).download['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
-          send_data decode_base64_content, filename: 'Factura.pdf'
+          if true
+            pdf = DocumentGeneratorServices::PdfService.new(@sale).call
+
+            fragua_details = CombinePDF.parse(pdf.render).pages[0]
+            final_pdf = CombinePDF.parse(decode_base64_content)
+            final_pdf.pages.each { |page| page << fragua_details }
+
+            send_data final_pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
+          else
+            send_data decode_base64_content, filename: 'Factura.pdf', type: "application/pdf"
+          end
         else
           @details = @sale.show
           render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"
@@ -69,7 +80,7 @@ class SalesController < ApplicationSystemController
     if @sale.save
       AppServices::SaleService.new(@sale, params[:sale][:products], current_user).call
 
-      if @sale.is_electronic_billing?
+      if @sale.electronic_bill?
         DigifactServices::Api.new(current_user, @sale).generate_bill
 
         if (@sale.electronic_bill.identifier.blank?)
@@ -83,21 +94,23 @@ class SalesController < ApplicationSystemController
 
       respond_with_successful(@sale)
 
-      @sale.details.each do |sale_detail|
-        product = @current_user.account.products.find_by(id: sale_detail.product_id)
+      if (@sale.origin != 'bill')
+        @sale.details.each do |sale_detail|
+          product = @current_user.account.products.find_by(id: sale_detail.product_id)
 
-        if (product && product.good?)
-          ActiveRecord::Base.transaction do
-            transaction = product.transactions.new(
-              category: "decrease",
-              user_creator: @current_user,
-              transaction_type: @current_user.account.product_transaction_sale_type,
-              quantity: sale_detail.quantity,
-              model_id: @sale.id,
-              model_type: "Sale",
-            )
+          if (product && product.good?)
+            ActiveRecord::Base.transaction do
+              transaction = product.transactions.new(
+                category: "decrease",
+                user_creator: @current_user,
+                transaction_type: @current_user.account.product_transaction_sale_type,
+                quantity: sale_detail.quantity,
+                model_id: @sale.id,
+                model_type: "Sale",
+              )
 
-            transaction.save!
+              transaction.save!
+            end
           end
         end
       end
@@ -138,12 +151,8 @@ class SalesController < ApplicationSystemController
     respond_with_successful
   end
 
-  def index_options
-    respond_with_successful(SaleQuery.new(@account).index_options(current_user))
-  end
-
   def options
-    respond_with_successful(SaleQuery.new(@account).options(current_user))
+    respond_with_successful(SaleQuery.new(@account).options(current_user, @query))
   end
 
   private
@@ -186,9 +195,27 @@ class SalesController < ApplicationSystemController
   # Only allow a list of trusted parameters through.
   def sale_params
     params.fetch(:sale, {}).permit(
-      %i[
-        client_id subtotal subtotal1 subtotal2 total discount interest shipping_costs status
-        received_amount change sale_type employees_id sale_date payment_method_id
+      :origin,
+      :client_id,
+      :subtotal,
+      :subtotal1,
+      :subtotal2,
+      :total,
+      :discount,
+      :interest,
+      :shipping_costs,
+      :status,
+      :received_amount,
+      :change,
+      :sale_type,
+      :employees_id,
+      :sale_date,
+      :payment_method_id,
+      custom_fields: [
+        :id,
+        :value,
+        :title,
+        :visible
       ]
     )
   end

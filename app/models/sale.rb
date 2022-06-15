@@ -33,12 +33,12 @@ class Sale < ApplicationRecord
 
       if before_status && !after_status
 
-        if (is_electronic_billing? && electronic_bill.identifier.present?)
+        if (is_electronic_billing?)
           DigifactServices::Api.new(user_modifier, self).anulate_bill
         end
 
         ActiveRecord::Base.transaction do
-          if (!is_electronic_billing? || (is_electronic_billing? && electronic_bill&.annulment_datetime.present?))
+          if (origin != 'bill' && (!is_electronic_billing? || (is_electronic_billing? && electronic_bill&.annulment_datetime.present?)))
             details.each do |sale_detail|
               sale_detail.user_modifier_id = user_modifier_id
               sale_detail.update(status: false)
@@ -61,17 +61,29 @@ class Sale < ApplicationRecord
     subtotal1_val = subtotal + interest
     subtotal2_val = subtotal1_val - discount
 
-    {
+    data = {
       sale: self.attributes.merge({
         'subtotal1' => subtotal1_val.to_f,
         'subtotal2' => subtotal2_val.to_f,
-        'sale_type' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
+        'sale_type_translated' => I18n.t("models.sales.column_enum_sale_type_#{sale_type}")
       }),
       client: client,
       details: details,
       employee: employee,
       payment_method: payment_method
     }
+
+    if self.is_electronic_billing?
+      return data.merge({
+        electronic_bill: {
+          serie: electronic_bill['certification_data'].dig('Serie'),
+          number: electronic_bill['certification_data'].dig('NUMERO'),
+          identifier: electronic_bill&.identifier
+        }
+      })
+    end
+
+    data
   end
 
   def calculations
@@ -82,13 +94,15 @@ class Sale < ApplicationRecord
   end
 
   def is_electronic_billing?
-    sale_type == 'electronic_bill'
+    sale_type == 'electronic_bill' &&
+    electronic_bill &&
+    electronic_bill.identifier.present?
   end
 
   def self.fetch_sale_types(current_user)
     ::Sale.sale_types.each_with_object([]) do |(k, v), sale_types|
 
-      next if current_user.account.id == 2 && v === 'bill'
+      next unless current_user.account.sale_types.include? v
       if k == 'electronic_bill'
         unless current_user.branch_office.electronic_billing? && current_user.account.electronic_billing?
           next
@@ -109,8 +123,7 @@ class Sale < ApplicationRecord
   end
 
   def sale_data
-    errors.add(:base, 'Debe seleccionar al menos un producto.') if (subtotal == 0)
-    errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total)
+    errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total && origin != 'bill')
     errors.add(:base, 'Debe seleccionar un tipo de venta.') if sale_type.blank?
     errors.add(:base, 'Debe seleccionar un cliente.') if client.blank?
   end

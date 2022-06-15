@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_27_045055) do
+ActiveRecord::Schema.define(version: 2022_06_09_074301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,56 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "account_id"
     t.index ["account_id"], name: "index_account_activities_on_account_id"
+  end
+
+  create_table "account_billing_field_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_billing_field_id"
+    t.index ["account_billing_field_id"], name: "account_billing_field_activities_billing_field"
+  end
+
+  create_table "account_billing_fields", force: :cascade do |t|
+    t.string "title"
+    t.string "label"
+    t.string "type"
+    t.string "value"
+    t.string "color"
+    t.decimal "position_x"
+    t.decimal "position_y"
+    t.boolean "disabled"
+    t.jsonb "settings"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_account_billing_fields_on_account_id"
+    t.index ["deleted_at"], name: "index_account_billing_fields_on_deleted_at"
+  end
+
+  create_table "account_sale_custom_fields", force: :cascade do |t|
+    t.string "title"
+    t.string "type"
+    t.jsonb "settings"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_account_sale_custom_fields_on_account_id"
+    t.index ["deleted_at"], name: "index_account_sale_custom_fields_on_deleted_at"
   end
 
   create_table "accounts", force: :cascade do |t|
@@ -50,6 +100,39 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
     t.jsonb "digifact", default: {}
     t.string "billing_phrase"
     t.string "billing_stage"
+    t.jsonb "sale_types"
+    t.bigint "sale_client_id"
+  end
+
+  create_table "bill_template_activities", force: :cascade do |t|
+    t.string "description"
+    t.string "field_name"
+    t.string "value_from"
+    t.string "value_to"
+    t.string "category"
+    t.string "field_type"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at, index: true"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "bill_template_id"
+    t.index ["bill_template_id"], name: "index_bill_template_activities_on_bill_template_id"
+  end
+
+  create_table "bill_templates", force: :cascade do |t|
+    t.text "name"
+    t.string "measurement_unit"
+    t.string "product_type"
+    t.string "title"
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "account_id"
+    t.index ["account_id"], name: "index_bill_templates_on_account_id"
+    t.index ["deleted_at"], name: "index_bill_templates_on_deleted_at"
   end
 
   create_table "branch_office_activities", force: :cascade do |t|
@@ -912,6 +995,18 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
     t.index ["sale_id"], name: "index_sale_activities_on_sale_id"
   end
 
+  create_table "sale_custom_fields", force: :cascade do |t|
+    t.string "jsonb"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_creator_id"
+    t.bigint "user_modifier_id"
+    t.datetime "deleted_at"
+    t.bigint "sale_id"
+    t.index ["deleted_at"], name: "index_sale_custom_fields_on_deleted_at"
+    t.index ["sale_id"], name: "index_sale_custom_fields_on_sale_id"
+  end
+
   create_table "sale_details", force: :cascade do |t|
     t.text "name"
     t.decimal "total"
@@ -982,6 +1077,8 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
     t.bigint "branch_office_id"
     t.decimal "subtotal1"
     t.decimal "subtotal2"
+    t.string "origin", default: "sale"
+    t.jsonb "custom_fields", default: []
     t.index ["account_id"], name: "index_sales_on_account_id"
     t.index ["branch_office_id"], name: "index_sales_on_branch_office_id"
     t.index ["cash_register_id"], name: "index_sales_on_cash_register_id"
@@ -1097,8 +1194,24 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
   add_foreign_key "account_activities", "accounts"
   add_foreign_key "account_activities", "users", column: "user_creator_id"
   add_foreign_key "account_activities", "users", column: "user_modifier_id"
+  add_foreign_key "account_billing_field_activities", "account_billing_fields"
+  add_foreign_key "account_billing_field_activities", "users", column: "user_creator_id"
+  add_foreign_key "account_billing_field_activities", "users", column: "user_modifier_id"
+  add_foreign_key "account_billing_fields", "accounts"
+  add_foreign_key "account_billing_fields", "users", column: "user_creator_id"
+  add_foreign_key "account_billing_fields", "users", column: "user_modifier_id"
+  add_foreign_key "account_sale_custom_fields", "accounts"
+  add_foreign_key "account_sale_custom_fields", "users", column: "user_creator_id"
+  add_foreign_key "account_sale_custom_fields", "users", column: "user_modifier_id"
+  add_foreign_key "accounts", "clients", column: "sale_client_id"
   add_foreign_key "accounts", "users", column: "user_creator_id"
   add_foreign_key "accounts", "users", column: "user_modifier_id"
+  add_foreign_key "bill_template_activities", "bill_templates"
+  add_foreign_key "bill_template_activities", "users", column: "user_creator_id"
+  add_foreign_key "bill_template_activities", "users", column: "user_modifier_id"
+  add_foreign_key "bill_templates", "accounts"
+  add_foreign_key "bill_templates", "users", column: "user_creator_id"
+  add_foreign_key "bill_templates", "users", column: "user_modifier_id"
   add_foreign_key "branch_office_activities", "branch_offices"
   add_foreign_key "branch_office_activities", "users", column: "user_creator_id"
   add_foreign_key "branch_office_activities", "users", column: "user_modifier_id"
@@ -1261,6 +1374,9 @@ ActiveRecord::Schema.define(version: 2022_05_27_045055) do
   add_foreign_key "sale_activities", "sales"
   add_foreign_key "sale_activities", "users", column: "user_creator_id"
   add_foreign_key "sale_activities", "users", column: "user_modifier_id"
+  add_foreign_key "sale_custom_fields", "sales"
+  add_foreign_key "sale_custom_fields", "users", column: "user_creator_id"
+  add_foreign_key "sale_custom_fields", "users", column: "user_modifier_id"
   add_foreign_key "sale_details", "accounts"
   add_foreign_key "sale_details", "products"
   add_foreign_key "sale_details", "sales"

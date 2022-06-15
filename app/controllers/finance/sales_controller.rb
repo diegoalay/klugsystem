@@ -1,2 +1,2 @@
-class Finance::SalesController < SalesController
+class Finance::SalesController < ::SalesController
 end

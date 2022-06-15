@@ -11,7 +11,7 @@ import VueI18n from 'vue-i18n'
 import ActionCableVue from 'actioncable-vue';
 import Dialog from 'bootstrap-vue-dialog'
 import VueLoading from 'vuejs-loading-plugin'
-
+import { Sketch } from 'vue-color'
 
 import {
     FormRadioPlugin,
@@ -57,7 +57,7 @@ import storage from './storage'
 
 // Global registration
 Vue.component('apexchart', VueApexCharts)
-
+Vue.component('color-picker', Sketch)
 Vue.component('component-files', componentFiles)
 Vue.component('component-header-list', componentHeaderList)
 Vue.component('component-search-list', componentSearchList)
@@ -99,7 +99,7 @@ Vue.use(VModal, { componentName: 'modal' })
 Vue.use(VueRouter)
 Vue.use(http)
 Vue.use(url, system.url)
-Vue.use(tools)
+Vue.use(tools, http)
 Vue.use(date, tools)
 Vue.use(store, system)
 Vue.use(storage, system)

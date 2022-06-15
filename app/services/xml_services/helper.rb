@@ -43,7 +43,7 @@ module XmlServices
     end
 
     def item_measurement_unit(item)
-      item.measurement_unit.upcase.split(" ").map do |word| word.first end.join
+      Product.measurement_unit_parser(item.measurement_unit)
     end
 
     def item_price(item)

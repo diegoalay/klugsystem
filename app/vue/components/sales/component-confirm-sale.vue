@@ -8,11 +8,14 @@ export default {
         total: {
             type: String,
             required: true
+        },
+        textBottom: {
+            type: String,
+            default: 'Total a pagar'
         }
     },
     data() {
-        return {
-        }
+        return {}
     },
     methods: {
         submitSale(sale_type){
@@ -20,8 +23,6 @@ export default {
         },
 
         getIcon(sale_type){
-            console.log(this.sale_types.length)
-
             switch (sale_type) {
                 case 'electronic_bill':
                     return 'envelope-open-text'
@@ -49,7 +50,7 @@ export default {
         <br>
         <b-row>
             <b-col class="text-center">
-                <b><h3> Total a pagar: {{ total }} </h3></b>
+                <b><h3> {{ textBottom }}: {{ total }} </h3></b>
             </b-col>
         </b-row>
     </section>

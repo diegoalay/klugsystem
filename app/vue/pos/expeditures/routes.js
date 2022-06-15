@@ -17,7 +17,7 @@ const routes =  [
     },
     {
         path: "/pos/expeditures/:id",
-        component: appPosExpedituresShow
+        component: appPosExpedituresShow,
     }
 ]
 

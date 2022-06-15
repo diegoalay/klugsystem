@@ -1,12 +1,16 @@
 <script type="text/javascript">
 import ComponentDialogDelete from 'vueApp/components/component-dialog-delete.vue'
-import componenSaleEmails from 'vueApp/components/component-sale-emails.vue'
+import componenSaleEmails from 'vueApp/components/sales/component-sale-emails.vue'
 
 export default {
     props: {
         app_module: {
             require: true,
             type: String
+        },
+        controller: {
+            type: String,
+            default: 'sales'
         },
         cashRegisterId: {
             type: Number,
@@ -15,10 +19,6 @@ export default {
         hideHeader: {
             type: Boolean,
             default: false
-        },
-        dateRange: {
-            type: Array,
-            default: null
         },
         userCreatorTypes: {
             type: Boolean,
@@ -31,6 +31,22 @@ export default {
         initFilters: {
             type: Object,
             default: () => { return {} }
+        },
+        titleHeader: {
+            type: String,
+            default: 'Ventas'
+        },
+        buttonHeader: {
+            type: String,
+            default: 'Vender'
+        },
+        origin: {
+            type: String,
+            default: ''
+        },
+        hiddenColumns: {
+            type: Array,
+            default: () => { return [] }
         }
     },
     components: {
@@ -109,7 +125,7 @@ export default {
                 payment_method: '',
                 user_creator_type: '',
                 cash_register_id: '',
-                date_range: this.dateRange ? this.dateRange : []
+                date_range: []
             },
             sale: {},
             loading: false,
@@ -117,39 +133,54 @@ export default {
         }
     },
     mounted() {
-        if (this.app_module ===  'finance') {
-            if (this.cashRegisterId) {
-                this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
-            }
-
-            this.addUserCreatorColumn()
-        } else if (this.app_module === 'pos'){
-            this.$set(this.filters, 'user_creator_type', 'current_cash_register')
-        } else if (this.app_module === 'reports') {
-            this.addUserCreatorColumn()
-        }
-
-
-        if ((this.store.global.cash_register.id && this.validateCashRegister) || (!this.validateCashRegister)) {
-            this.list()
-            this.getOptions()
-        } else {
-            const url = this.url.pos('cash_register').toString(false)
-            this.$router.push(url)
-        }
-
-        for(let key in this.filters) {
-            if (key === 'date_range' && this.initFilters[key]) {
-                this.$set(this.filters, key, [
-                    new Date(this.initFilters[key][0]),
-                    new Date(this.initFilters[key][1]),
-                ])
-            } else if (this.initFilters[key]) {
-                this.$set(this.filters, key, this.initFilters[key])
-            }
+        if (this.data.copySaleId) {
+            this.copySale()
         }
     },
     methods: {
+        copySale(){
+
+        },
+        watchProps(){
+            this.$set(this.filters, 'origin', this.origin) // bills source
+
+            if (this.app_module ===  'finance') {
+                if (this.cashRegisterId) {
+                    this.$set(this.filters, 'cash_register_id', this.cashRegisterId)
+                }
+
+                this.addUserCreatorColumn()
+            } else if (this.app_module === 'pos'){
+                this.$set(this.filters, 'user_creator_type', 'current_cash_register')
+            } else if (this.app_module === 'reports') {
+                this.addUserCreatorColumn()
+            }
+
+
+            if ((this.store.global.cash_register.id && this.validateCashRegister) || (!this.validateCashRegister)) {
+                this.list()
+                this.getOptions()
+            } else {
+                const url = this.url.pos('cash_register').toString(false)
+                this.$router.push(url)
+            }
+
+            for(let key in this.filters) {
+                if (key === 'date_range' && this.initFilters[key]) {
+                    this.$set(this.filters, key, [
+                        new Date(this.initFilters[key][0]),
+                        new Date(this.initFilters[key][1]),
+                    ])
+                } else if (this.initFilters[key]) {
+                    this.$set(this.filters, key, this.initFilters[key])
+                }
+            }
+
+
+            for (let column of this.hiddenColumns) {
+                this.fields = this.fields.filter(e => e.key !== column)
+            }
+        },
         list(){
             clearTimeout(this.timer)
             this.timer = setTimeout(() => {
@@ -213,7 +244,7 @@ export default {
                     ]
                 }
             )
-            if (resp) {
+            if (resp === true) {
                 const form = {
                     sale: {
                         status: false
@@ -249,7 +280,7 @@ export default {
         },
 
         getOptions(){
-            const url = this.url[this.app_module]('sales/index_options')
+            const url = this.url[this.app_module]('sales/options').filters({action: 'index'})
 
             this.http.get(url).then(result => {
                 if (result.successful) {
@@ -268,10 +299,16 @@ export default {
             })
         },
 
-        show(sale){
+        copySale(sale){
+            this.$set(this.store, 'copySaleId', sale.id)
+
+            this.$router.push(`/${this.app_module}/${this.controller}/new`)
+        },
+
+        showSale(sale){
             if (this.app_module === 'reports') return
 
-            this.$router.push(this.url[this.app_module]('sales/:id', {id: sale.id}).toString(false))
+            this.$router.push(this.url[this.app_module](`${this.controller}/:id`, {id: sale.id}).toString(false))
         },
 
         sendSale(sale){
@@ -307,6 +344,13 @@ export default {
         'filters.date_range'(){
             this.list()
         },
+        $props: {
+            handler() {
+                this.watchProps()
+            },
+            deep: true,
+            immediate: true
+        },
     }
 }
 </script>
@@ -326,8 +370,8 @@ export default {
 
         <component-header-list
             v-if="!hideHeader"
-            title="Ventas"
-            title-button-create="Vender"
+            :title="titleHeader"
+            :title-button-create="buttonHeader"
             :loading="loading"
             @reloadList="list"
         >
@@ -378,7 +422,7 @@ export default {
                     </b-form-select>
                     &nbsp;
                     <component-datepicker
-                        v-if="dateRange"
+                        v-if="filters.date_range.length > 0"
                         v-model="filters.date_range"
                         lang="es"
                         format="DD-MM-YYYY"
@@ -395,7 +439,7 @@ export default {
                     :items="data"
                     :fields="fields"
                     @filtered="onFiltered"
-                    @row-clicked="show"
+                    @row-clicked="showSale"
                     :sort-desc.sync="pagination.order"
                     :sort-by.sync="pagination.order_by"
                     responsive
@@ -411,7 +455,7 @@ export default {
                     </template>
 
                     <template v-slot:cell(status)="row">
-                      <div v-if="row.item.status" class="p-1 text-success">
+                        <div v-if="row.item.status" class="p-1 text-success">
                             {{ 'Activa' }}
                         </div>
                         <div v-else class="p-1 text-danger">
@@ -428,15 +472,37 @@ export default {
                     </template>
 
                     <template v-slot:cell(actions)="row">
-                        <b-button @click="tools.printSale(row.item)" variant="outline-dark" class="mr-1">
+                        <b-button
+                            @click="tools.printSale(row.item)"
+                            variant="outline-dark" class="mr-1"
+                        >
                             <font-awesome-icon icon="print" />
                         </b-button>
 
-                        <b-button v-if="app_module !== 'reports'" @click="sendSale(row.item)" variant="outline-success" class="mr-1">
+                        <b-button
+                            v-if="app_module !== 'reports'"
+                            @click="sendSale(row.item)"
+                            variant="outline-success"
+                            class="mr-1"
+                        >
                             <font-awesome-icon icon="envelope-open-text" />
                         </b-button>
 
-                        <b-button v-if="row.item.can_be_disabled && row.item.status && app_module !== 'reports'" @click="disableSale(row.item)" variant="outline-danger" class="mr-1">
+                        <b-button
+                            v-if="controller === 'bills'"
+                            @click="copySale(row.item)"
+                            variant="outline-info"
+                            class="mr-1"
+                        >
+                            <font-awesome-icon icon="copy" />
+                        </b-button>
+
+                        <b-button
+                            v-if="row.item.can_be_disabled && row.item.status && app_module !== 'reports'"
+                            @click="disableSale(row.item)"
+                            variant="outline-danger"
+                            class="mr-1"
+                        >
                             <font-awesome-icon icon="xmark" />
                         </b-button>
                     </template>

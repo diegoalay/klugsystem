@@ -15,9 +15,11 @@ class ApplicationSystemController < ApplicationController
 
   def set_query
     @query = {
-      filters: params[:filters],
+      filters: params[:filters]||{},
       pagination: {
-        disable: params[:disable_pagination] ? params[:disable_pagination] : false,
+        disable: params[:disable_pagination] || params[:disable_pagination] == 'true' ?
+          true :
+          false,
         per_page: (params[:per_page] ? params[:per_page].to_i : 10),
         current_page: (params[:current_page] ? params[:current_page].to_i : 1),
         order: (params[:order] ? params[:order] : "desc"),
@@ -28,6 +30,7 @@ class ApplicationSystemController < ApplicationController
 
   def set_account_data
     @data = {
+      walmart_billing: @account.walmart_billing?,
       account: @account,
       menu_items: MenuItem.all,
       current_user: {
@@ -37,6 +40,7 @@ class ApplicationSystemController < ApplicationController
         role: current_user.roles.first,
         abilities: current_user.abilities,
         cash_register: current_user.current_cash_register&.show,
+
       },
       url: {
         cable: cable_url,

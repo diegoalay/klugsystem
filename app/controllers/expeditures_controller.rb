@@ -76,10 +76,6 @@ class ExpedituresController < ApplicationSystemController
       end
     end
 
-    def index_options
-      respond_with_successful(ExpeditureQuery.new(@account).index_options)
-    end
-
     def options
       respond_with_successful(ExpeditureQuery.new(@account).options)
     end
