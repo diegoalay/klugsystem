@@ -68,11 +68,15 @@ module XmlServices
     end
 
     def item_price(item)
-      item.price + (item.price * item.interest_percentage.to_f)
+      item.price.to_f + (item.price.to_f * item.interest_percentage.to_f)
     end
 
     def round(val, decimals = 2)
-      val.round(decimals)
+      if (val > 1)
+        val.round(decimals)
+      else
+        val.round(4)
+      end
     end
   end
 end
