@@ -660,6 +660,17 @@ export default {
                             </b-col>
                         </b-row>
 
+                        <b-form-group v-if="employeePresence()">
+                            <label> Empleado <sup class="text-danger">*</sup> </label>
+                            <b-form-select required v-model="sale.employee_id" :options="options.employees">
+                                <template #first>
+                                    <b-form-select-option disabled :value="null">
+                                        Seleccione un empleado
+                                    </b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </b-form-group>
+
                         <b-row>
                             <b-col md="6" sm="12">
                                 <b-form-group>

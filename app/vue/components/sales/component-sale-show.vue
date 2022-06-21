@@ -225,9 +225,9 @@ export default {
                 </b-button>
             </slot>
         </component-header-form>
-        <b-row :class="billingFieldsEmpty() ? 'justify-content-md-center' : ''" v-if="loading_options">
-            <b-col v-if="!billingFieldsEmpty()">
-                <b-card v-if="isElectronicBill()">
+        <b-row :class="!isElectronicBill() ? 'justify-content-md-center' : ''" v-if="loading_options">
+            <b-col v-if="isElectronicBill()">
+                <b-card>
                     <template #header>
                         <h5 class="mb-0 font-weight-bold">Información de facturación electrónica</h5>
                     </template>
@@ -340,7 +340,7 @@ export default {
                     </b-form>
                 </b-card>
             </b-col>
-            <b-col :md="billingFieldsEmpty() ? '10' : '8'" sm="12">
+            <b-col :md="!isElectronicBill() ? '10' : '8'" sm="12">
                 <b-card>
                     <div class="bg-primary total-header text-center">
                         {{ sale.total ? 'Q ' + sale.total : '' }}
