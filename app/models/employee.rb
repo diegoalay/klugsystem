@@ -10,6 +10,8 @@ class Employee < ApplicationRecord
 
   validate  :user_assignment
 
+  acts_as_paranoid
+
   def self.index account
     clients = account.employees.select("
       employees.id,

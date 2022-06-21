@@ -98,7 +98,6 @@
             },
 
             reload(value){
-                console.log(value)
                 if (value) {
                     this.list()
                 }

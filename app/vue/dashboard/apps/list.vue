@@ -87,8 +87,7 @@
                         this.clearEvent()
                     })
                 } else {
-
-                      const index_1 = this.calendarData.findIndex(e => e.id == event.id)
+                    const index_1 = this.calendarData.findIndex(e => e.id == event.id)
 
                     if (index_1 !== -1) {
                         this.calendar.batchRendering(() => {
@@ -97,19 +96,22 @@
                             } else if (type == 'destroy') {
                                 this.calendarData = this.calendarData.filter(e => e.id !== event.id)
                                 this.reloadSimpleList()
+                                this.clearEvent(false)
                             }
                         })
                     }
                 }
             },
 
-            clearEvent(){
-                this.event = {
-                    id: null,
-                    modalTitle: '',
-                    model_type: this.event.model_type ?
-                        this.event.model_type :
-                        'Contact'
+            clearEvent(form = true){
+                if (form) {
+                    this.event = {
+                        id: null,
+                        modalTitle: '',
+                        model_type: this.event.model_type ?
+                            this.event.model_type :
+                            'Contact'
+                    }
                 }
 
                 this.$bvModal.hide('modal')
