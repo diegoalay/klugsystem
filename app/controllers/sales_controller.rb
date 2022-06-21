@@ -30,17 +30,13 @@ class SalesController < ApplicationSystemController
           attachment = DigifactServices::Api.new(current_user, @sale).download['ResponseDATA3']
           decode_base64_content = Base64.decode64(attachment)
 
-          if true
-            pdf = DocumentGeneratorServices::PdfService.new(@sale).call
+          pdf = DocumentGeneratorServices::PdfService.new(@sale).call
 
-            fragua_details = CombinePDF.parse(pdf.render).pages[0]
-            final_pdf = CombinePDF.parse(decode_base64_content)
-            final_pdf.pages.each { |page| page << fragua_details }
+          fragua_details = CombinePDF.parse(pdf.render).pages[0]
+          final_pdf = CombinePDF.parse(decode_base64_content)
+          final_pdf.pages.each { |page| page << fragua_details }
 
-            send_data final_pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
-          else
-            send_data decode_base64_content, filename: 'Factura.pdf', type: "application/pdf"
-          end
+          send_data final_pdf.to_pdf, filename: "Factura.pdf", type: "application/pdf"
         else
           @details = @sale.show
           render template: 'sales/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "VENTA: #{@details[:sale].dig('id')}"

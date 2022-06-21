@@ -55,6 +55,8 @@ es:
       quotations: 'Cotizaciones'
       expeditures: 'Gastos'
       cash_registers: 'Listado de cajas'
+      bills: 'Facturas'
+      bill_templates: 'Plantillas'
     inventory:
       title: 'Inventario'
       products: 'Productos'
@@ -88,4 +90,5 @@ es:
       branch_offices: 'Sucursales'
       payment_methods: 'Métodos de pago'
       digifact: 'Digifact'
+      billing_fields: 'Campos de facturación'
       account: 'Cuenta'

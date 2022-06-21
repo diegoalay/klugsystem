@@ -1,4 +1,4 @@
-import appDashboardList  from './apps/list.vue'
+import appDashboardList  from 'vueApp/dashboard/apps/list.vue'
 
 const routes =  [
     {

@@ -1,4 +1,7 @@
-<script type="text/javascript">
+
+
+<script>
+    import '@fullcalendar/core/vdom' // solves problem with Vite
     import { Calendar } from '@fullcalendar/core'
     import dayGridPlugin from '@fullcalendar/daygrid'
     import timeGridWeek from '@fullcalendar/timegrid';
@@ -6,98 +9,110 @@
     import interactionPlugin from '@fullcalendar/interaction'
     import esLocale from '@fullcalendar/core/locales/es';
 
-    export default {
-        components: {
+    import componentForm from '../components/form.vue'
+    import componentRowList from '../components/row-list.vue'
 
-        },
+    export default {
+        props: {},
+
         data() {
             return {
-                filters: {
-                    data: 'mine'
-                },
-                summary: {},
-                products: [],
-                products_total: 0,
+                calendar: null,
                 loading: false,
-                fields: [{
-                    label: 'Imágen',
-                    key: 'thumbnail',
-                },{
-                    label: 'Nombre',
-                    key: 'name',
-                    sortable: true
-                },{
-                    label: 'Precio',
-                    key: 'retail_price',
-                    sortable: true
-                },{
-                    label: 'Cantidad',
-                    key: 'quantity',
-                    sortable: true
-                },{
-                    label: 'Estado',
-                    key: 'status',
-                    sortable: true
-                }],
-                pagination: {
-                    total: 0,
-                    per_page: 10,
-                    current_page: 1,
-                    order_by: 'quantity',
-                    order: false,
-                },
-                search_text: '',
-                calendar: null
+                event: {},
+                calendarData: [],
+                reload: false,
+                filters: null,
+                monthId: null,
+                yearId: null
             }
         },
-        mounted() {
-            this.getSummary()
-            this.getProducts()
+        components: {
+            'component-form': componentForm,
+            'component-row-list': componentRowList,
+        },
+        mounted(){
+            this.setFilters(0,0,0,1)
             this.initCalendar()
         },
         methods: {
-            getSummary(){
-                this.loading = true
+            setFilters(monthOffset = 0, yearOffset = 0, dayOffset = 0, today = false){
+                if (this.calendar && this.calendar.currentData['currentViewType'] === 'timeGridWeek') {
 
-                const url = this.url.build('dashboard')
-                this.http.get(url).then(response => {
-                    if (response.successful) {
-                        this.summary = response.data
+                } else if (this.calendar && this.calendar.currentData['currentViewType'] === 'timeGridDay') {
+
+                } else {
+                    if (today) {
+                        this.monthId = new Date().getMonth()
+                        this.yearId = new Date().getFullYear()
                     } else {
-                        this.$toast.error(result.error.message)
+                        this.monthId += monthOffset
+                        this.yearId += yearOffset
                     }
 
-                    this.loading = false
+                    this.filters = {
+                        start_date: new Date(this.yearId, this.monthId, 1).toISOString(),
+                        end_date: new Date(this.yearId, this.monthId, this.date.daysInMonth(this.monthId+1, this.yearId)).toISOString()
+                    }
+                }
+
+                this.getEvents()
+            },
+            getEvents() {
+                this.reloadSimpleList()
+
+                const url = this.url.dashboard('events').filters(this.filters).paginate(false)
+
+                this.http.get(url).then(result => {
+                    this.calendarData = result.data
                 }).catch(error => {
                     console.log(error)
                 })
             },
 
-            getProducts(){
-                this.loading = true
-                const url = this.url.inventory('products')
-                .filters({search: this.search_text})
-                .paginate(this.pagination.current_page, this.pagination.per_page)
-                .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
+            submitEvent(type, event){
+                if (type === 'post') {
+                    this.calendar.batchRendering(() => {
+                        let newEvent = this.parseEvent(
+                            {
+                                ...event,
+                                date: event.date ? event.date : null,
+                                time_start: event.time_start ? event.time_start : null,
+                                time_end: event.time_end ? event.time_start : null
+                            }
+                        )
 
-                this.http.get(url).then(response => {
-                    this.loading = false
-                    if (response.successful) {
-                        this.products = response.data.products
-                        this.pagination.total = response.data.total_count
-                    } else {
-                        this.$toast.error(result.error.message)
+                        this.calendar.addEvent(this.parseEvent(newEvent))
+                        this.reloadSimpleList()
+                        this.clearEvent()
+                    })
+                } else {
+
+                      const index_1 = this.calendarData.findIndex(e => e.id == event.id)
+
+                    if (index_1 !== -1) {
+                        this.calendar.batchRendering(() => {
+                            if (type === 'put') {
+                                this.$set(this.calendarData, index_1, event)
+                            } else if (type == 'destroy') {
+                                this.calendarData = this.calendarData.filter(e => e.id !== event.id)
+                                this.reloadSimpleList()
+                            }
+                        })
                     }
-
-                    this.loading = false
-                }).catch(error => {
-                    console.log(error)
-                })
+                }
             },
-            onSearch(text){
-                this.search_text = text
 
-                this.getProducts()
+            clearEvent(){
+                this.event = {
+                    id: null,
+                    modalTitle: '',
+                    model_type: this.event.model_type ?
+                        this.event.model_type :
+                        'Contact'
+                }
+
+                this.$bvModal.hide('modal')
             },
 
             initCalendar(){
@@ -109,146 +124,158 @@
                     eventClick: this.onEventClick,
                     locales: [ esLocale ],
                     headerToolbar: {
-                        start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                        center: this.tools.isMobile() ?
-                            null :
-                            'title',
+                        start: 'title',
+                        // start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                        center: null,
                         end: this.tools.isMobile() ?
                             'prev,today,next' :
                             'prevYear,prev,today,next,nextYear'
+                    },
+                    customButtons: {
+                        prevYear: {
+                            click: () => {
+                                this.setFilters(0, -1)
+                                this.calendar.prevYear();
+                            }
+                        },
+                        nextYear: {
+                            click: () => {
+                                this.setFilters(0, 1)
+                                this.calendar.nextYear();
+                            }
+                        },
+                        prev: {
+                            click: () => {
+                                this.setFilters(-1)
+                                this.calendar.prev();
+                            }
+                        },
+                        next: {
+                            click: () => {
+                                this.setFilters(1)
+                                this.calendar.next();
+                            }
+                        },
+                        today: {
+                            text: 'Hoy',
+                            click: () => {
+                                this.setFilters(0,0,0, true)
+                                this.calendar.today();
+                            }
+                        }
                     }
                 });
 
                 this.calendar.render();
+            },
+
+
+            onDateSelect(arg) {
+                arg.jsEvent.preventDefault()
+
+                this.clearEvent()
+                this.$set(this.event, 'date', arg.date)
+                this.$set(this.event, 'modalTitle', `Crear Evento - ${this.date.date(arg.date)}`)
+                this.openModal()
+            },
+
+
+            onEventClick(arg) {
+                arg.jsEvent.preventDefault()
+
+                this.clearEvent()
+                const event = this.calendarData.find((e) => e.id == arg.event.id)
+
+                if (event) {
+                    this.event = event
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)
+                    this.openModal()
+                }
+            },
+
+            showEvent(event) {
+                if (event) {
+                    this.event = event
+                    this.$set(this.event, 'modalTitle', `Editar Evento - ${this.date.date(event.date)}`)
+                    this.openModal()
+                }
+            },
+
+            parseEvent(event){
+                let eventParsed = {
+                    ...event,
+                    start: event.date,
+                    end: event.date
+                }
+
+                if (event.time_start) {
+                    eventParsed.start = event.time_start
+                }
+
+                if (event.time_end) {
+                    eventParsed.end = event.time_end
+                }
+
+                return eventParsed
+            },
+
+            parseTitleDate(date){
+                return `${date.getDate()}/${date.getMonth()}/${this.yearId}`
+            },
+
+            openModal(){
+                this.$bvModal.show('modal')
+            },
+
+            reloadSimpleList(){
+                this.reload = true
+
+                setTimeout(() => {
+                    this.reload = false
+                }, 100)
             }
         },
+
         watch: {
-            'pagination.current_page'() {
-                this.getProducts()
-            },
+            calendarData() {
+                this.calendar.batchRendering(() => {
+                    // get rendered events in calendar
+                    let events = this.calendar.getEvents()
 
-            'pagination.order_by'() {
-                this.getProducts()
-            },
+                    // remove events from calendar
+                    events.forEach(event => event.remove() )
 
-            'pagination.order'(){
-                this.getProducts()
+                    // reload events
+                    this.calendarData.forEach(
+                        (event) => {
+                            this.calendar.addEvent(this.parseEvent(event))
+                        }
+                    )
+                })
             }
         }
     }
 </script>
-
 <template>
-    <section>
+    <div>
         <b-row>
-            <b-col>
-                <b-row>
-                    <b-col col="4">
-                        <b-card  title="Gastos" class="dashboard-top-box">
-                            <b-row>
-                                <b-col md="4" sm="4" class="text-left">
-                                    <h5 class="text-danger">
-                                        <font-awesome-icon icon="arrow-down"/> {{ summary.expeditures_count }}
-                                    </h5>
-                                </b-col>
-                                <b-col md="7" sm="7" class="dashboard-value text-right">
-                                    <h3> Q. {{ summary.expeditures_total }} </h3>
-                                </b-col>
-                            </b-row>
-                        </b-card>
-                    </b-col>
-                    <b-col col="4">
-                        <b-card title="Ventas" class="dashboard-top-box">
-                            <b-row>
-                                <b-col md="4" sm="4" class="dashboard-counter text-left">
-                                    <h5 class="text-success">
-                                        <font-awesome-icon icon="arrow-up"/> {{ summary.sales_count }}
-                                    </h5>
-                                </b-col>
-                                <b-col md="8" sm="8" class="dashboard-value text-right">
-                                    <h3> Q. {{ summary.sales_total }} </h3>
-                                </b-col>
-                            </b-row>
-                        </b-card>
-                    </b-col>
-                    <b-col col="4">
-                        <b-card title="Total" class="dashboard-top-box">
-                            <b-row>
-                                <b-col md="4" sm="4" class="dashboard-counter text-left">
-                                    <h5 class="text-info">
-                                        <font-awesome-icon icon="dollar-sign"/>
-                                    </h5>
-                                </b-col>
-                                <b-col md="8" sm="8" class="dashboard-value text-right">
-                                    <h3> Q. {{ summary.final_value }} </h3>
-                                </b-col>
-                            </b-row>
-                        </b-card>
-                    </b-col>
-                </b-row>
-                <b-row>
-                    <b-col md="12" sm="12">
-                        <b-card class="dashboard-graph">
-                            <div id='calendar'></div>
-                        </b-card>
-                    </b-col>
-                </b-row>
-            </b-col>
-            <b-col md="5" sm="12">
-                <b-card class="dashboard-products">
-                    <component-search-list :loading="loading" @search="onSearch"/>
-                    <b-table
-                        striped
-                        hover
-                        :items="products"
-                        :fields="fields"
-                        :sort-desc.sync="pagination.order"
-                        :sort-by.sync="pagination.order_by"
-                        responsive
-                    >
-                        <template #head()="{ label, field: { key, sortable }}">
-                            {{ label }}
-                            <template v-if="sortable">
-                                <template>
-                                    <font-awesome-icon v-if="((pagination.order) && (pagination.order_by === key))" icon="sort-down" />
-                                    <font-awesome-icon v-else-if="((!pagination.order) && (pagination.order_by === key))" icon="sort-up" />
-                                </template>
-                            </template>
-                        </template>
-
-                        <template v-slot:cell(thumbnail)="row">
-                            <b-img :src="tools.getProductImage(row.item)" width="50" rounded alt="image"> </b-img>
-                        </template>
-
-                        <template v-slot:cell(status)="row">
-                            <div v-if="row.item.quantity <= 0 && row.item.product_type === 'good'" class="p-1 text-danger">
-                                {{ row.item.status }}
-                            </div>
-                            <div v-else class="p-1 text-success">
-                                {{  row.item.status }}
-                            </div>
-                        </template>
-
-                        <template v-slot:cell(actions)="row">
-                            <b-button variant="outline-danger" @click.stop="deleteRecord(row.item.id)" class="mr-1">
-                                <font-awesome-icon icon="trash" />
-                            </b-button>
-                        </template>
-                    </b-table>
-                    <b-col sm="4" md="4" class="my-1">
-                        <b-pagination
-                            v-model="pagination.current_page"
-                            :simple="false"
-                            :total-rows="pagination.total"
-                            :per-page="pagination.per_page"
-                            align="fill"
-                            size="sm"
-                            class="my-0"
-                        >
-                        </b-pagination>
-                    </b-col>
+            <b-col md="8" sm="12">
+                <b-card>
+                    <div id='calendar'></div>
                 </b-card>
             </b-col>
+            <b-col md="4" sm="12">
+                <component-row-list v-if="filters" :filters="filters" @show="showEvent" :reload="reload">
+                </component-row-list>
+            </b-col>
         </b-row>
-    </section>
+
+        <b-modal id="modal" centered hide-footer content-class="shadow" :title="event.modalTitle">
+            <component-form
+                :event="event"
+                @submit="submitEvent"
+            >
+            </component-form>
+        </b-modal>
+    </div>
 </template>

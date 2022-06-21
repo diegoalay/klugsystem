@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :bill_templates
   devise_for :users,
   :controllers => {
     :registrations => "users/registrations",
@@ -29,8 +28,11 @@ Rails.application.routes.draw do
 
       get :dashboard, to: "dashboard#default"
 
-      namespace :crm do
+      namespace :dashboard do
         resources :events
+      end
+
+      namespace :crm do
         resources :contacts do
           collection do
             get :search

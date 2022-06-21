@@ -5,7 +5,6 @@ import dashboardRoutes from './dashboard/routes.js'
 // CLIENTS
 import clientsRoutes from 'vueApp/crm/clients/routes.js'
 import contactsRoutes from 'vueApp/crm/contacts/routes.js'
-import crmEventsRoutes from 'vueApp/crm/events/routes.js'
 
 // FINANCE
 import quotationsRoutes from 'vueApp/finance/quotations/routes.js'
@@ -59,7 +58,6 @@ app("",
     // CRM
     .concat(clientsRoutes)
     .concat(contactsRoutes)
-    .concat(crmEventsRoutes)
     // FINANCE
     .concat(salesRoutes)
     .concat(billsRoutes)

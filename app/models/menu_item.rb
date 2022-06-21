@@ -4,12 +4,30 @@ class MenuItem < ApplicationRecord
 
   def self.call_new
     MenuItem.find_or_initialize_by(
-      menu_item: MenuItem.find_by(key: 'reports'),
-      order: 0,
-      key: 'reports.sale_details',
-      icon: 'chart-column',
-      permissions: %w[sale_details.index]
+      menu_item: MenuItem.find_by(key: 'finance'),
+      order: 5,
+      key: 'finance.bills',
+      icon: 'receipt',
+      permissions: %w[bill.index]
     ).save!
+
+    MenuItem.find_or_initialize_by(
+      menu_item: MenuItem.find_by(key: 'finance'),
+      order: 6,
+      key: 'finance.bill_templates',
+      icon: 'file-lines',
+      permissions: %w[bill_template.index]
+    ).save!
+
+    MenuItem.find_or_initialize_by(
+      menu_item: MenuItem.find_by(key: 'administration'),
+      order: 5,
+      key: 'administration.billing_fields',
+      icon: 'circle-plus',
+      permissions: %w[billing_field.show]
+    ).save!
+
+    MenuItem.find_by(key: 'administration.account').update(order: 6)
   end
 
   def self.call
@@ -275,6 +293,14 @@ class MenuItem < ApplicationRecord
       key: 'reports.sales',
       icon: 'chart-line',
       permissions: %w[sales.index]
+    ).save!
+
+    MenuItem.find_or_initialize_by(
+      menu_item: MenuItem.find_by(key: 'reports'),
+      order: 0,
+      key: 'reports.sale_details',
+      icon: 'chart-column',
+      permissions: %w[sale_details.index]
     ).save!
   end
 end

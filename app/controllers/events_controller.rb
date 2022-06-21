@@ -7,7 +7,7 @@ class EventsController < ApplicationSystemController
       format.html {}
       format.json do
 
-        respond_with_successful(@account.events)
+        respond_with_successful(EventQuery.new(@account).index(@query))
       end
     end
   end
@@ -86,7 +86,7 @@ class EventsController < ApplicationSystemController
       %i[
         model_type model_id name description date
         time_start time_end title location url public
-      ] 
+      ]
     )
   end
 end
