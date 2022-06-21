@@ -2,7 +2,7 @@
 module AppServices
   class ImportService
     def initialize
-      @files = Dir.glob(Rails.root.join('db', 'imports', 'transnunfio', '**')).sort
+      @files = Dir.glob(Rails.root.join('db', 'imports', 'tical', '**')).sort
     end
 
     def call
@@ -24,7 +24,6 @@ module AppServices
           when "account"
             create_account(data)
           when "product"
-          when "products2"
             create_product(data)
           when "branch_office"
             create_branch_office(data)

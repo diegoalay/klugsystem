@@ -43,7 +43,7 @@ export default {
 <template>
     <section>
         <b-row>
-            <b-col col="3">
+            <b-col cols="3">
                 <b-card  title="Intereses" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="text-left">
@@ -52,12 +52,12 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.interests }} </h3>
+                            <h3> {{ number.formatCurrency(summary.interests) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col col="3">
+            <b-col cols="3">
                 <b-card  title="Descuentos" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="text-left">
@@ -66,12 +66,12 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.discounts }} </h3>
+                            <h3> {{ number.formatCurrency(summary.discounts) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col col="3">
+            <b-col cols="3">
                 <b-card title="# Artículos/Servicios" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="dashboard-counter text-left">
@@ -80,12 +80,12 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.products_count }} </h3>
+                            <h3> {{ number.formatCurrency(summary.products_count) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
             </b-col>
-            <b-col col="3">
+            <b-col cols="3">
                 <b-card title="Total Ventas" class="dashboard-top-box">
                     <b-row>
                         <b-col md="3" sm="3" class="dashboard-counter text-left">
@@ -94,7 +94,7 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.valid_sales }} </h3>
+                            <h3> {{ number.formatCurrency(summary.valid_sales) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>

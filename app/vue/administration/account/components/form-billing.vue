@@ -138,57 +138,109 @@ export default {
                     </b-col>
                 </b-row>
 
-                <b-form-tags
-                    v-if="options.sale_types.length > 0"
-                    id="tags-component-select"
-                    v-model="account.sale_types"
-                    size="lg"
-                    class="mb-10 pb-10"
-                    add-on-change
-                    no-outer-focus
-                >
-                    <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
-                        <b-form-select
-                            v-bind="inputAttrs"
-                            v-on="inputHandlers"
-                            :disabled="disabled || options.sale_types.length === 0"
-                            :options="availableOptions"
-                        >
-                            <template #first>
-                                <!-- This is required to prevent bugs with Safari -->
-                                <option disabled value="">Elegir tipos de venta ...</option>
+                <b-row>
+                    <b-col md="4" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                ¿ Elegir empleado al vender ?
                             </template>
-                        </b-form-select>
-                        <br>
-                        <br>
-                        <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
-                            <li v-for="tag in tags" :key="tag" class="list-inline-item">
-                            <b-form-tag
-                                @remove="removeTag(tag)"
-                                :title="tag"
-                                variant="info"
+
+                            <b-form-checkbox
+                                v-model="account.billing_employee_presence"
                             >
-                                {{ getSaleTypeText(tag) }}
-                            </b-form-tag>
-                            </li>
-                        </ul>
+                                {{ account.billing_employee_presence ? 'Deshabilitar' : 'Habilitar'}}
+                            </b-form-checkbox>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-row>
+                    <b-col md="4" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                ¿ Descontar del inventario al vender ?
+                            </template>
+
+                            <b-form-checkbox
+                                v-model="account.inventory_count"
+                            >
+                                {{ account.inventory_count ? 'Deshabilitar' : 'Habilitar'}}
+                            </b-form-checkbox>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-row>
+                    <b-col md="4" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                ¿ Permite cambiar el precio del producto al vender ?
+                            </template>
+
+                            <b-form-checkbox v-model="account.product_price_editable">
+                                {{ account.product_price_editable ? 'Deshabilitar' : 'Habilitar'}}
+                            </b-form-checkbox>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
+                <b-form-group>
+                    <template #label>
+                        Tipos de venta
                     </template>
-                </b-form-tags>
+
+                    <b-form-tags
+                        v-if="options.sale_types.length > 0"
+                        id="tags-component-select"
+                        v-model="account.sale_types"
+                        size="lg"
+                        class="mb-10 pb-10"
+                        add-on-change
+                        no-outer-focus
+                    >
+                        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+                            <b-form-select
+                                v-bind="inputAttrs"
+                                v-on="inputHandlers"
+                                :disabled="disabled || options.sale_types.length === 0"
+                                :options="availableOptions"
+                            >
+                                <template #first>
+                                    <!-- This is required to prevent bugs with Safari -->
+                                    <option disabled value="">Elegir tipos de venta ...</option>
+                                </template>
+                            </b-form-select>
+                            <br>
+                            <br>
+                            <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+                                <li v-for="tag in tags" :key="tag" class="list-inline-item">
+                                <b-form-tag
+                                    @remove="removeTag(tag)"
+                                    :title="tag"
+                                    variant="info"
+                                >
+                                    {{ getSaleTypeText(tag) }}
+                                </b-form-tag>
+                                </li>
+                            </ul>
+                        </template>
+                    </b-form-tags>
+                </b-form-group>
                 <br>
 
-            <b-form-group>
-                <template #label>
-                    Cliente predeterminado
-                </template>
+                <b-form-group>
+                    <template #label>
+                        Cliente predeterminado
+                    </template>
 
-                <component-autocomplete
-                    :default-option-id="account.sale_client_id"
-                    @select="(option) => account.sale_client_id = option ? option.id : null"
-                    text-field="billing_details"
-                    placeholder="Buscar por número de nit o nombre de facturación"
-                    :endpoint="url.crm('/clients/search').toString(false)"
-                />
-            </b-form-group>
+                    <component-autocomplete
+                        :default-option-id="account.sale_client_id"
+                        @select="(option) => account.sale_client_id = option ? option.id : null"
+                        text-field="billing_details"
+                        placeholder="Buscar por número de nit o nombre de facturación"
+                        :endpoint="url.crm('/clients/search').toString(false)"
+                    />
+                </b-form-group>
 
                 <div class="text-right">
                     <b-button type="submit" variant="primary">Guardar</b-button>

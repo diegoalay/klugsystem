@@ -2,7 +2,6 @@ import appSalesList  from 'vueApp/components/sales/component-sales-list.vue'
 import appSalesNew  from 'vueApp/components/sales/component-sale.vue'
 import appSalesShow from 'vueApp/components/sales/component-sale-show.vue'
 
-
 const routes =  [
     {
         path: "/finance/sales",
@@ -11,7 +10,8 @@ const routes =  [
             app_module: 'finance',
             controller: 'sales',
             userCreatorTypes: true,
-            origin: 'sale'
+            origin: 'sale',
+            storedFilters: true
         }
     },
     {
@@ -29,7 +29,7 @@ const routes =  [
         component: appSalesShow,
         props: {
             app_module: 'finance',
-            controller: 'sales'
+            controller: 'sales',
         }
     }
 ]

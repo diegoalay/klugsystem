@@ -1,4 +1,6 @@
 <script>
+import componentInputPassword from 'vueApp/components/form/password.vue'
+
 export default {
     props: {
         digifact: {
@@ -6,13 +8,9 @@ export default {
             type: Object
         }
     },
-    components: {},
-    data() {
-        return {
-
-        }
+    components: {
+        'input-password': componentInputPassword
     },
-    mounted() {},
     methods: {
         putForm(showMessage = true){
             const url = this.url.admin('digifact')
@@ -31,7 +29,6 @@ export default {
                 console.log(error)
             })
         },
-
         validateCredentials(){
             this.putForm(false)
 
@@ -56,7 +53,6 @@ export default {
                 })
             }, 500)
         },
-
         statusMessage(){
             if (this.digifact.digifact_status) {
                 return 'Verificado exitosamente.'
@@ -102,19 +98,12 @@ export default {
                     </b-form-input>
                 </b-form-group>
 
-                <b-form-group>
-                    <template #label>
-                        Contraseña <sup class="text-danger">*</sup>
-                    </template>
-
-                    <b-form-input
-                        v-model="digifact.digifact_password"
-                        type="text"
-                        placeholder=""
-                        required
-                    >
-                    </b-form-input>
-                </b-form-group>
+                <input-password
+                    :required="true"
+                    input-text="Contraseña"
+                    :input-init-value="digifact.digifact_password"
+                    @input="digifact.digifact_password = $event"
+                />
 
                 <b-form-group>
                     <template #label>

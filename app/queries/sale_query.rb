@@ -62,6 +62,7 @@ class SaleQuery
       )
     end
 
+    sales = sales.where("sales.employee_id = ?", query[:filters][:employee_id]) unless query[:filters][:employee_id].blank?
     sales = sales.where("sales.origin = ?", query[:filters][:origin]) unless query[:filters][:origin].blank?
     sales = sales.where("sales.sale_type = ?", query[:filters][:sale_type]) unless query[:filters][:sale_type].blank?
     sales = sales.where("sales.payment_method_id = ?", query[:filters][:payment_method]) unless query[:filters][:payment_method].blank?
@@ -110,7 +111,11 @@ class SaleQuery
       brands: @account.brands.map {|brand| {text: brand.name, value: brand.id}},
       sale_types: ::Sale.fetch_sale_types(current_user),
       billing_fields: @account.billing_fields,
-      sale_client_id: @account.sale_client_id
+      sale_client_id: @account.sale_client_id,
+      billing_employee_presence: @account.billing_employee_presence,
+      product_price_editable: @account.product_price_editable,
+      inventory_count: @account.inventory_count,
+      employees: @account.employees.map {|employee| {text: employee.name, value: employee.id}}
     }
   end
 end

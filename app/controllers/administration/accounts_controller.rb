@@ -36,6 +36,9 @@ class Administration::AccountsController < ApplicationSystemController
       :website,
       :electronic_billing,
       :sale_client_id,
+      :billing_employee_presence,
+      :inventory_count,
+      :product_price_editable,
       sale_types: []
     )
   end

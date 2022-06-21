@@ -2,6 +2,12 @@
 import componentProductItem from 'vueApp/components/sales/product-item.vue'
 
 export default {
+    props: {
+        options: {
+            type: Object,
+            required: true
+        }
+    },
     components: {
         'component-product-item': componentProductItem
     },
@@ -12,10 +18,10 @@ export default {
             search_text: '',
             pagination: {
                 total: 0,
-                per_page: 20,
+                per_page: 9,
                 current_page: 1,
-                order_by: 'quantity',
-                order: true,
+                order_by: 'name',
+                order: false,
             }
         }
     },
@@ -34,11 +40,12 @@ export default {
             .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
             this.loading = true
-            this.http.get(url).then(result => {
-                if (result.successful) {
-                    this.products = result.data.products
+            this.http.get(url).then(response => {
+                if (response.successful) {
+                    this.products = response.data.products
+                    this.pagination.total = response.data.total_count
                 } else {
-                    this.$toast.error(result.error.message)
+                    this.$toast.error(response.error.message)
                 }
 
                 this.loading = false
@@ -56,6 +63,19 @@ export default {
         addProduct(product){
             this.$emit('addProduct', product)
         }
+    },
+    watch: {
+        'pagination.current_page'() {
+            this.getProducts()
+        },
+
+        'pagination.order_by'() {
+            this.getProducts()
+        },
+
+        'pagination.order'(){
+            this.getProducts()
+        }
     }
 }
 </script>
@@ -67,6 +87,7 @@ export default {
         <hr>
         <b-row>
             <component-product-item
+                :options="options"
                 v-for="product in products"
                 :key="product.id"
                 :product="product"
@@ -74,5 +95,17 @@ export default {
             >
             </component-product-item>
         </b-row>
+        <br>
+        <b-col sm="4" md="4" class="my-1">
+            <b-pagination
+                v-model="pagination.current_page"
+                :simple="false"
+                :total-rows="pagination.total"
+                :per-page="pagination.per_page"
+                align="fill"
+                size="sm"
+                class="my-0"
+            ></b-pagination>
+        </b-col>
     </div>
 </template>

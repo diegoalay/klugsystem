@@ -18,10 +18,6 @@
                     key: 'retail_price',
                     sortable: true
                 },{
-                    label: 'Precio mayoreo',
-                    key: 'wholesale_price',
-                    sortable: true
-                },{
                     label: 'Cantidad',
                     key: 'quantity',
                     sortable: true

@@ -8,6 +8,15 @@ export default {
         inputRequired: {
             type: Boolean,
             default: true
+        },
+        inputInitValue: {
+            type: String,
+            default: null
+        }
+    },
+    mounted(){
+        if (this.inputInitValue) {
+            this.password = this.inputInitValue
         }
     },
     data() {
@@ -16,8 +25,10 @@ export default {
             password: ''
         }
     },
-
     watch: {
+        'inputInitValue'(){
+            this.password = this.inputInitValue
+        },
         'password'(){
             this.$emit('input', this.password)
         }

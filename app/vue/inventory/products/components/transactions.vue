@@ -191,10 +191,24 @@
 
                         <b-input-group>
                             <template #prepend>
-                                <b-button @click="product_transaction.category = 'decrease'" v-if="product_transaction.category === 'increase'" variant="success">
+                                <b-button
+                                    @click="product_transaction.category = 'decrease'"
+                                    v-if="product_transaction.category === 'increase'"
+                                    variant="success"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Incrementar existencias"
+                                >
                                     <font-awesome-icon icon="arrow-up" fixed-width />
                                 </b-button>
-                                <b-button @click="product_transaction.category = 'increase'" v-else variant="danger">
+                                <b-button
+                                    @click="product_transaction.category = 'increase'"
+                                    v-else
+                                    variant="danger"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    title="Decrementar existencias"
+                                >
                                     <font-awesome-icon icon="arrow-down" fixed-width />
                                 </b-button>
                             </template>

@@ -54,7 +54,7 @@ es:
       sales: 'Ventas'
       quotations: 'Cotizaciones'
       expeditures: 'Gastos'
-      cash_registers: 'Listado de cajas'
+      cash_registers: 'Cajas'
       bills: 'Facturas'
       bill_templates: 'Plantillas'
     inventory:

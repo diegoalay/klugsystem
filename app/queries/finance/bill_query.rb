@@ -14,7 +14,11 @@ class Finance::BillQuery < SaleQuery
       sale_types: ::Sale.fetch_sale_types(current_user),
       bill_templates: @account.bill_templates,
       billing_fields: @account.billing_fields,
-      sale_client_id: @account.sale_client_id
+      sale_client_id: @account.sale_client_id,
+      billing_employee_presence: @account.billing_employee_presence,
+      product_price_editable: @account.product_price_editable,
+      inventory_count: @account.inventory_count,
+      employees: @account.employees.map {|employee| {text: employee.name, value: employee.id}}
     }
   end
 end

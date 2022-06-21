@@ -55,6 +55,10 @@ class Employee < ApplicationRecord
     ") if search
   end
 
+  def name
+    [first_name, first_surname].join(' ')
+  end
+
   private
 
   def user_assignment

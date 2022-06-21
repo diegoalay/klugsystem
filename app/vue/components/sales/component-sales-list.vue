@@ -47,6 +47,10 @@ export default {
         hiddenColumns: {
             type: Array,
             default: () => { return [] }
+        },
+        storedFilters: {
+            type: Boolean,
+            default: false
         }
     },
     components: {
@@ -96,14 +100,6 @@ export default {
                 key: 'total',
                 sortable: true
             },{
-                label: 'Cantidad recibida',
-                key: 'received_amount',
-                sortable: true
-            },{
-                label: 'Cambio',
-                key: 'change',
-                sortable: true
-            },{
                 label: '',
                 key: 'actions'
             }],
@@ -122,6 +118,7 @@ export default {
                 status:'',
                 search: '',
                 sale_type: '',
+                employee_id: '',
                 payment_method: '',
                 user_creator_type: '',
                 cash_register_id: '',
@@ -176,6 +173,17 @@ export default {
                 }
             }
 
+            if (this.storedFilters) {
+                const filters = this.storage.local(`${this.app_module}/${this.controller}`)
+
+                for(let key in filters) {
+                    const value = filters[key]
+
+                    if (value) {
+                        this.$set(this.filters, key, value)
+                    }
+                }
+            }
 
             for (let column of this.hiddenColumns) {
                 this.fields = this.fields.filter(e => e.key !== column)
@@ -279,6 +287,15 @@ export default {
             })
         },
 
+
+        employeeColumn(){
+            this.fields.splice(this.fields.length - 1, 0, {
+                label: 'Empleado',
+                key: 'employee_name',
+                sortable: true
+            })
+        },
+
         getOptions(){
             const url = this.url[this.app_module]('sales/options').filters({action: 'index'})
 
@@ -291,6 +308,8 @@ export default {
 
                         this.$set(this.options, 'user_creator_types', user_creator_types)
                     }
+
+                    if (this.employeeHeader()) this.employeeColumn()
                 } else {
                     this.$toast.error(result.error.message)
                 }
@@ -316,6 +335,10 @@ export default {
             this.$bvModal.show('emails')
         },
 
+        // sendSaleViaWP(sale){
+        //     window.location = 'https://wa.me/+50243703704?text=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='
+        // },
+
         onSearch(text){
             this.filters.search = text
 
@@ -325,6 +348,10 @@ export default {
         onFiltered(filteredItems) {
             this.totalRows = filteredItems.length
             this.currentPage = 1
+        },
+
+        employeeHeader(){
+            return this.options.billing_employee_presence ? true : false
         }
     },
 
@@ -351,6 +378,12 @@ export default {
             deep: true,
             immediate: true
         },
+        filters: {
+            handler(){
+                this.storage.local(`${this.app_module}/${this.controller}`, this.filters)
+            },
+            deep: true
+        }
     }
 }
 </script>
@@ -411,6 +444,18 @@ export default {
                         </template>
                     </b-form-select>
                     &nbsp;
+                    <template v-if="employeeHeader()">
+                        <b-form-select
+                            v-model="filters.employee_id"
+                            :options="options.employees"
+                            @change="list()"
+                        >
+                            <template #first>
+                                <option value=""> Todos los empleados </option>
+                            </template>
+                        </b-form-select>
+                        &nbsp;
+                    </template>
                     <b-form-select
                         v-model="filters.status"
                         :options="options.statuses"
@@ -471,6 +516,22 @@ export default {
                         {{ row.item.sale_type_text }}
                     </template>
 
+                    <template v-slot:cell(subtotal)="row">
+                        {{ number.formatCurrency(row.item.subtotal) }}
+                    </template>
+
+                    <template v-slot:cell(discount)="row">
+                        {{ number.formatCurrency(row.item.discount) }}
+                    </template>
+
+                    <template v-slot:cell(interest)="row">
+                        {{ number.formatCurrency(row.item.interest) }}
+                    </template>
+
+                    <template v-slot:cell(total)="row">
+                        {{ number.formatCurrency(row.item.total) }}
+                    </template>
+
                     <template v-slot:cell(actions)="row">
                         <b-button
                             @click="tools.printSale(row.item)"
@@ -482,11 +543,20 @@ export default {
                         <b-button
                             v-if="app_module !== 'reports'"
                             @click="sendSale(row.item)"
-                            variant="outline-success"
+                            variant="outline-primary"
                             class="mr-1"
                         >
                             <font-awesome-icon icon="envelope-open-text" />
                         </b-button>
+<!--
+                        <b-button
+                            v-if="app_module !== 'reports'"
+                            @click="sendSaleViaWP(row.item)"
+                            variant="outline-success"
+                            class="mr-1"
+                        >
+                            <font-awesome-icon :icon="['fab', 'whatsapp']" />
+                        </b-button> -->
 
                         <b-button
                             v-if="controller === 'bills'"

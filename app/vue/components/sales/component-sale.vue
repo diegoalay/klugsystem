@@ -67,7 +67,8 @@ export default {
                 sale_type: null,
                 received_amount: 0,
                 change: 0,
-                origin: this.origin
+                origin: this.origin,
+                employee_id: null
             },
             client: {
                 id: null
@@ -389,35 +390,35 @@ export default {
 
         getSumWithFormat(key){
             const sum = this.getSum(key)
-            return `Q ${sum}`
+            return `Q ${this.number.formatCurrency(sum)}`
         },
 
         getDiscountWithFormat(){
-            return `Q ${this.getDiscount()}`
+            return `Q ${this.number.formatCurrency(this.getDiscount())}`
         },
 
         getTotalWithFormat(){
-            return `Q ${this.getTotal()}`
+            return `Q ${this.number.formatCurrency(this.getTotal())}`
         },
 
         getTotalSaleWithFormat(){
-            return `Q ${this.getTotalSale()}`
+            return `Q ${this.number.formatCurrency(this.getTotalSale())}`
         },
 
         getInterestWithFormat(){
-            return `Q ${this.getInterest()}`
+            return `Q ${this.number.formatCurrency(this.getInterest())}`
         },
 
         getTotalWithInterestAndFormat(){
-            return `Q ${this.getTotalWithInterest()}`
+            return `Q ${this.number.formatCurrency(this.getTotalWithInterest())}`
         },
 
         getTotalWithDiscountAndFormat(){
-            return `Q ${this.getTotalWithDiscount()}`
+            return `Q ${this.number.formatCurrency(this.getTotalWithDiscount())}`
         },
 
         getChangeWithFormat(){
-            return `Q ${this.getChange()}`
+            return `Q ${this.number.formatCurrency(this.getChange())}`
         },
 
         // Setters
@@ -457,7 +458,7 @@ export default {
         },
 
         addProduct(product){
-            if (product.quantity <= 0 && product.product_type === 'good') {
+            if (this.options.inventory_count && product.quantity <= 0 && product.product_type === 'good') {
                 this.$toast.error('El producto se encuentra agotado.')
                 return
             }
@@ -480,7 +481,7 @@ export default {
 
             clearTimeout(this.timer_product)
 
-            if (saleQuantity > product.quantity && product.product_type === 'good') {
+            if (this.options.inventory_count && saleQuantity > product.quantity && product.product_type === 'good') {
                 this.timer_product = setTimeout(e => {
                     this.$toast.error('Artículos agotado.')
                 }, 200)
@@ -531,6 +532,10 @@ export default {
             } else {
                 this.products.push(new_product)
             }
+        },
+
+        employeePresence(){
+            return this.options.billing_employee_presence ? true : false
         }
     },
 
@@ -574,6 +579,7 @@ export default {
             <b-col md="8" sm="12">
                 <b-card>
                     <component-sale-details
+                        v-if="options_loaded"
                         :options="options"
                         :products="products"
                         :payment_method_discount="payment_method_discount"
@@ -789,15 +795,16 @@ export default {
             </b-col>
         </b-row>
         <b-row v-else>
-            <b-col md="5" sm="12">
+            <b-col md="4" sm="12">
                 <b-card no-body>
                     <component-products-icon
+                        :options="options"
                         @addProduct="addProduct"
                     >
                     </component-products-icon>
                 </b-card>
             </b-col>
-            <b-col md="7" sm="12">
+            <b-col md="8" sm="12">
                 <b-card>
                     <b-form>
                         <div class="bg-primary total-header text-center">
@@ -897,55 +904,63 @@ export default {
                         </template>
 
                         <b-row>
-                            <b-col md="6" sm="12">
+                            <b-col v-if="employeePresence()" md="6" sm="12">
                                 <b-form-group>
-                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
-                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
+                                    <label> Empleado <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="sale.employee_id" :options="options.employees">
                                         <template #first>
-                                            <b-form-select-option :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                            <b-form-select-option disabled :value="null">
+                                                Seleccione un empleado
+                                            </b-form-select-option>
                                         </template>
                                     </b-form-select>
                                 </b-form-group>
                             </b-col>
 
-                            <b-col md="6" sm="12">
-                                <template v-if="payment_method.id">
-                                    <b-form-group v-if="getPaymentInterest().length > 1">
-                                        <label> Interés </label>
-                                        <b-form-select
-                                            v-model="payment_method_interest"
-                                            :options="getPaymentInterest()"
-                                            value-field="item"
-                                        >
-                                        </b-form-select>
-                                    </b-form-group>
-                                </template>
-                            </b-col>
-                        </b-row>
-
-                        <b-row>
-                            <b-col md="4" sm="12">
+                            <b-col :md="employeePresence() ? 3 : 4" sm="12">
                                 <b-form-group>
-                                    <template #label>
-                                        Fecha de emisión <sup class="text-danger">*</sup>
-                                    </template>
-                                    <component-datepicker
-                                        :focus="false"
-                                        lang="es"
-                                        type="date"
-                                        format="DD-MM-YYYY HH:mm"
-                                        v-model="sale.sale_date"
-                                        placeholder=""
-                                        required
+                                    <label> Método de pago <sup class="text-danger">*</sup> </label>
+                                    <b-form-select required v-model="payment_method" :options="options.payment_methods">
+                                        <template #first>
+                                            <b-form-select-option disabled :value="null"> Seleccione un método de pago  </b-form-select-option>
+                                        </template>
+                                    </b-form-select>
+                                </b-form-group>
+                            </b-col>
+
+                            <b-col v-if="payment_method.id" :md="employeePresence() ? 3 : 4" sm="12">
+                                <b-form-group v-if="getPaymentInterest().length > 1">
+                                    <label> Interés </label>
+                                    <b-form-select
+                                        v-model="payment_method_interest"
+                                        :options="getPaymentInterest()"
+                                        value-field="item"
                                     >
-                                    </component-datepicker>
+                                    </b-form-select>
                                 </b-form-group>
                             </b-col>
                         </b-row>
-
                         <hr>
 
+                        <b-form-group>
+                            <template #label>
+                                Fecha de emisión <sup class="text-danger">*</sup>
+                            </template>
+                            <component-datepicker
+                                :focus="false"
+                                lang="es"
+                                type="date"
+                                format="DD-MM-YYYY HH:mm"
+                                v-model="sale.sale_date"
+                                placeholder=""
+                                required
+                            >
+                            </component-datepicker>
+                        </b-form-group>
+
                         <component-sale-details
+                            v-if="options_loaded"
+                            :options="options"
                             :products="products"
                             :payment_method_discount="payment_method_discount"
                             :payment_method_interest="payment_method_interest"

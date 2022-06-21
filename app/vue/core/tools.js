@@ -65,12 +65,8 @@ export default {
             window.open(url, '_blank')
         }
 
-        const printSales = () => {
-            let url = `${window.location.href}.pdf`
-
-            url += `?disable_pagination=${true}`
-
-            window.open(url, '_blank')
+        const printSales = (url) => {
+            window.open(`${url}.pdf`, '_blank')
         }
 
         const printQuotation = (quotation_id) => {

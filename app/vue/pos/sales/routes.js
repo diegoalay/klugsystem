@@ -10,7 +10,8 @@ const routes =  [
         props: {
             app_module: 'pos',
             validateCashRegister: true,
-            origin: 'sale'
+            origin: 'sale',
+            storedFilters: true
         }
     },
     {
@@ -30,7 +31,7 @@ const routes =  [
         props: {
             app_module: 'pos',
             controller: 'sales'
-        }
+        },
     }
 ]
 

@@ -10,7 +10,8 @@ export default {
             summary: {
                 total: 0
             },
-            initFilters: null
+            initFilters: null,
+            filters: {}
         }
     },
     mounted() {
@@ -35,12 +36,11 @@ export default {
     },
     methods: {
         changeSummary(filters){
+            this.filters = filters
+
             this.storage.local('reports/sales', filters)
 
-            const url = this.url.reports('sales')
-            .filters(filters)
-            .paginate(false)
-
+            const url = this.getUrl('json')
             this.http.get(url).then(result => {
                 if (result.successful) {
                     this.summary = result.data
@@ -50,6 +50,11 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
+        },
+        getUrl(type){
+            let url = this.url.reports('sales').filters(this.filters).paginate(false)
+
+            return url.toString(type)
         }
     }
 }
@@ -67,7 +72,7 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.interests }} </h3>
+                            <h3> {{ this.number.formatCurrency(summary.interests) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -81,7 +86,7 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.discounts }} </h3>
+                            <h3> {{ this.number.formatCurrency(summary.discounts) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -95,7 +100,7 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.invalid_sales }} </h3>
+                            <h3> {{ this.number.formatCurrency(summary.invalid_sales) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -109,7 +114,7 @@ export default {
                             </h5>
                         </b-col>
                         <b-col md="9" sm="9" class="dashboard-value text-right">
-                            <h3> {{ summary.valid_sales }} </h3>
+                            <h3> {{ this.number.formatCurrency(summary.valid_sales) }} </h3>
                         </b-col>
                     </b-row>
                 </b-card>
@@ -117,7 +122,7 @@ export default {
         </b-row>
         <component-header-form v-if="summary.total > 0">
             <slot name="buttons">
-                <b-button variant="outline-danger" @click="tools.printSales()" class="mb-2">
+                <b-button variant="outline-danger" @click="tools.printSales(getUrl('pdf'))" class="mb-2">
                     <font-awesome-icon icon="file-pdf" />
                     {{ 'Fact. electrónicas' }}
                 </b-button>

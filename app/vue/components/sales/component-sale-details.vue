@@ -51,6 +51,18 @@ export default {
         } else {
             this.normalSaleFields()
         }
+
+        if (this.tools.isMobile()) {
+            this.fields.unshift({
+                label: '',
+                key: 'actions'
+            })
+        } else {
+            this.fields.push({
+                label: '',
+                key: 'actions'
+            })
+        }
     },
     methods: {
         normalSaleFields(){
@@ -60,7 +72,7 @@ export default {
                 sortable: true
             },{
                 label: 'Unidad',
-                key: 'measurement_unit_name'
+                key: 'measurement_unit'
             },{
                 label: 'Cantidad',
                 key: 'saleQuantity'
@@ -79,9 +91,6 @@ export default {
             },{
                 label: 'Total',
                 key: 'total'
-            },{
-                label: '',
-                key: 'actions'
             }]
         },
         manualSaleFields(){
@@ -91,7 +100,7 @@ export default {
                 sortable: true,
             },{
                 label: 'Unidad',
-                key: 'measurement_unit_name',
+                key: 'measurement_unit',
                 thClass: 'item-measurement-unit-header',
                 required: true
             },{
@@ -130,18 +139,6 @@ export default {
                 label: 'Total',
                 key: 'total'
             }]
-
-            if (this.tools.isMobile()) {
-                this.fields.unshift({
-                    label: '',
-                    key: 'actions'
-                })
-            } else {
-                this.fields.push({
-                    label: '',
-                    key: 'actions'
-                })
-            }
         },
         setProductQuantity(item){
             if (this.manualSale) {
@@ -176,7 +173,7 @@ export default {
                 return
             }
 
-            if ((productSaleQuantity > productmaxQuantity) && (item.product_type === 'good')) {
+            if (this.options.inventory_count && (productSaleQuantity > productmaxQuantity) && (item.product_type === 'good')) {
                 const quantity = productmaxQuantity
 
                 this.$set(this.products[index], 'saleQuantity', quantity)
@@ -483,16 +480,6 @@ export default {
                     --
                 </template>
             </template>
-
-            <template v-slot:cell(actions)="row">
-                <b-button size="sm" variant="outline-danger" @click.stop="removeProduct(row.item)" class="mr-1">
-                    <font-awesome-icon icon="trash" />
-                </b-button>
-                &nbsp;
-                <b-button size="sm" variant="outline-primary" @click.stop="showModal(row.item)" class="mr-1">
-                    <font-awesome-icon icon="pen-to-square" />
-                </b-button>
-            </template>
         </b-table>
 
         <b-table
@@ -503,7 +490,6 @@ export default {
             :items="products"
             :fields="fields"
         >
-
             <template v-slot:cell(saleQuantity)="row">
                 <b-row>
                     <b-col md="10">
@@ -513,12 +499,25 @@ export default {
                             type="number"
                             v-model="row.item.saleQuantity"
                             min="1"
-                            :max="row.item.quantity"
+                            :max="options.inventory_count ? row.item.quantity : null"
                             autocomplete="off"
                         >
                         </b-form-input>
                     </b-col>
                 </b-row>
+            </template>
+
+           <template v-if="options.product_price_editable" v-slot:cell(price)="row">
+                <b-form-input
+                    @change="setProductPriceManual(row.item)"
+                    size="sm"
+                    type="number"
+                    v-model="row.item.price"
+                    min="0"
+                    step="any"
+                    autocomplete="off"
+                >
+                </b-form-input>
             </template>
 
            <template v-slot:cell(interest)="row">

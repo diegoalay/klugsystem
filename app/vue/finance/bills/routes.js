@@ -14,7 +14,8 @@ const routes =  [
             titleHeader: 'Facturas',
             buttonHeader: 'Facturar',
             origin: 'bill',
-            hiddenColumns: ['received_amount', 'change']
+            hiddenColumns: ['received_amount', 'change'],
+            storedFilters: true
         }
     },
     {

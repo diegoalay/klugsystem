@@ -197,9 +197,9 @@ export default {
         },
 
         subtotal1(sale_detail){
-            return parseFloat(
+            return this.number.formatCurrency(parseFloat(
                 parseFloat(sale_detail.subtotal) + parseFloat(sale_detail.interest_value)
-            ).toFixed(2)
+            ).toFixed(2))
         }
     },
 
@@ -286,15 +286,23 @@ export default {
                     </template>
 
                     <template v-slot:cell(interest_value)="row">
-                        {{ row.item.interest_value > 0 ? row.item.interest_value + ` (${row.item.interest_percentage} %)` : '-'}}
+                        {{ row.item.interest_value > 0 ? number.formatPercentage(row.item.interest_value) + ` (${row.item.interest_percentage} %)` : '-'}}
                     </template>
 
                     <template v-slot:cell(discount_value)="row">
-                        {{ row.item.discount_value > 0 ? row.item.discount_value + ` (${row.item.discount_percentage} %)` : '-' }}
+                        {{ row.item.discount_value > 0 ? number.formatPercentage(row.item.discount_value) + ` (${row.item.discount_percentage} %)` : '-' }}
+                    </template>
+
+                    <template v-slot:cell(subtotal)="row">
+                        {{ number.formatCurrency(row.item.subtotal) }}
                     </template>
 
                     <template v-slot:cell(subtotal_1)="row">
                         {{ subtotal1(row.item) }}
+                    </template>
+
+                    <template v-slot:cell(total)="row">
+                        {{ number.formatCurrency(row.item.total) }}
                     </template>
 
                     <template v-slot:cell(sale_type)="row">

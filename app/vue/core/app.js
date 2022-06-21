@@ -3,6 +3,7 @@ import Vue from 'vue'
 import DatePicker from 'vue2-datepicker'; import 'vue2-datepicker/index.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast from 'vue-toastification'; import 'vue-toastification/dist/index.css';
 import VueApexCharts from 'vue-apexcharts'
@@ -54,6 +55,9 @@ import tools from './tools'
 import date from './date'
 import store from './store'
 import storage from './storage'
+import number from './number'
+import vuejsLoadingPlugin from 'vuejs-loading-plugin';
+import VueJSModal from 'vue-js-modal';
 
 // Global registration
 Vue.component('apexchart', VueApexCharts)
@@ -92,7 +96,7 @@ Vue.use(CarouselPlugin)
 Vue.use(VueApexCharts)
 Vue.use(Dialog)
 
-library.add(fas)
+library.add(fas, fab)
 
 // Libraries
 Vue.use(VModal, { componentName: 'modal' })
@@ -103,6 +107,8 @@ Vue.use(tools, http)
 Vue.use(date, tools)
 Vue.use(store, system)
 Vue.use(storage, system)
+Vue.use(number)
+
 Vue.use(Toast, {
     timeout: 1500,
     hideProgressBar: true,
@@ -189,7 +195,7 @@ export default (base_path, routes=[]) => {
                 data: {
                     content: this.message,
                 },
-            });
+            })
         }
     }
 

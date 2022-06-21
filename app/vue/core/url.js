@@ -14,7 +14,6 @@ export default {
 
             // parse, join and create a well formated url object
             _build(api = true) {
-
                 let url = ""
 
                 // if path exists for the url
@@ -25,7 +24,13 @@ export default {
                 // normally all the requests are sent to the internal Lesli api
                 // so, the requests should include the json suffix
                 if (api) {
-                    url = url.concat(".json")
+                    if (api === true) {
+                        url = url.concat(".json")
+                    } else {
+                        url = url.concat(`.${api}`)
+
+                        console.log(url)
+                    }
                 }
 
                 // concat query string if available

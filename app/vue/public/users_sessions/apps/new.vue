@@ -1,5 +1,5 @@
 <script type="text/javascript">
-import componenentAutocomplete from 'vueApp/components/form/password.vue'
+import componentInputPassword from 'vueApp/components/form/password.vue'
 
 export default {
     data() {
@@ -13,7 +13,7 @@ export default {
         }
     },
     components: {
-        'input-password': componenentAutocomplete
+        'input-password': componentInputPassword
     },
     methods: {
         submitForm(event) {

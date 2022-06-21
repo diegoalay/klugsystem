@@ -44,10 +44,12 @@ class Sale < ApplicationRecord
               sale_detail.update(status: false)
 
               if sale_detail.product.present?
-                quantity = sale_detail.product.quantity
-                quantity += sale_detail.quantity
+                if account.inventory_count
+                  quantity = sale_detail.product.quantity
+                  quantity += sale_detail.quantity
+                  sale_detail.product.update(quantity: quantity)
+                end
 
-                sale_detail.product.update(quantity: quantity)
                 sale_detail.product.transactions.find_by(model_id: id, model_type: 'Sale')&.destroy!
               end
             end
@@ -123,6 +125,7 @@ class Sale < ApplicationRecord
   end
 
   def sale_data
+    errors.add(:base, 'Debe seleccionar a un empleado.') if (employee.blank? && account.billing_employee_presence.present?)
     errors.add(:base, 'La cantidad recibida debe ser mayor o igual al total de la venta.') if (received_amount < total && origin != 'bill')
     errors.add(:base, 'Debe seleccionar un tipo de venta.') if sale_type.blank?
     errors.add(:base, 'Debe seleccionar un cliente.') if client.blank?

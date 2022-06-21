@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Efectivo"
+  },
+  {
+    "name": "Tarjeta"
+  },
+  {
+    "name": "Transferencia"
+  },
+  {
+    "name": "Cheque"
+  }
+]

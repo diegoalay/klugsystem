@@ -4,6 +4,10 @@ export default {
         product: {
             type: Object,
             required: false
+        },
+        options: {
+            type: Object,
+            required: true
         }
     },
 
@@ -23,7 +27,7 @@ export default {
 
 </script>
 <template>
-    <b-col sm="6" md="3">
+    <b-col sm="6" md="4">
         <b-card @click="addProduct(product)" class="overflow-hidden h-100 mt-1 p-1 pb-1 mb-1">
             <template #header>
                 <p class="mb-0 text-center"><b> {{ product.name }} </b></p>
@@ -34,7 +38,7 @@ export default {
                 <b-card-body>
                     <p> <b>Precio: </b> {{ 'Q ' + product.retail_price }} </p>
                     <template v-if="product.product_type === 'good'">
-                        <p> <b>Existencias:</b> {{ product.quantity }} </p>
+                        <p v-if="options.inventory_count"> <b>Existencias:</b> {{ product.quantity }} </p>
                         <p v-if="product.brand_name"> <b>Marca:</b> {{ product.brand_name }} </p>
                         <p v-if="product.department_name"> <b>Marca:</b> {{ product.department_name }} </p>
                         <p class="text-info"> <b> (Bien) </b></p>
