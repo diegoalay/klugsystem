@@ -21,7 +21,7 @@ class SaleQuery
       'sales.status',
       'sales.sale_date',
       'payment_methods.name as payment_method',
-      "concat(employees.first_name, ' ', employees.first_surname) as employee_name",
+      "concat(employees.first_name, ' ', employees.second_name, ' ', employees.first_surname, ' ', employees.second_surname) as employee_name",
       "concat(users.first_name, ' ', users.first_surname) as user_creator_name",
       "concat(clients.first_name, ' ', clients.first_surname) as client_name",
       'clients.billing_name as client_blling_name',
@@ -76,6 +76,7 @@ class SaleQuery
 
       data = sales.map do |sale|
         sale.attributes.merge(
+          employee_name: sale.employee_name&.squish,
           can_be_disabled: sale.status ? current_user.admin? : false,
           sale_type_text: I18n.t("models.sales.column_enum_sale_type_#{sale.sale_type}")
         )

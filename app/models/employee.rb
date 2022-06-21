@@ -13,14 +13,13 @@ class Employee < ApplicationRecord
   acts_as_paranoid
 
   def self.index account
-    clients = account.employees.select("
+    employees = account.employees.select("
       employees.id,
-      trim(
-        concat(
-          employees.first_name,
-          ' ',
-          employees.second_name
-        )
+      concat(
+        employees.first_name, ' ',
+        employees.second_name, ' ',
+        employees.first_surname, ' ',
+        employees.second_surname
       ) as full_name,
       employees.third_name,
       employees.first_surname,
@@ -29,6 +28,12 @@ class Employee < ApplicationRecord
       employees.employee_file_id
     ")
     .left_joins(:user)
+
+    employees.map do |employee|
+      employee.attributes.merge(
+        full_name: employee.full_name&.squish,
+      )
+    end
   end
 
   def self.search account, query
