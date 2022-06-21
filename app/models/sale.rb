@@ -13,7 +13,7 @@ class Sale < ApplicationRecord
   has_many   :details
   has_one    :electronic_bill
 
-  validate :sale_data
+  validate :sale_data, on: :create
 
   after_create  :initialize_sale
   after_save    :rollback_products_edition
