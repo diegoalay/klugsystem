@@ -1,5 +1,26 @@
 module XmlServices
   module Helper
+    def account_billing_municipality
+      municipality = @sale.branch_office.billing_municipality
+      municipality = '' if municipality.blank?
+
+      municipality
+    end
+
+    def account_billing_department
+      department = @sale.branch_office.billing_department
+      department = '' if department.blank?
+
+      department
+    end
+
+    def account_billing_postcode
+      postcode = @sale.branch_office.billing_postcode
+      postcode = 0 if postcode.blank?
+
+      postcode
+    end
+
     def client_billing_municipality
       municipality = @sale.client.billing_municipality
       municipality = '' if municipality.blank?

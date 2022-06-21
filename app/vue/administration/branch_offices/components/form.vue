@@ -162,48 +162,6 @@ export default {
 
                         <b-form-group>
                             <template #label>
-                                Código Postal <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="branch_office.billing_postcode"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-
-                        <b-form-group>
-                            <template #label>
-                                Municipio <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="branch_office.billing_municipality"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-
-                        <b-form-group>
-                            <template #label>
-                                Departamento <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="branch_office.billing_department"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-
-                        <b-form-group>
-                            <template #label>
                                 Código de establecimiento <sup class="text-danger">*</sup>
                             </template>
 
@@ -212,6 +170,45 @@ export default {
                                 type="text"
                                 placeholder=""
                                 required
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Código Postal
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_postcode"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Municipio
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_municipality"
+                                type="text"
+                                placeholder=""
+                            >
+                            </b-form-input>
+                        </b-form-group>
+
+                        <b-form-group>
+                            <template #label>
+                                Departamento
+                            </template>
+
+                            <b-form-input
+                                v-model="branch_office.billing_department"
+                                type="text"
+                                placeholder=""
                             >
                             </b-form-input>
                         </b-form-group>

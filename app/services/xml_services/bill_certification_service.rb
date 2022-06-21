@@ -26,9 +26,9 @@ module XmlServices
                           NombreComercial="#{@sale.account.name}" AfiliacionIVA="GEN">
                           <dte:DireccionEmisor>
                               <dte:Direccion>#{@sale.branch_office.billing_address}</dte:Direccion>
-                              <dte:CodigoPostal>#{@sale.branch_office.billing_postcode}</dte:CodigoPostal>
-                              <dte:Municipio>#{@sale.branch_office.billing_municipality}</dte:Municipio>
-                              <dte:Departamento>#{@sale.branch_office.billing_department}</dte:Departamento>
+                              <dte:CodigoPostal>#{account_billing_postcode}</dte:CodigoPostal>
+                              <dte:Municipio>#{account_billing_municipality||''}</dte:Municipio>
+                              <dte:Departamento>#{account_billing_department||''}</dte:Departamento>
                               <dte:Pais>GT</dte:Pais>
                           </dte:DireccionEmisor>
                       </dte:Emisor>
