@@ -148,20 +148,6 @@ export default {
 
                         <b-form-group>
                             <template #label>
-                                Dirección <sup class="text-danger">*</sup>
-                            </template>
-
-                            <b-form-input
-                                v-model="branch_office.billing_address"
-                                type="text"
-                                placeholder=""
-                                required
-                            >
-                            </b-form-input>
-                        </b-form-group>
-
-                        <b-form-group>
-                            <template #label>
                                 Código de establecimiento <sup class="text-danger">*</sup>
                             </template>
 

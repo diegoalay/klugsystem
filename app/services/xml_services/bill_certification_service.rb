@@ -22,10 +22,10 @@ module XmlServices
               <dte:DTE ID="DatosCertificados">
                   <dte:DatosEmision ID="DatosEmision">
                       <dte:DatosGenerales Tipo="FACT" FechaHoraEmision="#{date_format(@sale.sale_date)}" CodigoMoneda="GTQ" />
-                      <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_address}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
+                      <dte:Emisor NITEmisor="#{@sale.account.billing_identifier}" NombreEmisor="#{@sale.account.billing_name}" CodigoEstablecimiento="#{@sale.branch_office.billing_identifier}"
                           NombreComercial="#{@sale.account.name}" AfiliacionIVA="GEN">
                           <dte:DireccionEmisor>
-                              <dte:Direccion>#{@sale.branch_office.billing_address}</dte:Direccion>
+                              <dte:Direccion>#{@sale.account.billing_address}</dte:Direccion>
                               <dte:CodigoPostal>#{account_billing_postcode}</dte:CodigoPostal>
                               <dte:Municipio>#{account_billing_municipality||''}</dte:Municipio>
                               <dte:Departamento>#{account_billing_department||''}</dte:Departamento>
