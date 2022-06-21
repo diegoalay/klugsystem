@@ -68,8 +68,6 @@ module XmlServices
         taxes_amount = round(item_tax_amount(sale_detail))
         total = round(sale_detail.total)
 
-        debugger
-
         items.push(%{
             <dte:Item NumeroLinea="#{index}" BienOServicio="#{item_product_type(sale_detail)}">
               <dte:Cantidad>#{sale_detail.quantity}</dte:Cantidad>
