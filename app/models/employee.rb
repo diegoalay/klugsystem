@@ -56,7 +56,7 @@ class Employee < ApplicationRecord
   end
 
   def name
-    [first_name, first_surname].join(' ')
+    [first_name, second_name, first_surname, second_surname].join(' ')
   end
 
   private
