@@ -40,6 +40,8 @@ export default {
         }
     },
     mounted(){
+        console.log(this.item)
+
         setTimeout(() => {
             this.$nextTick(()=>{
                 const key = `item-description-${this.item.id}`

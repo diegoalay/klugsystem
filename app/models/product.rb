@@ -66,6 +66,7 @@ class Product < ApplicationRecord
       products.product_file_id,
       products.product_type,
       brands.name as brand_name,
+      measurement_units.name as measurement_unit,
       measurement_units.name as measurement_unit_name,
       case
         when products.quantity <= 0 then 'Agotado'

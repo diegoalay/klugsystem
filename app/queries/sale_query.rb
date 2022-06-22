@@ -104,6 +104,14 @@ class SaleQuery
     end
 
     {
+      product_types: Product.product_types.map { |k,_v|
+        {
+          text: I18n.t("models.products.column_enum_product_type_#{k}").split('')[0],
+          value: k
+        }
+      },
+      measurement_units: @account.measurement_units
+                        .map {|measurement_unit| {text: measurement_unit.name, value: Product.measurement_unit_parser(measurement_unit.name)}},
       statuses: [{text: 'Activa', value: true }, {text: 'Anulada', value: false }],
       user_creator_types: [{ text: 'Mis ventas', value: 'mine'}, {text: 'Caja actual', value: 'current_cash_register'}],
       payment_methods: payment_methods,
