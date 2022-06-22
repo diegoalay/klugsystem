@@ -216,7 +216,7 @@ export default {
         <component-header-form
             title="Ventas">
             <slot name="buttons">
-                <b-button variant="outline-dark" :to="`${app_module}/${controller}/new`" class="mb-2">
+                <b-button variant="outline-dark" :to="`/${app_module}/${controller}/new`" class="mb-2">
                     Vender <font-awesome-icon icon="cart-shopping" />
                 </b-button>
 
