@@ -31,6 +31,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'prawn'
 gem 'combine_pdf'
+gem 'pg_search'
 
 # Pagination
 gem 'kaminari'

@@ -1,5 +1,6 @@
 <script>
 import componentProductItem from 'vueApp/components/sales/product-item.vue'
+import componentProductForm from 'vueApp/inventory/products/components/form.vue'
 
 export default {
     props: {
@@ -9,10 +10,15 @@ export default {
         }
     },
     components: {
-        'component-product-item': componentProductItem
+        'component-product-item': componentProductItem,
+        'component-product-form': componentProductForm
     },
     data(){
         return {
+            newProduct: {
+                id: null,
+                product_type: 'good'
+            },
             products: [],
             loading: false,
             search_text: '',
@@ -35,7 +41,7 @@ export default {
     methods: {
         getProducts(){
             const url = this.url.inventory('products')
-            .filters({search: this.search_text})
+            .filters({search: this.search_text, view_type: 'sale'})
             .paginate(this.pagination.current_page, this.pagination.per_page)
             .order(this.pagination.order_by, this.pagination.order ? 'desc' : 'asc')
 
@@ -62,6 +68,21 @@ export default {
 
         addProduct(product){
             this.$emit('addProduct', product)
+        },
+
+        addNewProduct(){
+            this.$bvModal.show('product-form')
+        },
+
+        productPosted(product){
+            this.pagination.total += 1
+            this.products.unshift(product)
+            this.newProduct = {
+                id: null,
+                product_type: 'good'
+            }
+
+            this.$bvModal.hide('product-form')
         }
     },
     watch: {
@@ -83,7 +104,22 @@ export default {
 <template>
     <div>
         <br>
-        <component-search-list :loading="loading" @search="onSearch"/>
+        <b-row>
+            <b-col>
+                <component-search-list :loading="loading" @search="onSearch"/>
+            </b-col>
+            <b-col md="3" sm="4">
+                <b-button
+                    @click="addNewProduct"
+                    variant="primary"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Agregar un producto nuevo"
+                >
+                    Nuevo <font-awesome-icon icon="plus" />
+                </b-button>
+            </b-col>
+        </b-row>
         <hr>
         <b-row>
             <component-product-item
@@ -107,5 +143,21 @@ export default {
                 class="my-0"
             ></b-pagination>
         </b-col>
+
+        <b-modal
+            id="product-form"
+            size="xl"
+            centered
+            hide-footer
+            content-class="shadow"
+            title="Nuevo producto / servicio"
+        >
+            <component-product-form
+                :showProduct="false"
+                :product="newProduct"
+                @post="productPosted"
+            >
+            </component-product-form>
+        </b-modal>
     </div>
 </template>

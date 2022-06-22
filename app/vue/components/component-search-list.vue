@@ -33,6 +33,13 @@
                 this.timer = setTimeout(() => {
                     this.$emit("search", this.text)
                 }, 500);
+            },
+            clearInput(){
+                this.text = ''
+
+                this.$nextTick(()=> {
+                    this.$refs['input'].focus()
+                })
             }
         },
 
@@ -54,13 +61,14 @@
             <b-col>
                 <b-input-group>
                     <b-form-input
+                        ref="input"
                         id="filterInput"
                         :placeholder="placeholderText"
                         v-model="text"
                     >
                     </b-form-input>
                     <b-input-group-append>
-                        <b-button :disabled="!text" @click="text = ''"><font-awesome-icon icon="xmark" /></b-button>
+                        <b-button :disabled="!text" @click="clearInput()"><font-awesome-icon icon="xmark" /></b-button>
                     </b-input-group-append>
                 </b-input-group>
             </b-col>

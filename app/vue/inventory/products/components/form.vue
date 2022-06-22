@@ -4,6 +4,10 @@ export default {
         product: {
             required: true,
             type: Object
+        },
+        showProduct: {
+            type: Boolean,
+            default: true
         }
     },
     components: {
@@ -40,7 +44,12 @@ export default {
             this.http.post(url, form).then(result => {
                 if (result.successful) {
                     this.$toast.success('Producto creado exitosamente.')
-                    this.$router.push(this.url.inventory('products/:id', { id: result.data.id }).toString(false))
+
+                    if (this.showProduct) {
+                        this.$router.push(this.url.inventory('products/:id', { id: result.data.id }).toString(false))
+                    }
+
+                    this.$emit('post', result.data)
                 } else {
                     this.$toast.error(result.error.message)
                 }

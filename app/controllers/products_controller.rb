@@ -39,7 +39,7 @@ class ProductsController < ApplicationSystemController
     @product.user_modifier = current_user
 
     if @product.save
-      respond_with_successful(@product)
+      respond_with_successful(@product.show_simple)
     else
       respond_product_with_error
     end

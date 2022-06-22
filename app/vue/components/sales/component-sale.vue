@@ -248,7 +248,7 @@ export default {
                     this.$router.push(this.url[this.app_module](`${this.controller}/:id`, {id: result.data.id}).toString(false))
                 } else {
                     if (sale_type === 'electronic_bill') {
-                        this.$toast.error(result.error.message, {
+                        this.$toast.error(result.error.message||'Error al crear factura electrónica.', {
                             timeout: 10000,
                         })
                     } else {
@@ -605,6 +605,7 @@ export default {
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
                             :endpoint="url.crm('/clients/search').toString(false)"
+                            :closeable="true"
                         />
 
                         <b-row>
@@ -830,6 +831,7 @@ export default {
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
                             :endpoint="url.crm('/clients/search').toString(false)"
+                            :closeable="true"
                         />
 
                         <b-row v-if="quotation">

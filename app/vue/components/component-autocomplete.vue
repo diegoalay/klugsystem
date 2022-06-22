@@ -316,6 +316,11 @@ export default {
             this.$nextTick(()=>{
                 this.disable_search = false;
             });
+        },
+
+        clearInput(){
+            this.search = ''
+            this.focusOnInput()
         }
     },
 
@@ -379,7 +384,7 @@ export default {
             <template name="buttons">
                 <slot>
                   <b-input-group-prepend>
-                      <b-button v-if="closeable" :disabled="!search" @click="search = ''"><font-awesome-icon icon="xmark" /></b-button>
+                      <b-button v-if="closeable" :disabled="!search" @click="clearInput()"><font-awesome-icon icon="xmark" /></b-button>
                   </b-input-group-prepend>
                 </slot>
             </template>

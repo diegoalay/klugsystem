@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   include LoggerConcern
+  include PgSearch::Model
 
   belongs_to :brand, optional: :true
   belongs_to :department, optional: :true
@@ -25,10 +26,37 @@ class Product < ApplicationRecord
 
   acts_as_paranoid
 
+  validates :name, presence: true, uniqueness: { scope: :account_id }
+
+  pg_search_scope :search_product,
+                  against: { name: 'A', sku: 'B' },
+                  using: { tsearch: { dictionary: 'spanish' } }
+
   def self.index account, query
     search = query[:filters][:search]&.downcase if query[:filters]
 
-    products = account.products.select("
+    if !search.blank?
+      products = Product.search_product(search).where(account: account)
+
+      if products.blank?
+        products = account.products.where("
+          lower(products.status) like '%#{search}%' or
+          lower(products.sku) like '%#{search}%' or
+          lower(products.name) like '%#{search}%' or
+          cast(products.wholesale_price as varchar) like '%#{search}%' or
+          cast(products.quantity as varchar) like '%#{search}%'
+        ") unless search.blank?
+      end
+
+    else
+      products = account.products
+    end
+
+    if query[:filters] && !query[:filters][:product_type].blank?
+      products = products.where("products.product_type = ?", query[:filters][:product_type])
+    end
+
+    products = products.select("
       products.id,
       products.sku,
       products.name,
@@ -46,17 +74,6 @@ class Product < ApplicationRecord
     ")
     .joins(:branch_office)
     .left_joins(:brand, :department, :measurement_unit)
-
-    products = products.where("
-      lower(products.status) like '%#{search}%' or
-      lower(products.sku) like '%#{search}%' or
-      lower(products.name) like '%#{search}%' or
-      cast(products.retail_price as varchar) like '%#{search}%' or
-      cast(products.wholesale_price as varchar) like '%#{search}%' or
-      cast(products.quantity as varchar) like '%#{search}%'
-    ") unless search.blank?
-
-    products = products.where("products.product_type = ?", query[:filters][:product_type]) if query[:filters] && !query[:filters][:product_type].blank?
 
     if (query[:filters] && !!query[:filters][:top_products])
       return [] if (query[:filters][:start_date].blank?||query[:filters][:end_date].blank?)
@@ -190,13 +207,18 @@ class Product < ApplicationRecord
     text[0..2]
   end
 
-  def show
+  def show_simple
     product = self.attributes.merge({
+      product_type_translation: I18n.t("models.products.column_enum_product_type_#{product_type}"),
+      measurement_unit_name: Product.measurement_unit_parser(measurement_unit.name),
+    })
+  end
+
+  def show
+    self.attributes.merge({
       details: name.to_s + " [" + sku.to_s + "]",
       statistics: self.sale_statistics
     })
-
-    product
   end
 
   def self.options account
