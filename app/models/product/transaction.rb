@@ -61,17 +61,21 @@ class Product::Transaction < ApplicationRecord
   end
 
   def validate_quantity
-    if product.account.inventory_count && quantity > product.quantity && category == "decrease"
-      errors.add(:base, "El egreso debe ser menor o igual a la cantidad actual de las existencias")
+    if product.account.inventory_count
+      if quantity > product.quantity && category == "decrease"
+        errors.add(:base, "El egreso debe ser menor o igual a la cantidad actual de las existencias")
+      end
     end
   end
 
   private
 
   def set_product_quantity
-    if product.account.inventory_count
-      value = quantity * (category == "decrease" ? -1 : 1)
+    value = quantity * (category == "decrease" ? -1 : 1)
 
+    if !product.account.inventory_count && (self.product.quantity + value  < 0)
+      self.product.update!(quantity:  0)
+    else
       self.product.update!(quantity:  self.product.quantity + value)
     end
   end

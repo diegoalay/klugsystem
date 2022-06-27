@@ -158,7 +158,7 @@ export default {
                     <b-col md="4" sm="12">
                         <b-form-group>
                             <template #label>
-                                ¿ Descontar del inventario al vender ?
+                                ¿ Considerar el límite del inventario al vender ?
                             </template>
 
                             <b-form-checkbox
