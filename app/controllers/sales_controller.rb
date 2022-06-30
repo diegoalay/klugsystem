@@ -214,7 +214,6 @@ class SalesController < ApplicationSystemController
       :employee_id,
       :sale_date,
       :payment_method_id,
-      :product_price_editable,
       custom_fields: [
         :id,
         :value,

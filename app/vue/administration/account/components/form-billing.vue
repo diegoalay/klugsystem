@@ -184,6 +184,20 @@ export default {
                     </b-col>
                 </b-row>
 
+                <b-row>
+                    <b-col md="4" sm="12">
+                        <b-form-group>
+                            <template #label>
+                                ¿ Permite cambiar el nombre del producto al vender ?
+                            </template>
+
+                            <b-form-checkbox v-model="account.product_name_editable">
+                                {{ account.product_name_editable ? 'Deshabilitar' : 'Habilitar'}}
+                            </b-form-checkbox>
+                        </b-form-group>
+                    </b-col>
+                </b-row>
+
                 <b-form-group>
                     <template #label>
                         Tipos de venta

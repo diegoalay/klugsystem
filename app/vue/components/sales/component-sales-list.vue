@@ -101,7 +101,8 @@ export default {
                 sortable: true
             },{
                 label: '',
-                key: 'actions'
+                key: 'actions',
+                sortable: false
             }],
             pagination: {
                 total: 0,

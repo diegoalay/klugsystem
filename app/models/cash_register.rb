@@ -15,6 +15,10 @@ class CashRegister < ApplicationRecord
       cash_registers.final_value,
       cash_registers.open_date,
       cash_registers.close_date,
+      CASE
+        WHEN close_date is null THEN false
+        ELSE true
+      END as status,
       concat(users.first_name, ' ', users.first_surname) as user_creator_name
     ")
     .joins(:user_creator)

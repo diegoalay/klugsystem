@@ -39,6 +39,7 @@ class Administration::AccountsController < ApplicationSystemController
       :billing_employee_presence,
       :inventory_count,
       :product_price_editable,
+      :product_name_editable,
       sale_types: []
     )
   end

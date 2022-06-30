@@ -17,6 +17,7 @@ class Finance::BillQuery < SaleQuery
       sale_client_id: @account.sale_client_id,
       billing_employee_presence: @account.billing_employee_presence,
       product_price_editable: @account.product_price_editable,
+      product_name_editable: @account.product_name_editable,
       inventory_count: @account.inventory_count,
       employees: @account.employees.map {|employee| {text: employee.name, value: employee.id}}
     }

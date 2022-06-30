@@ -97,7 +97,7 @@ export default {
         <b-card>
             <b-card-body>
                 <b-row>
-                    <b-col md="2" sm="12">
+                    <b-col md="3" sm="12">
                         <b-form-group>
                             <template #label>
                                 Tipo de producto <sup class="text-danger">*</sup>
@@ -116,16 +116,17 @@ export default {
                             <template #label>
                                 Nombre  <sup class="text-danger"> * </sup>
                             </template>
-                            <b-form-input
+                            <b-form-textarea
+                                placeholder="Ingrese descripción"
                                 v-model="product.name"
-                                type="text"
-                                placeholder=""
+                                autocomplete="off"
+                                rows="3"
                                 required
                             >
-                            </b-form-input>
+                            </b-form-textarea>
                         </b-form-group>
                     </b-col>
-                    <b-col md="5" sm="12">
+                    <b-col md="4" sm="12">
                         <b-form-group>
                             <label> Precio <sup class="text-danger">*</sup> </label>
 

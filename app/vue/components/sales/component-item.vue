@@ -40,12 +40,12 @@ export default {
         }
     },
     mounted(){
-        console.log(this.item)
-
         setTimeout(() => {
             this.$nextTick(()=>{
                 const key = `item-description-${this.item.id}`
-                this.$refs[key].focus()
+                if (this.$refs[key]) {
+                    this.$refs[key].focus()
+                }
             })
         })
     },
@@ -87,9 +87,21 @@ export default {
 
                 <b-form-group>
                     <template #label> Descripción <sup class="text-danger">*</sup> </template>
+
+
                     <b-form-textarea
                         :ref="`item-description-${item.id}`"
+                        v-if="options.product_name_editable"
                         v-model="item.name"
+                        placeholder="Ingrese descripción"
+                        autocomplete="off"
+                        rows="3"
+                    >
+                    </b-form-textarea>
+                    <b-form-textarea
+                        v-else
+                        readonly
+                        :value="item.name"
                         placeholder="Ingrese descripción"
                         autocomplete="off"
                         rows="3"
@@ -101,9 +113,10 @@ export default {
                     <b-col md="3" sm="12">
                         <b-form-group>
                             <template #label>
-                                Valor <sup class="text-danger"> *</sup>
+                                Precio <sup class="text-danger"> *</sup>
                             </template>
                             <b-form-input
+                                v-if="options.product_price_editable"
                                 @change="setProductPriceManual(item)"
                                 size="sm"
                                 type="number"
@@ -111,6 +124,18 @@ export default {
                                 min="0"
                                 step="any"
                                 autocomplete="off"
+                            >
+                            </b-form-input>
+                            <b-form-input
+                                v-else
+                                :value="item.price"
+                                size="sm"
+                                type="number"
+                                v-model="item.price"
+                                min="0"
+                                step="any"
+                                autocomplete="off"
+                                readonly
                             >
                             </b-form-input>
                         </b-form-group>
