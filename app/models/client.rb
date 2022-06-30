@@ -38,6 +38,6 @@ class Client < ApplicationRecord
 
   def can_be_destroyed
     errors.add(:base, "Existen ventas asignadas a este cliente") and throw(:abort) unless account.sales.where(client: self).blank?
-    errors.add(:base, "El cliente ha sido configurado como predeterminado al momento de realizar una venta") and throw(:abort) unless account.sale_client_id == self.id
+    errors.add(:base, "El cliente ha sido configurado como predeterminado al momento de realizar una venta") and throw(:abort) if account.sale_client_id == self.id
   end
 end
