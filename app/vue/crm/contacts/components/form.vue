@@ -140,7 +140,7 @@ export default {
                             </component-datepicker>
                         </b-form-group>
 
-                        <b-form-group label="Nota">
+                        <b-form-group label="Descripción">
                             <b-form-textarea
                                 v-model="contact.note"
                                 placeholder="Ingrese observaciones"

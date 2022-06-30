@@ -28,6 +28,9 @@
                     label: 'Fax',
                     key: 'fax'
                 },{
+                    label: 'Descripción',
+                    key: 'note'
+                },{
                     label: '',
                     key: 'actions'
                 }],
