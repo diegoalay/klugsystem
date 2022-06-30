@@ -45,10 +45,23 @@
                 filters: {
                     search: '',
                     product_type: ''
-                }
+                },
+                loadingStoredFilters: true
             }
         },
         mounted() {
+            ['pagination', 'filters'].forEach((storedKey) => {
+                for(let key in this.storage.local(`inventory/products/${storedKey}`)) {
+                    const value = this.storage.local(`inventory/products/${storedKey}`)[key]
+
+                    if (value) {
+                        this.$set(this[storedKey], key, value)
+                    }
+                }
+
+                this.loadingStoredFilters = false
+            })
+
             this.list()
             this.getOptions()
         },
@@ -124,6 +137,18 @@
 
             'pagination.order'(){
                 this.list()
+            },
+            filters: {
+                handler(){
+                    this.storage.local('inventory/products/filters', this.filters)
+                },
+                deep: true
+            },
+            pagination: {
+                handler(){
+                    this.storage.local('inventory/products/pagination', this.pagination)
+                },
+                deep: true
             }
         }
     }
@@ -140,7 +165,7 @@
         </component-header-list>
 
         <b-card>
-            <component-search-list :loading="loading" @search="onSearch">
+            <component-search-list :loading="loading" @search="onSearch" :default-value="filters.search">
                 <slot name="filters">
                     <b-form-select
                         v-model="filters.product_type"
@@ -200,6 +225,7 @@
                 </b-table>
                 <b-col sm="4" md="4" class="my-1">
                     <b-pagination
+                        v-if="!loadingStoredFilters"
                         v-model="pagination.current_page"
                         :simple="false"
                         :total-rows="pagination.total"
