@@ -73,10 +73,10 @@ class Product::Transaction < ApplicationRecord
   def set_product_quantity
     value = quantity * (category == "decrease" ? -1 : 1)
 
-    if !product.account.inventory_count && (self.product.quantity + value  < 0)
+    if !product.account.inventory_count && (self.product.quantity.to_f + value.to_f  < 0)
       self.product.update!(quantity:  0)
     else
-      self.product.update!(quantity:  self.product.quantity + value)
+      self.product.update!(quantity:  self.product.quantity.to_f + value.to_f)
     end
   end
 end
