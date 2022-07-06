@@ -49,6 +49,7 @@ Rails.application.routes.draw do
         resources :sales do
           collection do
             get :options
+            post :info_nit
           end
           member do
             post :send_sale
@@ -76,6 +77,7 @@ Rails.application.routes.draw do
 
         resources :sales do
           collection do
+            post :info_nit
             get :options
           end
           member do
@@ -86,6 +88,7 @@ Rails.application.routes.draw do
 
         resources :bills do
           collection do
+            post :info_nit
             get :options
           end
           member do

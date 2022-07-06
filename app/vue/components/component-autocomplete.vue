@@ -348,7 +348,7 @@ export default {
                     this.index = -1;
                 }
             }
-            this.$emit('update:text', this.search)
+            this.$emit('updateText', this.search)
         },
 
         clearOptions(){

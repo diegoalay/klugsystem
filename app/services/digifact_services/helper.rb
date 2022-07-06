@@ -2,9 +2,9 @@ module DigifactServices
   module Helper
     def api_url
       if test_mode?
-        return 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api/FELRequestV2'
+        return 'https://felgttestaws.digifact.com.gt/gt.com.fel.api.v3/api'
       else
-        return 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api/FelRequestV2'
+        return 'https://felgtaws.digifact.com.gt/gt.com.fel.api.v3/api'
       end
     end
 

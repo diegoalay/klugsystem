@@ -123,7 +123,10 @@ export default {
             storedData: {},
             options_loaded: false,
             initialClientId: null,
-            timer_product: null
+            timer_product: null,
+            loadingInfoNit: false,
+            clearContactOptions: false,
+            clientInput: null
         }
     },
     mounted(){
@@ -282,6 +285,40 @@ export default {
                 } else {
                     this.$toast.error(result.error.message)
                 }
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+
+        searchInfoNit(){
+            const url = this.url[this.app_module](`${this.controller}/info_nit`)
+
+            this.loadingInfoNit = true
+
+            const data = {
+                sale: {
+                    client: {
+                        billing_identifier: this.clientInput
+                    }
+                }
+            }
+
+            this.http.post(url, data).then(result => {
+                if (result.successful) {
+                    if (result.data.billing_identifier) {
+                        for(let key in result.data){
+                            if (result.data[key]) {
+                                this.$set(this.client, key, result.data[key])
+                            }
+                        }
+                    } else {
+                        this.$toast.error(`No se ha encontrado el número de NIT ${this.clientInput} en los servidores de la SAT.`)
+                    }
+                } else {
+                    this.$toast.error(result.error.message)
+                }
+
+                this.loadingInfoNit = false
             }).catch(error => {
                 console.log(error)
             })
@@ -556,6 +593,13 @@ export default {
                 key: 'interest_percentage',
                 value: 0
             }
+        },
+        clearContactOptions(value){
+            if (value) {
+                setTimeout(() => {
+                    this.clearContactOptions = false
+                }, 200)
+            }
         }
     }
 }
@@ -605,8 +649,28 @@ export default {
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
                             :endpoint="url.crm('/clients/search').toString(false)"
-                            :closeable="true"
-                        />
+                            :clear-options="clearContactOptions"
+                            @updateText="(value) => clientInput = value"
+                        >
+                            <slot name="buttons">
+                                <b-input-group-prepend>
+                                    <b-button variant="outline-default" @click="clearContactOptions = true">
+                                        <font-awesome-icon icon="xmark" />
+                                    </b-button>
+                                    &nbsp;
+                                    <b-button
+                                        @click="searchInfoNit()"
+                                        variant="outline-primary"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Buscar nit en servidores de la SAT."
+                                    >
+                                        <font-awesome-icon v-if="loadingInfoNit" icon="spinner" spin />
+                                        <font-awesome-icon v-else icon="magnifying-glass" />
+                                    </b-button>
+                                </b-input-group-prepend>
+                            </slot>
+                        </component-autocomplete>
 
                         <b-row>
                             <b-col md="6" sm="12">
@@ -831,8 +895,28 @@ export default {
                             text-field="billing_details"
                             placeholder="Buscar por número de nit"
                             :endpoint="url.crm('/clients/search').toString(false)"
-                            :closeable="true"
-                        />
+                            :clear-options="clearContactOptions"
+                            @updateText="(value) => clientInput = value"
+                        >
+                            <slot name="buttons">
+                                <b-input-group-prepend>
+                                    <b-button variant="outline-default" @click="clearContactOptions = true">
+                                        <font-awesome-icon icon="xmark" />
+                                    </b-button>
+                                    &nbsp;
+                                    <b-button
+                                        @click="searchInfoNit()"
+                                        variant="outline-primary"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Buscar nit en servidores de la SAT."
+                                    >
+                                        <font-awesome-icon v-if="loadingInfoNit" icon="spinner" spin />
+                                        <font-awesome-icon v-else icon="magnifying-glass" />
+                                    </b-button>
+                                </b-input-group-prepend>
+                            </slot>
+                        </component-autocomplete>
 
                         <b-row v-if="quotation">
                             <b-col md="6" sm="12">

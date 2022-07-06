@@ -151,11 +151,13 @@ class SalesController < ApplicationSystemController
     respond_with_successful(SaleQuery.new(@account).options(current_user, @query))
   end
 
+  def info_nit
+    respond_with_successful(DigifactServices::Api.new(current_user).info_nit(billing_identifier&.gsub(/[^0-9]/, '')))
+  end
+
   private
 
   def create_client
-    billing_identifier = params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")&.upcase
-
     @new_client = @account.clients.find_or_initialize_by(
       billing_identifier: billing_identifier
     )
@@ -182,6 +184,10 @@ class SalesController < ApplicationSystemController
     end
 
     client
+  end
+
+  def billing_identifier
+    params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")
   end
 
   def respond_sale_with_error

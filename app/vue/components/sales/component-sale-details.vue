@@ -207,7 +207,7 @@ export default {
 
             this.$set(this.products[index], 'discount_percentage', value)
 
-            this.setProductTotal(index, item)
+            this.setProductTotal(index, item, false)
         },
 
         setProductDiscountPercentage(item){
@@ -231,18 +231,23 @@ export default {
             this.setProductTotal(index, item)
         },
 
-        setProductTotal(index, item){
+        setProductTotal(index, item, percentage = true){
             let subtotal = item.subtotal
             let interest_percentage = item.interest_percentage
             let discount_percentage = item.discount_percentage
+            let discount_value = item.discount_value
 
             if (Number.isNaN(subtotal)) subtotal = 0
             if (Number.isNaN(interest_percentage)) interest_percentage = 0
             if (Number.isNaN(discount_percentage)) discount_percentage = 0
+            if (Number.isNaN(discount_value)) discount_value = 0
 
             const interest_value = parseFloat(parseFloat(subtotal * interest_percentage).toFixed(2))
             const final_subtotal = parseFloat(parseFloat(subtotal + interest_value).toFixed(2))
-            const discount_value = parseFloat(parseFloat(final_subtotal * (discount_percentage / 100))).toFixed(2)
+            if (percentage) {
+                discount_value = parseFloat(parseFloat(final_subtotal * (discount_percentage / 100))).toFixed(2)
+            }
+
             const total = parseFloat(parseFloat(final_subtotal - discount_value).toFixed(2))
 
             this.$set(this.products[index], 'discount_value', discount_value)

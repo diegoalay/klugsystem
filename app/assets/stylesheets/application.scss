@@ -133,6 +133,15 @@ a, a:hover {
     opacity:0.5 !important;
  }
 
+ .btn-outline-default {
+    border-color:  rgb(30, 31, 33) !important;
+}
+
+.btn-outline-default:hover {
+    color: #eee;
+    background-color: rgb(30, 31, 33) !important;
+}
+
  @media screen and (-webkit-min-device-pixel-ratio:0) {
     select:focus,
     textarea:focus,

@@ -2,9 +2,10 @@ module DigifactServices
   class Api
     include DigifactServices::GenerateBill
     include DigifactServices::AnulateBill
+    include DigifactServices::InfoNit
     include DigifactServices::Helper
 
-    def initialize(current_user, sale)
+    def initialize(current_user, sale = nil)
       @current_user = current_user
       @token = current_user.account.digifact_token
       @sale = sale
@@ -19,7 +20,7 @@ module DigifactServices
 
     def post(url, query = {}, body = {})
       HTTParty.post(
-        api_url()  + url,
+        url,
         headers: headers,
         query: query,
         body: body,
@@ -29,7 +30,7 @@ module DigifactServices
 
     def get(url, query = {}, body = {})
       HTTParty.get(
-        api_download_url() + url,
+        url,
         headers: headers,
         query: query,
         body: body,
@@ -37,20 +38,24 @@ module DigifactServices
       )
     end
 
-    def download()
+    def download
       unless test_mode?
-        get('', generate_params('GET_DOCUMENT').merge('GUID' => @sale.electronic_bill.identifier))
+        get(api_download_url(), generate_params('GET_DOCUMENT').merge('GUID' => @sale.electronic_bill.identifier))
       else
         @sale.electronic_bill.certification_data
       end
     end
 
+    def info_billing_identifier(billing_identifier)
+      get(api_url() + '/SHAREDINFO', generate_params('GET_DOCUMENT').merge('DATA1' => 'SHARED_GETINFONITcom', 'DATA2' => "NIT|#{billing_identifier}"))
+    end
+
     def certificate(body)
-      post('', generate_params('CERTIFICATE_DTE_XML_TOSIGN'), body)
+      post(api_url() + '/FELRequestV2', generate_params('CERTIFICATE_DTE_XML_TOSIGN'), body)
     end
 
     def annulment(body)
-      post('', generate_params('ANULAR_FEL_TOSIGN'), body)
+      post(api_url() + '/FELRequestV2', generate_params('ANULAR_FEL_TOSIGN'), body)
     end
 
     def generate_params(type)

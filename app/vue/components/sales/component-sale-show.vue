@@ -158,13 +158,13 @@ export default {
                                 value: this.sale.interest
                             },{
                                 description: 'Total (+ Intéres)',
-                                value: this.sale.subtotal2
+                                value: this.sale.subtotal1
                             },{
                                 description: 'Descuento',
                                 value: this.sale.discount
                             },{
                                 description: 'Total (- Descuento)',
-                                value: this.sale.subtotal1
+                                value: this.sale.subtotal2
                             },{
                                 description: 'Envío',
                                 value: this.sale.shipping_costs
