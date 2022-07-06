@@ -33,6 +33,10 @@ es:
           has_many: No se puede eliminar el registro porque existen %{record} dependientes
       format:
       models:
+        product:
+          attributes:
+            name:
+              taken: 'Este producto/servicio ya existe en el sistema.'
         sale:
           attributes:
             payment_method:

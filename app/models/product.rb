@@ -26,7 +26,7 @@ class Product < ApplicationRecord
 
   acts_as_paranoid
 
-  validates :name, presence: true, uniqueness: { scope: :account_id }
+  validates :name, presence: true, uniqueness: { scope: [:measurement_unit, :product_type, :account_id, :brand_id, :branch_office_id] }, on: :create
 
   pg_search_scope :search_product,
                   against: { name: 'A', sku: 'B' },
