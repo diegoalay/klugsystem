@@ -152,7 +152,7 @@ class SalesController < ApplicationSystemController
   end
 
   def info_nit
-    respond_with_successful(DigifactServices::Api.new(current_user).info_nit(billing_identifier&.gsub(/[^0-9]/, '')))
+    respond_with_successful(DigifactServices::Api.new(current_user).info_nit(billing_identifier&.gsub(/[^0-9][A-Z]/, '')))
   end
 
   private
@@ -187,7 +187,7 @@ class SalesController < ApplicationSystemController
   end
 
   def billing_identifier
-    params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")
+    params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "").upcase
   end
 
   def respond_sale_with_error
