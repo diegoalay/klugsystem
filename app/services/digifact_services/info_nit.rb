@@ -24,14 +24,14 @@ module DigifactServices
     def generate_client_name(name)
       name = name.split(',')
 
-      first_name = name[3]
-      second_name = name[4]
+      first_name = name[3]&.squish
+      second_name = name[4]&.squish
 
-      first_surname = name[0]
-      second_surname = name[1]
-      third_surname = name[2]
+      first_surname = name[0]&.squish
+      second_surname = name[1]&.squish
+      third_surname = name[2]&.squish
 
-      [first_name, second_name, first_surname, second_surname, third_surname].join(' ')
+      [first_name, second_name, first_surname, second_surname, third_surname].compact.join(' ')
     end
   end
 end
