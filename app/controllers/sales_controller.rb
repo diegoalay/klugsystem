@@ -187,7 +187,7 @@ class SalesController < ApplicationSystemController
   end
 
   def billing_identifier
-    params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "").upcase
+    params[:sale][:client][:billing_identifier]&.gsub("-", "")&.gsub(/\s/, "")&.upcase
   end
 
   def respond_sale_with_error
