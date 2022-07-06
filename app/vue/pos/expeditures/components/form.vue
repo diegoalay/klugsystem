@@ -93,6 +93,7 @@ export default {
                         v-model="expediture.amount"
                         type="number"
                         placeholder=""
+                        step="any"
                         required
                     >
                     </b-form-input>

@@ -91,6 +91,7 @@ export default {
                         type="number"
                         placeholder=""
                         required
+                        step="any"
                     >
                     </b-form-input>
                 </b-form-group>
