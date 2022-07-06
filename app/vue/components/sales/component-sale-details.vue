@@ -485,6 +485,16 @@ export default {
                     --
                 </template>
             </template>
+
+            <template v-slot:cell(actions)="row">
+                <b-button size="sm" variant="outline-danger" @click.stop="removeProduct(row.item)" class="mr-1">
+                    <font-awesome-icon icon="trash" />
+                </b-button>
+
+                <b-button size="sm" variant="outline-primary" @click.stop="showModal(row.item)" class="mr-1">
+                    <font-awesome-icon icon="pen-to-square" />
+                </b-button>
+            </template>
         </b-table>
 
         <b-table
