@@ -120,18 +120,13 @@ class SalesController < ApplicationSystemController
     @sale.user_modifier = current_user
 
     if @sale.update(sale_params)
-      respond_with_successful(@sale)
-    else
-      respond_sale_with_error
-    end
-  end
 
-  # DELETE /sales/1 or /sales/1.json
-  def destroy
-    @sale.user_modifier = current_user
+      sale = @sale.reload
+      sale = sale.attributes.merge({
+        annulment_error: sale.reload&.electronic_bill&.annulment_data&.dig('Mensaje')
+      })
 
-    if @sale.destroy
-      respond_with_successful(@sale)
+      respond_with_successful(sale)
     else
       respond_sale_with_error
     end

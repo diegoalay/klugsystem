@@ -266,11 +266,19 @@ export default {
                     if (sale.sale_type === 'electronic_bill') this.$loading(false)
 
                     if (result.successful) {
-                        this.$toast.success('Venta deshabilitada exitosamente.')
-                        const index = this.data.findIndex(e => e.id === sale.id)
-                        this.$set(this.data[index], 'status', false)
+                        if (sale.sale_type !== 'electronic_bill' || (sale.sale_type === 'electronic_bill' && !result.data.status)) {
+                            this.$toast.success('Venta deshabilitada exitosamente.')
 
-                        this.$emit('change', this.filters)
+                            const index = this.data.findIndex(e => e.id === sale.id)
+                            this.$set(this.data[index], 'status', false)
+
+                            this.$emit('change', this.filters)
+                        } else {
+                            // error in electronic bill annulment
+                            this.$toast.error(result.data.annulment_error||'Error al anular la factura electrónica.', {
+                                timeout: 4000
+                            })
+                        }
                     } else {
                         this.$toast.error(result.error.message)
                     }
