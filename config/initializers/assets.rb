@@ -15,6 +15,9 @@ Rails.application.config.assets.precompile += %w( destinations.js )
 Rails.application.config.assets.precompile += %w( dashboard.js )
 Rails.application.config.assets.precompile += %w( units.js )
 
+Rails.application.config.assets.precompile += %w( quotations/default.css )
+Rails.application.config.assets.precompile += %w( quotations/simple.css )
+
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
