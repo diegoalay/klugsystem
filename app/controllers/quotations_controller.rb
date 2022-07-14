@@ -25,7 +25,8 @@ class QuotationsController < ApplicationSystemController
         set_quotation
 
         @details = @quotation.show
-        render template: 'quotations/show.pdf.html.erb', viewport_size: '1280x1024', pdf: "COTIZACION: #{@details[:quotation].dig('id')}"
+
+        render template: current_user.account.quotation_path, viewport_size: '1280x1024', pdf: "COTIZACION: #{@details[:quotation].dig('id')}"
       end
     end
   end
@@ -107,7 +108,7 @@ class QuotationsController < ApplicationSystemController
       %i[
         subtotal total discount interest shipping_costs
         received_amount change quotation_type employees_id quotation_date payment_method_id
-        client_name client_email
+        client_name client_email client_telephone employee_id
       ]
     )
   end

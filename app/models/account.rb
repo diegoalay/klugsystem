@@ -97,7 +97,39 @@ class Account < ApplicationRecord
     }
   end
 
+  def logo
+    if logo_exists?
+      return "account/#{id}/logo.png"
+    end
+
+    nil
+  end
+
+  def quotation_path
+    if custom_quotation_pdf?
+      "quotations/#{id}/show.pdf.html.erb"
+    else
+      "quotations/show.pdf.html.erb"
+    end
+  end
+
   def walmart_billing?
     return true
+  end
+
+  def custom_quotation_pdf?
+    if File.file?("#{Rails.root}/app/views/quotations/#{id}/show.pdf.html.erb")
+      return true
+    end
+
+    false
+  end
+
+  def logo_exists?
+    if File.file?("#{Rails.root}/assets/images/account/#{id}.png")
+      return true
+    end
+
+    false
   end
 end

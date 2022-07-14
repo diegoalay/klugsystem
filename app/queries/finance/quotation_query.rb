@@ -70,7 +70,11 @@ class Finance::QuotationQuery
     {
       quotation_types: ::Sale.fetch_sale_types(current_user),
       user_creator_types: [{ text: 'Mis cotizaciones', value: 'mine'}],
-      payment_methods: payment_methods
+      payment_methods: payment_methods,
+      billing_employee_presence: @account.billing_employee_presence,
+      product_price_editable: @account.product_price_editable,
+      product_name_editable: @account.product_name_editable,
+      employees: @account.employees.map {|employee| {text: employee.name, value: employee.id}}
     }
   end
 end

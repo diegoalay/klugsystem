@@ -918,32 +918,46 @@ export default {
                             </slot>
                         </component-autocomplete>
 
-                        <b-row v-if="quotation">
-                            <b-col md="6" sm="12">
-                                <b-form-group>
-                                    <label> Nombre <sup class="text-danger">* </sup> </label>
-                                    <b-form-input
-                                        ref="client-name"
-                                        v-model="sale.client_name"
-                                        type="text"
-                                        placeholder=""
-                                        required
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                            <b-col md="6" sm="12">
-                                <b-form-group>
-                                    <label> E-Mail </label>
-                                    <b-form-input
-                                        v-model="sale.client_email"
-                                        type="email"
-                                        placeholder=""
-                                    >
-                                    </b-form-input>
-                                </b-form-group>
-                            </b-col>
-                        </b-row>
+                        <template v-if="quotation">
+                            <b-row>
+                                <b-col md="4" sm="12">
+                                    <b-form-group>
+                                        <label> Nombre <sup class="text-danger">* </sup> </label>
+                                        <b-form-input
+                                            ref="client-name"
+                                            v-model="sale.client_name"
+                                            type="text"
+                                            placeholder=""
+                                            required
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col md="4" sm="12">
+                                    <b-form-group>
+                                        <label> Teléfono </label>
+                                        <b-form-input
+                                            v-model="sale.client_telephone"
+                                            type="email"
+                                            placeholder=""
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                                <b-col md="4" sm="12">
+                                    <b-form-group>
+                                        <label> E-Mail </label>
+                                        <b-form-input
+                                            v-model="sale.client_email"
+                                            type="email"
+                                            placeholder=""
+                                        >
+                                        </b-form-input>
+                                    </b-form-group>
+                                </b-col>
+                            </b-row>
+                        </template>
+
                         <template v-else>
                             <b-row>
                                 <b-col md="6" sm="12">

@@ -32,7 +32,9 @@ class ApplicationSystemController < ApplicationController
     @data = {
       walmart_billing: @account.walmart_billing?,
       account: @account,
+      account_logo: @account.logo,
       menu_items: MenuItem.all,
+      branch_office: current_user.branch_office,
       current_user: {
         id: current_user.id,
         email: current_user.email,
@@ -40,7 +42,6 @@ class ApplicationSystemController < ApplicationController
         role: current_user.roles.first,
         abilities: current_user.abilities,
         cash_register: current_user.current_cash_register&.show,
-
       },
       url: {
         cable: cable_url,

@@ -1,0 +1,106 @@
+
+<%= wicked_pdf_stylesheet_link_tag "pdfs/tornillos_tical" %>
+
+<div class="pdf-container">
+  <% if @data[:account_logo] %>
+    <%= image_tag wicked_pdf_asset_base64(@data[:account][:logo]), class: 'account-logo' %>
+  <% end %>
+  <div class="main-box bordered">
+    <div class="bold title bordered-bottom">
+      <%= @data[:account][:name] %>
+    </div>
+
+    <div class="bold quotation-title bordered-bottom">
+      COTIZACIÓN NO. <%= @details[:quotation].dig('id') %>
+    </div>
+
+    <div class="info bordered-bottom">
+      <div class="quotation-company-info">
+        <% if @data[:branch_office][:street_address] %>
+          <p> <span class="bold text-left"> Dirección: </span> <%= @data[:branch_office][:street_address] %> </p>
+        <% end %>
+        <p> <span class="bold text-left"> Ciudad: </span> Guatemala </p>
+        <% if @data[:account][:telephone] %>
+          <p> <span class="bold text-left"> Telefóno: </span> <%= @data[:account][:telephone] %> </p>
+        <% end %>
+        <% if @details[:quotation].dig('employee_name') %>
+          <p> <span class="bold text-left"> Vendedor: </span> <%= @details[:quotation].dig('employee_name') %> </p>
+        <% end %>
+      </div>
+
+      <div class="quotation-client-info">
+        <table class="quotation-client-table">
+          <tbody>
+            <tr>
+              <td class="bold text-left color-table-clients"> Fecha solicitud </td>
+              <td class="text-left"> <%= DateParser.datetime_string(@details[:quotation].dig('created_at')) %> </td>
+            </tr>
+            <tr>
+              <td class="bold text-left color-table-clients"> Número de Cliente </td>
+              <td class="text-left"> <%= @details[:quotation].dig('client_telephone') %> </td>
+            </tr>
+            <tr>
+              <td class="bold text-left color-table-clients"> E-mail de Cliente </td>
+              <td class="text-left"> <%= @details[:quotation].dig('client_email') %> </td>
+            </tr>
+            <tr>
+              <td class="bold text-left color-table-clients"> Método de Pago </td>
+              <td class="text-left"> <%= @details[:payment_method].name %> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="quotation-client-name">
+      <div class="quotation-client-label bordered-right color-table-clients bold">
+        Solicitado por
+      </div>
+      <div class="quotation-client">
+        <%= @details[:quotation].dig('client_name') %>
+      </div>
+    </div>
+
+    <div class="products-table bordered-bottom">
+      <table>
+        <tr class="color-table-products">
+          <th class="bold">No.</th>
+          <th class="bold">Cantidad</th>
+          <th class="bold">Descripción</th>
+          <th class="bold">Precio/Unidad (Q.)</th>
+          <th class="bold">Descuento (Q.)</th>
+          <th class="bold">Subtotal (Q.)</th>
+          <th class="bold">Interés (Q.)</th>
+          <th class="bold">Total (Q.)</th>
+        </tr>
+      </tr>
+      <% @details[:details].each_with_index do |quotation_detail, index| %>
+        <tr>
+          <th scope="row" class="bold color-table-clients"> <%= (index + 1 ) %> </th>
+          <td class="text-center"> <%= quotation_detail.quantity %> </td>
+          <td class="text-left"> <%= quotation_detail.name %> </td>
+          <td class="text-right"> <%= quotation_detail.price %> </td>
+          <td class="text-right"> <%= quotation_detail.discount_value %> </td>
+          <td class="text-right"> <%= quotation_detail.subtotal %> </td>
+          <td class="text-right"> <%= quotation_detail.interest_value %> </td>
+          <td class="text-right"> <%= quotation_detail.final_subtotal %> </td>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="borderless" colspan="4">
+          <p class="text-left bold">
+            Si tiene alguna duda sobre este presupuesto no dude en comunicarse con nosotros.
+          </p>
+
+          <p class="text-left text-red">
+            El precio varia si se disminuye la cantidad de compra.
+          </p>
+        </td>
+        <td class="borderless"></td>
+        <td class="borderless-bottom"></td>
+        <td class="bold">Total</td>
+        <td class="text-right"> <%= @details[:quotation].dig('total') %> </td>
+      </tr>
+    </table>
+  <div>
+</div>
