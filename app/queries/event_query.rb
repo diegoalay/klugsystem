@@ -32,8 +32,7 @@ class EventQuery
     end
 
     events = events.where("
-      lower(events.title) like '%#{search}%' or
-      lower(people.model_identifier) like '%#{search}%'
+      lower(events.title) like '%#{search}%'
     ") unless search.blank?
 
     if (query[:pagination][:disable])

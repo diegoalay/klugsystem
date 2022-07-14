@@ -18,7 +18,8 @@ class Quotation < ApplicationRecord
     {
       quotation: self.attributes.merge({
         'subtotal1' => subtotal1.to_f,
-        'subtotal2' => subtotal2.to_f
+        'subtotal2' => subtotal2.to_f,
+        'quotation_type_translated' => I18n.t("models.sales.column_enum_sale_type_#{quotation_type}")
       }),
       details: details,
       employee: employee,

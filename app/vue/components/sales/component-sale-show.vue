@@ -51,7 +51,7 @@ export default {
                 key: 'quantity'
             },{
                 label: 'Total',
-                key: 'subtotal',
+                key: 'total',
                 thClass: 'text-right',
                 tdClass: 'text-right',
             }],
@@ -119,7 +119,7 @@ export default {
                 if (result.successful) {
                     this.options = result.data
 
-                    this.custom_fields = JSON.parse(JSON.stringify(this.options.billing_fields))
+                    this.custom_fields = JSON.parse(JSON.stringify(this.options.billing_fields||[]))
                     for(let key in this.custom_fields) {
                         const custom_field = this.custom_fields[key]
 
@@ -145,7 +145,7 @@ export default {
             this.http.get(url).then(result => {
                 if (result.successful) {
                     for (let key in result.data) {
-                        this[key] = result.data[key]
+                        this[key == 'quotation' ? 'sale' : key] = result.data[key]
                     }
 
                     if (this.sale) {
@@ -192,7 +192,7 @@ export default {
         },
 
         isElectronicBill(){
-            return (this.sale.sale_type === 'electronic_bill')
+            return (this.sale?.sale_type === 'electronic_bill')
         },
 
         sendToClipboard(string) {
@@ -208,6 +208,14 @@ export default {
 
             this.$toast.success('Texto copiado al portapapeles')
         },
+
+        printDocument(){
+            if (this.controller === 'quotations') {
+                this.tools.printQuotation(this.sale.id)
+            } else {
+                this.tools.printSale(this.sale)
+            }
+        }
     }
 }
 </script>
@@ -347,7 +355,27 @@ export default {
                     </div>
                     <br>
 
-                    <b-row>
+                    <b-row v-if="controller === 'quotations'">
+                        <b-col md="4" sm="12">
+                            <h5> <b>  Datos generales </b> </h5>
+                            <b> Fecha: </b> {{ date.datetime(sale.created_at) }} <br>
+                            <b> Método de pago: </b> {{ payment_method.name }} <br>
+                        </b-col>
+
+                        <b-col md="4">
+                            <h5> <b>  Detalles de cotización </b> </h5>
+                            <b> Cantidad recibida: </b> {{ sale.received_amount }} <br>
+                            <b> Vuelto: </b> {{ sale.change }} <br>
+                        </b-col>
+
+                        <b-col md="4" sm="12">
+                            <h5> <b>  Datos de cliente </b> </h5>
+                            <b> Nombre: </b> {{ sale.client_name }} <br>
+                            <b> Teléfono: </b> {{ sale.client_telephone }} <br>
+                            <b> E-Mail: </b> {{ client.client_email }} <br>
+                        </b-col>
+                    </b-row>
+                    <b-row v-else>
                         <b-col md="4" sm="12">
                             <h5> <b>  Datos generales </b> </h5>
                             <b> Fecha: </b> {{ date.datetime(sale.sale_date) }} <br>
@@ -380,7 +408,7 @@ export default {
 
                     <br>
                     <b-row class="justify-content-end">
-                        <b-col class="text-center" md="6" v-if="!sale.status">
+                        <b-col class="text-center" md="6" v-if="!sale.status && controller !== 'quotations'">
                             <h1 class="text-danger"> {{ 'ANULADA' }} </h1>
                         </b-col>
                         <b-col md="6" sm="12">
@@ -394,7 +422,7 @@ export default {
 
                     <hr>
                     <div class="text-right">
-                        <b-button variant="primary" @click="tools.printSale(sale)">
+                        <b-button variant="primary" @click="printDocument()">
                             <font-awesome-icon icon="print"/> Imprimir
                         </b-button>
                     </div>

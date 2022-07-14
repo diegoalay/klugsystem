@@ -1,4 +1,3 @@
-
 <%= wicked_pdf_stylesheet_link_tag "quotations/simple" %>
 
 <div class="pdf-container">
@@ -67,10 +66,10 @@
           <th class="bold">No.</th>
           <th class="bold">Cantidad</th>
           <th class="bold">Descripción</th>
-          <th class="bold">Precio/Unidad (Q.)</th>
-          <th class="bold">Descuento (Q.)</th>
-          <th class="bold">Subtotal (Q.)</th>
+          <th class="bold">Precio (Q.)</th>
           <th class="bold">Interés (Q.)</th>
+          <th class="bold">Subtotal (Q.)</th>
+          <th class="bold">Descuento (Q.)</th>
           <th class="bold">Total (Q.)</th>
         </tr>
       </tr>
@@ -80,10 +79,10 @@
           <td class="text-center"> <%= quotation_detail.quantity %> </td>
           <td class="text-left"> <%= quotation_detail.name %> </td>
           <td class="text-right"> <%= quotation_detail.price %> </td>
-          <td class="text-right"> <%= quotation_detail.discount_value %> </td>
-          <td class="text-right"> <%= quotation_detail.subtotal %> </td>
           <td class="text-right"> <%= quotation_detail.interest_value %> </td>
           <td class="text-right"> <%= quotation_detail.final_subtotal %> </td>
+          <td class="text-right"> <%= quotation_detail.discount_value %> </td>
+          <td class="text-right"> <%= quotation_detail.total %> </td>
         </tr>
       <% end %>
       <tr>
