@@ -12,6 +12,13 @@ module XmlServices
 
     def call
       generate_xml
+
+      # DATA data = Base64.decode64(Sale::ElectronicBill.last.certification_data['ResponseDATA1'])
+      # IMPUESTOS ITEM Ox.load(data, mode: :hash)[:"dte:GTDocumento"][1][:"dte:SAT"][1][:"dte:DTE"][1][:"dte:DatosEmision"][5][:"dte:Items"]
+      # TOTAL IMPUESTOS
+      # NOMBRE IMPUESTO Ox.load(data, mode: :hash)[:"dte:GTDocumento"][1][:"dte:SAT"][1][:"dte:DTE"][1][:"dte:DatosEmision"][6][:"dte:Totales"][:"dte:TotalImpuestos"][:"dte:TotalImpuesto"][0][:NombreCorto]
+      # VALOR Ox.load(data, mode: :hash)[:"dte:GTDocumento"][1][:"dte:SAT"][1][:"dte:DTE"][1][:"dte:DatosEmision"][6][:"dte:Totales"][:"dte:TotalImpuestos"][:"dte:TotalImpuesto"][0][:TotalMontoImpuesto]
+      # GRAN TOTAL Ox.load(data, mode: :hash)[:"dte:GTDocumento"][1][:"dte:SAT"][1][:"dte:DTE"][1][:"dte:DatosEmision"][6][:"dte:Totales"][:"dte:GranTotal"]
     end
 
     def generate_xml

@@ -197,12 +197,27 @@
       </ul>
     </li>
 
-    <%# <li> %>
-      <%# <%= navigation_vue_item("/books") do %>
-        <%# <i class="fas fa-book"></i> %>
-        <%# <span> Contabilidad </span> %>
-      <%# <% end %>
-    <%# </li> %>
+    <li>
+      <%= navigation_vue_item("/books", ["list"]) do %>
+        <i class="fa-solid fa-address-card"></i>
+        <span> Contabilidad </span>
+        <span class="float-right caret right"></span>
+      <% end %>
+      <ul class="list-unstyled dropdown">
+        <li>
+          <%= navigation_vue_item("/books/purchases") do %>
+            <i class="fa-solid fa-briefcase"></i>
+            <span> Libro de compras </span>
+          <% end %>
+        </li>
+        <li>
+          <%= navigation_vue_item("/books/sales") do %>
+            <i class="fa-solid fa-money-bill"></i>
+            <span> Libro de ventas </span>
+          <% end %>
+        </li>
+      </ul>
+    </li>
 
     <li>
       <%= navigation_vue_item("/reports", ['list']) do %>

@@ -18,7 +18,7 @@ module HtmlHelper
     id = id.join('.')
 
     case id
-    when 'crm', 'finance', 'administration', 'inventory', 'hr', 'configurations', 'pos', 'reports', 'purchases'
+    when 'crm', 'finance', 'administration', 'inventory', 'hr', 'configurations', 'pos', 'reports', 'purchases', 'books'
       link_path = "#"
     end
 

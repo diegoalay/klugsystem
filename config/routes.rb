@@ -165,7 +165,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :books do
+      namespace :books do
+        get :purchases
+        get :sales
       end
 
       namespace :configurations do
