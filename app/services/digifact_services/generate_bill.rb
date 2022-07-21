@@ -22,7 +22,7 @@ module DigifactServices
 
         # save error
         @sale.activities.create(
-          description: resp.parsed_response['ResponseDATA1'],
+          description: file,
           category: 'electronic_certification_failed',
           user_creator: @sale.user_creator
         )

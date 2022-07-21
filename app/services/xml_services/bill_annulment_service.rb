@@ -21,7 +21,7 @@ module XmlServices
               NumeroDocumentoAAnular="#{@sale.electronic_bill.identifier}"
               NITEmisor="#{@sale.account.billing_identifier}"
               IDReceptor="#{@sale.client.billing_identifier}"
-              FechaEmisionDocumentoAnular="#{date_format(@sale.electronic_bill.certification_datetime)}"
+              FechaEmisionDocumentoAnular="#{date_format(@sale.sale_date)}"
               FechaHoraAnulacion="#{date_format(Time.current)}"
               MotivoAnulacion="ELIMINACION"/>
             </dte:AnulacionDTE>
