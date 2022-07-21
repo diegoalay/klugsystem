@@ -8,7 +8,7 @@ class Product::File < Shared::File
       'jpg',
       'gif',
       'webp',
-      'heif'
+      'heic'
     ]
   end
 end
