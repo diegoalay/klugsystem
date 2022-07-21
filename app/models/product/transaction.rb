@@ -74,9 +74,12 @@ class Product::Transaction < ApplicationRecord
     value = quantity * (category == "decrease" ? -1 : 1)
 
     if !product.account.inventory_count && (self.product.quantity.to_f + value.to_f  < 0)
-      self.product.update!(quantity:  0)
+      quantity = 0
     else
-      self.product.update!(quantity:  self.product.quantity.to_f + value.to_f)
+      quantity = self.product.quantity.to_f + value.to_f
     end
+
+    self.quantity = quantity
+    self.save(validation: false)
   end
 end
