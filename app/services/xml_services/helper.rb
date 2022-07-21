@@ -28,6 +28,10 @@ module XmlServices
       municipality
     end
 
+    def client_billing_name
+      @sale.client.billing_name.gsub('&', '&amp;')
+    end
+
     def client_billing_department
       department = @sale.client.billing_department
       department = '' if department.blank?

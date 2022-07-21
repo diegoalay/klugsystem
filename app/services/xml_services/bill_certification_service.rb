@@ -32,7 +32,7 @@ module XmlServices
                               <dte:Pais>GT</dte:Pais>
                           </dte:DireccionEmisor>
                       </dte:Emisor>
-                      <dte:Receptor NombreReceptor="#{@sale.client.billing_name}" IDReceptor="#{@sale.client.billing_identifier}" CorreoReceptor="#{@sale.client.billing_email}">
+                      <dte:Receptor NombreReceptor="#{client_billing_name}" IDReceptor="#{@sale.client.billing_identifier}" CorreoReceptor="#{@sale.client.billing_email}">
                           <dte:DireccionReceptor>
                             <dte:Direccion>#{@sale.client.billing_address}</dte:Direccion>
                             <dte:CodigoPostal>#{client_billing_postcode}</dte:CodigoPostal>
