@@ -76,10 +76,10 @@ class Product::Transaction < ApplicationRecord
     if !product.account.inventory_count && (self.product.quantity.to_f + value.to_f  < 0)
       quantity = 0
     else
-      quantity = self.product.quantity.to_f + value.to_f
+      quantity = (self.product.quantity.to_f + value.to_f)
     end
 
-    self.quantity = quantity
-    self.save(validation: false)
+    self.product.quantity = quantity
+    self.product.save(validation: false)
   end
 end
